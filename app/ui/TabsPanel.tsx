@@ -36,9 +36,7 @@ export class TabsPanel extends Component<ITabsPanelProps> {
     }
 
     render() {
-        console.log("render TabsPanel",this.props.children);
-
-
+        console.log("render TabsPanel");
         return (
             <div id={this.$id} style={{border: "none"}}>
                 <ul>

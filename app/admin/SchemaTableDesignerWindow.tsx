@@ -2,6 +2,7 @@ import * as  React from "react";
 import {IWindowProps, Window} from "../ui/Window";
 import {TabsPanel} from "../ui/TabsPanel";
 import {TabsPanelItem} from "../ui/TabsPanelItem";
+import {omit} from "../utils/omit";
 
 
 export interface ISchemaTableDesignerProps {
@@ -13,11 +14,11 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
 
     render() {
         console.log("SchemaTableDesignerWindow");
-        let props=this.props.window || {};
-        delete props.children;
+        // let props=this.props.window || {};
+        // delete props.children;
         //<Window {...this.props.window}>
         return (
-            <Window {...this.props.window}>
+            <Window {...omit(this.props.window,["children"])}>
                 {/*Дизайнер таблицы {this.props.tableId}*/}
                 <TabsPanel height="100%">
                     <TabsPanelItem title="Таблица">
