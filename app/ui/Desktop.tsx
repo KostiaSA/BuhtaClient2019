@@ -3,6 +3,7 @@ import {appState} from "../AppState";
 import {IWindowProps, Window} from "./Window";
 import {getRandomString} from "../utils/getRandomString";
 import {replaceAll} from "../utils/replaceAll";
+import {SchemaTableDesignerWindow} from "../admin/SchemaTableDesignerWindow";
 
 
 export interface IDesktopProps {
@@ -47,6 +48,13 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                     }}>
                     open buhta/test1/TestWindow
                 </button>
+                <button
+                    onClick={() => {
+                        this.openWindow(<SchemaTableDesignerWindow key="czcfwewer" window={{ height:400 ,width:600}} tableId="buhta/test1/Организация"></SchemaTableDesignerWindow>);
+                        //  this.openWindow(<div key="111" title="111">новое окно</div>);
+                    }}>
+                    open SchemaTableDesignerWindow
+                </button>
                 <Window key="222" ref={(e) => {
                     this.w = e!
                 }} left={10} top={50} height={300} width={600} title={this.t}>
@@ -64,11 +72,11 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     }
 
     openWindow(win: React.ReactElement<IWindowProps>) {
-        if (win.type !== Window)
-            throw "Desktop.openWindow(): win должно быть типа Window";
+        // if (win.type !== Window && !((win.type as any).prototype instanceof Window))
+        //     throw "Desktop.openWindow(): win должно быть типа Window";
 
-        if (!win.key)
-            throw "Desktop.openWindow(): у win не заполнен аттрибут 'key'";
+        // if (!win.key)
+        //     throw "Desktop.openWindow(): у win не заполнен аттрибут 'key'";
 
         this.windows.push(win);
         this.forceUpdate();

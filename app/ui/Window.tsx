@@ -17,16 +17,13 @@ export class Window extends Component<IWindowProps> {
 
     constructor(props: any, context: any) {
         super(props, context);
-//        this.props = props;
-        //   this.state = props;
         this.context = context;
     }
 
-    widget: any;
     content: any;
 
     componentDidMount() {
-        console.log("didmount win "+this.$id);
+        console.log("didmount win " + this.$id);
         this.widget = $("#" + this.$id);
         //ReactDOM.render(<Div ref={(e)=>{this.content=e}}>{this.state.children}.......</Div>, document.getElementById(this.$contentId));
         this.updateProps(this.props);

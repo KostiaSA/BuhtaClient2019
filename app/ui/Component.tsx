@@ -17,7 +17,13 @@ export interface IComponentRegistration {
 
 export class Component<P> extends React.Component<P, any>{
 
-    state:P;
+    constructor(props: any, context: any) {
+        super(props, context);
+        this.context = context;
+    }
+
+    widget: any;
+//    state:P;
 
     // --- $ ---
     //protected _$: JQuery;
