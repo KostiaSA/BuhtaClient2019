@@ -6,6 +6,7 @@ node_modules
 *.zip
 *.lock
 !webpack.config.js
+wwwroot/vendor
 
 
 
