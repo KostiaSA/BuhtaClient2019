@@ -42,7 +42,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                 </button>
                 <button
                     onClick={() => {
-                        this.openSchemaWindow("buhta_test1_TestWindow");
+                        this.openSchemaWindow("buhta_test1_TestWindow", {title: getRandomString()});
                         //  this.openWindow(<div key="111" title="111">новое окно</div>);
                     }}>
                     open buhta/test1/TestWindow
@@ -74,10 +74,12 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         this.forceUpdate();
     }
 
-    async openSchemaWindow(winId: string): Promise<void> {
+    async openSchemaWindow(winId: string, props: any = {}): Promise<void> {
         await this.loadBabelScript(winId);
         let winClass = (window as any)[winId];
-        this.openWindow(new winClass().render());
+        if (!props.key)
+            props.key = getRandomString();
+        this.openWindow(new winClass().render(props));
     }
 
     async loadBabelScript(className: string): Promise<void> {

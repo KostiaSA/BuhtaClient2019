@@ -1,8 +1,8 @@
 
 class TestWindow extends SchemaWindow {
-    render(){
+    render(props){
         return (
-            <Window key={908}>
+            <Window {...props}>
                 <div>это TestWindow из схемы</div>
             </Window>
         )
