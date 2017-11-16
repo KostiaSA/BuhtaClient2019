@@ -51,7 +51,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                     this.w = e!
                 }} left={10} top={50} height={300} width={600} title={this.t}>
                     <button onClick={() => {
-                        this.t = "жопа2";
+                        this.t = "жопа";
                         this.b = "ага";
                         this.forceUpdate();
                         this.w.updateProps({top: 300, left: 300, title: "уроды"});
