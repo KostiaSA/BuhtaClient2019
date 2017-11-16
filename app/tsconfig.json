@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es2017",
+    //"outDir": "../distdist",
+    "declaration": false,
+    "module": "commonjs",
+    "jsx": "react",
+    "experimentalDecorators":true,
+    "strictNullChecks":true,
+    "noStrictGenericChecks":true,
+    //    "reactNamespace": "__React"
+    "lib": ["es6", "es2015.proxy","es2015.promise","dom"],
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
+
+  },
+  "exclude": [
+    "../node_modules",
+    "bower_components",
+    ".js"
+    //"**/*x.d.ts"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "className": "SchemaTable",
+  "name": "Автомобиль",
+  "description": "Список автомобилей",
+  "columns": [
+    {
+      "name": "Ключ",
+      "primaryKey": true,
+      "dataType": {
+        "className": "IntegerSqlDataType",
+        "size": "32"
+      },
+      "description": "pos 0"
+    },
+    {
+      "name": "Марка",
+      "dataType": {
+        "className": "StringSqlDataType",
+        "maxLen": 100
+      },
+      "description": "pos 1"
+    },
+    {
+      "name": "Госномер",
+      "dataType": {
+        "className": "StringSqlDataType",
+        "maxLen": 20
+      },
+      "description": "pos 2"
+    },
+    {
+      "name": "Гаражный номер",
+      "dataType": {
+        "className": "StringSqlDataType",
+        "maxLen": 50
+      },
+      "description": "pos 3"
+    },
+    {
+      "name": "Грузоподъемность",
+      "dataType": {
+        "className": "IntegerSqlDataType",
+        "size": "32"
+      },
+      "description": "pos 4"
+    },
+    {
+      "name": "Номер и название",
+      "dataType": {
+        "className": "StringSqlDataType",
+        "maxLen": 117
+      },
+      "description": "pos 5"
+    },
+    {
+      "name": "ИНН ТС",
+      "dataType": {
+        "className": "StringSqlDataType",
+        "maxLen": 30
+      },
+      "description": "pos 6"
+    },
+    {
+      "name": "Мощность",
+      "dataType": {
+        "className": "IntegerSqlDataType",
+        "size": "32"
+      },
+      "description": "pos 7"
+    },
+    {
+      "name": "Номер",
+      "dataType": {
+        "className": "StringSqlDataType",
+        "maxLen": 20
+      },
+      "description": "pos 8"
+    },
+    {
+      "name": "Код вида ТС",
+      "dataType": {
+        "className": "StringSqlDataType",
+        "maxLen": 10
+      },
+      "description": "pos 9"
+    }
+  ]
+}
