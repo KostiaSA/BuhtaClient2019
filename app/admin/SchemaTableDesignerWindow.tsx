@@ -3,6 +3,9 @@ import {IWindowProps, Window} from "../ui/Window";
 import {TabsPanel} from "../ui/TabsPanel";
 import {TabsPanelItem} from "../ui/TabsPanelItem";
 import {omit} from "../utils/omit";
+import {FormPanel} from "../ui/FormPanel";
+import {FormPanelItem} from "../ui/FormPanelItem";
+import {Input} from "../ui/inputs/Input";
 
 
 export interface ISchemaTableDesignerProps {
@@ -23,6 +26,14 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                 <TabsPanel height="100%">
                     <TabsPanelItem title="Таблица">
                         таблица контент
+                        <FormPanel>
+                            <FormPanelItem title="имя">
+                                <Input placeHolder="имя таблицы"/>
+                            </FormPanelItem>
+                            <FormPanelItem title="sql-имя">
+                                <Input placeHolder="введите sql имя таблицы"/>
+                            </FormPanelItem>
+                        </FormPanel>
                     </TabsPanelItem>
                     <TabsPanelItem title="Колонки">
                         колонки контент

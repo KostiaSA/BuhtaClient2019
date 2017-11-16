@@ -1,15 +1,15 @@
 import * as  React from "react";
 
 
-export interface ITabsPanelProps {
+export interface ITabsPanelItemProps {
     title: string | React.ReactNode;
-    height?: string | number;
+    height?: number;
 }
 
-export class TabsPanelItem extends React.Component<ITabsPanelProps> {
+export class TabsPanelItem extends React.Component<ITabsPanelItemProps> {
 
     render() {
-        return <div>{ this.props.children}</div>;
+        return <div >{this.props.children}</div>;
     }
 
 }
