@@ -1,9 +1,11 @@
 import * as  React from "react";
 import {Component} from "./Component";
+import {omit} from "../utils/omit";
 
 
 export interface ITabsPanelProps {
-    height: string | number;
+    height?: string | number;
+    width?: string | number;
 }
 
 export class TabsPanel extends Component<ITabsPanelProps> {
@@ -21,10 +23,11 @@ export class TabsPanel extends Component<ITabsPanelProps> {
     }
 
     updateProps(props: ITabsPanelProps) {
-        let opt: any = {};
+        let opt: any = omit(this.props, ["children"]);
 
-        if (props.height)
-            opt.height = props.height;
+        opt.height = opt.height || "auto";
+        opt.width = opt.width || "100%";
+        opt.autoHeight = true;
 
         this.widget.jqxTabs(opt);
     }
@@ -38,7 +41,7 @@ export class TabsPanel extends Component<ITabsPanelProps> {
     render() {
         console.log("render TabsPanel");
         return (
-            <div id={this.$id} style={{border: "none"}}>
+            <div id={this.$id} style={{border: "1px solid blue"}}>
                 <ul>
                     {this.renderHeaders()}
                 </ul>

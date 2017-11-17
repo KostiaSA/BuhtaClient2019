@@ -8,6 +8,8 @@ import {FormPanelItem} from "../ui/FormPanelItem";
 import {Input} from "../ui/inputs/Input";
 import {Grid} from "../ui/Grid";
 import {GridColumn} from "../ui/GridColumn";
+import {HorzFlexPanel} from "../ui/HorzFlexPanel";
+import {HorzFlexPanelItem} from "../ui/HorzFlexPanelItem";
 
 
 export interface ISchemaTableDesignerProps {
@@ -114,30 +116,67 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
         return (
             <Window {...omit(this.props.window, ["children"])}>
                 {/*Дизайнер таблицы {this.props.tableId}*/}
-                <TabsPanel height="100%">
-                    <TabsPanelItem title="Таблица">
-                        таблица контент
-                        <FormPanel bindObj={this.table}>
-                            <FormPanelItem title="имя">
-                                <Input bindObj={this.table} bindProp="name" placeHolder="имя таблицы"/>
-                            </FormPanelItem>
-                            <FormPanelItem title="описание">
-                                <Input bindProp="description" placeHolder="введите sql имя таблицы"/>
-                            </FormPanelItem>
-                            <Input width={400} bindProp="note" placeHolder="note"
-                                   title={<span style={{color: "red"}}>SchemaObject:</span>}/>
-                        </FormPanel>
-                    </TabsPanelItem>
-                    <TabsPanelItem title="Колонки">
-                        <Grid source={this.table.columns}>
-                            <GridColumn text="Колонка" datafield="name"/>
-                            <GridColumn text="Описание" datafield="description"/>
-                        </Grid>
-                    </TabsPanelItem>
-                    <TabsPanelItem title="Индексы">
-                        индексы контент
-                    </TabsPanelItem>
-                </TabsPanel>
+
+                <HorzFlexPanel>
+                    <HorzFlexPanelItem dock="top">
+                        таблица: XXX
+                    </HorzFlexPanelItem>
+                    <HorzFlexPanelItem dock="fill">
+                        <TabsPanel>
+
+                            <TabsPanelItem title="Колонки">
+
+                                <HorzFlexPanel>
+
+                                    <HorzFlexPanelItem dock="top">
+                                        фильтр по названию
+                                    </HorzFlexPanelItem>
+
+                                    <HorzFlexPanelItem dock="fill">
+                                        <Grid source={this.table.columns}>
+                                            <GridColumn text="Колонка" datafield="name"/>
+                                            <GridColumn text="Описание" datafield="description"/>
+                                        </Grid>
+                                    </HorzFlexPanelItem>
+
+                                    <HorzFlexPanelItem dock="bottom">
+                                        add edit delete
+                                    </HorzFlexPanelItem>
+
+                                </HorzFlexPanel>
+
+                            </TabsPanelItem>
+                            <TabsPanelItem title="Таблица">
+
+                                <HorzFlexPanelItem dock="top">
+                                    таблица контент
+                                </HorzFlexPanelItem>
+                                <HorzFlexPanelItem dock="top">
+                                    <FormPanel bindObj={this.table}>
+                                        <FormPanelItem title="имя">
+                                            <Input bindObj={this.table} bindProp="name" placeHolder="имя таблицы"/>
+                                        </FormPanelItem>
+                                        <FormPanelItem title="описание">
+                                            <Input bindProp="description" placeHolder="введите sql имя таблицы"/>
+                                        </FormPanelItem>
+                                        <Input width={400} bindProp="note" placeHolder="note"
+                                               title={<span style={{color: "red"}}>SchemaObject:</span>}/>
+                                    </FormPanel>
+                                </HorzFlexPanelItem>
+
+
+                            </TabsPanelItem>
+
+                            <TabsPanelItem title="Индексы">
+                                индексы контент
+                            </TabsPanelItem>
+                        </TabsPanel> </HorzFlexPanelItem>
+                    <HorzFlexPanelItem dock="bottom">
+                        сохранить отмена
+                    </HorzFlexPanelItem>
+                </HorzFlexPanel>
+
+
             </Window>
 
         )
