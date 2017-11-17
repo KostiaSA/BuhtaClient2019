@@ -23,12 +23,15 @@
 }
 
 .jqx-widget-content,
-input,textarea, select, button,
-/*input[type="button"].jqx-input,*/
+input, textarea, select, button,
 input[type=password].jqx-input,
 input[type=text].jqx-input {
     font-family: Ubuntu, sans-serif;
     font-style: normal;
     font-size: 13px;
-    color:rgba(66, 66, 66, 1);
+    color: rgba(66, 66, 66, 1);
+}
+
+.jqx-fill-state-focus {
+    border-color: dodgerblue;
 }
