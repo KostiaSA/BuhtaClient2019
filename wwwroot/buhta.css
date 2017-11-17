@@ -1,0 +1,34 @@
+.jqx-cell {
+    min-height: 23px;
+    padding: 1px 3px;
+}
+
+.jqx-button {
+    padding: 4px;
+}
+
+.jqx-window.jqx-widget-content {
+    border-color: rgba(33, 115, 70, 0.60);
+    box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.14);
+}
+
+.jqx-window-header {
+    border-color: rgba(33, 115, 70, 0.60);
+    background: rgba(33, 115, 70, 0.11);
+}
+
+.jqx-tree-item {
+    padding-bottom: 0px;
+    padding-top: 1px;
+}
+
+.jqx-widget-content,
+input,textarea, select, button,
+/*input[type="button"].jqx-input,*/
+input[type=password].jqx-input,
+input[type=text].jqx-input {
+    font-family: Ubuntu, sans-serif;
+    font-style: normal;
+    font-size: 13px;
+    color:rgba(66, 66, 66, 1);
+}

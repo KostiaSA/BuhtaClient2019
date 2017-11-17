@@ -4,6 +4,11 @@ import {Desktop} from "./ui/Desktop";
 import {appState} from "./AppState";
 import {SchemaWindow} from "./schema/window/SchemaWindow";
 import {Window} from "./ui/Window";
+import {FormPanel} from "./ui/FormPanel";
+import {FormPanelItem} from "./ui/FormPanelItem";
+import {TabsPanel} from "./ui/TabsPanel";
+import {TabsPanelItem} from "./ui/TabsPanelItem";
+import {Input} from "./ui/inputs/Input";
 
 async function start() {
 
@@ -14,6 +19,14 @@ async function start() {
 
     w.Window = Window;
     w.SchemaWindow = SchemaWindow;
+
+    w.FormPanel = FormPanel;
+    w.FormPanelItem = FormPanelItem;
+
+    w.TabsPanel = TabsPanel;
+    w.TabsPanelItem = TabsPanelItem;
+
+    w.Input = Input;
 
     // window.addEventListener('unhandledrejection', (event: any) => {
     //     console.error(event.reason.statusText || event.reason);
