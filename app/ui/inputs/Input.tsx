@@ -54,10 +54,10 @@ export class Input extends Component<IInputProps> {
     }
 
     updateProps(props: IInputProps, create: boolean) {
-        let opt: any = omit(props, ["bindObj", "bindProp", "title"]);
+        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children"]);
 
         opt.height = opt.height || 24;
-        opt.width = opt.width|| 200;
+        opt.width = opt.width || 200;
 
         this.widget.jqxInput(opt);
     }
