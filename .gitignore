@@ -7,6 +7,6 @@ node_modules
 *.lock
 !webpack.config.js
 wwwroot/vendor
-
+!wwwroot/vendor/jqwidgets/jqxtabs.js
 
 

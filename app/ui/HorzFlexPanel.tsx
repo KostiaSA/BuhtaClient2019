@@ -23,7 +23,7 @@ export class HorzFlexPanel extends Component<IHorzFlexPanelProps> {
     render() {
         console.log("render HorzFlexPanel");
         return (
-            <div style={{border: "1px solid green", display: "flex", flexDirection: "column", height:this.props.height || "100%"}}>
+            <div style={{display: "flex", flexDirection: "column", height:this.props.height || "100%"}}>
                     {this.props.children}
             </div>
         )

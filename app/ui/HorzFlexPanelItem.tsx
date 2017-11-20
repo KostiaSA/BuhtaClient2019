@@ -13,9 +13,8 @@ export class HorzFlexPanelItem extends React.Component<IHorzFlexPanelItemProps> 
     render() {
 
         let style: CSSProperties = {
-            border: "1px solid red",
+            //border: "1px solid red",
             display: "flex",
-            position: "relative"
         };
 
         if (this.props.dock === "fill") {
