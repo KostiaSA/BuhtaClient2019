@@ -53,3 +53,6 @@ input[type=text].jqx-input {
     font-family: Ubuntu, sans-serif;
 }
 
+.jqx-fill-state-normal {
+    border-color: #d2d2d2;
+}

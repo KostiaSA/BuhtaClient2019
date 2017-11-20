@@ -170,6 +170,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                             <TabsPanelItem title="Индексы">
                                 индексы контент
                             </TabsPanelItem>
+
                         </TabsPanel>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
