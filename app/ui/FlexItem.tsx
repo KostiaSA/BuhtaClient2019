@@ -1,14 +1,14 @@
 import * as  React from "react";
 import {CSSProperties} from "react";
 
-export type HorzFlexPanelItemDock = "top" | "bottom" | "fill";
+export type HorzFlexPanelItemDock = "top" | "bottom" | "fill" | "left" | "right";
 
 export interface IHorzFlexPanelItemProps {
     dock: HorzFlexPanelItemDock;
     height?: number;
 }
 
-export class HorzFlexPanelItem extends React.Component<IHorzFlexPanelItemProps> {
+export class FlexItem extends React.Component<IHorzFlexPanelItemProps> {
 
     render() {
 

@@ -6,8 +6,8 @@ import {omit} from "../utils/omit";
 import {FormPanel} from "../ui/FormPanel";
 import {FormPanelItem} from "../ui/FormPanelItem";
 import {Input} from "../ui/inputs/Input";
-import {HorzFlexPanel} from "../ui/HorzFlexPanel";
-import {HorzFlexPanelItem} from "../ui/HorzFlexPanelItem";
+import {FlexHPanel} from "../ui/FlexHPanel";
+import {FlexItem} from "../ui/FlexItem";
 import {Grid} from "../ui/Grid";
 import {GridColumn} from "../ui/GridColumn";
 
@@ -117,42 +117,36 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
             <Window {...omit(this.props.window, ["children"])}>
                 {/*Дизайнер таблицы {this.props.tableId}*/}
 
-                <HorzFlexPanel>
-                    <HorzFlexPanelItem dock="top">
+                <FlexHPanel>
+                    <FlexItem dock="top">
                         таблица: XXX
-                    </HorzFlexPanelItem>
-                    <HorzFlexPanelItem dock="fill">
+                    </FlexItem>
+                    <FlexItem dock="fill">
                         <TabsPanel>
 
                             <TabsPanelItem title="Колонки">
-
-                                <HorzFlexPanel>
-
-                                    <HorzFlexPanelItem dock="top">
+                                <FlexHPanel>
+                                    <FlexItem dock="top">
                                         фильтр по названию
-                                    </HorzFlexPanelItem>
-
-                                    <HorzFlexPanelItem dock="fill">
+                                    </FlexItem>
+                                    <FlexItem dock="fill">
                                         <Grid source={this.table.columns}>
                                             <GridColumn text="Колонка" datafield="name"/>
                                             <GridColumn text="Описание" datafield="description"/>
                                         </Grid>
-                                    </HorzFlexPanelItem>
-
-                                    <HorzFlexPanelItem dock="bottom">
+                                    </FlexItem>
+                                    <FlexItem dock="bottom">
                                         add edit delete
-                                    </HorzFlexPanelItem>
-
-                                </HorzFlexPanel>
-
+                                    </FlexItem>
+                                </FlexHPanel>
                             </TabsPanelItem>
-                            <TabsPanelItem title="Таблица">
 
-                                <HorzFlexPanel>
-                                    <HorzFlexPanelItem dock="top">
+                            <TabsPanelItem title="Таблица">
+                                <FlexHPanel>
+                                    <FlexItem dock="top">
                                         таблица контент ЗАГОЛОВОК
-                                    </HorzFlexPanelItem>
-                                    <HorzFlexPanelItem dock="fill">
+                                    </FlexItem>
+                                    <FlexItem dock="fill">
                                         <FormPanel bindObj={this.table}>
                                             <FormPanelItem title="имя">
                                                 <Input bindObj={this.table} bindProp="name" placeHolder="имя таблицы"/>
@@ -163,23 +157,22 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                             <Input width={400} bindProp="note" placeHolder="note"
                                                    title={<span style={{color: "red"}}>SchemaObject:</span>}/>
                                         </FormPanel>
-                                    </HorzFlexPanelItem>
-                                    <HorzFlexPanelItem dock="top">
+                                    </FlexItem>
+                                    <FlexItem dock="top">
                                         таблица контент ФУТТЕР
-                                    </HorzFlexPanelItem>
-                                </HorzFlexPanel>
-
+                                    </FlexItem>
+                                </FlexHPanel>
                             </TabsPanelItem>
 
                             <TabsPanelItem title="Индексы">
                                 индексы контент
                             </TabsPanelItem>
                         </TabsPanel>
-                    </HorzFlexPanelItem>
-                    <HorzFlexPanelItem dock="bottom">
+                    </FlexItem>
+                    <FlexItem dock="bottom">
                         сохранить отмена
-                    </HorzFlexPanelItem>
-                </HorzFlexPanel>
+                    </FlexItem>
+                </FlexHPanel>
 
 
             </Window>

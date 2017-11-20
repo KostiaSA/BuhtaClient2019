@@ -27,9 +27,7 @@ export class TabsPanel extends Component<ITabsPanelProps> {
 
         opt.height = opt.height || "auto";
         opt.width = opt.width || "100%";
-        //opt.autoHeight = true;
 
-        console.log("tabspanel",opt);
         this.widget.jqxTabs(opt);
     }
 
@@ -42,7 +40,7 @@ export class TabsPanel extends Component<ITabsPanelProps> {
     render() {
         console.log("render TabsPanel");
         return (
-            <div id={this.$id} style={{border: "0px solid blue"}}>
+            <div id={this.$id}>
                 <ul>
                     {this.renderHeaders()}
                 </ul>

@@ -24,16 +24,6 @@ export class Grid extends Component<IGridProps> {
         bindObj: PropTypes.object
     };
 
-    // get isChanged(): boolean {
-    //     if (!this.initialValue)
-    //         return false;
-    //     else
-    //         return stringify(this.initialValue) !== stringify(objectPathGet(this.props.bindObj || this.context.bindObj, this.props.bindProp));
-    // }
-
-    initialValue: any;
-
-
     lastParentH: number;
     resizeIntervalId: any;
 
@@ -82,7 +72,6 @@ export class Grid extends Component<IGridProps> {
         }
 
         this.widget.jqxGrid(gridOptions);
-        console.log("gridOptions========", gridOptions);
 
     }
 

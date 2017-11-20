@@ -6,7 +6,7 @@ export interface IHorzFlexPanelProps {
     height?: string | number;
 }
 
-export class HorzFlexPanel extends Component<IHorzFlexPanelProps> {
+export class FlexHPanel extends Component<IHorzFlexPanelProps> {
 
     constructor(props: any, context: any) {
         super(props, context);
@@ -14,14 +14,14 @@ export class HorzFlexPanel extends Component<IHorzFlexPanelProps> {
     }
 
     componentDidMount() {
-        // console.log("didmount HorzFlexPanel " + this.$id);
+        // console.log("didmount FlexHPanel " + this.$id);
         // this.widget = $("#" + this.$id);
         // //ReactDOM.render(<Div ref={(e)=>{this.content=e}}>{this.state.children}.......</Div>, document.getElementById(this.$contentId));
         // this.updateProps(this.props);
     }
 
     render() {
-        console.log("render HorzFlexPanel");
+        console.log("render FlexHPanel");
         return (
             <div style={{display: "flex", flexDirection: "column", height:this.props.height || "100%"}}>
                     {this.props.children}
