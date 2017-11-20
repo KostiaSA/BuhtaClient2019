@@ -10,6 +10,7 @@ import {FlexHPanel} from "../ui/FlexHPanel";
 import {FlexItem} from "../ui/FlexItem";
 import {Grid} from "../ui/Grid";
 import {GridColumn} from "../ui/GridColumn";
+import {Button} from "../ui/Button";
 
 
 export interface ISchemaTableDesignerProps {
@@ -124,29 +125,12 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                     <FlexItem dock="fill">
                         <TabsPanel>
 
-                            <TabsPanelItem title="Колонки">
-                                <FlexHPanel>
-                                    <FlexItem dock="top">
-                                        фильтр по названию
-                                    </FlexItem>
-                                    <FlexItem dock="fill">
-                                        <Grid source={this.table.columns}>
-                                            <GridColumn text="Колонка" datafield="name"/>
-                                            <GridColumn text="Описание" datafield="description"/>
-                                        </Grid>
-                                    </FlexItem>
-                                    <FlexItem dock="bottom">
-                                        add edit delete
-                                    </FlexItem>
-                                </FlexHPanel>
-                            </TabsPanelItem>
-
                             <TabsPanelItem title="Таблица">
                                 <FlexHPanel>
-                                    <FlexItem dock="top">
+                                    <FlexItem dock="top" style={{padding: 5}}>
                                         таблица контент ЗАГОЛОВОК
                                     </FlexItem>
-                                    <FlexItem dock="fill">
+                                    <FlexItem dock="fill" style={{padding: 5}}>
                                         <FormPanel bindObj={this.table}>
                                             <FormPanelItem title="имя">
                                                 <Input bindObj={this.table} bindProp="name" placeHolder="имя таблицы"/>
@@ -158,8 +142,27 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                                    title={<span style={{color: "red"}}>SchemaObject:</span>}/>
                                         </FormPanel>
                                     </FlexItem>
-                                    <FlexItem dock="top">
+                                    <FlexItem dock="top" style={{padding: 5}}>
                                         таблица контент ФУТТЕР
+                                    </FlexItem>
+                                </FlexHPanel>
+                            </TabsPanelItem>
+
+                            <TabsPanelItem title="Колонки">
+                                <FlexHPanel>
+                                    <FlexItem dock="top" style={{padding: 5}}>
+                                        фильтр по названию
+                                    </FlexItem>
+                                    <FlexItem dock="fill" style={{padding: 5}}>
+                                        <Grid source={this.table.columns}>
+                                            <GridColumn text="Колонка" datafield="name"/>
+                                            <GridColumn text="Описание" datafield="description"/>
+                                        </Grid>
+                                    </FlexItem>
+                                    <FlexItem dock="bottom" style={{padding: 5, height:38}}>
+                                        <Button imgSrc="vendor/fugue/icons/plus.png" text="Добавить колонку" height={26} style={{marginRight: 5, marginTop:8}}/>
+                                        <Button imgSrc="vendor/fugue/icons/card--pencil.png" text="Изменить" height={26} style={{marginRight: 5, marginTop:8}}/>
+                                        <Button imgSrc="vendor/fugue/icons/cross.png" text="Удалить" height={26} style={{marginRight: 5, marginTop:8}}/>
                                     </FlexItem>
                                 </FlexHPanel>
                             </TabsPanelItem>
@@ -169,8 +172,9 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                             </TabsPanelItem>
                         </TabsPanel>
                     </FlexItem>
-                    <FlexItem dock="bottom">
-                        сохранить отмена
+                    <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
+                        <Button imgSrc="vendor/fugue/icons/disk.png" text="Сохранить" style={{marginRight: 5}}/>
+                        <Button imgSrc="vendor/fugue/icons/cross-script.png" text="Отмена"/>
                     </FlexItem>
                 </FlexHPanel>
 

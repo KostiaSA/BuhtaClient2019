@@ -48,3 +48,8 @@ input[type=text].jqx-input {
     /*margin-right: 2px;*/
     margin-left: 6px;
 }
+
+.jqx-fill-state-normal, .jqx-fill-state-pressed, .jqx-fill-state-hover {
+    font-family: Ubuntu, sans-serif;
+}
+

@@ -3,19 +3,27 @@ import {CSSProperties} from "react";
 
 export type HorzFlexPanelItemDock = "top" | "bottom" | "fill" | "left" | "right";
 
-export interface IHorzFlexPanelItemProps {
+export interface IFlexItemProps {
     dock: HorzFlexPanelItemDock;
     height?: number;
+    style?: CSSProperties;
 }
 
-export class FlexItem extends React.Component<IHorzFlexPanelItemProps> {
+export class FlexItem extends React.Component<IFlexItemProps> {
+    constructor(props: any, context: any) {
+        super(props, context);
+        this.context = context;
+    }
 
     render() {
 
         let style: CSSProperties = {
+            ...this.props.style,
             //border: "1px solid red",
             display: "flex",
         };
+
+        console.log("style",this.props, this.props.style,style);
 
         if (this.props.dock === "fill") {
             style.flex = "1 1 auto";
