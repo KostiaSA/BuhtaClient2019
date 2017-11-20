@@ -5,6 +5,7 @@ node_modules
 *.rar
 *.zip
 *.lock
+
 !webpack.config.js
 !wwwroot/vendor/jqwidgets/jqxtabs.js
 !wwwroot/vendor/jqwidgets/jqxgrid.js

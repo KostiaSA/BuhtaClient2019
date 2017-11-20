@@ -36,24 +36,20 @@ export class Grid extends Component<IGridProps> {
 
     lastParentH: number;
     resizeIntervalId: any;
-    unmountCount: number = 0;
-
 
     componentDidMount() {
         console.log("didmount Grid " + this.$id);
         this.widget = $("#" + this.$id);
         this.updateProps(this.props, true);
 
-        if (!this.props.height || this.props.height==="100%") {
+        if (!this.props.height || this.props.height === "100%") {
             this.resizeIntervalId = setInterval(() => {
                 let newH = this.widget.parent().innerHeight();
-                if (newH === 0) {
-                    this.unmountCount++;
-                    if (this.unmountCount > 10)
-                        clearInterval(this.resizeIntervalId);
+
+                // отановка таймера resize, если grid удалена
+                if ($("#" + this.$id).length !== 1) {
+                    clearInterval(this.resizeIntervalId);
                 }
-                else
-                    this.unmountCount = 0;
 
                 if (this.lastParentH !== newH) {
                     this.lastParentH = newH;
