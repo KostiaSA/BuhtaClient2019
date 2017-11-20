@@ -50,7 +50,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                 </button>
                 <button
                     onClick={() => {
-                        this.openWindow(<SchemaTableDesignerWindow key="czcfwewer" window={{ height:400 ,width:600}} tableId="buhta/test1/Организация"></SchemaTableDesignerWindow>);
+                        this.openWindow(<SchemaTableDesignerWindow key="czcfwewer" window={{ height:444 ,width:600}} tableId="buhta/test1/Организация"></SchemaTableDesignerWindow>);
                         //  this.openWindow(<div key="111" title="111">новое окно</div>);
                     }}>
                     open SchemaTableDesignerWindow

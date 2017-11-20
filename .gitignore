@@ -6,7 +6,8 @@ node_modules
 *.zip
 *.lock
 !webpack.config.js
-wwwroot/vendor
 !wwwroot/vendor/jqwidgets/jqxtabs.js
+!wwwroot/vendor/jqwidgets/jqxgrid.js
+wwwroot/vendor
 
 

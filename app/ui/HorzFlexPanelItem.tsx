@@ -18,7 +18,7 @@ export class HorzFlexPanelItem extends React.Component<IHorzFlexPanelItemProps> 
         };
 
         if (this.props.dock === "fill") {
-            style.flex = "1 0 auto";
+            style.flex = "1 1 auto";
             //style.height = 100;
         }
         else {

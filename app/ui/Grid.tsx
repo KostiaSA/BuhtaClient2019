@@ -33,17 +33,39 @@ export class Grid extends Component<IGridProps> {
 
     initialValue: any;
 
+
+    lastParentH: number;
+    resizeIntervalId: any;
+    unmountCount: number = 0;
+
+
     componentDidMount() {
         console.log("didmount Grid " + this.$id);
         this.widget = $("#" + this.$id);
         this.updateProps(this.props, true);
-        //this.initialValue = objectPathGet(this.props.bindObj || this.context.bindObj, this.props.bindProp);
-        //this.widget.jqxGrid("val", this.initialValue);
+
+        if (!this.props.height || this.props.height==="100%") {
+            this.resizeIntervalId = setInterval(() => {
+                let newH = this.widget.parent().innerHeight();
+                if (newH === 0) {
+                    this.unmountCount++;
+                    if (this.unmountCount > 10)
+                        clearInterval(this.resizeIntervalId);
+                }
+                else
+                    this.unmountCount = 0;
+
+                if (this.lastParentH !== newH) {
+                    this.lastParentH = newH;
+                    this.widget.jqxGrid({height: newH});
+                }
+            }, 100);
+        }
     }
 
     updateProps(props: IGridProps, create: boolean) {
         let gridOptions: any = omit(props, ["children", "source"]);
-        gridOptions.height = gridOptions.height || "100%";
+        gridOptions.height = gridOptions.height || 350;
         gridOptions.width = gridOptions.width || "100%";
         gridOptions.rowsheight = gridOptions.rowsheight || 22;
         gridOptions.columnsheight = gridOptions.columnsheight || 22;
@@ -64,6 +86,8 @@ export class Grid extends Component<IGridProps> {
         }
 
         this.widget.jqxGrid(gridOptions);
+        console.log("gridOptions========", gridOptions);
+
     }
 
 
