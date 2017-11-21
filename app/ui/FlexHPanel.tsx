@@ -1,8 +1,8 @@
 import * as  React from "react";
-import {Component} from "./Component";
+import {Component, IComponentProps} from "./Component";
 
 
-export interface IHorzFlexPanelProps {
+export interface IHorzFlexPanelProps  extends IComponentProps{
     height?: string | number;
 }
 

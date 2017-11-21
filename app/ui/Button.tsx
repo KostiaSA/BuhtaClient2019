@@ -1,10 +1,10 @@
 import * as  React from "react";
 import {CSSProperties} from "react";
-import {Component} from "./Component";
+import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
 
 
-export interface IButtonProps {
+export interface IButtonProps  extends IComponentProps{
     text?: string;
     height?: string | number;
     width?: string | number;

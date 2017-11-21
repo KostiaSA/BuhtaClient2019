@@ -23,8 +23,6 @@ export class FlexItem extends React.Component<IFlexItemProps> {
             display: "flex",
         };
 
-        console.log("style",this.props, this.props.style,style);
-
         if (this.props.dock === "fill") {
             style.flex = "1 1 auto";
             //style.height = 100;

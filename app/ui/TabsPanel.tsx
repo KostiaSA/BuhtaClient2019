@@ -1,9 +1,9 @@
 import * as  React from "react";
-import {Component} from "./Component";
+import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
 
 
-export interface ITabsPanelProps {
+export interface ITabsPanelProps  extends IComponentProps{
     height?: string | number;
     width?: string | number;
 }

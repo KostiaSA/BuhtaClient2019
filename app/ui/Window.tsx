@@ -5,6 +5,7 @@ import {appState} from "../AppState";
 declare var jqxWindow: any;
 
 export interface IWindowProps {
+    id?: string;
     top?: number;
     left?: number;
     height?: number;
@@ -12,6 +13,7 @@ export interface IWindowProps {
     title?: string;
     children?: any;
     icon?: string;
+    onClose?: (result: boolean) => void;
 }
 
 export class Window extends Component<IWindowProps> {
@@ -35,7 +37,7 @@ export class Window extends Component<IWindowProps> {
     // }
 
     updateProps(props: IWindowProps) {
-        let opt: any = {};
+        let opt: any = {animationType: "none"};
         if (props.left || props.top) {
             opt.position = {};
             if (props.left)
@@ -53,13 +55,18 @@ export class Window extends Component<IWindowProps> {
 
         this.widget.jqxWindow(opt);
         this.widget = $("#" + this.$id);
+        this.widget.on("close", () => {
+            this.close();
+        });
     }
 
 
-    async openParentWindow(win: React.ReactElement<IWindowProps>) {
+    async openParentWindow(win: React.ReactElement<IWindowProps>): Promise<boolean> {
 
         this.disable();
-        appState.desktop.openWindow(win);
+        let result = await appState.desktop.openWindow(win);
+        this.enable();
+        return result;
 
     }
 
@@ -77,8 +84,16 @@ export class Window extends Component<IWindowProps> {
         this.forceUpdate();
     }
 
-    close() {
-        this.widget.jqxWindow("close");
+    close(result: boolean = false) {
+        if (this.props.onClose)
+            this.props.onClose(result);
+        appState.desktop.closeWindow(this);
+        //this.widget.jqxWindow("close");
+        //this.widget.jqxWindow("destroy");
+    }
+
+    destroy() {
+        this.widget.jqxWindow("destroy");
     }
 
     bringToFront() {
@@ -92,7 +107,16 @@ export class Window extends Component<IWindowProps> {
     render() {
         console.log("render win-:" + this.props.title);
         let disabledOverlay = this.disabled ? (
-            <div style={{background: "white", opacity:0.4, position: "absolute", zIndex:99, left: 0, top: 0, right: 0, bottom: 0}}></div>) : null;
+            <div style={{
+                background: "white",
+                opacity: 0.4,
+                position: "absolute",
+                zIndex: 99,
+                left: 0,
+                top: 0,
+                right: 0,
+                bottom: 0
+            }}></div>) : null;
         return (
             <div id={this.$id}>
                 <div>

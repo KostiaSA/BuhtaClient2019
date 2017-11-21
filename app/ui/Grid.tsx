@@ -1,17 +1,21 @@
 import * as  React from "react";
 import * as PropTypes from "prop-types";
-import {Component} from "./Component";
+import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
 import {GridColumn} from "./GridColumn";
+import {Keycode} from "../utils/Keycode";
 
 
-export interface IGridProps {
+
+export interface IGridProps extends IComponentProps {
     height?: string | number;
     width?: string | number;
     source?: any;
     rowsheight?: number;
     columnsheight?: number;
     sortable?: boolean;
+    onRowDoubleClick?: (rowIndex: number) => void;
+    onRowKeyDown?: (rowIndex: number, keyCode: Keycode) => boolean;
 }
 
 export class Grid extends Component<IGridProps> {
@@ -52,7 +56,7 @@ export class Grid extends Component<IGridProps> {
     }
 
     updateProps(props: IGridProps, create: boolean) {
-        let gridOptions: any = omit(props, ["children", "source"]);
+        let gridOptions: any = omit(props, ["children", "source", "onRowDoubleClick", "onRowKeyDown"]);
         gridOptions.height = gridOptions.height || 350;
         gridOptions.width = gridOptions.width || "100%";
         gridOptions.rowsheight = gridOptions.rowsheight || 22;
@@ -76,8 +80,20 @@ export class Grid extends Component<IGridProps> {
             }
         }
 
+        if (this.props.onRowKeyDown)
+            gridOptions.handlekeyboardnavigation = (event: any) => {
+                return this.props.onRowKeyDown!(this.getSelectedRowIndex(), event.keyCode);
+            };
+
         this.widget.jqxGrid(gridOptions);
         this.widget = $("#" + this.$id);
+
+        if (this.props.onRowDoubleClick)
+            this.widget.on("rowdoubleclick", (event: any) => {
+                this.props.onRowDoubleClick!(event.args.rowindex);
+            });
+        else
+            this.widget.off("rowdoubleclick");
 
     }
 

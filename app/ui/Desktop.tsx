@@ -1,12 +1,13 @@
 import * as  React from "react";
 import {appState} from "../AppState";
-import {IWindowProps, Window} from "./Window";
+import {Window} from "./Window";
 import {getRandomString} from "../utils/getRandomString";
 import {replaceAll} from "../utils/replaceAll";
 import {SchemaTableDesignerWindow} from "../admin/SchemaTableDesignerWindow";
+import {IComponentProps} from "./Component";
 
 
-export interface IDesktopProps {
+export interface IDesktopProps extends IComponentProps {
     //schemaPageId: string;
     //form: WrappedFormUtils;
 }
@@ -50,7 +51,8 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                 </button>
                 <button
                     onClick={() => {
-                        this.openWindow(<SchemaTableDesignerWindow key="czcfwewer" window={{ height:444 ,width:600}} tableId="buhta/test1/Организация"></SchemaTableDesignerWindow>);
+                        this.openWindow(<SchemaTableDesignerWindow key="czcfwewer" window={{height: 444, width: 600}}
+                                                                   tableId="buhta/test1/Организация"></SchemaTableDesignerWindow>);
                         //  this.openWindow(<div key="111" title="111">новое окно</div>);
                     }}>
                     open SchemaTableDesignerWindow
@@ -71,15 +73,31 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         )
     }
 
-    openWindow(win: React.ReactElement<IWindowProps>) {
+    async openWindow(win: React.ReactElement<any>): Promise<boolean> {
         // if (win.type !== Window && !((win.type as any).prototype instanceof Window))
         //     throw "Desktop.openWindow(): win должно быть типа Window";
 
         // if (!win.key)
         //     throw "Desktop.openWindow(): у win не заполнен аттрибут 'key'";
 
-        this.windows.push(win);
-        this.forceUpdate();
+
+        return new Promise<boolean>((resolve: (result: boolean) => void, reject: (error: string) => void) => {
+//            this.windows.push(React.cloneElement(win, {window:{onClose: resolve}} as IWindowProps));
+            win.props.window.id = getRandomString();
+            win.props.window.onClose = resolve;
+            this.windows.push(win);
+            this.forceUpdate();
+        });
+    }
+
+    closeWindow(win: Window) {
+        let winFromList = this.windows.find((w: any) => w.props.window.id === win.props.id);
+        if (win) {
+            this.windows.slice(this.windows.indexOf(winFromList), 1);
+            this.forceUpdate();
+            win.destroy();
+            console.log("win.destroy");
+        }
     }
 
     async openSchemaWindow(winId: string, props: any = {}): Promise<void> {

@@ -1,14 +1,14 @@
 import * as  React from "react";
 import {CSSProperties} from "react";
 import * as PropTypes from "prop-types";
-import {Component} from "../Component";
+import {Component, IComponentProps} from "../Component";
 import {omit} from "../../utils/omit";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {stringify} from "ejson";
 import {objectPathSet} from "../../utils/objectPathSet";
 
 
-export interface IInputProps {
+export interface IInputProps extends IComponentProps {
     title?: string | React.ReactNode;
     height?: string | number;
     width?: string | number;

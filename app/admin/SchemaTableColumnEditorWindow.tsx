@@ -21,10 +21,18 @@ export interface ISchemaTableColumnEditorProps {
 
 export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableColumnEditorProps, any> {
 
+    window: Window;
+
+    form1: FormPanel | null;
+
     render() {
         console.log("SchemaTableColumnEditorWindow");
         return (
-            <Window {...omit(this.props.window, ["children"])}>
+            <Window
+                {...omit(this.props.window, ["children"])}
+                ref={(e) => {
+                    this.window = e!
+                }}>
                 {/*Дизайнер колонки {this.props.ta??bleId}*/}
 
                 <FlexHPanel>
@@ -35,7 +43,10 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                         <TabsPanel>
 
                             <TabsPanelItem title="Колонка">
-                                <FormPanel bindObj={this.props.column}>
+                                <FormPanel
+                                    ref={(e) => this.form1 = e}
+                                    bindObj={this.props.column}
+                                >
                                     <FormPanelItem title="name">
                                         <Input bindProp="name" placeHolder="имя колонки"/>
                                     </FormPanelItem>
@@ -64,8 +75,21 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                         </TabsPanel>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
-                        <Button imgSrc="vendor/fugue/icons/disk.png" text="Сохранить" style={{marginRight: 5}}/>
-                        <Button imgSrc="vendor/fugue/icons/cross-script.png" text="Отмена"/>
+                        <Button
+                            imgSrc="vendor/fugue/icons/disk.png" text="Сохранить"
+                            style={{marginRight: 5}}
+                            onClick={() => {
+                                this.window.close(true);
+                            }}
+                        />
+                        <Button
+                            imgSrc="vendor/fugue/icons/cross-script.png"
+                            text="Отмена"
+                            onClick={() => {
+                                //this.form1!.cancelChanges();
+                                this.window.close(false);
+                            }}
+                        />
                     </FlexItem>
                 </FlexHPanel>
 

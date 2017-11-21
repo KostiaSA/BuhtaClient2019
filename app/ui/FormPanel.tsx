@@ -1,11 +1,11 @@
 import * as  React from "react";
 import * as PropTypes from "prop-types";
-import {Component} from "./Component";
+import {Component, IComponentProps} from "./Component";
 import {clone} from "ejson";
 import {reassignObject} from "../utils/reassignObject";
 
 
-export interface IFormPanelProps {
+export interface IFormPanelProps  extends IComponentProps{
     bindObj?: any;
 }
 

@@ -12,6 +12,8 @@ import {Grid} from "../ui/Grid";
 import {GridColumn} from "../ui/GridColumn";
 import {Button} from "../ui/Button";
 import {SchemaTableColumnEditorWindow} from "./SchemaTableColumnEditorWindow";
+import {clone} from "ejson";
+import {Keycode} from "../utils/Keycode";
 
 
 export interface ISchemaTableDesignerProps {
@@ -111,17 +113,29 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
     };
 
 
-    editColumnClickHandler = () => {
+    async editColumnClickHandler() {
         console.log("cli", this.columnsGrid.getSelectedRowIndex(), this.table.columns);
         let columnIndex = this.columnsGrid.getSelectedRowIndex();
-        this.window.openParentWindow(
+
+        let editedColumn = clone(this.tableColumnsArray.get(columnIndex));
+
+        let resultOk = await this.window.openParentWindow(
             <SchemaTableColumnEditorWindow
                 table={this.table}
-                column={this.table.columns[columnIndex]}
+                column={editedColumn}
                 window={{height: 300, width: 400}}
             />
         );
+        if (resultOk) {
+            this.tableColumnsArray.set(columnIndex, editedColumn);
+        }
     };
+
+    tableColumnsArray: any;
+
+    componentWillMount() {
+        this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
+    }
 
     window: Window;
     columnsGrid: Grid;
@@ -179,7 +193,18 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                             ref={(e) => {
                                                 this.columnsGrid = e!
                                             }}
-                                            source={this.table.columns}>
+                                            source={this.tableColumnsArray}
+                                            onRowDoubleClick={() => this.editColumnClickHandler()}
+                                            onRowKeyDown={(rowIndex: number, keyCode: Keycode) => {
+                                                console.log("onRowKeyDown=", rowIndex, keyCode, this);
+                                                if (keyCode === Keycode.Enter) {
+                                                    this.editColumnClickHandler();
+                                                    return true;
+                                                }
+                                                else
+                                                    return false;
+                                            }}
+                                        >
                                             <GridColumn text="Колонка" datafield="name"/>
                                             <GridColumn text="Описание" datafield="description"/>
                                         </Grid>
@@ -189,7 +214,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                                 style={{marginRight: 5, marginTop: 8}}/>
                                         <Button imgSrc="vendor/fugue/icons/card--pencil.png" text="Изменить" height={26}
                                                 style={{marginRight: 5, marginTop: 8}}
-                                                onClick={this.editColumnClickHandler}/>
+                                                onClick={() => this.editColumnClickHandler()}/>
                                         <Button imgSrc="vendor/fugue/icons/cross.png" text="Удалить" height={26}
                                                 style={{marginRight: 5, marginTop: 8}}/>
                                     </FlexItem>

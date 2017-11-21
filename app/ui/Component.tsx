@@ -15,7 +15,11 @@ export interface IComponentRegistration {
     title?: string;
 }
 
-export class Component<P> extends React.Component<P, any>{
+export interface IComponentProps {
+    id?: string;
+}
+
+export class Component<P extends IComponentProps> extends React.Component<P, any>{
 
     constructor(props: any, context: any) {
         super(props, context);
@@ -42,11 +46,11 @@ export class Component<P> extends React.Component<P, any>{
     private _$id: string;
     get $id(): string {
         if (!this._$id)
-            this._$id = this.getRandomId();
+            this._$id = this.props.id! || this.getRandomId();
         return this._$id;
     }
 
-    private getRandomId(length: number = 20): string {
+    getRandomId(length: number = 20): string {
         return "a"+Math.random().toString(36).slice(2, length + 2);
     }
 }
