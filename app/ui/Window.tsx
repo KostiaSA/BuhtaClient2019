@@ -1,5 +1,6 @@
 import * as  React from "react";
 import {Component} from "./Component";
+import {appState} from "../AppState";
 
 declare var jqxWindow: any;
 
@@ -50,32 +51,48 @@ export class Window extends Component<IWindowProps> {
         if (props.title)
             opt.title = props.title;
 
-        //debugger
         this.widget.jqxWindow(opt);
-        // if (create)
-        //     this.widget.jqxWindow(opt);
-        // else
-        //     this.widget.jqxWindow('setOptions', opt);
-
-        //if (props.title)
-        //  this.widget.title = props.title;
+        this.widget = $("#" + this.$id);
     }
 
-    // get $titleId(): string {
-    //     return this.$id + "-title";
-    // }
-    //
-    // get $contentId(): string {
-    //     return this.$id + "-content";
-    // }
-    //
-    // get $iconId(): string {
-    //     return this.$id + "-title-icon";
-    // }
 
+    async openParentWindow(win: React.ReactElement<IWindowProps>) {
+
+        this.disable();
+        appState.desktop.openWindow(win);
+
+    }
+
+    disabled: boolean;
+
+    disable() {
+        this.widget.jqxWindow("disable");
+        this.disabled = true;
+        this.forceUpdate();
+    }
+
+    enable() {
+        this.widget.jqxWindow("enable");
+        this.disabled = false;
+        this.forceUpdate();
+    }
+
+    close() {
+        this.widget.jqxWindow("close");
+    }
+
+    bringToFront() {
+        this.widget.jqxWindow("bringToFront");
+    }
+
+    focus() {
+        this.widget.jqxWindow("focus");
+    }
 
     render() {
         console.log("render win-:" + this.props.title);
+        let disabledOverlay = this.disabled ? (
+            <div style={{background: "white", opacity:0.4, position: "absolute", zIndex:99, left: 0, top: 0, right: 0, bottom: 0}}></div>) : null;
         return (
             <div id={this.$id}>
                 <div>
@@ -88,6 +105,7 @@ export class Window extends Component<IWindowProps> {
                 <div style={{padding: 0, position: "relative"}}>
                     {this.props.children}
                 </div>
+                {disabledOverlay}
             </div>
 
         )

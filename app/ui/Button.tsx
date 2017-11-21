@@ -12,6 +12,7 @@ export interface IButtonProps {
     imgPosition?: "left" | "top" | "center" | "bottom" | "right" | "topLeft" | "bottomLeft" | "topRight" | "bottomRight";
     textImageRelation?: "imageBeforeText" | "imageAboveText" | "textAboveImage" | "textBeforeImage" | "overlay";
     style?: CSSProperties;
+    onClick?: () => void;
 }
 
 export class Button extends Component<IButtonProps> {
@@ -28,7 +29,7 @@ export class Button extends Component<IButtonProps> {
     }
 
     updateProps(props: IButtonProps) {
-        let opt: any = omit(this.props, ["children", "text", "style"]);
+        let opt: any = omit(this.props, ["children", "text", "style", "onClick"]);
 
         opt.imgPosition = opt.imgPosition || "left";
         opt.textImageRelation = opt.textImageRelation || "imageBeforeText";
@@ -36,10 +37,17 @@ export class Button extends Component<IButtonProps> {
         opt.value = this.props.text || "Кнопка";
 
         //debugger
-        opt.height = this.props.height || (this.props.style? this.props.style.height: null) || 28;
+        opt.height = this.props.height || (this.props.style ? this.props.style.height : null) || 28;
         // opt.width = opt.width || "100%";
 
+
         this.widget.jqxButton(opt);
+        this.widget = $("#" + this.$id);
+
+        if (this.props.onClick)
+            this.widget.on("click", this.props.onClick);
+        else
+            this.widget.off("click");
     }
 
     renderHeaders(): React.ReactNode {

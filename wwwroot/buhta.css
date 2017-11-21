@@ -17,6 +17,10 @@
     background: rgba(33, 115, 70, 0.11);
 }
 
+.jqx-window.jqx-fill-state-disabled {
+    opacity: 0.8;
+}
+
 .jqx-tree-item {
     padding-bottom: 0px;
     padding-top: 1px;
@@ -47,6 +51,10 @@ input[type=text].jqx-input {
     /*text-align: left;*/
     /*margin-right: 2px;*/
     margin-left: 6px;
+}
+
+.jqx-grid-cell-sort {
+    background-color: rgba(253, 227, 0, 0.03);
 }
 
 .jqx-fill-state-normal, .jqx-fill-state-pressed, .jqx-fill-state-hover {

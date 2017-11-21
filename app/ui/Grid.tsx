@@ -11,6 +11,7 @@ export interface IGridProps {
     source?: any;
     rowsheight?: number;
     columnsheight?: number;
+    sortable?: boolean;
 }
 
 export class Grid extends Component<IGridProps> {
@@ -41,11 +42,12 @@ export class Grid extends Component<IGridProps> {
                     clearInterval(this.resizeIntervalId);
                 }
 
-                if (this.lastParentH !== newH) {
+                if (newH > 10 && this.lastParentH !== newH) {
+                    //console.log("resize",this.$id,this.lastParentH,newH);
                     this.lastParentH = newH;
                     this.widget.jqxGrid({height: newH});
                 }
-            }, 100);
+            }, 300);
         }
     }
 
@@ -55,6 +57,9 @@ export class Grid extends Component<IGridProps> {
         gridOptions.width = gridOptions.width || "100%";
         gridOptions.rowsheight = gridOptions.rowsheight || 22;
         gridOptions.columnsheight = gridOptions.columnsheight || 22;
+
+        if (gridOptions.sortable !== false)
+            gridOptions.sortable = true;
 
         gridOptions.source = {
             localdata: props.source,
@@ -72,9 +77,38 @@ export class Grid extends Component<IGridProps> {
         }
 
         this.widget.jqxGrid(gridOptions);
+        this.widget = $("#" + this.$id);
 
     }
 
+    clearSelection() {
+        this.widget.jqxGrid("clearselection");
+    }
+
+    getSelectedRowIndex(): number {
+        return this.widget.jqxGrid("getselectedrowindex");
+    }
+
+    getSelectedRowIndexes(): number[] {
+        return this.widget.jqxGrid("getselectedrowindexes");
+    }
+
+    selectAllRows() {
+        this.widget.jqxGrid("selectallrows");
+    }
+
+    selectRow(rowIndex: number) {
+        this.widget.jqxGrid("selectrow", rowIndex);
+    }
+
+    unselectRow(rowIndex: number) {
+        this.widget.jqxGrid("unselectrow", rowIndex);
+    }
+
+    // getRowData(rowIndex: number) {
+    //     this.props.source
+    //     this.widget.jqxGrid("getrowdata", rowIndex);
+    // }
 
     render() {
         console.log("render Grid");

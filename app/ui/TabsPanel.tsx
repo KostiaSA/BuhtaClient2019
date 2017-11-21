@@ -29,6 +29,7 @@ export class TabsPanel extends Component<ITabsPanelProps> {
         opt.width = opt.width || "100%";
 
         this.widget.jqxTabs(opt);
+        this.widget = $("#" + this.$id);
     }
 
     renderHeaders(): React.ReactNode {

@@ -11,6 +11,7 @@ import {FlexItem} from "../ui/FlexItem";
 import {Grid} from "../ui/Grid";
 import {GridColumn} from "../ui/GridColumn";
 import {Button} from "../ui/Button";
+import {SchemaTableColumnEditorWindow} from "./SchemaTableColumnEditorWindow";
 
 
 export interface ISchemaTableDesignerProps {
@@ -109,13 +110,33 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
         ]
     };
 
+
+    editColumnClickHandler = () => {
+        console.log("cli", this.columnsGrid.getSelectedRowIndex(), this.table.columns);
+        let columnIndex = this.columnsGrid.getSelectedRowIndex();
+        this.window.openParentWindow(
+            <SchemaTableColumnEditorWindow
+                table={this.table}
+                column={this.table.columns[columnIndex]}
+                window={{height: 300, width: 400}}
+            />
+        );
+    };
+
+    window: Window;
+    columnsGrid: Grid;
+
     render() {
         console.log("SchemaTableDesignerWindow");
         // let props=this.props.window || {};
         // delete props.children;
         //<Window {...this.props.window}>
         return (
-            <Window {...omit(this.props.window, ["children"])}>
+            <Window
+                {...omit(this.props.window, ["children"])}
+                ref={(e) => {
+                    this.window = e!
+                }}>
                 {/*Дизайнер таблицы {this.props.tableId}*/}
 
                 <FlexHPanel>
@@ -154,15 +175,23 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                         фильтр по названию
                                     </FlexItem>
                                     <FlexItem dock="fill" style={{padding: 5}}>
-                                        <Grid source={this.table.columns}>
+                                        <Grid
+                                            ref={(e) => {
+                                                this.columnsGrid = e!
+                                            }}
+                                            source={this.table.columns}>
                                             <GridColumn text="Колонка" datafield="name"/>
                                             <GridColumn text="Описание" datafield="description"/>
                                         </Grid>
                                     </FlexItem>
-                                    <FlexItem dock="bottom" style={{padding: 5, height:38}}>
-                                        <Button imgSrc="vendor/fugue/icons/plus.png" text="Добавить колонку" height={26} style={{marginRight: 5, marginTop:8}}/>
-                                        <Button imgSrc="vendor/fugue/icons/card--pencil.png" text="Изменить" height={26} style={{marginRight: 5, marginTop:8}}/>
-                                        <Button imgSrc="vendor/fugue/icons/cross.png" text="Удалить" height={26} style={{marginRight: 5, marginTop:8}}/>
+                                    <FlexItem dock="bottom" style={{padding: 5, height: 38}}>
+                                        <Button imgSrc="vendor/fugue/icons/plus.png" text="Добавить колонку" height={26}
+                                                style={{marginRight: 5, marginTop: 8}}/>
+                                        <Button imgSrc="vendor/fugue/icons/card--pencil.png" text="Изменить" height={26}
+                                                style={{marginRight: 5, marginTop: 8}}
+                                                onClick={this.editColumnClickHandler}/>
+                                        <Button imgSrc="vendor/fugue/icons/cross.png" text="Удалить" height={26}
+                                                style={{marginRight: 5, marginTop: 8}}/>
                                     </FlexItem>
                                 </FlexHPanel>
                             </TabsPanelItem>
