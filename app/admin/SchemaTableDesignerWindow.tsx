@@ -14,6 +14,8 @@ import {Button} from "../ui/Button";
 import {SchemaTableColumnEditorWindow} from "./SchemaTableColumnEditorWindow";
 import {clone} from "ejson";
 import {Keycode} from "../utils/Keycode";
+import {ISchemaTableProps} from "../schema/table/ISchemaTableProps";
+import {ISchemaObjectFiles, loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
 
 
 export interface ISchemaTableDesignerProps {
@@ -23,94 +25,6 @@ export interface ISchemaTableDesignerProps {
 
 export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesignerProps, any> {
     //table: any = {name: "Организация", sqlName: "_Организация_", note:"это такая таблица"};
-    table: any = {
-        "className": "SchemaTable",
-        "name": "Автомобиль",
-        "description": "Список автомобилей",
-        "columns": [
-            {
-                "name": "Ключ",
-                "primaryKey": true,
-                "dataType": {
-                    "className": "IntegerSqlDataType",
-                    "size": "32"
-                },
-                "description": "pos 0"
-            },
-            {
-                "name": "Марка",
-                "dataType": {
-                    "className": "StringSqlDataType",
-                    "maxLen": 100
-                },
-                "description": "pos 1"
-            },
-            {
-                "name": "Госномер",
-                "dataType": {
-                    "className": "StringSqlDataType",
-                    "maxLen": 20
-                },
-                "description": "pos 2"
-            },
-            {
-                "name": "Гаражный номер",
-                "dataType": {
-                    "className": "StringSqlDataType",
-                    "maxLen": 50
-                },
-                "description": "pos 3"
-            },
-            {
-                "name": "Грузоподъемность",
-                "dataType": {
-                    "className": "IntegerSqlDataType",
-                    "size": "32"
-                },
-                "description": "pos 4"
-            },
-            {
-                "name": "Номер и название",
-                "dataType": {
-                    "className": "StringSqlDataType",
-                    "maxLen": 117
-                },
-                "description": "pos 5"
-            },
-            {
-                "name": "ИНН ТС",
-                "dataType": {
-                    "className": "StringSqlDataType",
-                    "maxLen": 30
-                },
-                "description": "pos 6"
-            },
-            {
-                "name": "Мощность",
-                "dataType": {
-                    "className": "IntegerSqlDataType",
-                    "size": "32"
-                },
-                "description": "pos 7"
-            },
-            {
-                "name": "Номер",
-                "dataType": {
-                    "className": "StringSqlDataType",
-                    "maxLen": 20
-                },
-                "description": "pos 8"
-            },
-            {
-                "name": "Код вида ТС",
-                "dataType": {
-                    "className": "StringSqlDataType",
-                    "maxLen": 10
-                },
-                "description": "pos 9"
-            }
-        ]
-    };
 
 
     async editColumnClickHandler() {
@@ -131,16 +45,42 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
         }
     };
 
+    error: string;
+    table: ISchemaTableProps;
     tableColumnsArray: any;
 
-    componentWillMount() {
-        this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
+    componentDidMount() {
+
+        loadSchemaObjectFiles(this.props.tableId!)
+            .then((res: ISchemaObjectFiles) => {
+                if (res.json) {
+                    this.table = JSON.parse(res.json);
+                    this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
+                    console.log("loadSchemaObjectFiles", this.table);
+                }
+                else {
+                    this.error = "не найден объект: " + this.props.tableId;
+                }
+                this.forceUpdate();
+            })
+            .catch((err) => {
+                this.error = err.toString();
+                this.forceUpdate();
+            });
+
     }
 
     window: Window;
     columnsGrid: Grid;
 
     render() {
+
+        if (this.error) {
+            return <Window title="Ошибка"><span style={{color:"red"}}>ошибка: {this.error}</span></Window>
+        }
+
+        if (!this.table)
+            return null;
         console.log("SchemaTableDesignerWindow");
         // let props=this.props.window || {};
         // delete props.children;
@@ -195,8 +135,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                             }}
                                             source={this.tableColumnsArray}
                                             onRowDoubleClick={() => this.editColumnClickHandler()}
-                                            onRowKeyDown={(rowIndex: number, keyCode: Keycode) => {
-                                                console.log("onRowKeyDown=", rowIndex, keyCode, this);
+                                            onRowKeyDown={(rowIndex, keyCode) => {
                                                 if (keyCode === Keycode.Enter) {
                                                     this.editColumnClickHandler();
                                                     return true;

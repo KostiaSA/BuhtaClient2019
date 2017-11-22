@@ -5,6 +5,7 @@ import {getRandomString} from "../utils/getRandomString";
 import {replaceAll} from "../utils/replaceAll";
 import {SchemaTableDesignerWindow} from "../admin/SchemaTableDesignerWindow";
 import {IComponentProps} from "./Component";
+import {loadSchemaObjectFiles} from "../admin/api/loadSchemaObjectFiles";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -52,10 +53,22 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                 <button
                     onClick={() => {
                         this.openWindow(<SchemaTableDesignerWindow key="czcfwewer" window={{height: 444, width: 600}}
-                                                                   tableId="buhta/test1/Организация"></SchemaTableDesignerWindow>);
+                                                                   tableId="buhta/test1/Автомобиль"></SchemaTableDesignerWindow>);
                         //  this.openWindow(<div key="111" title="111">новое окно</div>);
                     }}>
                     open SchemaTableDesignerWindow
+                </button>
+                <button
+                    onClick={() => {
+                        loadSchemaObjectFiles("buhta/test1/Автомобиль")
+                            .then((res) => {
+                                console.log("ok", res)
+                            })
+                            .catch((err) => {
+                                console.log("err:", err)
+                            })
+                    }}>
+                    test loadSchemaObjectFiles
                 </button>
                 <Window key="222" ref={(e) => {
                     this.w = e!
