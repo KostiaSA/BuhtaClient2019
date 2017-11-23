@@ -1,4 +1,6 @@
 import * as  React from "react";
+import {CSSProperties} from "react";
+import * as PropTypes from "prop-types";
 import {Component} from "./Component";
 import {appState} from "../AppState";
 
@@ -21,6 +23,16 @@ export class Window extends Component<IWindowProps> {
     constructor(props: any, context: any) {
         super(props, context);
         this.context = context;
+    }
+
+    static childContextTypes = {
+        window: PropTypes.object
+    };
+
+    getChildContext(): any {
+        return {
+            window: this
+        };
     }
 
     content: any;
@@ -71,8 +83,10 @@ export class Window extends Component<IWindowProps> {
     }
 
     disabled: boolean;
+    disabledStyle: CSSProperties;
 
-    disable() {
+    disable(disabledStyle: CSSProperties = {}) {
+        this.disabledStyle = disabledStyle;
         this.widget.jqxWindow("disable");
         this.disabled = true;
         this.forceUpdate();
@@ -115,7 +129,8 @@ export class Window extends Component<IWindowProps> {
                 left: 0,
                 top: 0,
                 right: 0,
-                bottom: 0
+                bottom: 0,
+                ...this.disabledStyle
             }}></div>) : null;
         return (
             <div id={this.$id}>

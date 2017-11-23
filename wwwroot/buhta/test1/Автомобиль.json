@@ -1,6 +1,6 @@
 ﻿{
     "className": "SchemaTable",
-    "name": "Ав33том2222222222обиль333==--99+\"'",
+    "name": "Ав33том22222222t22обиль333==--99+\"'",
     "description": "Список авт2ом33обилей2",
     "columns": [{
         "name": "Ключ",
@@ -44,7 +44,7 @@
             "className": "StringSqlDataType",
             "maxLen": 117
         },
-        "description": "pos 5"
+        "description": "pos 52222222"
     }, {
         "name": "ИНН ТС",
         "dataType": {

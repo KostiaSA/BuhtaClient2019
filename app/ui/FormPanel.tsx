@@ -5,7 +5,7 @@ import {clone} from "ejson";
 import {reassignObject} from "../utils/reassignObject";
 
 
-export interface IFormPanelProps  extends IComponentProps{
+export interface IFormPanelProps extends IComponentProps {
     bindObj?: any;
 }
 
@@ -21,11 +21,15 @@ export class FormPanel extends Component<IFormPanelProps> {
     };
 
     static contextTypes = {
+        ...Component.contextTypes,
         bindObj: PropTypes.object
     };
 
-    getChildContext() {
-        return {bindObj: this.props.bindObj};
+    getChildContext(): any {
+        return {
+//            ...super.getChildContext(),
+            bindObj: this.props.bindObj
+        };
     }
 
     get bindObj(): any {

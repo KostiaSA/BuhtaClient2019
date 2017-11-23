@@ -61,7 +61,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                 </button>
                 <button
                     onClick={() => {
-                        saveSchemaObjectFiles({filePath:"buhta/test1/Организация1233", json:"{ага4}"})
+                        saveSchemaObjectFiles({filePath: "buhta/test1/Организация1233", json: "{ага4}"})
                             .then((res) => {
                                 console.log("ok", res)
                             })

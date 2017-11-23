@@ -1,10 +1,11 @@
 import * as  React from "react";
 import {CSSProperties} from "react";
+import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
 
 
-export interface IButtonProps  extends IComponentProps{
+export interface IButtonProps extends IComponentProps {
     text?: string;
     height?: string | number;
     width?: string | number;
@@ -12,7 +13,7 @@ export interface IButtonProps  extends IComponentProps{
     imgPosition?: "left" | "top" | "center" | "bottom" | "right" | "topLeft" | "bottomLeft" | "topRight" | "bottomRight";
     textImageRelation?: "imageBeforeText" | "imageAboveText" | "textAboveImage" | "textBeforeImage" | "overlay";
     style?: CSSProperties;
-    onClick?: () => void;
+    onClick?: () => Promise<void>;
 }
 
 export class Button extends Component<IButtonProps> {
@@ -21,6 +22,12 @@ export class Button extends Component<IButtonProps> {
         super(props, context);
         this.context = context;
     }
+
+    // пример наследования
+    static contextTypes: any = {
+        ...Component.contextTypes,
+        windowTest: PropTypes.object
+    };
 
     componentDidMount() {
         this.widget = $("#" + this.$id);
@@ -44,10 +51,38 @@ export class Button extends Component<IButtonProps> {
         this.widget = $("#" + this.$id);
 
         if (this.props.onClick)
-            this.widget.on("click", this.props.onClick);
+            this.widget.on("click", async () => {
+                console.log("getWindow", this.getWindow());
+                if (!this.disabled()) {
+                    let win = this.getWindow();
+                    if (win) {
+                        win.disable({cursor: "wait"});
+                        await this.props.onClick!();
+                        win.enable();
+                        win.bringToFront();
+                    }
+                    else
+                        this.props.onClick!();
+                }
+            });
         else
             this.widget.off("click");
     }
+
+    disabled(): boolean {
+        return this.widget.jqxButton("disabled");
+    }
+
+    disable() {
+        this.widget.jqxButton({disabled: true});
+        this.forceUpdate();
+    }
+
+    enable() {
+        this.widget.jqxButton({disabled: false});
+        this.forceUpdate();
+    }
+
 
     renderHeaders(): React.ReactNode {
         return React.Children.toArray(this.props.children).map((child, index) => {

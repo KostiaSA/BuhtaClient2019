@@ -26,6 +26,8 @@ export interface ISchemaTableDesignerProps {
 
 export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesignerProps, any> {
 
+    saveButton: Button;
+    closeButton: Button;
 
     editColumnClickHandler = async () => {
         let columnIndex = this.columnsGrid.getSelectedRowIndex();
@@ -79,11 +81,15 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
             json: JSON.stringify(this.table)
         };
 
+        this.saveButton.disable();
+        this.closeButton.disable();
         try {
             await saveSchemaObjectFiles(req);
             this.window.close(true);
         }
         catch (err) {
+            this.saveButton.enable();
+            this.closeButton.enable();
             alert(err.toString());
         }
 
@@ -192,9 +198,11 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                         <Button imgSrc="vendor/fugue/icons/disk.png"
                                 text="Сохранить"
                                 style={{marginRight: 5}}
+                                ref={(e) => this.saveButton = e!}
                                 onClick={this.handleClickSaveButton}/>
                         <Button imgSrc="vendor/fugue/icons/cross-script.png"
                                 text="Отмена"
+                                ref={(e) => this.closeButton = e!}
                                 onClick={this.handleClickCloseButton}/>
                     </FlexItem>
                 </FlexHPanel>

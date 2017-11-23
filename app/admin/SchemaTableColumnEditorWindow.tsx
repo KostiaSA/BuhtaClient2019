@@ -78,14 +78,14 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                         <Button
                             imgSrc="vendor/fugue/icons/disk.png" text="Сохранить"
                             style={{marginRight: 5}}
-                            onClick={() => {
+                            onClick={async () => {
                                 this.window.close(true);
                             }}
                         />
                         <Button
                             imgSrc="vendor/fugue/icons/cross-script.png"
                             text="Отмена"
-                            onClick={() => {
+                            onClick={async () => {
                                 //this.form1!.cancelChanges();
                                 this.window.close(false);
                             }}
