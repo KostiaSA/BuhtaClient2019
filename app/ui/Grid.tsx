@@ -33,7 +33,6 @@ export class Grid extends Component<IGridProps> {
     resizeIntervalId: any;
 
     componentDidMount() {
-        console.log("didmount Grid " + this.$id);
         this.widget = $("#" + this.$id);
         this.updateProps(this.props, true);
 

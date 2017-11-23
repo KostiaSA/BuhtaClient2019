@@ -23,7 +23,6 @@ export class Button extends Component<IButtonProps> {
     }
 
     componentDidMount() {
-        console.log("didmount Button " + this.$id);
         this.widget = $("#" + this.$id);
         this.updateProps(this.props);
     }

@@ -15,7 +15,8 @@ import {SchemaTableColumnEditorWindow} from "./SchemaTableColumnEditorWindow";
 import {clone} from "ejson";
 import {Keycode} from "../utils/Keycode";
 import {ISchemaTableProps} from "../schema/table/ISchemaTableProps";
-import {ISchemaObjectFiles, loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
+import {loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
+import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
 
 
 export interface ISchemaTableDesignerProps {
@@ -24,11 +25,9 @@ export interface ISchemaTableDesignerProps {
 }
 
 export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesignerProps, any> {
-    //table: any = {name: "Организация", sqlName: "_Организация_", note:"это такая таблица"};
 
 
-    async editColumnClickHandler() {
-        console.log("cli", this.columnsGrid.getSelectedRowIndex(), this.table.columns);
+    editColumnClickHandler = async () => {
         let columnIndex = this.columnsGrid.getSelectedRowIndex();
 
         let editedColumn = clone(this.tableColumnsArray.get(columnIndex));
@@ -49,42 +48,65 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
     table: ISchemaTableProps;
     tableColumnsArray: any;
 
-    componentDidMount() {
+    async componentDidMount() {
 
-        loadSchemaObjectFiles(this.props.tableId!)
-            .then((res: ISchemaObjectFiles) => {
-                if (res.json) {
-                    this.table = JSON.parse(res.json);
-                    this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
-                    console.log("loadSchemaObjectFiles", this.table);
-                }
-                else {
-                    this.error = "не найден объект: " + this.props.tableId;
-                }
-                this.forceUpdate();
-            })
-            .catch((err) => {
-                this.error = err.toString();
-                this.forceUpdate();
-            });
+        try {
+            let res = await loadSchemaObjectFiles(this.props.tableId!);
+
+            if (res.json) {
+                this.table = JSON.parse(res.json);
+                this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
+            }
+            else {
+                this.error = "не найден объект: " + this.props.tableId;
+            }
+            this.forceUpdate();
+
+        }
+        catch (error) {
+            this.error = error.toString();
+            this.forceUpdate();
+        }
 
     }
+
+    handleClickSaveButton = async () => {
+
+        this.table.columns = this.tableColumnsArray.toArray();
+
+        let req: ISavedSchemaObjectFiles = {
+            filePath: this.props.tableId!,
+            json: JSON.stringify(this.table)
+        };
+
+        try {
+            await saveSchemaObjectFiles(req);
+            this.window.close(true);
+        }
+        catch (err) {
+            alert(err.toString());
+        }
+
+    };
+
+    handleClickCloseButton = async () => {
+        this.window.close();
+    };
 
     window: Window;
     columnsGrid: Grid;
 
+
     render() {
 
         if (this.error) {
-            return <Window title="Ошибка"><span style={{color:"red"}}>ошибка: {this.error}</span></Window>
+            return <Window title="Ошибка"><span style={{color: "red"}}>ошибка: {this.error}</span></Window>
         }
 
         if (!this.table)
             return null;
-        console.log("SchemaTableDesignerWindow");
-        // let props=this.props.window || {};
-        // delete props.children;
-        //<Window {...this.props.window}>
+
+        console.log("render SchemaTableDesignerWindow");
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
@@ -134,7 +156,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                                 this.columnsGrid = e!
                                             }}
                                             source={this.tableColumnsArray}
-                                            onRowDoubleClick={() => this.editColumnClickHandler()}
+                                            onRowDoubleClick={this.editColumnClickHandler}
                                             onRowKeyDown={(rowIndex, keyCode) => {
                                                 if (keyCode === Keycode.Enter) {
                                                     this.editColumnClickHandler();
@@ -167,8 +189,13 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                         </TabsPanel>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
-                        <Button imgSrc="vendor/fugue/icons/disk.png" text="Сохранить" style={{marginRight: 5}}/>
-                        <Button imgSrc="vendor/fugue/icons/cross-script.png" text="Отмена"/>
+                        <Button imgSrc="vendor/fugue/icons/disk.png"
+                                text="Сохранить"
+                                style={{marginRight: 5}}
+                                onClick={this.handleClickSaveButton}/>
+                        <Button imgSrc="vendor/fugue/icons/cross-script.png"
+                                text="Отмена"
+                                onClick={this.handleClickCloseButton}/>
                     </FlexItem>
                 </FlexHPanel>
 

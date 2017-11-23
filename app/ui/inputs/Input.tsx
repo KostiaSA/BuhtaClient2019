@@ -38,15 +38,12 @@ export class Input extends Component<IInputProps> {
     initialValue: any;
 
     componentDidMount() {
-        console.log("didmount Input " + this.$id);
         this.widget = $("#" + this.$id);
-        //ReactDOM.render(<Div ref={(e)=>{this.content=e}}>{this.state.children}.......</Div>, document.getElementById(this.$contentId));
         this.updateProps(this.props, true);
         this.initialValue = objectPathGet(this.props.bindObj || this.context.bindObj, this.props.bindProp);
         this.widget.jqxInput("val", this.initialValue);
         this.widget.on("change",
             (event: any) => {
-                //var type = event.args.type; // keyboard, mouse or null depending on how the value was changed.
                 objectPathSet(this.props.bindObj || this.context.bindObj, this.props.bindProp, this.widget.val());
                 this.forceUpdate();
                 console.log("change");
