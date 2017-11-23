@@ -6,6 +6,7 @@ import {replaceAll} from "../utils/replaceAll";
 import {SchemaTableDesignerWindow} from "../admin/SchemaTableDesignerWindow";
 import {IComponentProps} from "./Component";
 import {loadSchemaObjectFiles} from "../admin/api/loadSchemaObjectFiles";
+import {saveSchemaObjectFiles} from "../admin/api/saveSchemaObjectFiles";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -60,7 +61,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                 </button>
                 <button
                     onClick={() => {
-                        loadSchemaObjectFiles("buhta/test1/Автомобиль")
+                        saveSchemaObjectFiles({filePath:"buhta/test1/Организация1233", json:"{ага4}"})
                             .then((res) => {
                                 console.log("ok", res)
                             })
@@ -68,7 +69,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                                 console.log("err:", err)
                             })
                     }}>
-                    test loadSchemaObjectFiles
+                    test seveSchemaObjectFiles
                 </button>
                 <Window key="222" ref={(e) => {
                     this.w = e!
@@ -95,7 +96,6 @@ export class Desktop extends React.Component<IDesktopProps, any> {
 
 
         return new Promise<boolean>((resolve: (result: boolean) => void, reject: (error: string) => void) => {
-//            this.windows.push(React.cloneElement(win, {window:{onClose: resolve}} as IWindowProps));
             win.props.window.id = getRandomString();
             win.props.window.onClose = resolve;
             this.windows.push(win);
