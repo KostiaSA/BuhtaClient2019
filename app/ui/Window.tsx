@@ -58,10 +58,10 @@ export class Window extends Component<IWindowProps> {
 
     updateProps(props: IWindowProps) {
         let opt: any = {
-            ...omit(this.props, ["id", "children", "left", "top", "icon", "onClose","title"]),
+            ...omit(this.props, ["id", "children", "left", "top", "icon", "onClose", "title"]),
             animationType: "none",
             modalOpacity: 0.2,
-            showCloseButton:false
+            showCloseButton: false
         };
         if (!opt.maxHeight) {
             opt.maxHeight = 3000;
@@ -120,6 +120,9 @@ export class Window extends Component<IWindowProps> {
     }
 
     destroy() {
+        // страный глюк, когда остаеся "ждущий" курсор от убитого оверлея, приходится убирать курсор вручную
+        $("#" + this.$id+"-overlay").css("cursor","auto");
+
         this.widget.jqxWindow("destroy");
     }
 
@@ -134,7 +137,7 @@ export class Window extends Component<IWindowProps> {
     render() {
         console.log("render win-:" + this.props.title);
         let disabledOverlay = this.disabled ? (
-            <div style={{
+            <div id={this.$id+"-overlay"} style={{
                 background: "white",
                 opacity: 0.4,
                 position: "absolute",
@@ -147,10 +150,10 @@ export class Window extends Component<IWindowProps> {
             }}></div>) : null;
         return (
             <div id={this.$id}>
-                <div style={{overflow:"hidden"}}>
+                <div style={{overflow: "hidden"}}>
                      <span>
-                         <img src={this.props.icon} style={{verticalAlign: "middle", marginRight: 5, marginTop:-3}}/>
-                         <span style={{fontWeight:"bold", color:"#5a5a5afc"}}>{this.props.title}</span>
+                         <img src={this.props.icon} style={{verticalAlign: "middle", marginRight: 5, marginTop: -3}}/>
+                         <span style={{fontWeight: "bold", color: "#5a5a5afc"}}>{this.props.title}</span>
                      </span>
                 </div>
                 <div style={{padding: 0, position: "relative"}}>

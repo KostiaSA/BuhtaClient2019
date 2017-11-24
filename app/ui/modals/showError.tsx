@@ -4,6 +4,7 @@ import {appState} from "../../AppState";
 import {Button} from "../Button";
 import {FlexItem} from "../FlexItem";
 import {FlexHPanel} from "../FlexHPanel";
+import {sleep} from "../../utils/sleep";
 
 export function getErrorWindow(message: React.ReactNode, title: string = "Ошибка"): React.ReactElement<any> {
     let w: Window;
@@ -44,5 +45,6 @@ export function getErrorWindow(message: React.ReactNode, title: string = "Оши
 }
 
 export async function showError(message: React.ReactNode, title: string = "Ошибка") {
+    sleep(1);
     await appState.desktop.openWindow(getErrorWindow(message,title));
 }
