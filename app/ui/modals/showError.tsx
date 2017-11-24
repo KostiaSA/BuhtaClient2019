@@ -5,9 +5,9 @@ import {Button} from "../Button";
 import {FlexItem} from "../FlexItem";
 import {FlexHPanel} from "../FlexHPanel";
 
-export async function showError(message: React.ReactNode, title:string="Ошибка") {
+export function getErrorWindow(message: React.ReactNode, title: string = "Ошибка"): React.ReactElement<any> {
     let w: Window;
-    let win = (
+    return (
         <Window
             title={title}
             isModal
@@ -21,7 +21,13 @@ export async function showError(message: React.ReactNode, title:string="Ошиб
         >
 
             <FlexHPanel>
-                <FlexItem dock="fill" style={{color: "crimson", padding: 10, marginTop:0, justifyContent: "center", overflow:"auto"}}>
+                <FlexItem dock="fill" style={{
+                    color: "crimson",
+                    padding: 10,
+                    marginTop: 0,
+                    justifyContent: "center",
+                    overflow: "auto"
+                }}>
                     {message}
                 </FlexItem>
                 <FlexItem dock="bottom" style={{padding: 5, justifyContent: "center"}}>
@@ -35,5 +41,8 @@ export async function showError(message: React.ReactNode, title:string="Ошиб
         </Window>
     );
 
-    await appState.desktop.openWindow(win);
+}
+
+export async function showError(message: React.ReactNode, title: string = "Ошибка") {
+    await appState.desktop.openWindow(getErrorWindow(message,title));
 }

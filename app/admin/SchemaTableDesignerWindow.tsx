@@ -17,6 +17,7 @@ import {Keycode} from "../utils/Keycode";
 import {ISchemaTableProps} from "../schema/table/ISchemaTableProps";
 import {loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
 import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
+import {getErrorWindow} from "../ui/modals/showError";
 
 
 export interface ISchemaTableDesignerProps {
@@ -106,7 +107,8 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
     render() {
 
         if (this.error) {
-            return <Window title="Ошибка"><span style={{color: "red"}}>ошибка: {this.error}</span></Window>
+            return getErrorWindow(this.error);
+            //return <Window title="Ошибка"><span style={{color: "red"}}>ошибка: {this.error}</span></Window>
         }
 
         if (!this.table)
@@ -124,9 +126,6 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                 {/*Дизайнер таблицы {this.props.tableId}*/}
 
                 <FlexHPanel>
-                    <FlexItem dock="top">
-                        таблица: XXX
-                    </FlexItem>
                     <FlexItem dock="fill">
                         <TabsPanel>
 
