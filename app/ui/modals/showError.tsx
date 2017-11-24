@@ -45,6 +45,5 @@ export function getErrorWindow(message: React.ReactNode, title: string = "Оши
 }
 
 export async function showError(message: React.ReactNode, title: string = "Ошибка") {
-    sleep(1);
     await appState.desktop.openWindow(getErrorWindow(message,title));
 }

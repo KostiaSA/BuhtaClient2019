@@ -87,12 +87,6 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     }
 
     async openWindow(win: React.ReactElement<any>): Promise<boolean> {
-        // if (win.type !== Window && !((win.type as any).prototype instanceof Window))
-        //     throw "Desktop.openWindow(): win должно быть типа Window";
-
-        // if (!win.key)
-        //     throw "Desktop.openWindow(): у win не заполнен аттрибут 'key'";
-
 
         return new Promise<boolean>((resolve: (result: boolean) => void, reject: (error: string) => void) => {
             if (win.props.window) {
@@ -109,7 +103,6 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     }
 
     closeWindow(win: Window) {
-//        let winFromList = this.windows.find((w: any) => w.props.id === win.props.id || w.props.window.id === win.props.id);
         let winFromList = this.windows.find((w: any) => w.id === win.props.id);
         if (win) {
             this.windows.slice(this.windows.indexOf(winFromList), 1);

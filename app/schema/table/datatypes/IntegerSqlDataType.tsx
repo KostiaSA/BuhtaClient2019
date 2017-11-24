@@ -1,17 +1,16 @@
 import * as React from "react";
-import {ISqlDataTypeClassInfo, SqlDataType} from "./SqlDataType";
-import {IIntegerSqlDataTypeProps} from "./IIntegerSqlDataTypeProps";
-
-export class IntegerSqlDataType extends SqlDataType<IIntegerSqlDataTypeProps> {
-
-    static classInfo: ISqlDataTypeClassInfo = {
-        className: "platform-core:IntegerSqlDataType",
-        constructor: IntegerSqlDataType,
-        title: "целое"
-    };
+import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 
 
-    dataTypeUserFriendly(parentReactComp: React.Component<any, any>): string | JSX.Element {
+export interface IIntegerSqlDataTypeProps extends IBaseSqlDataTypeProps {
+    size?: "8" | "16" | "32" | "64";
+    unsigned?: boolean;
+    autoIncrement?: boolean;
+}
+
+export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps> {
+
+    dataTypeUserFriendly(parentReactComp: React.ReactElement<any>): React.ReactNode {
         return (
             <span
                 style={{color: "teal"}}>{(this.props.unsigned ? "+" : "") + "целое" + this.props.size + (this.props.autoIncrement ? ", autoInc" : "")}
