@@ -116,6 +116,8 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
+                title={"таблица: " + this.props.tableId}
+                icon="vendor/fugue/table.png"
                 ref={(e) => {
                     this.window = e!
                 }}>

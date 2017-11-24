@@ -42,10 +42,7 @@ export class Button extends Component<IButtonProps> {
 
         opt.value = this.props.text || "Кнопка";
 
-        //debugger
         opt.height = this.props.height || (this.props.style ? this.props.style.height : null) || 28;
-        // opt.width = opt.width || "100%";
-
 
         this.widget.jqxButton(opt);
         this.widget = $("#" + this.$id);
@@ -81,13 +78,6 @@ export class Button extends Component<IButtonProps> {
     enable() {
         this.widget.jqxButton({disabled: false});
         this.forceUpdate();
-    }
-
-
-    renderHeaders(): React.ReactNode {
-        return React.Children.toArray(this.props.children).map((child, index) => {
-            return <li key={index}>{(child as any).props.title}</li>
-        });
     }
 
     render() {

@@ -30,6 +30,9 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
+                title={"колонка: " + this.props.column!.name}
+                icon="vendor/fugue/table-insert-column.png"
+
                 ref={(e) => {
                     this.window = e!
                 }}>
