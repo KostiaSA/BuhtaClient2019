@@ -3,6 +3,7 @@ import {CSSProperties} from "react";
 import * as PropTypes from "prop-types";
 import {Component} from "./Component";
 import {appState} from "../AppState";
+import {omit} from "../utils/omit";
 
 declare var jqxWindow: any;
 
@@ -15,6 +16,13 @@ export interface IWindowProps {
     title?: string;
     children?: any;
     icon?: string;
+    isModal?: boolean;
+
+    minHeight?: number;
+    maxHeight?: number;
+    minWidth?: number;
+    maxWidth?: number;
+
     onClose?: (result: boolean) => void;
 }
 
@@ -49,7 +57,19 @@ export class Window extends Component<IWindowProps> {
     // }
 
     updateProps(props: IWindowProps) {
-        let opt: any = {animationType: "none"};
+        let opt: any = {
+            ...omit(this.props, ["id", "children", "left", "top", "icon", "onClose","title"]),
+            animationType: "none",
+            modalOpacity: 0.2,
+            showCloseButton:false
+        };
+        if (!opt.maxHeight) {
+            opt.maxHeight = 3000;
+        }
+        if (!opt.maxWidth) {
+            opt.maxWidth = 3000;
+        }
+
         if (props.left || props.top) {
             opt.position = {};
             if (props.left)
@@ -57,13 +77,6 @@ export class Window extends Component<IWindowProps> {
             if (props.top)
                 opt.position.y = props.top;
         }
-        if (props.height)
-            opt.height = props.height;
-        if (props.width)
-            opt.width = props.width;
-
-        if (props.title)
-            opt.title = props.title;
 
         this.widget.jqxWindow(opt);
         this.widget = $("#" + this.$id);
@@ -134,11 +147,10 @@ export class Window extends Component<IWindowProps> {
             }}></div>) : null;
         return (
             <div id={this.$id}>
-                <div>
-                      <span>
-                          {this.props.title}
-                          <img src='$this.icon11' style={{verticalAlign: "middle", marginRight: 5}}/>
-                        <span>{this.props.title}</span>
+                <div style={{overflow:"hidden"}}>
+                     <span>
+                         <img src={this.props.icon} style={{verticalAlign: "middle", marginRight: 5, marginTop:-3}}/>
+                         <span style={{fontWeight:"bold", color:"#5a5a5afc"}}>{this.props.title}</span>
                      </span>
                 </div>
                 <div style={{padding: 0, position: "relative"}}>

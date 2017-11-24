@@ -76,14 +76,14 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
                         <Button
-                            imgSrc="vendor/fugue/icons/disk.png" text="Сохранить"
+                            imgSrc="vendor/fugue/disk.png" text="Сохранить"
                             style={{marginRight: 5}}
                             onClick={async () => {
                                 this.window.close(true);
                             }}
                         />
                         <Button
-                            imgSrc="vendor/fugue/icons/cross-script.png"
+                            imgSrc="vendor/fugue/cross-script.png"
                             text="Отмена"
                             onClick={async () => {
                                 //this.form1!.cancelChanges();

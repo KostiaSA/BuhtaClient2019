@@ -5,8 +5,8 @@ import {getRandomString} from "../utils/getRandomString";
 import {replaceAll} from "../utils/replaceAll";
 import {SchemaTableDesignerWindow} from "../admin/SchemaTableDesignerWindow";
 import {IComponentProps} from "./Component";
-import {loadSchemaObjectFiles} from "../admin/api/loadSchemaObjectFiles";
 import {saveSchemaObjectFiles} from "../admin/api/saveSchemaObjectFiles";
+import {showError} from "./modals/showError";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -38,11 +38,10 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         return (
             <div id="desktop" style={{height: "100%", flex: "1 0 auto"}}>
                 <button
-                    onClick={() => {
-                        this.openWindow(<Window key={getRandomString()} title="111">новое окно</Window>);
-                        //  this.openWindow(<div key="111" title="111">новое окно</div>);
+                    onClick={async () => {
+                        await showError("ам явлено замечательное сходство тех, кто травит Райкина здесь и там. Этим силам невыносимо искусство, невыносимы люди, преданные ему и не интересующиеся беспрерывным доминированием, насилием, унижением: Райкин интересуется совсем другими вещами. Для чертей этот ладан невыносим. Полезно увидеть сходство, почти парность наших культурных начальников и «Правого сектора», ");
                     }}>
-                    open win
+                    show error
                 </button>
                 <button
                     onClick={() => {
@@ -96,15 +95,22 @@ export class Desktop extends React.Component<IDesktopProps, any> {
 
 
         return new Promise<boolean>((resolve: (result: boolean) => void, reject: (error: string) => void) => {
-            win.props.window.id = getRandomString();
-            win.props.window.onClose = resolve;
-            this.windows.push(win);
+            if (win.props.window) {
+                if (!win.props.window.id)
+                    win.props.window.id = getRandomString();
+                win.props.window.onClose = resolve;
+                this.windows.push(win);
+            }
+            else {
+                this.windows.push(React.cloneElement(win, {onClose: resolve}))
+            }
             this.forceUpdate();
         });
     }
 
     closeWindow(win: Window) {
-        let winFromList = this.windows.find((w: any) => w.props.window.id === win.props.id);
+//        let winFromList = this.windows.find((w: any) => w.props.id === win.props.id || w.props.window.id === win.props.id);
+        let winFromList = this.windows.find((w: any) => w.id === win.props.id);
         if (win) {
             this.windows.slice(this.windows.indexOf(winFromList), 1);
             this.forceUpdate();

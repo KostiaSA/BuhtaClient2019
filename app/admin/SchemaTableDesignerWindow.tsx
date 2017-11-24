@@ -177,12 +177,12 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                         </Grid>
                                     </FlexItem>
                                     <FlexItem dock="bottom" style={{padding: 5, height: 38}}>
-                                        <Button imgSrc="vendor/fugue/icons/plus.png" text="Добавить колонку" height={26}
+                                        <Button imgSrc="vendor/fugue/plus.png" text="Добавить колонку" height={26}
                                                 style={{marginRight: 5, marginTop: 8}}/>
-                                        <Button imgSrc="vendor/fugue/icons/card--pencil.png" text="Изменить" height={26}
+                                        <Button imgSrc="vendor/fugue/card--pencil.png" text="Изменить" height={26}
                                                 style={{marginRight: 5, marginTop: 8}}
                                                 onClick={() => this.editColumnClickHandler()}/>
-                                        <Button imgSrc="vendor/fugue/icons/cross.png" text="Удалить" height={26}
+                                        <Button imgSrc="vendor/fugue/cross.png" text="Удалить" height={26}
                                                 style={{marginRight: 5, marginTop: 8}}/>
                                     </FlexItem>
                                 </FlexHPanel>
@@ -195,12 +195,12 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                         </TabsPanel>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
-                        <Button imgSrc="vendor/fugue/icons/disk.png"
+                        <Button imgSrc="vendor/fugue/disk.png"
                                 text="Сохранить"
                                 style={{marginRight: 5}}
                                 ref={(e) => this.saveButton = e!}
                                 onClick={this.handleClickSaveButton}/>
-                        <Button imgSrc="vendor/fugue/icons/cross-script.png"
+                        <Button imgSrc="vendor/fugue/cross-script.png"
                                 text="Отмена"
                                 ref={(e) => this.closeButton = e!}
                                 onClick={this.handleClickCloseButton}/>
