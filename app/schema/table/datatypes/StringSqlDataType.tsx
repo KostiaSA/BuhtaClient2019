@@ -11,8 +11,18 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
 
     public static id = "String";
 
-    getName(): string {
-        return "Строка";
+    getName(props?: IStringSqlDataTypeProps): string {
+        if (!props)
+            return "Строка";
+        else {
+            let maxLenStr = "(MAX)";
+
+            if (props.maxLen && props.maxLen > 0)
+                maxLenStr = "(" + props.maxLen + ")";
+
+            return this.getName() + maxLenStr;
+
+        }
     }
 
     getPropsNames(): string[] {

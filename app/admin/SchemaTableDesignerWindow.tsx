@@ -17,7 +17,8 @@ import {Keycode} from "../utils/Keycode";
 import {loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
 import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
 import {getErrorWindow, showError} from "../ui/modals/showError";
-import {ISchemaTableProps} from "../schema/table/SchemaTable";
+import {ISchemaTableColumnProps, ISchemaTableProps} from "../schema/table/SchemaTable";
+import {appState} from "../AppState";
 
 
 export interface ISchemaTableDesignerProps {
@@ -104,6 +105,10 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
     window: Window;
     columnsGrid: Grid;
 
+    dataTypeColumnCompute = (row: ISchemaTableColumnProps): string => {
+        let dt = appState.sqlDataTypes[row.dataType.id];
+        return dt.getName(row.dataType);
+    };
 
     render() {
 
@@ -175,6 +180,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                             }}
                                         >
                                             <GridColumn text="Колонка" datafield="name"/>
+                                            <GridColumn text="Тип данных" compute={this.dataTypeColumnCompute}/>
                                             <GridColumn text="Описание" datafield="description"/>
                                         </Grid>
                                     </FlexItem>

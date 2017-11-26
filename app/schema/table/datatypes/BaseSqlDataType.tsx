@@ -27,7 +27,7 @@ export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypePro
     setDefaultProps(props: any) {
     }
 
-    getName(): string {
+    getName(props?:IBaseSqlDataTypeProps): string {
         return "?";
     }
 

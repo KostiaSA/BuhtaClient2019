@@ -6,7 +6,9 @@ export interface IGridColumnProps {
     datafield?: string;
     displayfield?: string;
     cellsformat?: string;
-    aggregates?:string[];
+    aggregates?: string[];
+//    cellsrenderer?: (row: any,columnfield: any, value: any, defaulthtml: any) => string;
+    compute?: (row: any) => string;
 }
 
 export class GridColumn extends React.Component<IGridColumnProps> {

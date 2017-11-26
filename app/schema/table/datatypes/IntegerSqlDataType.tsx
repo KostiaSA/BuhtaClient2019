@@ -21,8 +21,12 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
         props.size = props.size || "32";
     }
 
-    getName(): string {
-        return "Целое";
+    getName(props?: IIntegerSqlDataTypeProps): string {
+        if (!props)
+            return "Целое";
+        else {
+            return (props.unsigned ? "+" : "") + this.getName() + props.size + (props.autoIncrement ? ", autoInc" : "")
+        }
     }
 
     renderPropsEditors(props: IIntegerSqlDataTypeProps): React.ReactNode {

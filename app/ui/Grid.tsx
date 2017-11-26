@@ -2,9 +2,9 @@ import * as  React from "react";
 import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
-import {GridColumn} from "./GridColumn";
+import {GridColumn, IGridColumnProps} from "./GridColumn";
 import {Keycode} from "../utils/Keycode";
-
+import {escapeHtml} from "../utils/escapeHtml";
 
 
 export interface IGridProps extends IComponentProps {
@@ -72,9 +72,26 @@ export class Grid extends Component<IGridProps> {
         gridOptions.columns = [];
         for (let col of React.Children.toArray(this.props.children)) {
             if ((col as any).type === GridColumn) {
-                let columnOptions = omit((col as any).props, ["children"]);
+                let colProps = (col as any).props as IGridColumnProps;
+                let columnOptions = omit(colProps, ["children", "compute"]);
                 if (!columnOptions.text)
                     columnOptions.text = columnOptions.datafield || "?datafield";
+                if (colProps.compute) {
+                    columnOptions.cellsrenderer = (rowIndex: number, columnfield: any, value: any, defaulthtml: string): string => {
+                        let defaultHtmlStart = defaulthtml.replace("</div>", "");
+                        let defaultHtmlEnd = "</div>";
+                        let row = props.source[rowIndex];
+                        let computedValue: string;
+                        try {
+                            computedValue = escapeHtml(colProps.compute!(row));
+                        }
+                        catch (e) {
+                            computedValue = "<span style='color: indianred'>"+ escapeHtml("Ошибка в compute(): " + e.toString().substr(0, 40))+"</span>";
+                            console.error("Ошибка в compute(): " + e.toString());
+                        }
+                        return defaultHtmlStart + computedValue + defaultHtmlEnd;
+                    };
+                }
                 gridOptions.columns.push(columnOptions);
             }
         }
