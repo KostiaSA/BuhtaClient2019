@@ -19,17 +19,16 @@
     }, {
         "name": "Госномер2ooooooooooo",
         "dataType": {
-            "className": "StringSqlDataType",
-            "maxLen": 20
+            "id": "String",
+            "maxLen": 50
         },
         "description": "pos 2ppp88ppppppppp"
     }, {
         "name": "Гаражный номер33333=11=89--",
+        "description": "pos 3",
         "dataType": {
-            "className": "StringSqlDataType",
-            "maxLen": 50
-        },
-        "description": "pos 3"
+            "id": "Integer"
+        }
     }, {
         "name": "Грузоподъемность",
         "dataType": {

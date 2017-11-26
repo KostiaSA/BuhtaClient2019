@@ -11,6 +11,7 @@ import {Button} from "../ui/Button";
 import {ISchemaTableColumnProps, ISchemaTableProps} from "../schema/table/SchemaTable";
 import {ComboBox} from "../ui/inputs/ComboBox";
 import {appState} from "../AppState";
+import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -36,6 +37,16 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
 
     render() {
         console.log("SchemaTableColumnEditorWindow");
+        let col = this.props.column!;
+        if (!col.dataType) {
+            col.dataType = {} as any;
+        }
+        if (!col.dataType.id) {
+            col.dataType.id = StringSqlDataType.id;
+            let dt = appState.sqlDataTypes[StringSqlDataType.id];
+            dt.setDefaultProps(col.dataType);
+        }
+
         return (
             <Window
                 {...omit(this.props.window, ["children"])}

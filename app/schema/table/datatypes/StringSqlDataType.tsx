@@ -18,6 +18,10 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
         return [...super.getPropsNames(),"maxLen"];
     }
 
+    setDefaultProps(props: IStringSqlDataTypeProps) {
+        props.maxLen = 50;
+    }
+
     // renderEditor: (columnProps: ISchemaTableColumnProps, attrs?: any): JSX.Element | JSX.Element[] => {
     //     return [
     //         <FormInput

@@ -24,6 +24,9 @@ export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypePro
         return ["id"];
     }
 
+    setDefaultProps(props: any) {
+    }
+
     getName(): string {
         return "?";
     }
@@ -36,6 +39,9 @@ export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypePro
         return ret;
     }
 
+    renderPropsEditors(props: P): React.ReactNode {
+        return null;
+    }
 
     dataTypeUserFriendly(props: P, parentReactComp: React.ReactElement<any>): React.ReactNode {
         return <span>{this.getName()}</span>;
