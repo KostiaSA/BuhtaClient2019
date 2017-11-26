@@ -8,6 +8,15 @@ export interface IStringSqlDataTypeProps extends IBaseSqlDataTypeProps {
 
 export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> {
 
+    public static id = "String";
+
+    getName(): string {
+        return "Строка";
+    }
+
+    getPropsNames(): string[] {
+        return [...super.getPropsNames(),"maxLen"];
+    }
 
     // renderEditor: (columnProps: ISchemaTableColumnProps, attrs?: any): JSX.Element | JSX.Element[] => {
     //     return [
@@ -25,15 +34,15 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
     // }
 
 
-    dataTypeUserFriendly(parentReactComp: React.ReactElement<any>): React.ReactNode {
+    dataTypeUserFriendly(props: IStringSqlDataTypeProps,parentReactComp: React.ReactElement<any>): React.ReactNode {
         let maxLenStr = "(MAX)";
 
-        if (this.props.maxLen && this.props.maxLen > 0)
-            maxLenStr = "(" + this.props.maxLen + ")";
+        if (props.maxLen && props.maxLen > 0)
+            maxLenStr = "(" + props.maxLen + ")";
 
         return (
             <span
-                style={{color: "indianred"}}>{this.props.dataTypeName + maxLenStr}
+                style={{color: "indianred"}}>{this.getName() + maxLenStr}
             </span>
         );
     }

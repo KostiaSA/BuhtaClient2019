@@ -3,7 +3,7 @@ import {StringSqlDataType} from "./StringSqlDataType";
 import {IntegerSqlDataType} from "./IntegerSqlDataType";
 
 export function registerSqlDataTypes(){
-    appState.sqlDataTypes["целое"] = IntegerSqlDataType;
-    appState.sqlDataTypes["строка"] = StringSqlDataType;
+    appState.sqlDataTypes[IntegerSqlDataType.id] = new IntegerSqlDataType();
+    appState.sqlDataTypes[StringSqlDataType.id] = new StringSqlDataType();
 
 }

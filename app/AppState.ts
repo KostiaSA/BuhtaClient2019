@@ -6,7 +6,7 @@ export class AppState {
 
     public desktop: Desktop;
 
-    public sqlDataTypes: { [name: string]: typeof BaseSqlDataType } = {};
+    public sqlDataTypes: { [name: string]: BaseSqlDataType } = {};
 
     async start() {
         registerSqlDataTypes();

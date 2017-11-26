@@ -10,10 +10,21 @@ export interface IIntegerSqlDataTypeProps extends IBaseSqlDataTypeProps {
 
 export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps> {
 
-    dataTypeUserFriendly(parentReactComp: React.ReactElement<any>): React.ReactNode {
+    public static id = "Integer";
+
+    getPropsNames(): string[] {
+        return [...super.getPropsNames(),"size", "unsigned", "autoIncrement"];
+    }
+
+    getName(): string {
+        return "Целое";
+    }
+
+
+    dataTypeUserFriendly(props: IIntegerSqlDataTypeProps, parentReactComp: React.ReactElement<any>): React.ReactNode {
         return (
             <span
-                style={{color: "teal"}}>{(this.props.unsigned ? "+" : "") + "целое" + this.props.size + (this.props.autoIncrement ? ", autoInc" : "")}
+                style={{color: "teal"}}>{(props.unsigned ? "+" : "") + this.getName() + props.size + (props.autoIncrement ? ", autoInc" : "")}
             </span>
         );
 

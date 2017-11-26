@@ -1,29 +1,34 @@
-import {ISchemaObjectClassInfo, SchemaObject} from "../SchemaObject";
-import {ISchemaTableProps} from "./ISchemaTableProps";
-//import {appState} from "../../AppState";
-import {isString} from "util";
-//import {SchemaHelper} from "../SchemaHelper";
-//import {SchemaPage} from "../SchemaPage";
-//import {ISchemaTableRow, SchemaTableRow} from "./SchemaTableRow";
-//import {CoreConst} from "../../CoreConst";
-//import {tableGetRowApiRequest} from "./api/tableGetRowApiRequest";
-import {ISchemaTableColumnProps} from "./ISchemaTableColumnProps";
-//import {SchemaDatabase} from "../database/SchemaDatabase";
+import {ISchemaObjectClassInfo, ISchemaObjectProps, SchemaObject} from "../SchemaObject";
+import {IBaseSqlDataTypeProps} from "./datatypes/BaseSqlDataType";
 
 
-export interface ISchemaTableClassInfo extends ISchemaObjectClassInfo<typeof SchemaTable> {
-
+export interface ISchemaTableProps extends ISchemaObjectProps {
+    sqlName?: string;
+    columns: ISchemaTableColumnProps[];
+    //  editOptions?: ISchemaTableEditOptions;
 }
+
+export interface ISchemaTableColumnProps {
+    name: string;
+    primaryKey?: boolean;
+    description?: string;
+    position?: number;
+    notNull?:boolean,
+    dataType: IBaseSqlDataTypeProps;
+
+    //formInputOptions?: IFormInputOptions;
+}
+
 
 export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements ISchemaTableRow {
 
-    static classInfo: ISchemaTableClassInfo = {
-        title: "Таблица",
-        description: "Sql - таблица",
-        className: "platform-core:SchemaTable",
-        constructor: SchemaTable,
-        recordIdPrefix: "schema-table",
-    };
+    // static classInfo: ISchemaTableClassInfo = {
+    //     title: "Таблица",
+    //     description: "Sql - таблица",
+    //     className: "platform-core:SchemaTable",
+    //     constructor: SchemaTable,
+    //     recordIdPrefix: "schema-table",
+    // };
 
     getColumnByName(colName: string): ISchemaTableColumnProps | undefined {
         if (this.props.columns) {

@@ -1,21 +1,21 @@
 import * as  React from "react";
 import {CSSProperties} from "react";
-import * as PropTypes from "prop-types";
-import {Component, IComponentProps} from "../Component";
 import {omit} from "../../utils/omit";
 import {objectPathGet} from "../../utils/objectPathGet";
-import {stringify} from "ejson";
 import {objectPathSet} from "../../utils/objectPathSet";
 import {BaseInput, IBaseInputProps} from "./BaseInput";
 
 
-export interface IInputProps extends IBaseInputProps {
+export interface IComboBoxProps extends IBaseInputProps {
     height?: string | number;
     width?: string | number;
     placeHolder?: string;
+    displayMember?: string;
+    valueMember?: string;
+    source?: any;
 }
 
-export class Input extends BaseInput<IInputProps> {
+export class ComboBox extends BaseInput<IComboBoxProps> {
 
     constructor(props: any, context: any) {
         super(props, context);
@@ -25,8 +25,8 @@ export class Input extends BaseInput<IInputProps> {
     componentDidMount() {
         this.widget = $("#" + this.$id);
         this.updateProps(this.props, true);
-        this.initialValue = objectPathGet(this.props.bindObj || this.context.bindObj, this.props.bindProp);
-        this.widget.jqxInput("val", this.initialValue);
+        this.initialValue = objectPathGet(this.bindObj, this.props.bindProp);
+        this.widget.jqxComboBox("val", this.initialValue);
         this.widget.on("change",
             (event: any) => {
                 objectPathSet(this.bindObj, this.props.bindProp, this.widget.val());
@@ -35,25 +35,26 @@ export class Input extends BaseInput<IInputProps> {
             });
     }
 
-    updateProps(props: IInputProps, create: boolean) {
+    updateProps(props: IComboBoxProps, create: boolean) {
         let opt: any = omit(props, ["bindObj", "bindProp", "title", "children"]);
 
+        opt.animationType = "none";
         opt.height = opt.height || 24;
         opt.width = opt.width || 200;
 
-        this.widget.jqxInput(opt);
+        this.widget.jqxComboBox(opt);
     }
 
 
-    render() {
-        console.log("render Input");
+    render(): React.ReactNode {
+        console.log("render Combobox");
 
         let style: CSSProperties = {};
         if (this.isChanged)
             style.color = "#2196F3";
 
         return (
-            <input id={this.$id} style={style} type="text"/>
+            <div id={this.$id} style={style}/>
         )
     }
 

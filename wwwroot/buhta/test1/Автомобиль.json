@@ -1,22 +1,21 @@
 ﻿{
     "className": "SchemaTable",
     "name": "Ав2233том22222222t2t2обиль333==--99+\"'",
-    "description": "Список аwвwwт2ом323обилей2",
+    "description": "Список 1",
     "columns": [{
         "name": "Ключ",
         "primaryKey": true,
         "dataType": {
-            "className": "IntegerSqlDataType",
-            "size": "32"
+            "id": "String"
         },
-        "description": "pos 0"
+        "description": "pos 01"
     }, {
         "name": "Марка",
         "dataType": {
-            "className": "StringSqlDataType",
+            "id": "String",
             "maxLen": 100
         },
-        "description": "pos 1"
+        "description": "pos 11"
     }, {
         "name": "Госномер2ooooooooooo",
         "dataType": {

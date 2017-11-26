@@ -14,10 +14,10 @@ import {Button} from "../ui/Button";
 import {SchemaTableColumnEditorWindow} from "./SchemaTableColumnEditorWindow";
 import {clone} from "ejson";
 import {Keycode} from "../utils/Keycode";
-import {ISchemaTableProps} from "../schema/table/ISchemaTableProps";
 import {loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
 import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
 import {getErrorWindow, showError} from "../ui/modals/showError";
+import {ISchemaTableProps} from "../schema/table/SchemaTable";
 
 
 export interface ISchemaTableDesignerProps {

@@ -4,13 +4,13 @@ import {TabsPanel} from "../ui/TabsPanel";
 import {TabsPanelItem} from "../ui/TabsPanelItem";
 import {omit} from "../utils/omit";
 import {FormPanel} from "../ui/FormPanel";
-import {FormPanelItem} from "../ui/FormPanelItem";
 import {Input} from "../ui/inputs/Input";
 import {FlexHPanel} from "../ui/FlexHPanel";
 import {FlexItem} from "../ui/FlexItem";
 import {Button} from "../ui/Button";
-import {ISchemaTableProps} from "../schema/table/ISchemaTableProps";
-import {ISchemaTableColumnProps} from "../schema/table/ISchemaTableColumnProps";
+import {ISchemaTableColumnProps, ISchemaTableProps} from "../schema/table/SchemaTable";
+import {ComboBox} from "../ui/inputs/ComboBox";
+import {appState} from "../AppState";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -24,6 +24,15 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
     window: Window;
 
     form1: FormPanel | null;
+
+    getDataTypesSource(): any[] {
+        let ret: any[] = [];
+        for (let dataTypeId in appState.sqlDataTypes) {
+            ret.push({id: dataTypeId, name: appState.sqlDataTypes[dataTypeId].getName()});
+        }
+        console.log("ret===========", ret);
+        return ret;
+    }
 
     render() {
         console.log("SchemaTableColumnEditorWindow");
@@ -50,12 +59,17 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                                     ref={(e) => this.form1 = e}
                                     bindObj={this.props.column}
                                 >
-                                    <FormPanelItem title="name">
-                                        <Input bindProp="name" placeHolder="имя колонки"/>
-                                    </FormPanelItem>
-                                    <FormPanelItem title="описание">
-                                        <Input bindProp="description" placeHolder="описание колонки"/>
-                                    </FormPanelItem>
+                                    <Input title="name" bindProp="name" placeHolder="имя колонки" width={300}/>
+                                    <Input title="описание" bindProp="description" placeHolder="описание колонки"
+                                           width={400}/>
+                                    <ComboBox
+                                        title="тип данных"
+                                        bindProp="dataType.id"
+                                        placeHolder="тип данных"
+                                        valueMember="id"
+                                        displayMember="name"
+                                        source={this.getDataTypesSource()}
+                                    />
                                 </FormPanel>
                             </TabsPanelItem>
 
@@ -82,6 +96,11 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                             imgSrc="vendor/fugue/disk.png" text="Сохранить"
                             style={{marginRight: 5}}
                             onClick={async () => {
+
+                                // удаление лишних props
+                                let dt = appState.sqlDataTypes[this.props.column!.dataType.id];
+                                this.props.column!.dataType = dt.copyProps(this.props.column!.dataType);
+
                                 this.window.close(true);
                             }}
                         />

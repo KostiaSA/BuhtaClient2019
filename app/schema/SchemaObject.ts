@@ -1,7 +1,12 @@
-import {ISchemaObjectProps} from "./ISchemaObject";
-//import {saveSchemaObjectApiRequest} from "./api/saveSchemaObjectApiRequest";
 import {IClassInfo} from "./IClassInfo";
-//import {ISchemaTableEditOptions} from "./table/ISchemaTableEditOptions";
+
+export interface ISchemaObjectProps {
+    id: string;
+    name: string;
+    className:string;
+    description:string;
+}
+
 
 export interface ISchemaObjectClassInfo<T> extends IClassInfo<T> {
     //designerUrl: string;

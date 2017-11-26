@@ -3,7 +3,7 @@ import * as React from "react";
 export type SqlDialect = "mysql" | "postgres" | "mssql";
 
 export interface IBaseSqlDataTypeProps {
-    dataTypeName: string;
+    id: string;
 }
 
 
@@ -13,15 +13,32 @@ export interface IBaseSqlDataTypeProps {
 // }
 
 
-export class BaseSqlDataType<P extends IBaseSqlDataTypeProps> {
-    props: P;
+export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypeProps> {
+    //props: P;
 
     // static renderEditor(columnProps: ISchemaTableColumnProps, attrs?: any): JSX.Element | JSX.Element[] {
     //     return null as any;
     // }
 
-    dataTypeUserFriendly(parentReactComp: React.ReactElement<any>): React.ReactNode {
-        return <span>{this.props.dataTypeName}</span>;
+    getPropsNames(): string[] {
+        return ["id"];
+    }
+
+    getName(): string {
+        return "?";
+    }
+
+    copyProps(props: any): P {
+        let ret: any = {};
+        for (let propName of this.getPropsNames()) {
+            ret[propName] = props[propName];
+        }
+        return ret;
+    }
+
+
+    dataTypeUserFriendly(props: P, parentReactComp: React.ReactElement<any>): React.ReactNode {
+        return <span>{this.getName()}</span>;
     }
 
 }
