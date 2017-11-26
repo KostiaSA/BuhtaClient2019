@@ -6,14 +6,15 @@
         "name": "Ключ",
         "primaryKey": true,
         "dataType": {
-            "id": "String"
+            "id": "Integer",
+            "size": "32"
         },
         "description": "pos 01"
     }, {
         "name": "Марка",
         "dataType": {
             "id": "String",
-            "maxLen": 100
+            "maxLen": "1001"
         },
         "description": "pos 11"
     }, {
@@ -39,8 +40,8 @@
     }, {
         "name": "Номер и название2",
         "dataType": {
-            "className": "StringSqlDataType",
-            "maxLen": 117
+            "id": "String",
+            "maxLen": "501"
         },
         "description": "pos 52222222"
     }, {

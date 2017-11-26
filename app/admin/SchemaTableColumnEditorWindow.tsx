@@ -31,9 +31,25 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
         for (let dataTypeId in appState.sqlDataTypes) {
             ret.push({id: dataTypeId, name: appState.sqlDataTypes[dataTypeId].getName()});
         }
-        console.log("ret===========", ret);
         return ret;
     }
+
+    renderDataTypeEditors(): React.ReactNode {
+        let ret: React.ReactNode[] = [];
+        for (let dataTypeId in appState.sqlDataTypes) {
+            let dt = appState.sqlDataTypes[dataTypeId];
+            ret.push(dt.renderPropsEditors(this.props.column!.dataType));
+        }
+        return ret;
+    }
+
+    handleDataTypeChange = async () => {
+        // let col = this.props.column!;
+        // let dt = appState.sqlDataTypes[col.dataType.id];
+        // dt.setDefaultProps(col.dataType);
+        this.forceUpdate();
+        //console.log("handleDataTypeChange");
+    };
 
     render() {
         console.log("SchemaTableColumnEditorWindow");
@@ -43,8 +59,8 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
         }
         if (!col.dataType.id) {
             col.dataType.id = StringSqlDataType.id;
-            let dt = appState.sqlDataTypes[StringSqlDataType.id];
-            dt.setDefaultProps(col.dataType);
+            // let dt = appState.sqlDataTypes[StringSqlDataType.id];
+            // dt.setDefaultProps(col.dataType);
         }
 
         return (
@@ -74,13 +90,15 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                                     <Input title="описание" bindProp="description" placeHolder="описание колонки"
                                            width={400}/>
                                     <ComboBox
-                                        title="тип данных"
+                                        title="тип данных sql"
                                         bindProp="dataType.id"
                                         placeHolder="тип данных"
                                         valueMember="id"
                                         displayMember="name"
                                         source={this.getDataTypesSource()}
+                                        onChange={this.handleDataTypeChange}
                                     />
+                                    {this.renderDataTypeEditors()}
                                 </FormPanel>
                             </TabsPanelItem>
 

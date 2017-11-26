@@ -28,21 +28,31 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
         this.initialValue = objectPathGet(this.bindObj, this.props.bindProp);
         this.widget.jqxComboBox("val", this.initialValue);
         this.widget.on("change",
-            (event: any) => {
+            async (event: any) => {
                 objectPathSet(this.bindObj, this.props.bindProp, this.widget.val());
+                if (this.props.onChange) {
+                    await this.props.onChange();
+                }
                 this.forceUpdate();
                 console.log("change");
             });
+        this.widget.find("input").css("color",this.widget.css("color"));
+    }
+
+    componentDidUpdate() {
+        this.widget.find("input").css("color",this.widget.css("color"));
     }
 
     updateProps(props: IComboBoxProps, create: boolean) {
-        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children"]);
+        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden"]);
 
         opt.animationType = "none";
+        opt.autoDropDownHeight = true;
         opt.height = opt.height || 24;
         opt.width = opt.width || 200;
 
         this.widget.jqxComboBox(opt);
+
     }
 
 

@@ -39,7 +39,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
             <SchemaTableColumnEditorWindow
                 table={this.table}
                 column={editedColumn}
-                window={{height: 300, width: 400}}
+                window={{height: 500, width: 600}}
             />
         );
         if (resultOk) {

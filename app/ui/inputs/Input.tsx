@@ -1,10 +1,7 @@
 import * as  React from "react";
 import {CSSProperties} from "react";
-import * as PropTypes from "prop-types";
-import {Component, IComponentProps} from "../Component";
 import {omit} from "../../utils/omit";
 import {objectPathGet} from "../../utils/objectPathGet";
-import {stringify} from "ejson";
 import {objectPathSet} from "../../utils/objectPathSet";
 import {BaseInput, IBaseInputProps} from "./BaseInput";
 
@@ -28,15 +25,18 @@ export class Input extends BaseInput<IInputProps> {
         this.initialValue = objectPathGet(this.props.bindObj || this.context.bindObj, this.props.bindProp);
         this.widget.jqxInput("val", this.initialValue);
         this.widget.on("change",
-            (event: any) => {
+            async (event: any) => {
                 objectPathSet(this.bindObj, this.props.bindProp, this.widget.val());
+                if (this.props.onChange) {
+                    await this.props.onChange();
+                }
                 this.forceUpdate();
                 console.log("change");
             });
     }
 
     updateProps(props: IInputProps, create: boolean) {
-        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children"]);
+        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden"]);
 
         opt.height = opt.height || 24;
         opt.width = opt.width || 200;

@@ -59,7 +59,7 @@ export class FormPanel extends Component<IFormPanelProps> {
     renderItems(): React.ReactNode {
         return React.Children.toArray(this.props.children).map((child, index) => {
             return (
-                <tr key={index}>
+                <tr key={index} style={{display: (child as any).props.hidden ? "none" : undefined}}>
                     <td>
                         <div style={{textAlign: "right", paddingRight: 8, height: (child as any).props.height}}>
                             {(child as any).props.title || (child as any).props.bindProp}

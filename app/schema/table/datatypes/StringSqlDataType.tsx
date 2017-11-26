@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
+import {Input} from "../../../ui/inputs/Input";
 
 export interface IStringSqlDataTypeProps extends IBaseSqlDataTypeProps {
     maxLen?: number;
@@ -15,30 +16,27 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
     }
 
     getPropsNames(): string[] {
-        return [...super.getPropsNames(),"maxLen"];
+        return [...super.getPropsNames(), "maxLen"];
     }
 
     setDefaultProps(props: IStringSqlDataTypeProps) {
-        props.maxLen = 50;
+        props.maxLen = props.maxLen || 50;
     }
 
-    // renderEditor: (columnProps: ISchemaTableColumnProps, attrs?: any): JSX.Element | JSX.Element[] => {
-    //     return [
-    //         <FormInput
-    //             {...attrs}
-    //             mode="input"
-    //             label="длина"
-    //             bindProperty="dataType.maxLen"
-    //             defaultValue="50"
-    //             style={{maxWidth: 100}}
-    //             tooltip="ноль или пустое значение означает максимальную длину.."
-    //             rules={[{required: true, message: "тип данных должнен быть заполнен"}]}
-    //         />
-    //     ]
-    // }
+    renderPropsEditors(props: IStringSqlDataTypeProps): React.ReactNode {
+        this.setDefaultProps(props);
+        return (
+            <Input
+                title="макс. длина"
+                bindProp="dataType.maxLen"
+                placeHolder="макс. длина"
+                width={100}
+                hidden={props.id !== StringSqlDataType.id}
+            />
+        )
+    }
 
-
-    dataTypeUserFriendly(props: IStringSqlDataTypeProps,parentReactComp: React.ReactElement<any>): React.ReactNode {
+    dataTypeUserFriendly(props: IStringSqlDataTypeProps, parentReactComp: React.ReactElement<any>): React.ReactNode {
         let maxLenStr = "(MAX)";
 
         if (props.maxLen && props.maxLen > 0)

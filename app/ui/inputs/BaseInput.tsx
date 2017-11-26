@@ -1,11 +1,8 @@
 import * as  React from "react";
-import {CSSProperties} from "react";
 import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "../Component";
-import {omit} from "../../utils/omit";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {stringify} from "ejson";
-import {objectPathSet} from "../../utils/objectPathSet";
 
 
 export interface IBaseInputProps extends IComponentProps {
@@ -15,6 +12,8 @@ export interface IBaseInputProps extends IComponentProps {
     // placeHolder?: string;
     bindObj?: any;
     bindProp: string;
+    onChange?: () => Promise<void>;
+    hidden?: boolean;
 }
 
 export class BaseInput<P extends IBaseInputProps> extends Component<P> {
@@ -28,7 +27,7 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
         bindObj: PropTypes.object
     };
 
-    get bindObj():any{
+    get bindObj(): any {
         return this.props.bindObj || this.context.bindObj;
     }
 
@@ -64,7 +63,7 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
     // }
 
 
-    render():React.ReactNode {
+    render(): React.ReactNode {
         throw "BaseInput:abstract error";
     }
 
