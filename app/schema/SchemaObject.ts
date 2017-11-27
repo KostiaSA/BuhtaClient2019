@@ -1,5 +1,6 @@
 import {IClassInfo} from "./IClassInfo";
 import * as Joi from "joi";
+import {joiRus} from "../i18n/joiRus";
 
 export interface ISchemaObjectProps {
     id: string;
@@ -33,7 +34,8 @@ export class SchemaObject<T extends ISchemaObjectProps> {
 
 
     getValidator(): Joi.ObjectSchema {
-        return Joi.object().keys({
+
+        return Joi.object().options({language: joiRus}).keys({
             id: Joi.string().min(10).max(20),
             name: Joi.string().max(255),
             className: Joi.string().max(255),
