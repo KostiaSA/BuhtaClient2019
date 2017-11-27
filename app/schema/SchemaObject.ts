@@ -1,23 +1,49 @@
 import {IClassInfo} from "./IClassInfo";
+import * as Joi from "joi";
 
 export interface ISchemaObjectProps {
     id: string;
     name: string;
-    className:string;
-    description:string;
+    className: string;
+    description: string;
 }
+
+// export const SchemaObjectPropsValidator = Joi.object().keys({
+//     id: Joi.string().min(10).max(20),
+//     name: Joi.string().max(255),
+//     className: Joi.string().max(255),
+//     description: Joi.string().max(4096),
+// });
 
 
 export interface ISchemaObjectClassInfo<T> extends IClassInfo<T> {
     //designerUrl: string;
-    title:string;
-    description:string;
+    title: string;
+    description: string;
     designerPageId?: string;
     //editOptions?:ISchemaTableEditOptions;
 }
 
 export class SchemaObject<T extends ISchemaObjectProps> {
-    props: T = {} as any;
+    props: T;
+
+    constructor(props: T) {
+        this.props = props || {};
+    }
+
+
+    getValidator(): Joi.ObjectSchema {
+        return Joi.object().keys({
+            id: Joi.string().min(10).max(20),
+            name: Joi.string().max(255),
+            className: Joi.string().max(255),
+            description: Joi.string().max(4096),
+        })
+    };
+
+    validate(): Joi.ValidationResult<T> {
+        return Joi.validate<T>(this.props, this.getValidator());
+    }
 
 //    static className = "platform-core:SchemaObject";
 //    static designerUrl = "admin/schema-object-designer";

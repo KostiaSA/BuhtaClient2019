@@ -1,4 +1,5 @@
 import * as  React from "react";
+
 import {IWindowProps, Window} from "../ui/Window";
 import {TabsPanel} from "../ui/TabsPanel";
 import {TabsPanelItem} from "../ui/TabsPanelItem";
@@ -17,7 +18,7 @@ import {Keycode} from "../utils/Keycode";
 import {loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
 import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
 import {getErrorWindow, showError} from "../ui/modals/showError";
-import {ISchemaTableColumnProps, ISchemaTableProps} from "../schema/table/SchemaTable";
+import {ISchemaTableColumnProps, ISchemaTableProps, SchemaTable} from "../schema/table/SchemaTable";
 import {appState} from "../AppState";
 import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
 import {getConfirmation} from "../ui/modals/getConfirmation";
@@ -93,7 +94,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
 
         if (confirmed) {
             this.tableColumnsArray.splice(columnIndex, 1);
-            this.columnsGrid.selectRow(Math.min(columnIndex,this.tableColumnsArray.length-1));
+            this.columnsGrid.selectRow(Math.min(columnIndex, this.tableColumnsArray.length - 1));
         }
     };
 
@@ -113,6 +114,9 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
             else {
                 this.error = "не найден объект: " + this.props.tableId;
             }
+
+            let result = new SchemaTable(this.table).validate();
+            debugger
             this.forceUpdate();
 
         }

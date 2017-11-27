@@ -1,4 +1,5 @@
-import {ISchemaObjectClassInfo, ISchemaObjectProps, SchemaObject} from "../SchemaObject";
+import * as Joi from "joi";
+import {ISchemaObjectProps, SchemaObject} from "../SchemaObject";
 import {IBaseSqlDataTypeProps} from "./datatypes/BaseSqlDataType";
 
 
@@ -8,12 +9,20 @@ export interface ISchemaTableProps extends ISchemaObjectProps {
     //  editOptions?: ISchemaTableEditOptions;
 }
 
+// export const SchemaTablePropsValidator: Joi.JoiObject = SchemaObjectPropsValidator.keys({
+//     id: Joi.string().min(10).max(20),
+//     name:Joi.string().max(255),
+//     className:Joi.string().max(255),
+//     description:Joi.string().max(4096),
+// });
+
+
 export interface ISchemaTableColumnProps {
     name: string;
     primaryKey?: boolean;
     description?: string;
     position?: number;
-    notNull?:boolean,
+    notNull?: boolean,
     dataType: IBaseSqlDataTypeProps;
 
     //formInputOptions?: IFormInputOptions;
@@ -22,17 +31,22 @@ export interface ISchemaTableColumnProps {
 
 export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements ISchemaTableRow {
 
-    // static classInfo: ISchemaTableClassInfo = {
-    //     title: "Таблица",
-    //     description: "Sql - таблица",
-    //     className: "platform-core:SchemaTable",
-    //     constructor: SchemaTable,
-    //     recordIdPrefix: "schema-table",
-    // };
+    constructor(props: ISchemaTableProps) {
+        super(props);
+    }
+
+
+    getValidator(): Joi.ObjectSchema {
+        return super.getValidator().keys({
+            sqlName: Joi.string().max(128),
+            columns: Joi.array()
+        })
+    };
+
 
     getColumnByName(colName: string): ISchemaTableColumnProps | undefined {
         if (this.props.columns) {
-            let index = this.props.columns.findIndex((col:any) => col.name === colName);
+            let index = this.props.columns.findIndex((col: any) => col.name === colName);
             return this.props.columns[index];
         }
         else

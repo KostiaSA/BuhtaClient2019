@@ -11,6 +11,7 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "@types/ejson": "^2.1.2",
+    "@types/joi": "^13.0.0",
     "@types/jquery": "^3.2.16",
     "@types/moment": "^2.13.0",
     "@types/node": "^8.0.52",
@@ -18,13 +19,17 @@
     "@types/react": "^16.0.22",
     "@types/react-dom": "^16.0.3",
     "@types/uuid": "^3.4.3",
+    "@types/validator": "^6.3.0",
     "axios": "^0.17.1",
     "ejson": "^2.1.2",
+    "joi": "^13.0.2",
+    "joi-browser": "^13.0.1",
     "moment": "^2.19.2",
     "object-path": "^0.11.4",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "uuid": "^3.1.0",
+    "validator": "^9.1.2",
     "webpack": "^3.8.1"
   }
 }

@@ -23,7 +23,10 @@ module.exports = {
     // },
     //
     resolve: {
-        extensions: ["*.js", ".webpack.js", ".web.js", ".js"]
+        extensions: ["*.js", ".webpack.js", ".web.js", ".js"],
+        alias: {
+            joi: 'joi-browser'
+        }
     },
     plugins: [
         // Define production build to allow React to strip out unnecessary checks
@@ -64,6 +67,7 @@ module.exports = {
         //"codemirror": "CodeMirror",
         "jquery": "$",
         //"socket.io-client": "io",
+        "joi": "Joi",
         //"moment": "moment",
     }
 };
