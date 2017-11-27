@@ -26,7 +26,8 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
         this.widget = $("#" + this.$id);
         this.updateProps(this.props, true);
         this.initialValue = objectPathGet(this.bindObj, this.props.bindProp);
-        this.widget.jqxComboBox("val", this.initialValue);
+        if (this.initialValue)
+            this.widget.jqxComboBox("val", this.initialValue);
         this.widget.on("change",
             async (event: any) => {
                 objectPathSet(this.bindObj, this.props.bindProp, this.widget.val());
@@ -36,11 +37,11 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
                 this.forceUpdate();
                 console.log("change");
             });
-        this.widget.find("input").css("color",this.widget.css("color"));
+        this.widget.find("input").css("color", this.widget.css("color"));
     }
 
     componentDidUpdate() {
-        this.widget.find("input").css("color",this.widget.css("color"));
+        this.widget.find("input").css("color", this.widget.css("color"));
     }
 
     updateProps(props: IComboBoxProps, create: boolean) {

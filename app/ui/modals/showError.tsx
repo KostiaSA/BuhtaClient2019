@@ -4,7 +4,7 @@ import {appState} from "../../AppState";
 import {Button} from "../Button";
 import {FlexItem} from "../FlexItem";
 import {FlexHPanel} from "../FlexHPanel";
-import {sleep} from "../../utils/sleep";
+import {Keycode} from "../../utils/Keycode";
 
 export function getErrorWindow(message: React.ReactNode, title: string = "Ошибка"): React.ReactElement<any> {
     let w: Window;
@@ -19,6 +19,11 @@ export function getErrorWindow(message: React.ReactNode, title: string = "Оши
             maxWidth={600}
             width={300}
             ref={(e) => w = e!}
+            onKeyDown={async (keyCode: number) => {
+                if (keyCode === Keycode.Escape)
+                    w.close();
+            }}
+
         >
 
             <FlexHPanel>
@@ -45,5 +50,5 @@ export function getErrorWindow(message: React.ReactNode, title: string = "Оши
 }
 
 export async function showError(message: React.ReactNode, title: string = "Ошибка") {
-    await appState.desktop.openWindow(getErrorWindow(message,title));
+    await appState.desktop.openWindow(getErrorWindow(message, title));
 }

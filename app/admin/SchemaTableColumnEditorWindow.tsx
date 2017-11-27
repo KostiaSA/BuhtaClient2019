@@ -78,15 +78,16 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                     <FlexItem dock="top">
                         таблица: XXX
                     </FlexItem>
-                    <FlexItem dock="fill">
+                    <FlexItem dock="fill" >
                         <TabsPanel>
 
-                            <TabsPanelItem title="Колонка">
+                            <TabsPanelItem title="Колонка" style={{}}>
                                 <FormPanel
                                     ref={(e) => this.form1 = e}
                                     bindObj={this.props.column}
+
                                 >
-                                    <Input title="name" bindProp="name" placeHolder="имя колонки" width={300}/>
+                                    <Input title="имя" bindProp="name" placeHolder="имя колонки" width={300}/>
                                     <Input title="описание" bindProp="description" placeHolder="описание колонки"
                                            width={400}/>
                                     <ComboBox
@@ -102,7 +103,7 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                                 </FormPanel>
                             </TabsPanelItem>
 
-                            <TabsPanelItem title="XXX">
+                            <TabsPanelItem title="В списках">
                                 <FlexHPanel>
                                     <FlexItem dock="top" style={{padding: 5}}>
                                         фильтр по названию
@@ -114,7 +115,7 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                                 </FlexHPanel>
                             </TabsPanelItem>
 
-                            <TabsPanelItem title="YYY">
+                            <TabsPanelItem title="В формах">
                                 индексы контент
                             </TabsPanelItem>
 

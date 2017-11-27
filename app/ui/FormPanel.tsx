@@ -61,7 +61,12 @@ export class FormPanel extends Component<IFormPanelProps> {
             return (
                 <tr key={index} style={{display: (child as any).props.hidden ? "none" : undefined}}>
                     <td>
-                        <div style={{textAlign: "right", paddingRight: 8, height: (child as any).props.height}}>
+                        <div style={{
+                            textAlign: "right",
+                            paddingRight: 8,
+                            height: (child as any).props.height,
+                            color: "cadetblue"
+                        }}>
                             {(child as any).props.title || (child as any).props.bindProp}
                         </div>
                     </td>

@@ -24,6 +24,7 @@ export interface IWindowProps {
     maxWidth?: number;
 
     onClose?: (result: boolean) => void;
+    onKeyDown?: (keyCode: number) => Promise<void>;
 }
 
 export class Window extends Component<IWindowProps> {
@@ -50,6 +51,7 @@ export class Window extends Component<IWindowProps> {
         this.widget = $("#" + this.$id);
         //ReactDOM.render(<Div ref={(e)=>{this.content=e}}>{this.state.children}.......</Div>, document.getElementById(this.$contentId));
         this.updateProps(this.props);
+        this.widget.focus();
     }
 
     // componentDidUpdate() {
@@ -58,10 +60,12 @@ export class Window extends Component<IWindowProps> {
 
     updateProps(props: IWindowProps) {
         let opt: any = {
-            ...omit(this.props, ["id", "children", "left", "top", "icon", "onClose", "title"]),
+            ...omit(this.props, ["id", "children", "left", "top", "icon", "onClose", "title","onKeyDown"]),
             animationType: "none",
             modalOpacity: 0.2,
-            showCloseButton: false
+            showCloseButton: false,
+            keyboardNavigation: false,
+            keyboardCloseKey: 0
         };
         if (!opt.maxHeight) {
             opt.maxHeight = 3000;
@@ -83,6 +87,13 @@ export class Window extends Component<IWindowProps> {
         this.widget.on("close", () => {
             this.close();
         });
+        if (this.props.onKeyDown) {
+            this.widget.on("keydown", async (event: any) => {
+                await this.props.onKeyDown!(event.keyCode);
+                //console.log("keypress", event.keyCode);
+            });
+        }
+
     }
 
 

@@ -19,6 +19,8 @@ import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaOb
 import {getErrorWindow, showError} from "../ui/modals/showError";
 import {ISchemaTableColumnProps, ISchemaTableProps} from "../schema/table/SchemaTable";
 import {appState} from "../AppState";
+import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
+import {getConfirmation} from "../ui/modals/getConfirmation";
 
 
 export interface ISchemaTableDesignerProps {
@@ -31,8 +33,38 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
     saveButton: Button;
     closeButton: Button;
 
+    addColumnClickHandler = async () => {
+        let columnIndex = this.columnsGrid.getSelectedRowIndex();
+
+        let editedColumn: ISchemaTableColumnProps = {
+            name: "новая колонка",
+            dataType: {
+                id: StringSqlDataType.id
+            }
+        };
+        let dt = appState.sqlDataTypes[StringSqlDataType.id];
+        dt.setDefaultProps(editedColumn.dataType);
+
+        let resultOk = await this.window.openParentWindow(
+            <SchemaTableColumnEditorWindow
+                table={this.table}
+                column={editedColumn}
+                window={{height: 500, width: 600}}
+            />
+        );
+        if (resultOk) {
+            this.tableColumnsArray.push(editedColumn);
+            this.columnsGrid.selectRow(this.tableColumnsArray.length - 1);
+
+        }
+    };
+
     editColumnClickHandler = async () => {
         let columnIndex = this.columnsGrid.getSelectedRowIndex();
+        if (columnIndex < 0) {
+            await showError("колонка не выбрана");
+            return;
+        }
 
         let editedColumn = clone(this.tableColumnsArray.get(columnIndex));
 
@@ -45,6 +77,23 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
         );
         if (resultOk) {
             this.tableColumnsArray.set(columnIndex, editedColumn);
+        }
+    };
+
+    deleteColumnClickHandler = async () => {
+        let columnIndex = this.columnsGrid.getSelectedRowIndex();
+        if (columnIndex < 0) {
+            await showError("колонка не выбрана");
+            return;
+        }
+
+        let editedColumn = clone(this.tableColumnsArray.get(columnIndex));
+
+        let confirmed = await getConfirmation("Удалить колонку '" + editedColumn.name + "'?", "Удаление", "Удалить", "Отмена");
+
+        if (confirmed) {
+            this.tableColumnsArray.splice(columnIndex, 1);
+            this.columnsGrid.selectRow(Math.min(columnIndex,this.tableColumnsArray.length-1));
         }
     };
 
@@ -83,16 +132,11 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
             json: JSON.stringify(this.table)
         };
 
-        // this.saveButton.disable();
-        // this.closeButton.disable();
         try {
             await saveSchemaObjectFiles(req);
             this.window.close(true);
         }
         catch (err) {
-            // this.saveButton.enable();
-            // this.closeButton.enable();
-            //alert(err.toString());
             showError(err.toString());
         }
 
@@ -137,10 +181,10 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
 
                             <TabsPanelItem title="Таблица">
                                 <FlexHPanel>
-                                    <FlexItem dock="top" style={{padding: 5}}>
+                                    <FlexItem dock="top">
                                         таблица контент ЗАГОЛОВОК
                                     </FlexItem>
-                                    <FlexItem dock="fill" style={{padding: 5}}>
+                                    <FlexItem dock="fill">
                                         <FormPanel bindObj={this.table}>
                                             <FormPanelItem title="имя">
                                                 <Input bindObj={this.table} bindProp="name" placeHolder="имя таблицы"/>
@@ -152,7 +196,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                                    title={<span style={{color: "red"}}>SchemaObject:</span>}/>
                                         </FormPanel>
                                     </FlexItem>
-                                    <FlexItem dock="top" style={{padding: 5}}>
+                                    <FlexItem dock="top">
                                         таблица контент ФУТТЕР
                                     </FlexItem>
                                 </FlexHPanel>
@@ -160,10 +204,10 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
 
                             <TabsPanelItem title="Колонки">
                                 <FlexHPanel>
-                                    <FlexItem dock="top" style={{padding: 5}}>
+                                    <FlexItem dock="top">
                                         фильтр по названию
                                     </FlexItem>
-                                    <FlexItem dock="fill" style={{padding: 5}}>
+                                    <FlexItem dock="fill">
                                         <Grid
                                             ref={(e) => {
                                                 this.columnsGrid = e!
@@ -171,8 +215,16 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                             source={this.tableColumnsArray}
                                             onRowDoubleClick={this.editColumnClickHandler}
                                             onRowKeyDown={(rowIndex, keyCode) => {
-                                                if (keyCode === Keycode.Enter) {
+                                                if (keyCode === Keycode.Insert) {
+                                                    this.addColumnClickHandler();
+                                                    return true;
+                                                }
+                                                else if (keyCode === Keycode.Enter) {
                                                     this.editColumnClickHandler();
+                                                    return true;
+                                                }
+                                                else if (keyCode === Keycode.Delete) {
+                                                    this.deleteColumnClickHandler();
                                                     return true;
                                                 }
                                                 else
@@ -184,14 +236,29 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                             <GridColumn text="Описание" datafield="description"/>
                                         </Grid>
                                     </FlexItem>
-                                    <FlexItem dock="bottom" style={{padding: 5, height: 38}}>
-                                        <Button imgSrc="vendor/fugue/plus.png" text="Добавить колонку" height={26}
-                                                style={{marginRight: 5, marginTop: 8}}/>
-                                        <Button imgSrc="vendor/fugue/card--pencil.png" text="Изменить" height={26}
-                                                style={{marginRight: 5, marginTop: 8}}
-                                                onClick={() => this.editColumnClickHandler()}/>
-                                        <Button imgSrc="vendor/fugue/cross.png" text="Удалить" height={26}
-                                                style={{marginRight: 5, marginTop: 8}}/>
+                                    <FlexItem dock="bottom" style={{paddingTop: 8, paddingBottom: 10}}>
+                                        <Button imgSrc="vendor/fugue/plus.png"
+                                                text="Добавить колонку"
+                                                tooltip="добавить новую колонку (ESC)"
+                                                height={26}
+                                                style={{marginRight: 5}}
+                                                onClick={this.addColumnClickHandler}
+                                        />
+                                        <Button imgSrc="vendor/fugue/card--pencil.png"
+                                                text="Изменить"
+                                                tooltip="редактировать колонку (ENTER)"
+                                                height={26}
+                                                style={{marginRight: 5}}
+                                                onClick={this.editColumnClickHandler}
+                                        />
+                                        <Button imgSrc="vendor/fugue/cross.png"
+                                                text="Удалить"
+                                                tooltip="удалить колонку (DEL)"
+                                                height={26}
+                                                style={{marginRight: 5}}
+                                                onClick={this.deleteColumnClickHandler}
+
+                                        />
                                     </FlexItem>
                                 </FlexHPanel>
                             </TabsPanelItem>

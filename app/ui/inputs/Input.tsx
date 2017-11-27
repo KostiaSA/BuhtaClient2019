@@ -22,8 +22,9 @@ export class Input extends BaseInput<IInputProps> {
     componentDidMount() {
         this.widget = $("#" + this.$id);
         this.updateProps(this.props, true);
-        this.initialValue = objectPathGet(this.props.bindObj || this.context.bindObj, this.props.bindProp);
-        this.widget.jqxInput("val", this.initialValue);
+        this.initialValue = objectPathGet(this.bindObj, this.props.bindProp);
+        if (this.initialValue)
+            this.widget.jqxInput("val", this.initialValue);
         this.widget.on("change",
             async (event: any) => {
                 objectPathSet(this.bindObj, this.props.bindProp, this.widget.val());

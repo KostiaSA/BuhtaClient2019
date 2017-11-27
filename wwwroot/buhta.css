@@ -1,3 +1,12 @@
+::-webkit-input-placeholder { /* Chrome */
+    color: #c7c7c7;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    color: #c7c7c7;
+    opacity: 1;
+}
+
 .jqx-cell {
     min-height: 23px;
     padding: 1px 3px;
@@ -6,6 +15,9 @@
 .jqx-button {
     padding: 4px;
 }
+/*.jqx-button:focus {*/
+    /*border-color: dodgerblue;*/
+/*}*/
 
 .jqx-window.jqx-widget-content {
     border-color: rgba(33, 115, 70, 0.60);
@@ -20,7 +32,6 @@
 .jqx-window.jqx-fill-state-disabled {
     opacity: 1;
 }
-
 
 .jqx-tree-item {
     padding-bottom: 0px;

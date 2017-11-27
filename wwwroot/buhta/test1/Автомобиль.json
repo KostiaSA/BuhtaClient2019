@@ -7,7 +7,7 @@
         "primaryKey": true,
         "dataType": {
             "id": "Integer",
-            "size": "32"
+            "size": "16"
         },
         "description": "pos 01"
     }, {
@@ -34,8 +34,8 @@
     }, {
         "name": "Грузоподъемность",
         "dataType": {
-            "className": "IntegerSqlDataType",
-            "size": "32"
+            "id": "String",
+            "maxLen": 50
         },
         "description": "pos 4"
     }, {
@@ -62,8 +62,8 @@
     }, {
         "name": "Номер",
         "dataType": {
-            "id": "String",
-            "maxLen": 20
+            "id": "Integer",
+            "size": "32"
         },
         "description": "pos 8"
     }, {
@@ -73,6 +73,12 @@
             "maxLen": "108"
         },
         "description": "pos 9"
+    }, {
+        "name": "новая колонка22",
+        "dataType": {
+            "id": "String",
+            "maxLen": 50
+        }
     }],
-    "note": "222w2e="
+    "note": "222w2e=111"
 }

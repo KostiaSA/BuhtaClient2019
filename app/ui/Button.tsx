@@ -9,6 +9,8 @@ export interface IButtonProps extends IComponentProps {
     text?: string;
     height?: string | number;
     width?: string | number;
+    tooltip?: string;
+    tabIndex?: number;
     imgSrc?: string;
     imgPosition?: "left" | "top" | "center" | "bottom" | "right" | "topLeft" | "bottomLeft" | "topRight" | "bottomRight";
     textImageRelation?: "imageBeforeText" | "imageAboveText" | "textAboveImage" | "textBeforeImage" | "overlay";
@@ -35,7 +37,7 @@ export class Button extends Component<IButtonProps> {
     }
 
     updateProps(props: IButtonProps) {
-        let opt: any = omit(this.props, ["children", "text", "style", "onClick"]);
+        let opt: any = omit(this.props, ["children", "text", "style", "onClick", "tabIndex","autoFocus","tooltip"]);
 
         opt.imgPosition = opt.imgPosition || "left";
         opt.textImageRelation = opt.textImageRelation || "imageBeforeText";
@@ -83,7 +85,12 @@ export class Button extends Component<IButtonProps> {
     render() {
         console.log("render Button");
         return (
-            <input id={this.$id} type="button" style={{display: "inline-block", ...this.props.style,}}>
+            <input
+                id={this.$id}
+                type="button"
+                title={this.props.tooltip}
+                tabIndex={this.props.tabIndex}
+                style={{display: "inline-block", ...this.props.style,}}>
                 {this.props.children}
             </input>
         )
