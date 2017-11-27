@@ -1,7 +1,7 @@
 export const joiRus={
 
     any: {
-        unknown: 'is not allowed',
+        unknown: 'неизвестное свойство',
         invalid: 'contains an invalid value',
         empty: 'is not allowed to be empty',
         required: 'is required',
@@ -72,7 +72,7 @@ export const joiRus={
         min: 'must have at least {{limit}} children',
         max: 'must have less than or equal to {{limit}} children',
         length: 'must have {{limit}} children',
-        allowUnknown: '!!"{{!child}}" is not allowed',
+        allowUnknown: '!!"{{!child}}" неизвестное свойство',
         with: '!!"{{mainWithLabel}}" missing required peer "{{peerWithLabel}}"',
         without: '!!"{{mainWithLabel}}" conflict with forbidden peer "{{peerWithLabel}}"',
         missing: 'must contain at least one of {{peersWithLabels}}',

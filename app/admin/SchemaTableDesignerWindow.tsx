@@ -116,7 +116,9 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
             }
 
             let result = new SchemaTable(this.table).validate();
-            debugger
+            if (result.error)
+                throw "Файл таблицы содержит ошибки:\n\n" + result.error.details.map((err)=>err.message).join("\n");
+
             this.forceUpdate();
 
         }

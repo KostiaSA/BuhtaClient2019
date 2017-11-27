@@ -5,9 +5,25 @@ import {Button} from "../Button";
 import {FlexItem} from "../FlexItem";
 import {FlexHPanel} from "../FlexHPanel";
 import {Keycode} from "../../utils/Keycode";
+import {isString} from "util";
 
 export function getErrorWindow(message: React.ReactNode, title: string = "Ошибка"): React.ReactElement<any> {
     let w: Window;
+
+    let renderMessage = (): React.ReactNode => {
+        if (isString(message))
+            // делаем многострочные сообщения
+            return (
+                <span>
+                    {message.toString().split("\n").map((str: string, index: number) => {
+                        return [<span key={index * 2}>{str}</span>, <br key={index * 2 + 1}/>];
+                    })}
+                </span>
+            );
+        else
+            return message;
+    };
+
     return (
         <Window
             title={title}
@@ -34,7 +50,7 @@ export function getErrorWindow(message: React.ReactNode, title: string = "Оши
                     justifyContent: "center",
                     overflow: "auto"
                 }}>
-                    {message}
+                    {renderMessage()}
                 </FlexItem>
                 <FlexItem dock="bottom" style={{padding: 5, justifyContent: "center"}}>
                     <Button

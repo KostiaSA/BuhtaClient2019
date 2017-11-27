@@ -44,7 +44,7 @@ export class SchemaObject<T extends ISchemaObjectProps> {
     };
 
     validate(): Joi.ValidationResult<T> {
-        return Joi.validate<T>(this.props, this.getValidator());
+        return Joi.validate<T>(this.props, this.getValidator(), {abortEarly: false});
     }
 
 //    static className = "platform-core:SchemaObject";
