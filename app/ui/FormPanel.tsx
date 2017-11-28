@@ -1,5 +1,6 @@
 import * as  React from "react";
 import * as PropTypes from "prop-types";
+import * as Joi from "joi";
 import {Component, IComponentProps} from "./Component";
 import {clone} from "ejson";
 import {reassignObject} from "../utils/reassignObject";
@@ -7,6 +8,7 @@ import {reassignObject} from "../utils/reassignObject";
 
 export interface IFormPanelProps extends IComponentProps {
     bindObj?: any;
+    validator?: Joi.ObjectSchema;
 }
 
 export class FormPanel extends Component<IFormPanelProps> {
@@ -17,23 +19,31 @@ export class FormPanel extends Component<IFormPanelProps> {
     }
 
     static childContextTypes = {
-        bindObj: PropTypes.object
+        bindObj: PropTypes.object,
+        validator: PropTypes.object
     };
 
     static contextTypes = {
         ...Component.contextTypes,
-        bindObj: PropTypes.object
+        bindObj: PropTypes.object,
+        validator: PropTypes.object
     };
 
     getChildContext(): any {
         return {
 //            ...super.getChildContext(),
-            bindObj: this.props.bindObj
+            bindObj: this.props.bindObj,
+            validator: this.props.validator
         };
     }
 
     get bindObj(): any {
         let ret = this.props.bindObj || this.context.bindObj;
+        return ret;
+    }
+
+    get validator(): any {
+        let ret = this.props.validator || this.context.validator;
         return ret;
     }
 

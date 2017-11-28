@@ -27,12 +27,17 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
     }
 
     static contextTypes = {
-        window: PropTypes.object,
-        bindObj: PropTypes.object
+        ...Component.contextTypes,
+        bindObj: PropTypes.object,
+        validator: PropTypes.object,
     };
 
     get bindObj(): any {
         return this.props.bindObj || this.context.bindObj;
+    }
+
+    get validator(): Joi.ObjectSchema {
+        return this.props.validator || this.context.validator;
     }
 
     get isChanged(): boolean {

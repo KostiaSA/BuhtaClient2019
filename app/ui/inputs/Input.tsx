@@ -31,8 +31,9 @@ export class Input extends BaseInput<IInputProps> {
                 if (this.props.onChange) {
                     await this.props.onChange();
                 }
-                if (this.props.validator) {
-                    this.validationResult = Joi.validate(this.bindObj, this.props.validator, {abortEarly: false});
+                if (this.validator) {
+                    this.validationResult = Joi.validate(this.bindObj, this.validator, {abortEarly: false});
+                    console.log("this.validationResult", this.validationResult)
                 }
 
                 this.forceUpdate();
@@ -55,19 +56,13 @@ export class Input extends BaseInput<IInputProps> {
             return null;
         }
         else {
-            // return (
-            //     <Tooltip
-            //         getPopupContainer={()=>{return findDOMNode(this.getWindow()) as any}}
-            //         overlayStyle={{color:"red"}} title={"здесь ошибка здесь ошибка здесь ошибка здесь ошибка здесь ошибка"} placement="right" autoAdjustOverflow={false} visible>
-            //         <img key={2} src="vendor/fugue/exclamation-red.png" title="жопа просто"/>
-            //     </Tooltip >
-            // )
             let errDetail = this.validationResult.error.details.find((detail: any) => detail.path.join(".") === this.props.bindProp);
             if (!errDetail)
                 return null;
-            console.log("this.validationResult", this.validationResult)
             return (
-                <span title={errDetail!.message}
+                <span
+                    key={2}
+                      title={errDetail!.message}
                       style={{
                           color: "crimson",
                           whiteSpace: "nowrap",
@@ -83,15 +78,16 @@ export class Input extends BaseInput<IInputProps> {
 
     render() {
         console.log("render Input");
+        let renderedValidationResult = this.renderValidationResult();
 
         let style: CSSProperties = {};
         if (this.isChanged)
             style.color = "#2196F3";
-        if (this.validationResult && this.validationResult.error)
+        if (renderedValidationResult)
             style.color = "crimson";
 
         return (
-            [<input key={1} id={this.$id} style={style} type="text"/>, this.renderValidationResult()]
+            [<input key={1} id={this.$id} style={style} type="text"/>, renderedValidationResult]
         )
     }
 

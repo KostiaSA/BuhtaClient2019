@@ -195,14 +195,14 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                         таблица контент ЗАГОЛОВОК
                                     </FlexItem>
                                     <FlexItem dock="fill">
-                                        <FormPanel bindObj={this.table}>
+                                        <FormPanel bindObj={this.table} validator={validator}>
 
                                             <Input
                                                 title="имя"
                                                 bindObj={this.table}
                                                 bindProp="name"
                                                 placeHolder="имя таблицы"
-                                                validator={validator}
+
                                             />
 
                                             <Input title="описание" bindProp="description"
