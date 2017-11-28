@@ -26,6 +26,7 @@ export class Grid extends Component<IGridProps> {
     }
 
     static contextTypes = {
+        ...Component.contextTypes,
         bindObj: PropTypes.object
     };
 
@@ -86,7 +87,7 @@ export class Grid extends Component<IGridProps> {
                             computedValue = escapeHtml(colProps.compute!(row));
                         }
                         catch (e) {
-                            computedValue = "<span style='color: indianred'>"+ escapeHtml("Ошибка в compute(): " + e.toString().substr(0, 40))+"</span>";
+                            computedValue = "<span style='color: indianred'>" + escapeHtml("Ошибка в compute(): " + e.toString().substr(0, 40)) + "</span>";
                             console.error("Ошибка в compute(): " + e.toString());
                         }
                         return defaultHtmlStart + computedValue + defaultHtmlEnd;
@@ -98,7 +99,10 @@ export class Grid extends Component<IGridProps> {
 
         if (this.props.onRowKeyDown)
             gridOptions.handlekeyboardnavigation = (event: any) => {
-                return this.props.onRowKeyDown!(this.getSelectedRowIndex(), event.keyCode);
+                if (this.getWindow().disabled)
+                    return false;
+                else
+                    return this.props.onRowKeyDown!(this.getSelectedRowIndex(), event.keyCode);
             };
 
         this.widget.jqxGrid(gridOptions);

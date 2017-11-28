@@ -38,7 +38,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     getColumnValidator(): Joi.ObjectSchema {
         return Joi.object().options({language: joiRus}).keys({
-            name: Joi.string().min(1).max(127).required(),
+            name: Joi.string().min(1).max(20).required(),
             primaryKey: Joi.boolean(),
             description: Joi.string().max(4096),
             notNull: Joi.boolean(),

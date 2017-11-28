@@ -18,14 +18,14 @@
         },
         "description": "pos 11"
     }, {
-        "name": "Госномер2ooooooooooo",
+        "name": "Госномер",
         "dataType": {
             "id": "Integer",
             "size": "32"
         },
         "description": "pos 2ppp88ppppppppp"
     }, {
-        "name": "Гаражный номер33333=11=89--",
+        "name": "Гаражный номер",
         "description": "pos 3",
         "dataType": {
             "id": "Integer",
@@ -39,7 +39,7 @@
         },
         "description": "pos 4"
     }, {
-        "name": "Номер и название2",
+        "name": "Номер и название",
         "dataType": {
             "id": "String",
             "maxLen": "501"

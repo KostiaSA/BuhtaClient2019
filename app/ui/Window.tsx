@@ -119,6 +119,7 @@ export class Window extends Component<IWindowProps> {
         this.forceUpdate();
     }
 
+
     enable() {
         this.widget.jqxWindow("enable");
         this.disabled = false;

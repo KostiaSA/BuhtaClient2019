@@ -8,7 +8,7 @@ import {Input} from "../ui/inputs/Input";
 import {FlexHPanel} from "../ui/FlexHPanel";
 import {FlexItem} from "../ui/FlexItem";
 import {Button} from "../ui/Button";
-import {ISchemaTableColumnProps, ISchemaTableProps} from "../schema/table/SchemaTable";
+import {ISchemaTableColumnProps, ISchemaTableProps, SchemaTable} from "../schema/table/SchemaTable";
 import {ComboBox} from "../ui/inputs/ComboBox";
 import {appState} from "../AppState";
 import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
@@ -64,6 +64,8 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
             // dt.setDefaultProps(col.dataType);
         }
 
+        let validator = new SchemaTable(this.props.table!).getColumnValidator();
+
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
@@ -79,14 +81,14 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                     <FlexItem dock="top">
                         таблица: XXX
                     </FlexItem>
-                    <FlexItem dock="fill" >
+                    <FlexItem dock="fill">
                         <TabsPanel>
 
                             <TabsPanelItem title="Колонка" style={{}}>
                                 <FormPanel
                                     ref={(e) => this.form1 = e}
                                     bindObj={this.props.column}
-
+                                    validator={validator}
                                 >
                                     <Input title="имя" bindProp="name" placeHolder="имя колонки" width={300}/>
                                     <Input title="описание" bindProp="description" placeHolder="описание колонки"
