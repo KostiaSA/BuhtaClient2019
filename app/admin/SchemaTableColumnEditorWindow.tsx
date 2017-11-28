@@ -12,6 +12,7 @@ import {ISchemaTableColumnProps, ISchemaTableProps} from "../schema/table/Schema
 import {ComboBox} from "../ui/inputs/ComboBox";
 import {appState} from "../AppState";
 import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
+import {config} from "../const/config";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -123,7 +124,8 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
                         <Button
-                            imgSrc="vendor/fugue/disk.png" text="Сохранить"
+                            imgSrc={config.button.saveIcon}
+                            text="Сохранить"
                             style={{marginRight: 5}}
                             onClick={async () => {
 
@@ -135,7 +137,7 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                             }}
                         />
                         <Button
-                            imgSrc="vendor/fugue/cross-script.png"
+                            imgSrc={config.button.cancelIcon}
                             text="Отмена"
                             onClick={async () => {
                                 //this.form1!.cancelChanges();

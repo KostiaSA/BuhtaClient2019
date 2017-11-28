@@ -137,6 +137,10 @@ export class Grid extends Component<IGridProps> {
         this.widget.jqxGrid("unselectrow", rowIndex);
     }
 
+    focus() {
+        this.widget.jqxGrid("focus");
+    }
+
     // getRowData(rowIndex: number) {
     //     this.props.source
     //     this.widget.jqxGrid("getrowdata", rowIndex);

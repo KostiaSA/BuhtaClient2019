@@ -5,6 +5,7 @@ import {Button} from "../Button";
 import {FlexItem} from "../FlexItem";
 import {FlexHPanel} from "../FlexHPanel";
 import {Keycode} from "../../utils/Keycode";
+import {config} from "../../const/config";
 
 export function getGetConfirmationWindow(message: React.ReactNode, title: string = "Подтверждение", yesButtonText: string = "Да", noButtonText: string = "Нет"): React.ReactElement<any> {
     let w: Window;
@@ -19,12 +20,18 @@ export function getGetConfirmationWindow(message: React.ReactNode, title: string
             maxWidth={600}
             width={300}
             ref={(e) => w = e!}
-            onKeyDown={async (keyCode: number) => {
-                if (keyCode===Keycode.Escape)
+            onKeyDown={async (keyCode: number): Promise<boolean> => {
+                if (keyCode === Keycode.Escape) {
                     w.close();
-                else
-                if (keyCode===Keycode.Enter)
+                    return true;
+                }
+                else if (keyCode === Keycode.Enter) {
                     w.close(true);
+                    return true;
+                }
+                else
+                    return false;
+
             }}
         >
 
@@ -41,16 +48,16 @@ export function getGetConfirmationWindow(message: React.ReactNode, title: string
                 </FlexItem>
                 <FlexItem dock="bottom" style={{padding: 5, justifyContent: "center"}}>
                     <Button
-                        imgSrc="vendor/fugue/tick.png"
+                        imgSrc={config.button.okIcon}
                         text={yesButtonText}
-                        tooltip={yesButtonText+" (ENTER)"}
+                        tooltip={yesButtonText + " (ENTER)"}
                         style={{marginRight: 10, border: "1px solid dodgerblue"}}
                         onClick={async () => w.close(true)}
                     />
                     <Button
-                        imgSrc="vendor/fugue/cross-script.png"
+                        imgSrc={config.button.cancelIcon}
                         text={noButtonText}
-                        tooltip={noButtonText+" (ESC)"}
+                        tooltip={noButtonText + " (ESC)"}
                         onClick={async () => w.close()}
                     />
                 </FlexItem>

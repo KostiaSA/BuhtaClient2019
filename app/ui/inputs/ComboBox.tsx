@@ -1,4 +1,5 @@
 import * as  React from "react";
+import * as Joi from "joi";
 import {CSSProperties} from "react";
 import {omit} from "../../utils/omit";
 import {objectPathGet} from "../../utils/objectPathGet";
@@ -34,8 +35,9 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
                 if (this.props.onChange) {
                     await this.props.onChange();
                 }
-                if (this.props.validator) {
-
+                if (this.validator) {
+                    this.validationResult = Joi.validate(this.bindObj, this.validator, {abortEarly: false});
+                    //console.log("this.validationResult", this.validationResult)
                 }
                 this.forceUpdate();
                 console.log("change");

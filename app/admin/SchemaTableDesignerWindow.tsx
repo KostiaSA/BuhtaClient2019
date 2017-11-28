@@ -21,6 +21,7 @@ import {ISchemaTableColumnProps, ISchemaTableProps, SchemaTable} from "../schema
 import {appState} from "../AppState";
 import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
 import {getConfirmation} from "../ui/modals/getConfirmation";
+import {config} from "../const/config";
 
 
 export interface ISchemaTableDesignerProps {
@@ -57,6 +58,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
             this.columnsGrid.selectRow(this.tableColumnsArray.length - 1);
 
         }
+        this.columnsGrid.focus();
     };
 
     editColumnClickHandler = async () => {
@@ -78,6 +80,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
         if (resultOk) {
             this.tableColumnsArray.set(columnIndex, editedColumn);
         }
+        this.columnsGrid.focus();
     };
 
     deleteColumnClickHandler = async () => {
@@ -95,6 +98,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
             this.tableColumnsArray.splice(columnIndex, 1);
             this.columnsGrid.selectRow(Math.min(columnIndex, this.tableColumnsArray.length - 1));
         }
+        this.columnsGrid.focus();
     };
 
     error: any;
@@ -253,21 +257,21 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                         </Grid>
                                     </FlexItem>
                                     <FlexItem dock="bottom" style={{paddingTop: 8, paddingBottom: 10}}>
-                                        <Button imgSrc="vendor/fugue/plus.png"
+                                        <Button imgSrc={config.button.insertRowIcon}
                                                 text="Добавить колонку"
                                                 tooltip="добавить новую колонку (ESC)"
                                                 height={26}
                                                 style={{marginRight: 5}}
                                                 onClick={this.addColumnClickHandler}
                                         />
-                                        <Button imgSrc="vendor/fugue/card--pencil.png"
+                                        <Button imgSrc={config.button.changeRowIcon}
                                                 text="Изменить"
                                                 tooltip="редактировать колонку (ENTER)"
                                                 height={26}
                                                 style={{marginRight: 5}}
                                                 onClick={this.editColumnClickHandler}
                                         />
-                                        <Button imgSrc="vendor/fugue/cross.png"
+                                        <Button imgSrc={config.button.deleteRowIcon}
                                                 text="Удалить"
                                                 tooltip="удалить колонку (DEL)"
                                                 height={26}
@@ -286,12 +290,12 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                         </TabsPanel>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
-                        <Button imgSrc="vendor/fugue/disk.png"
+                        <Button imgSrc={config.button.saveIcon}
                                 text="Сохранить"
                                 style={{marginRight: 5}}
                                 ref={(e) => this.saveButton = e!}
                                 onClick={this.handleClickSaveButton}/>
-                        <Button imgSrc="vendor/fugue/cross-script.png"
+                        <Button imgSrc={config.button.cancelIcon}
                                 text="Отмена"
                                 ref={(e) => this.closeButton = e!}
                                 onClick={this.handleClickCloseButton}/>

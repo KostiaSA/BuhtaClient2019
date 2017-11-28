@@ -5,6 +5,7 @@ import {ValidationResult} from "joi";
 import {Component, IComponentProps} from "../Component";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {stringify} from "ejson";
+import {config} from "../../const/config";
 
 
 export interface IBaseInputProps extends IComponentProps {
@@ -49,6 +50,34 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
 
     initialValue: any;
     validationResult: ValidationResult<any>;
+
+    renderValidationResult(): React.ReactNode {
+
+        if (!this.validationResult || !this.validationResult.error) {
+            return null;
+        }
+        else {
+            let errDetail = this.validationResult.error.details.find((detail: any) => detail.path.join(".") === this.props.bindProp);
+            if (!errDetail)
+                return null;
+            let errDetailMessage = (errDetail!.message.split(":")[1] || errDetail!.message).trim();
+            return (
+                <span
+                    key={2}
+                    title={errDetailMessage}
+                    style={{
+                        color: config.formPanel.errorMessageColor,
+                        whiteSpace: "nowrap",
+                        fontSize: config.formPanel.errorMessageFontSize,
+                        fontStyle: config.formPanel.errorMessageFontStyle,
+                        marginLeft: 3
+                    }}>
+                {" " + errDetailMessage.substr(0, config.formPanel.errorMessageMaxLength)}
+            </span>
+            )
+        }
+    }
+
 
     // componentDidMount() {
     //     this.widget = $("#" + this.$id);

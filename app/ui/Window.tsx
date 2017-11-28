@@ -24,7 +24,7 @@ export interface IWindowProps {
     maxWidth?: number;
 
     onClose?: (result: boolean) => void;
-    onKeyDown?: (keyCode: number) => Promise<void>;
+    onKeyDown?: (keyCode: number) => Promise<boolean>;
 }
 
 export class Window extends Component<IWindowProps> {
@@ -60,7 +60,7 @@ export class Window extends Component<IWindowProps> {
 
     updateProps(props: IWindowProps) {
         let opt: any = {
-            ...omit(this.props, ["id", "children", "left", "top", "icon", "onClose", "title","onKeyDown"]),
+            ...omit(this.props, ["id", "children", "left", "top", "icon", "onClose", "title", "onKeyDown"]),
             animationType: "none",
             modalOpacity: 0.2,
             showCloseButton: false,
@@ -89,7 +89,9 @@ export class Window extends Component<IWindowProps> {
         });
         if (this.props.onKeyDown) {
             this.widget.on("keydown", async (event: any) => {
-                await this.props.onKeyDown!(event.keyCode);
+                let resultOk = await this.props.onKeyDown!(event.keyCode);
+                if (resultOk)
+                    event.stopPropagation();
                 //console.log("keypress", event.keyCode);
             });
         }

@@ -5,6 +5,7 @@ import {omit} from "../../utils/omit";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {objectPathSet} from "../../utils/objectPathSet";
 import {BaseInput, IBaseInputProps} from "./BaseInput";
+import {config} from "../../const/config";
 
 export interface IInputProps extends IBaseInputProps {
     height?: string | number;
@@ -33,11 +34,11 @@ export class Input extends BaseInput<IInputProps> {
                 }
                 if (this.validator) {
                     this.validationResult = Joi.validate(this.bindObj, this.validator, {abortEarly: false});
-                    console.log("this.validationResult", this.validationResult)
+                    //console.log("this.validationResult", this.validationResult)
                 }
 
                 this.forceUpdate();
-                console.log("change");
+                //console.log("change");
             });
     }
 
@@ -50,41 +51,15 @@ export class Input extends BaseInput<IInputProps> {
         this.widget.jqxInput(opt);
     }
 
-    renderValidationResult(): React.ReactNode {
-
-        if (!this.validationResult || !this.validationResult.error) {
-            return null;
-        }
-        else {
-            let errDetail = this.validationResult.error.details.find((detail: any) => detail.path.join(".") === this.props.bindProp);
-            if (!errDetail)
-                return null;
-            return (
-                <span
-                    key={2}
-                      title={errDetail!.message}
-                      style={{
-                          color: "crimson",
-                          whiteSpace: "nowrap",
-                          fontSize: 12,
-                          fontStyle: "italic",
-                          marginLeft: 3
-                      }}>
-                {" " + errDetail!.message.substr(0, 50)}
-            </span>
-            )
-        }
-    }
-
     render() {
         console.log("render Input");
         let renderedValidationResult = this.renderValidationResult();
 
         let style: CSSProperties = {};
         if (this.isChanged)
-            style.color = "#2196F3";
+            style.color = config.formPanel.inputChangedColor;
         if (renderedValidationResult)
-            style.color = "crimson";
+            style.background = config.formPanel.errorInputBackground;
 
         return (
             [<input key={1} id={this.$id} style={style} type="text"/>, renderedValidationResult]

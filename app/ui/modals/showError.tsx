@@ -6,6 +6,7 @@ import {FlexItem} from "../FlexItem";
 import {FlexHPanel} from "../FlexHPanel";
 import {Keycode} from "../../utils/Keycode";
 import {isString} from "util";
+import {config} from "../../const/config";
 
 export function getErrorWindow(message: any, title: string = "Ошибка"): React.ReactElement<any> {
     let w: Window;
@@ -71,9 +72,13 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
             maxWidth={600}
             width={300}
             ref={(e) => w = e!}
-            onKeyDown={async (keyCode: number) => {
-                if (keyCode === Keycode.Escape)
+            onKeyDown={async (keyCode: number): Promise<boolean> => {
+                if (keyCode === Keycode.Escape) {
                     w.close();
+                    return true;
+                }
+                else
+                    return false;
             }}
 
         >
@@ -90,7 +95,7 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
                 </FlexItem>
                 <FlexItem dock="bottom" style={{padding: 5, justifyContent: "center"}}>
                     <Button
-                        imgSrc="vendor/fugue/cross-script.png"
+                        imgSrc={config.button.cancelIcon}
                         text="Закрыть"
                         onClick={async () => w.close()}/>
                 </FlexItem>

@@ -4,6 +4,7 @@ import * as Joi from "joi";
 import {Component, IComponentProps} from "./Component";
 import {clone} from "ejson";
 import {reassignObject} from "../utils/reassignObject";
+import {config} from "../const/config";
 
 
 export interface IFormPanelProps extends IComponentProps {
@@ -69,7 +70,11 @@ export class FormPanel extends Component<IFormPanelProps> {
     renderItems(): React.ReactNode {
         return React.Children.toArray(this.props.children).map((child, index) => {
             return (
-                <tr key={index} style={{display: (child as any).props.hidden ? "none" : undefined}}>
+                <tr key={index}
+                    style={{
+                        display: (child as any).props.hidden ? "none" : undefined
+                    }}
+                >
                     <td>
                         <div style={{
                             textAlign: "right",
@@ -80,7 +85,7 @@ export class FormPanel extends Component<IFormPanelProps> {
                             {(child as any).props.title || (child as any).props.bindProp}
                         </div>
                     </td>
-                    <td>
+                    <td style={{paddingTop: index > 0 ? config.formPanel.inputVerticalSpace : 0}}>
                         {child}
                     </td>
                 </tr>
