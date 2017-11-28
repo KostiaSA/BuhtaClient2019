@@ -5,7 +5,6 @@ import {TabsPanel} from "../ui/TabsPanel";
 import {TabsPanelItem} from "../ui/TabsPanelItem";
 import {omit} from "../utils/omit";
 import {FormPanel} from "../ui/FormPanel";
-import {FormPanelItem} from "../ui/FormPanelItem";
 import {Input} from "../ui/inputs/Input";
 import {FlexHPanel} from "../ui/FlexHPanel";
 import {FlexItem} from "../ui/FlexItem";
@@ -99,6 +98,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
     };
 
     error: any;
+    errorTitle: string;
     table: ISchemaTableProps;
     tableColumnsArray: any;
 
@@ -117,9 +117,10 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
 
             let result = new SchemaTable(this.table).validate();
             //debugger
-            if (result.error)
-                throw (<span>Файл таблицы содержит ошибки 888</span>)
-                //throw "Файл таблицы содержит ошибки:\n\n" + result.error.details.map((err)=>err.message).join("\n");
+            if (result.error) {
+                this.errorTitle = "Ошибка загрузки файла";
+                throw result.error;
+            }
 
             this.forceUpdate();
 
@@ -165,12 +166,13 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
     render() {
 
         if (this.error) {
-            return getErrorWindow(this.error);
-            //return <Window title="Ошибка"><span style={{color: "red"}}>ошибка: {this.error}</span></Window>
+            return getErrorWindow(this.error, this.errorTitle);
         }
 
         if (!this.table)
             return null;
+
+        let validator = new SchemaTable(this.table).getValidator();
 
         console.log("render SchemaTableDesignerWindow");
         return (
@@ -194,12 +196,18 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
                                     </FlexItem>
                                     <FlexItem dock="fill">
                                         <FormPanel bindObj={this.table}>
-                                            <FormPanelItem title="имя">
-                                                <Input bindObj={this.table} bindProp="name" placeHolder="имя таблицы"/>
-                                            </FormPanelItem>
-                                            <FormPanelItem title="описание">
-                                                <Input bindProp="description" placeHolder="введите sql имя таблицы"/>
-                                            </FormPanelItem>
+
+                                            <Input
+                                                title="имя"
+                                                bindObj={this.table}
+                                                bindProp="name"
+                                                placeHolder="имя таблицы"
+                                                validator={validator}
+                                            />
+
+                                            <Input title="описание" bindProp="description"
+                                                   placeHolder="введите sql имя таблицы"/>
+
                                             <Input width={400} bindProp="note" placeHolder="note"
                                                    title={<span style={{color: "red"}}>SchemaObject:</span>}/>
                                         </FormPanel>

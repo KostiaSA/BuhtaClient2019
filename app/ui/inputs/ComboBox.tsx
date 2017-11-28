@@ -34,6 +34,9 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
                 if (this.props.onChange) {
                     await this.props.onChange();
                 }
+                if (this.props.validator) {
+
+                }
                 this.forceUpdate();
                 console.log("change");
             });
@@ -45,7 +48,7 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
     }
 
     updateProps(props: IComboBoxProps, create: boolean) {
-        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden"]);
+        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator"]);
 
         opt.animationType = "none";
         opt.autoDropDownHeight = true;

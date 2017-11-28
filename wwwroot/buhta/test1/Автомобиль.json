@@ -1,7 +1,7 @@
 ﻿{
     "className": "Schema-----",
     "description": "Список 1",
-    "name": "Ав2233том22222222t2t2о",
+    "name": "Ав3456789012",
     "columns": [{
         "name": "Ключ",
         "primaryKey": true,
@@ -12,7 +12,6 @@
         "description": "pos 01"
     }, {
         "name": "Марка",
-        "name1": "Марка",
         "dataType": {
             "id": "String",
             "maxLen": "1001"

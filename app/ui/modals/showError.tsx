@@ -10,6 +10,7 @@ import {isString} from "util";
 export function getErrorWindow(message: any, title: string = "Ошибка"): React.ReactElement<any> {
     let w: Window;
 
+    //debugger
 
     let renderMultiline = (str: string): React.ReactNode => {
         // делаем многострочные сообщения
@@ -23,9 +24,29 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
 
     };
 
+    let renderJoi = (joiMessage: any): React.ReactNode => {
+        if (message.details && message.details.length > 0) {
+            return (
+                <div>
+                    {message.details.map((detail: any, index: number) => {
+                        let msg = detail.message.split(":")[1] || detail.message;
+                        return <div key={index}>"{detail.path.join(".")}" {msg}</div>
+                    })}
+                </div>
+            )
+        }
+        else
+            return message.toString();
+    };
+
+
     let renderMessage = (): React.ReactNode => {
-        if (message.$$typeof)
+        if (!message)
+            return "ошибка?";
+        else if (message.$$typeof)
             return message;
+        else if (message.isJoi)
+            return renderJoi(message);
         else if (isString(message))
             return renderMultiline(message);
         else if (isString(message.message))

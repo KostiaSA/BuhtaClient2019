@@ -61,9 +61,9 @@ module.exports = {
     // This is important because it allows us to avoid bundling all of our
     // dependencies, which allows browsers to cache those libraries between builds.
     externals: {
-        //"react": "React",
-        //"react-dom": "ReactDOM",
-        //"antd": "antd",
+        "react": "React",
+        "react-dom": "ReactDOM",
+        "antd": "antd",
         //"codemirror": "CodeMirror",
         "jquery": "$",
         //"socket.io-client": "io",

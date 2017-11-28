@@ -1,11 +1,11 @@
-export const joiRus={
+export const joiRus = {
 
     any: {
-        unknown: 'неизвестное свойство',
-        invalid: 'contains an invalid value',
-        empty: 'is not allowed to be empty',
-        required: 'is required',
-        allowOnly: 'must be one of {{valids}}',
+        unknown: ': неизвестное свойство',
+        invalid: ": неверное значение", //'contains an invalid value',
+        empty: ": не может быть пустым",//'is not allowed to be empty',
+        required: ': должно быть заполнено',
+        allowOnly: ": должно быть одно из {{valids}}", //'must be one of {{valids}}',
         default: 'threw an error when running default method'
     },
     alternatives: {
@@ -72,7 +72,7 @@ export const joiRus={
         min: 'must have at least {{limit}} children',
         max: 'must have less than or equal to {{limit}} children',
         length: 'must have {{limit}} children',
-        allowUnknown: '!!"{{!child}}" неизвестное свойство',
+        allowUnknown: '!!"{{!child}}": неизвестное свойство',
         with: '!!"{{mainWithLabel}}" missing required peer "{{peerWithLabel}}"',
         without: '!!"{{mainWithLabel}}" conflict with forbidden peer "{{peerWithLabel}}"',
         missing: 'must contain at least one of {{peersWithLabels}}',
@@ -108,9 +108,9 @@ export const joiRus={
     },
     string: {
         base: 'must be a string',
-        min: 'length must be at least {{limit}} characters long',
+        min: ": длина должна быть не менее {{limit}}",//'length must be at least {{limit}} characters long',
         max: ": превышена длина, максимум {{limit}}",//'length must be less than or equal to {{limit}} characters long',
-        length: 'length must be {{limit}} characters long',
+        length: ": длина должна быть {{limit}}",//'length must be {{limit}} characters long',
         alphanum: 'must only contain alpha-numeric characters',
         token: 'must only contain alpha-numeric and underscore characters',
         regex: {

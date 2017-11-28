@@ -49,7 +49,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     getValidator(): Joi.ObjectSchema {
         return super.getValidator().keys({
-            sqlName: Joi.string().max(128),
+            sqlName: Joi.string().max(127),
             columns: Joi.array().items(this.getColumnValidator())
         })
     };

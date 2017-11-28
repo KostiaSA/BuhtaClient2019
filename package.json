@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/antd": "^1.0.0",
     "@types/axios": "^0.14.0",
     "@types/ejson": "^2.1.2",
     "@types/joi": "^13.0.0",
@@ -20,6 +21,7 @@
     "@types/react-dom": "^16.0.3",
     "@types/uuid": "^3.4.3",
     "@types/validator": "^6.3.0",
+    "antd": "^2.13.10",
     "axios": "^0.17.1",
     "ejson": "^2.1.2",
     "joi": "^13.0.2",

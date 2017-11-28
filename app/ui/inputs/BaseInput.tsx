@@ -1,5 +1,7 @@
 import * as  React from "react";
 import * as PropTypes from "prop-types";
+import * as Joi from "joi";
+import {ValidationResult} from "joi";
 import {Component, IComponentProps} from "../Component";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {stringify} from "ejson";
@@ -14,6 +16,7 @@ export interface IBaseInputProps extends IComponentProps {
     bindProp: string;
     onChange?: () => Promise<void>;
     hidden?: boolean;
+    validator?: Joi.ObjectSchema;
 }
 
 export class BaseInput<P extends IBaseInputProps> extends Component<P> {
@@ -24,6 +27,7 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
     }
 
     static contextTypes = {
+        window: PropTypes.object,
         bindObj: PropTypes.object
     };
 
@@ -39,6 +43,7 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
     }
 
     initialValue: any;
+    validationResult: ValidationResult<any>;
 
     // componentDidMount() {
     //     this.widget = $("#" + this.$id);

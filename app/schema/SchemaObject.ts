@@ -37,7 +37,7 @@ export class SchemaObject<T extends ISchemaObjectProps> {
 
         return Joi.object().options({language: joiRus}).keys({
             id: Joi.string().min(10).max(20),
-            name: Joi.string().max(255),
+            name: Joi.string().max(12).required(),
             className: Joi.string().max(255),
             description: Joi.string().max(4096),
         })
