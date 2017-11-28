@@ -8,6 +8,10 @@ export class AppState {
 
     public sqlDataTypes: { [name: string]: BaseSqlDataType } = {};
 
+    public get sqlDataTypesAsArray(): BaseSqlDataType[] {
+        return Object.keys(this.sqlDataTypes).map((key:string)=>this.sqlDataTypes[key]);
+    }
+
     async start() {
         registerSqlDataTypes();
     }

@@ -1,10 +1,11 @@
 import * as  React from "react";
-import * as Joi from "joi";
 import {CSSProperties} from "react";
+import * as Joi from "joi";
 import {omit} from "../../utils/omit";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {objectPathSet} from "../../utils/objectPathSet";
 import {BaseInput, IBaseInputProps} from "./BaseInput";
+import {config} from "../../const/config";
 
 
 export interface IComboBoxProps extends IBaseInputProps {
@@ -31,13 +32,18 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
             this.widget.jqxComboBox("val", this.initialValue);
         this.widget.on("change",
             async (event: any) => {
+                console.log("this.widget.val==========================================", this.widget.val(), this.widget.jqxComboBox("selectedIndex"));
+
                 objectPathSet(this.bindObj, this.props.bindProp, this.widget.val());
                 if (this.props.onChange) {
                     await this.props.onChange();
                 }
                 if (this.validator) {
-                    this.validationResult = Joi.validate(this.bindObj, this.validator, {abortEarly: false});
-                    //console.log("this.validationResult", this.validationResult)
+                    this.validationResult = Joi.validate(this.bindObj, this.validator, {
+                        abortEarly: false,
+                        allowUnknown: true
+                    });
+                    console.log("combo-this.validationResult", this.validationResult)
                 }
                 this.forceUpdate();
                 console.log("change");
@@ -64,14 +70,18 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
 
     render(): React.ReactNode {
         console.log("render Combobox");
+        let renderedValidationResult = this.renderValidationResult();
 
         let style: CSSProperties = {};
         if (this.isChanged)
             style.color = "#2196F3";
+        if (renderedValidationResult)
+            style.background = config.formPanel.errorInputBackground;
 
         return (
-            <div id={this.$id} style={style}/>
+            [<div key={1} id={this.$id} style={style}/>, renderedValidationResult]
         )
+
     }
 
 }

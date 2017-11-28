@@ -1,5 +1,7 @@
 import * as React from "react";
-
+import * as Joi from "joi";
+import {joiRus} from "../../../i18n/joiRus";
+import {appState} from "../../../AppState";
 export type SqlDialect = "mysql" | "postgres" | "mssql";
 
 export interface IBaseSqlDataTypeProps {
@@ -30,6 +32,12 @@ export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypePro
     getName(props?:IBaseSqlDataTypeProps): string {
         return "?";
     }
+
+    getValidator(): Joi.ObjectSchema {
+        return Joi.object().options({language: joiRus}).keys({
+            id: Joi.string().only(Object.keys(appState.sqlDataTypes)),
+        })
+    };
 
     copyProps(props: any): P {
         let ret: any = {};

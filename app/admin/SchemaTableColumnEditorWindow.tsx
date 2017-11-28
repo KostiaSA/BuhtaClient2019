@@ -45,11 +45,7 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
     }
 
     handleDataTypeChange = async () => {
-        // let col = this.props.column!;
-        // let dt = appState.sqlDataTypes[col.dataType.id];
-        // dt.setDefaultProps(col.dataType);
         this.forceUpdate();
-        //console.log("handleDataTypeChange");
     };
 
     render() {

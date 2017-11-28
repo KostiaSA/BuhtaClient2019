@@ -1,7 +1,9 @@
 import * as Joi from "joi";
+import {alternatives} from "joi";
 import {ISchemaObjectProps, SchemaObject} from "../SchemaObject";
 import {IBaseSqlDataTypeProps} from "./datatypes/BaseSqlDataType";
 import {joiRus} from "../../i18n/joiRus";
+import {appState} from "../../AppState";
 
 
 export interface ISchemaTableProps extends ISchemaObjectProps {
@@ -36,13 +38,20 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         super(props);
     }
 
+    // getDataTypeValidator(): Joi.ObjectSchema {
+    //     return Joi.object().options({language: joiRus}).keys({
+    //         id: Joi.string().min(1).max(3).required(),
+    //     })
+    //
+    // }
+
     getColumnValidator(): Joi.ObjectSchema {
         return Joi.object().options({language: joiRus}).keys({
             name: Joi.string().min(1).max(20).required(),
             primaryKey: Joi.boolean(),
             description: Joi.string().max(4096),
             notNull: Joi.boolean(),
-            dataType: Joi.object(),
+            dataType: alternatives(appState.sqlDataTypesAsArray.map((dt) => dt.getValidator())),
         })
 
     }

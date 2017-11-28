@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {ComboBox} from "../../../ui/inputs/ComboBox";
 
@@ -28,6 +29,15 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
             return (props.unsigned ? "+" : "") + this.getName() + props.size + (props.autoIncrement ? ", autoInc" : "")
         }
     }
+
+    getValidator(): Joi.ObjectSchema {
+        return super.getValidator().keys({
+            size: Joi.string().only(["8", "16", "32", "64"]),
+            unsigned: Joi.boolean(),
+            autoIncrement: Joi.boolean(),
+
+        })
+    };
 
     renderPropsEditors(props: IIntegerSqlDataTypeProps): React.ReactNode {
         //return ()<Input title="макс. длина" bindProp="dataType.maxLen" placeHolder="макс. длина" width={100}/>

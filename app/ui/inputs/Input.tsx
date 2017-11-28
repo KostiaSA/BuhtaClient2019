@@ -33,7 +33,10 @@ export class Input extends BaseInput<IInputProps> {
                     await this.props.onChange();
                 }
                 if (this.validator) {
-                    this.validationResult = Joi.validate(this.bindObj, this.validator, {abortEarly: false});
+                    this.validationResult = Joi.validate(this.bindObj, this.validator, {
+                        abortEarly: false,
+                        allowUnknown: true
+                    });
                     //console.log("this.validationResult", this.validationResult)
                 }
 
