@@ -12,6 +12,7 @@
         "description": "pos 01"
     }, {
         "name": "Марка",
+        "name1": "Марка",
         "dataType": {
             "id": "String",
             "maxLen": "1001"

@@ -7,22 +7,37 @@ import {FlexHPanel} from "../FlexHPanel";
 import {Keycode} from "../../utils/Keycode";
 import {isString} from "util";
 
-export function getErrorWindow(message: React.ReactNode, title: string = "Ошибка"): React.ReactElement<any> {
+export function getErrorWindow(message: any, title: string = "Ошибка"): React.ReactElement<any> {
     let w: Window;
 
-    let renderMessage = (): React.ReactNode => {
-        if (isString(message))
-            // делаем многострочные сообщения
-            return (
-                <span>
-                    {message.toString().split("\n").map((str: string, index: number) => {
-                        return [<span key={index * 2}>{str}</span>, <br key={index * 2 + 1}/>];
-                    })}
-                </span>
-            );
-        else
-            return message;
+
+    let renderMultiline = (str: string): React.ReactNode => {
+        // делаем многострочные сообщения
+        return (
+            <span>
+                 {str.toString().split("\n").map((str: string, index: number) => {
+                     return [<span key={index * 2}>{str}</span>, <br key={index * 2 + 1}/>];
+                 })}
+             </span>
+        );
+
     };
+
+    let renderMessage = (): React.ReactNode => {
+        if (message.$$typeof)
+            return message;
+        else if (isString(message))
+            return renderMultiline(message);
+        else if (isString(message.message))
+            return renderMultiline(message.message);
+        else if (message.toString)
+            return renderMultiline(message.toString());
+        else {
+            console.error("неизвестный формат ошибки", message);
+            return "неизвестный формат ошибки";
+        }
+    };
+
 
     return (
         <Window
@@ -65,6 +80,6 @@ export function getErrorWindow(message: React.ReactNode, title: string = "Оши
 
 }
 
-export async function showError(message: React.ReactNode, title: string = "Ошибка") {
+export async function showError(message: any, title: string = "Ошибка") {
     await appState.desktop.openWindow(getErrorWindow(message, title));
 }

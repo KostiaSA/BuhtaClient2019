@@ -98,7 +98,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
         }
     };
 
-    error: string;
+    error: any;
     table: ISchemaTableProps;
     tableColumnsArray: any;
 
@@ -116,14 +116,16 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
             }
 
             let result = new SchemaTable(this.table).validate();
+            //debugger
             if (result.error)
-                throw "Файл таблицы содержит ошибки:\n\n" + result.error.details.map((err)=>err.message).join("\n");
+                throw (<span>Файл таблицы содержит ошибки 888</span>)
+                //throw "Файл таблицы содержит ошибки:\n\n" + result.error.details.map((err)=>err.message).join("\n");
 
             this.forceUpdate();
 
         }
         catch (error) {
-            this.error = error.toString();
+            this.error = error;
             this.forceUpdate();
         }
 

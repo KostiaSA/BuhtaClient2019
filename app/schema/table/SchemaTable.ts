@@ -1,6 +1,7 @@
 import * as Joi from "joi";
 import {ISchemaObjectProps, SchemaObject} from "../SchemaObject";
 import {IBaseSqlDataTypeProps} from "./datatypes/BaseSqlDataType";
+import {joiRus} from "../../i18n/joiRus";
 
 
 export interface ISchemaTableProps extends ISchemaObjectProps {
@@ -35,11 +36,21 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         super(props);
     }
 
+    getColumnValidator(): Joi.ObjectSchema {
+        return Joi.object().options({language: joiRus}).keys({
+            name: Joi.string().min(1).max(127).required(),
+            primaryKey: Joi.boolean(),
+            description: Joi.string().max(4096),
+            notNull: Joi.boolean(),
+            dataType: Joi.object(),
+        })
+
+    }
 
     getValidator(): Joi.ObjectSchema {
         return super.getValidator().keys({
             sqlName: Joi.string().max(128),
-            columns: Joi.array()
+            columns: Joi.array().items(this.getColumnValidator())
         })
     };
 
