@@ -6,7 +6,7 @@
         "primaryKey": true,
         "dataType": {
             "id": "Integer",
-            "size": "162"
+            "size": "16"
         },
         "description": "pos 01"
     }, {

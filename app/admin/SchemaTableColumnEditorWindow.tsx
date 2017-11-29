@@ -97,6 +97,7 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                                         placeHolder="тип данных"
                                         valueMember="id"
                                         displayMember="name"
+                                        width={150}
                                         source={this.getDataTypesSource()}
                                         onChange={this.handleDataTypeChange}
                                     />
