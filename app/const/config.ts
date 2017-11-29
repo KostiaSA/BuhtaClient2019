@@ -21,5 +21,16 @@ export let config: any = {
         insertRowIcon: "vendor/fugue/plus.png",
         changeRowIcon: "vendor/fugue/card--pencil.png",
         deleteRowIcon: "vendor/fugue/cross.png",
+    },
+    baseInput: {
+        height: 24,
+        width: 300,
+    },
+    numberInput: {
+        decimalSeparator: ".",
+        digits: 12,
+        groupSeparator: " ",
+        width: 150,
+        negativeColor:"red"
     }
 };

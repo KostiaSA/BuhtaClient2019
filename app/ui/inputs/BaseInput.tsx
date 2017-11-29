@@ -10,9 +10,6 @@ import {config} from "../../const/config";
 
 export interface IBaseInputProps extends IComponentProps {
     title?: string | React.ReactNode;
-    // height?: string | number;
-    // width?: string | number;
-    // placeHolder?: string;
     bindObj?: any;
     bindProp: string;
     onChange?: () => Promise<void>;
@@ -49,7 +46,19 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
     }
 
     initialValue: any;
+
     validationResult: ValidationResult<any>;
+
+    validate() {
+        if (this.validator) {
+            this.validationResult = Joi.validate(this.bindObj, this.validator, {
+                abortEarly: false,
+                allowUnknown: false
+            });
+        }
+        else
+            delete this.validationResult;
+    }
 
     renderValidationResult(): React.ReactNode {
 
@@ -57,50 +66,25 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
             return null;
         }
         else {
-            let errDetail = this.validationResult.error.details.find((detail: any) => detail.path.join(".") === this.props.bindProp);
+            let errDetail = this.validationResult.error.details.find((detail: any) => detail.path.join(".") === this.props.bindProp && detail.type !== "object.allowUnknown");
             if (!errDetail)
                 return null;
             let errDetailMessage = (errDetail!.message.split(":")[1] || errDetail!.message).trim();
             return (
-                <span
+                <div
                     key={2}
                     title={errDetailMessage}
                     style={{
                         color: config.formPanel.errorMessageColor,
-                        whiteSpace: "nowrap",
                         fontSize: config.formPanel.errorMessageFontSize,
                         fontStyle: config.formPanel.errorMessageFontStyle,
                         marginLeft: 3
                     }}>
-                {" " + errDetailMessage.substr(0, config.formPanel.errorMessageMaxLength)}
-            </span>
+                    {" " + errDetailMessage.substr(0, config.formPanel.errorMessageMaxLength)}
+                </div>
             )
         }
     }
-
-
-    // componentDidMount() {
-    //     this.widget = $("#" + this.$id);
-    //     this.updateProps(this.props, true);
-    //     this.initialValue = objectPathGet(this.props.bindObj || this.context.bindObj, this.props.bindProp);
-    //     this.widget.jqxInput("val", this.initialValue);
-    //     this.widget.on("change",
-    //         (event: any) => {
-    //             objectPathSet(this.props.bindObj || this.context.bindObj, this.props.bindProp, this.widget.val());
-    //             this.forceUpdate();
-    //             console.log("change");
-    //         });
-    // }
-
-    // updateProps(props: IInputProps, create: boolean) {
-    //     let opt: any = omit(props, ["bindObj", "bindProp", "title", "children"]);
-    //
-    //     opt.height = opt.height || 24;
-    //     opt.width = opt.width || 200;
-    //
-    //     this.widget.jqxInput(opt);
-    // }
-
 
     render(): React.ReactNode {
         throw "BaseInput:abstract error";

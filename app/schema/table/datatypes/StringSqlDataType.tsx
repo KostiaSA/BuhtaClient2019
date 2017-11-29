@@ -2,6 +2,7 @@ import * as React from "react";
 import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {Input} from "../../../ui/inputs/Input";
+import {NumberInput} from "../../../ui/inputs/NumberInput";
 
 export interface IStringSqlDataTypeProps extends IBaseSqlDataTypeProps {
     maxLen?: number;
@@ -35,18 +36,18 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
 
     getValidator(): Joi.ObjectSchema {
         return super.getValidator().keys({
-            maxLen: Joi.number().min(1).max(4096),
+            maxLen: Joi.number().integer().min(0).max(4096),
         })
     };
 
     renderPropsEditors(props: IStringSqlDataTypeProps): React.ReactNode {
         this.setDefaultProps(props);
         return (
-            <Input
+            <NumberInput
                 title="макс. длина"
                 bindProp="dataType.maxLen"
-                placeHolder="макс. длина"
                 width={100}
+                decimalDigits={0}
                 hidden={props.id !== StringSqlDataType.id}
             />
         )

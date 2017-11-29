@@ -14,16 +14,16 @@
         "name": "Марка",
         "dataType": {
             "id": "String",
-            "maxLen": "1001"
+            "maxLen": 1001
         },
         "description": "pos 11"
     }, {
-        "name": "Госномер",
+        "name": "Госномер16666666666",
         "dataType": {
             "id": "Integer",
-            "size": "32"
+            "size": "8"
         },
-        "description": "pos 2ppp88ppppppppp"
+        "description": "pos 2ppp88ppppppppp111111111111111111111111111"
     }, {
         "name": "Гаражный номер",
         "description": "pos 3",
@@ -80,5 +80,4 @@
             "maxLen": 50
         }
     }]
-
 }
