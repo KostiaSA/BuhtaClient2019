@@ -36,7 +36,7 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
 
     getValidator(): Joi.ObjectSchema {
         return super.getValidator().keys({
-            maxLen: Joi.number().integer().min(0).max(4096),
+            maxLen: Joi.number().integer().min(0).max(4096).label("макс. длина"),
         })
     };
 

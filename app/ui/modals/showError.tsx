@@ -7,6 +7,7 @@ import {FlexHPanel} from "../FlexHPanel";
 import {Keycode} from "../../utils/Keycode";
 import {isString} from "util";
 import {config} from "../../const/config";
+import {replaceAll} from "../../utils/replaceAll";
 
 export function getErrorWindow(message: any, title: string = "Ошибка"): React.ReactElement<any> {
     let w: Window;
@@ -30,8 +31,8 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
             return (
                 <div>
                     {message.details.map((detail: any, index: number) => {
-                        let msg = detail.message.split(":")[1] || detail.message;
-                        return <div key={index}>"{detail.path.join(".")}" {msg}</div>
+                        //let path = detail.message.split(":")[1] || detail.message;
+                        return <div key={index}>{"\""+detail.path.join(".")+"\" "+detail.message.replace("\"","(").replace("\"",")")}</div>
                     })}
                 </div>
             )
@@ -39,6 +40,21 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
         else
             return message.toString();
     };
+
+    // let renderJoi = (joiMessage: any): React.ReactNode => {
+    //     if (message.details && message.details.length > 0) {
+    //         return (
+    //             <div>
+    //                 {message.details.map((detail: any, index: number) => {
+    //                     let msg = detail.message.split(":")[1] || detail.message;
+    //                     return <div key={index}>"{detail.path.join(".")}" {msg}</div>
+    //                 })}
+    //             </div>
+    //         )
+    //     }
+    //     else
+    //         return message.toString();
+    // };
 
 
     let renderMessage = (): React.ReactNode => {

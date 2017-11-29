@@ -1,13 +1,12 @@
 ﻿{
-    "className": "Schema-----",
     "description": "Список 1",
-    "name": "Ав3456789012",
+    "name": "Автомобиль",
     "columns": [{
         "name": "Ключ",
         "primaryKey": true,
         "dataType": {
             "id": "Integer",
-            "size": "16"
+            "size": "162"
         },
         "description": "pos 01"
     }, {

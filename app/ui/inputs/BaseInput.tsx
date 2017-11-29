@@ -1,11 +1,12 @@
 import * as  React from "react";
 import * as PropTypes from "prop-types";
 import * as Joi from "joi";
-import {ValidationResult} from "joi";
+import {ValidationError} from "joi";
 import {Component, IComponentProps} from "../Component";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {stringify} from "ejson";
 import {config} from "../../const/config";
+import {joiValidate} from "../../validation/joiValidate";
 
 
 export interface IBaseInputProps extends IComponentProps {
@@ -47,26 +48,23 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
 
     initialValue: any;
 
-    validationResult: ValidationResult<any>;
+    validationError: ValidationError | null;
 
     validate() {
         if (this.validator) {
-            this.validationResult = Joi.validate(this.bindObj, this.validator, {
-                abortEarly: false,
-                allowUnknown: false
-            });
+            this.validationError = joiValidate(this.bindObj, this.validator);
         }
         else
-            delete this.validationResult;
+            this.validationError = null;
     }
 
     renderValidationResult(): React.ReactNode {
 
-        if (!this.validationResult || !this.validationResult.error) {
+        if (!this.validationError) {
             return null;
         }
         else {
-            let errDetail = this.validationResult.error.details.find((detail: any) => detail.path.join(".") === this.props.bindProp && detail.type !== "object.allowUnknown");
+            let errDetail = this.validationError.details.find((detail: any) => detail.path.join(".") === this.props.bindProp);
             if (!errDetail)
                 return null;
             let errDetailMessage = (errDetail!.message.split(":")[1] || errDetail!.message).trim();

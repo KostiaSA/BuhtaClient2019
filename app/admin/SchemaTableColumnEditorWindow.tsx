@@ -13,6 +13,8 @@ import {ComboBox} from "../ui/inputs/ComboBox";
 import {appState} from "../AppState";
 import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
 import {config} from "../const/config";
+import {showError} from "../ui/modals/showError";
+import {joiValidate} from "../validation/joiValidate";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -129,9 +131,18 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
 
                                 // удаление лишних props
                                 let dt = appState.sqlDataTypes[this.props.column!.dataType.id];
-                                this.props.column!.dataType = dt.copyProps(this.props.column!.dataType);
+                                if (dt)
+                                    this.props.column!.dataType = dt.copyProps(this.props.column!.dataType);
 
-                                this.window.close(true);
+                                let validationError = joiValidate(this.props.column!, validator);
+
+                                if (validationError) {
+                                    console.error("validationResult.error+++++++++++++++++++++", validationError);
+                                    await showError(validationError);
+                                }
+                                else {
+                                    this.window.close(true);
+                                }
                             }}
                         />
                         <Button

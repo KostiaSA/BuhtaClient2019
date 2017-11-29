@@ -1,6 +1,6 @@
 import * as  React from "react";
 import {CSSProperties} from "react";
-import * as Joi from "joi";
+
 import {omit} from "../../utils/omit";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {objectPathSet} from "../../utils/objectPathSet";

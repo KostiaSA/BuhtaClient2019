@@ -99,8 +99,6 @@ export class NumberInput extends BaseInput<INumberInputProps> {
         if (renderedValidationResult)
             style.background = config.formPanel.errorInputBackground;
 
-//        style.background = "red";
-
         return (
             [<div key={1} id={this.$id} style={style}/>, renderedValidationResult]
         )

@@ -120,10 +120,9 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
             }
 
             let result = new SchemaTable(this.table).validate();
-            //debugger
-            if (result.error) {
+            if (result) {
                 this.errorTitle = "Ошибка загрузки файла";
-                throw result.error;
+                throw result;
             }
 
             this.forceUpdate();

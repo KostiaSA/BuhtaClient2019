@@ -1,6 +1,7 @@
 import {IClassInfo} from "./IClassInfo";
 import * as Joi from "joi";
 import {joiRus} from "../i18n/joiRus";
+import {joiValidate} from "../validation/joiValidate";
 
 export interface ISchemaObjectProps {
     id: string;
@@ -36,15 +37,13 @@ export class SchemaObject<T extends ISchemaObjectProps> {
     getValidator(): Joi.ObjectSchema {
 
         return Joi.object().options({language: joiRus}).keys({
-            id: Joi.string().min(10).max(20),
-            name: Joi.string().max(12).required(),
-            className: Joi.string().max(255),
-            description: Joi.string().max(4096),
+            name: Joi.string().max(12).required().label("имя объекта"),
+            description: Joi.string().max(4096).label("описание"),
         })
     };
 
-    validate(): Joi.ValidationResult<T> {
-        return Joi.validate<T>(this.props, this.getValidator(), {abortEarly: false});
+    validate(): Joi.ValidationError | null {
+        return joiValidate(this.props, this.getValidator());
     }
 
 //    static className = "platform-core:SchemaObject";

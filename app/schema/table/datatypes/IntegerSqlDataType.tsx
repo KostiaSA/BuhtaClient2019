@@ -32,9 +32,9 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
 
     getValidator(): Joi.ObjectSchema {
         return super.getValidator().keys({
-            size: Joi.string().only(["8", "16", "32", "64"]),
-            unsigned: Joi.boolean(),
-            autoIncrement: Joi.boolean(),
+            size: Joi.string().only(["8", "16", "32", "64"]).label("размерность"),
+            unsigned: Joi.boolean().label("беззнаковое"),
+            autoIncrement: Joi.boolean().label("автонумерация"),
 
         })
     };

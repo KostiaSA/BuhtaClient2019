@@ -47,19 +47,19 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     getColumnValidator(): Joi.ObjectSchema {
         return Joi.object().options({language: joiRus}).keys({
-            name: Joi.string().min(1).max(20).required(),
-            primaryKey: Joi.boolean(),
-            description: Joi.string().max(4096),
-            notNull: Joi.boolean(),
-            dataType: alternatives(appState.sqlDataTypesAsArray.map((dt) => dt.getValidator())),
+            name: Joi.string().min(1).max(20).required().label("имя"),
+            primaryKey: Joi.boolean().label("первичный ключ"),
+            description: Joi.string().max(4096).label("описание"),
+            notNull: Joi.boolean().label("not null"),
+            dataType: alternatives(appState.sqlDataTypesAsArray.map((dt) => dt.getValidator())).label("тип данных"),
         })
 
     }
 
     getValidator(): Joi.ObjectSchema {
         return super.getValidator().keys({
-            sqlName: Joi.string().max(127),
-            columns: Joi.array().items(this.getColumnValidator())
+            sqlName: Joi.string().max(127).label("sql-имя"),
+            columns: Joi.array().items(this.getColumnValidator()).label("колонки")
         })
     };
 
