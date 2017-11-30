@@ -4,6 +4,7 @@ import {ISchemaObjectProps, SchemaObject} from "../SchemaObject";
 import {IBaseSqlDataTypeProps} from "./datatypes/BaseSqlDataType";
 import {joiRus} from "../../i18n/joiRus";
 import {appState} from "../../AppState";
+import {config} from "../../const/config";
 
 
 export interface ISchemaTableProps extends ISchemaObjectProps {
@@ -11,14 +12,6 @@ export interface ISchemaTableProps extends ISchemaObjectProps {
     columns: ISchemaTableColumnProps[];
     //  editOptions?: ISchemaTableEditOptions;
 }
-
-// export const SchemaTablePropsValidator: Joi.JoiObject = SchemaObjectPropsValidator.keys({
-//     id: Joi.string().min(10).max(20),
-//     name:Joi.string().max(255),
-//     className:Joi.string().max(255),
-//     description:Joi.string().max(4096),
-// });
-
 
 export interface ISchemaTableColumnProps {
     name: string;
@@ -38,18 +31,11 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         super(props);
     }
 
-    // getDataTypeValidator(): Joi.ObjectSchema {
-    //     return Joi.object().options({language: joiRus}).keys({
-    //         id: Joi.string().min(1).max(3).required(),
-    //     })
-    //
-    // }
-
     getColumnValidator(): Joi.ObjectSchema {
         return Joi.object().options({language: joiRus}).keys({
-            name: Joi.string().min(1).max(20).required().label("имя"),
+            name: Joi.string().min(1).max(config.sql.maxIdentifierLength).required().label("имя"),
             primaryKey: Joi.boolean().label("первичный ключ"),
-            description: Joi.string().max(4096).label("описание"),
+            description: Joi.string().max(config.sql.maxStringLength).label("описание"),
             notNull: Joi.boolean().label("not null"),
             dataType: alternatives(appState.sqlDataTypesAsArray.map((dt) => dt.getValidator())).label("тип данных"),
         })
@@ -58,8 +44,8 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     getValidator(): Joi.ObjectSchema {
         return super.getValidator().keys({
-            sqlName: Joi.string().max(127).label("sql-имя"),
-            columns: Joi.array().items(this.getColumnValidator()).label("колонки")
+            sqlName: Joi.string().max(config.sql.maxIdentifierLength).label("sql-имя"),
+            columns: Joi.array().items(this.getColumnValidator()).max(config.sql.maxColumnsInTable).min(1).label("колонки")
         })
     };
 

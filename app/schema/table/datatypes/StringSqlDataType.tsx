@@ -3,6 +3,7 @@ import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {Input} from "../../../ui/inputs/Input";
 import {NumberInput} from "../../../ui/inputs/NumberInput";
+import {config} from "../../../const/config";
 
 export interface IStringSqlDataTypeProps extends IBaseSqlDataTypeProps {
     maxLen?: number;
@@ -36,7 +37,7 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
 
     getValidator(): Joi.ObjectSchema {
         return super.getValidator().keys({
-            maxLen: Joi.number().integer().min(0).max(4096).label("макс. длина"),
+            maxLen: Joi.number().integer().min(0).max(config.sql.maxStringLength).label("макс. длина"),
         })
     };
 

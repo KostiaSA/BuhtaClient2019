@@ -6,9 +6,36 @@ import {FlexItem} from "../FlexItem";
 import {FlexHPanel} from "../FlexHPanel";
 import {Keycode} from "../../utils/Keycode";
 import {config} from "../../const/config";
+import {getTextWidth} from "../../utils/getTextWidth";
+import {isString} from "util";
 
 export function getGetConfirmationWindow(message: React.ReactNode, title: string = "Подтверждение", yesButtonText: string = "Да", noButtonText: string = "Нет"): React.ReactElement<any> {
-    let w: Window;
+    let win: Window;
+
+    let maxTextWidth = 0;
+
+    let renderMultiline = (text: string): React.ReactNode => {
+        // делаем многострочные сообщения
+        return (
+            <span>
+                 {text.toString().split("\n").map((str: string, index: number) => {
+                     let textWidth = getTextWidth(str);
+                     if (textWidth > maxTextWidth)
+                         maxTextWidth = textWidth;
+                     return [<span key={index * 2}>{str}</span>, <br key={index * 2 + 1}/>];
+                 })}
+             </span>
+        );
+
+    };
+
+    if (isString(message)) {
+        message = renderMultiline(message);
+    }
+    else {
+        maxTextWidth = 400;
+    }
+
     return (
         <Window
             title={title}
@@ -17,16 +44,16 @@ export function getGetConfirmationWindow(message: React.ReactNode, title: string
             minHeight={150}
             maxHeight={600}
             minWidth={300}
-            maxWidth={600}
-            width={300}
-            ref={(e) => w = e!}
+            maxWidth={700}
+            width={Math.min(maxTextWidth * 1.2, 700)}
+            ref={(e) => win = e!}
             onKeyDown={async (keyCode: number): Promise<boolean> => {
                 if (keyCode === Keycode.Escape) {
-                    w.close();
+                    win.close();
                     return true;
                 }
                 else if (keyCode === Keycode.Enter) {
-                    w.close(true);
+                    win.close(true);
                     return true;
                 }
                 else
@@ -52,13 +79,13 @@ export function getGetConfirmationWindow(message: React.ReactNode, title: string
                         text={yesButtonText}
                         tooltip={yesButtonText + " (ENTER)"}
                         style={{marginRight: 10, border: "1px solid dodgerblue"}}
-                        onClick={async () => w.close(true)}
+                        onClick={async () => win.close(true)}
                     />
                     <Button
                         imgSrc={config.button.cancelIcon}
                         text={noButtonText}
                         tooltip={noButtonText + " (ESC)"}
-                        onClick={async () => w.close()}
+                        onClick={async () => win.close()}
                     />
                 </FlexItem>
             </FlexHPanel>

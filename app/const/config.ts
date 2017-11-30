@@ -38,5 +38,10 @@ export let config: any = {
         groupSeparator: " ",
         width: 150,
         negativeColor: "red"
+    },
+    sql: {
+        maxIdentifierLength: 127,
+        maxStringLength: 4096,
+        maxColumnsInTable: 4096,
     }
 };
