@@ -6,7 +6,8 @@ import {replaceAll} from "../utils/replaceAll";
 import {SchemaTableDesignerWindow} from "../admin/SchemaTableDesignerWindow";
 import {IComponentProps} from "./Component";
 import {saveSchemaObjectFiles} from "../admin/api/saveSchemaObjectFiles";
-import {showError} from "./modals/showError";
+import {loadSchemaTree} from "../admin/api/loadSchemaTree";
+import {SchemaExplorerWindow} from "../admin/SchemaExplorerWindow";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -39,16 +40,17 @@ export class Desktop extends React.Component<IDesktopProps, any> {
             <div id="desktop" style={{height: "100%", flex: "1 0 auto"}}>
                 <button
                     onClick={async () => {
-                        await showError("ам явлено замечательное сходство тех, кто травит Райкина здесь и там.");
+                        let result = await loadSchemaTree();
+                        console.log(result);
                     }}>
-                    show error
+                    loadSchemaTree
                 </button>
                 <button
                     onClick={() => {
-                        this.openSchemaWindow("buhta_test1_TestWindow", {title: getRandomString()});
-                        //  this.openWindow(<div key="111" title="111">новое окно</div>);
+                        this.openWindow(<SchemaExplorerWindow
+                            window={{height: 500, width: 400}}></SchemaExplorerWindow>);
                     }}>
-                    open buhta/test1/TestWindow
+                    инспектор объектов
                 </button>
                 <button
                     onClick={() => {

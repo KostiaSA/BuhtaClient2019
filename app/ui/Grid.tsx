@@ -5,6 +5,7 @@ import {omit} from "../utils/omit";
 import {GridColumn, IGridColumnProps} from "./GridColumn";
 import {Keycode} from "../utils/Keycode";
 import {escapeHtml} from "../utils/escapeHtml";
+import {config} from "../const/config";
 
 
 export interface IGridProps extends IComponentProps {
@@ -59,8 +60,8 @@ export class Grid extends Component<IGridProps> {
         let gridOptions: any = omit(props, ["children", "source", "onRowDoubleClick", "onRowKeyDown"]);
         gridOptions.height = gridOptions.height || 350;
         gridOptions.width = gridOptions.width || "100%";
-        gridOptions.rowsheight = gridOptions.rowsheight || 22;
-        gridOptions.columnsheight = gridOptions.columnsheight || 22;
+        gridOptions.rowsheight = gridOptions.rowsheight || config.grid.rowsHeight;
+        gridOptions.columnsheight = gridOptions.columnsheight || config.grid.rowsHeight;
 
         if (gridOptions.sortable !== false)
             gridOptions.sortable = true;

@@ -44,5 +44,8 @@ export let config: any = {
         maxIdentifierLength: 127,
         maxStringLength: 4096,
         maxColumnsInTable: 4096,
+    },
+    grid: {
+        rowsHeight: 22
     }
 };
