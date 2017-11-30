@@ -31,6 +31,9 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         super(props);
     }
 
+    static objectType = "Table";
+    static objectTypeName = "Таблица";
+
     getColumnValidator(): Joi.ObjectSchema {
         return Joi.object().options({language: joiRus}).keys({
             name: Joi.string().min(1).max(config.sql.maxIdentifierLength).required().label("имя"),
@@ -44,6 +47,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     getValidator(): Joi.ObjectSchema {
         return super.getValidator().keys({
+            name: Joi.string().max(config.sql.maxIdentifierLength).required().label("имя таблицы"),
             sqlName: Joi.string().max(config.sql.maxIdentifierLength).label("sql-имя"),
             columns: Joi.array().items(this.getColumnValidator()).max(config.sql.maxColumnsInTable).min(1).label("колонки")
         })

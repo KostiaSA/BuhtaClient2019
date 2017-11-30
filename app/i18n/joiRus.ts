@@ -13,7 +13,7 @@ export const joiRus = {
         child: null
     },
     array: {
-        base: 'must be an array',
+        base: ': должен быть массив (array)',
         includes: 'at position {{pos}} does not match any of the allowed types',
         includesSingle: 'single value of "{{!label}}" does not match any of the allowed types',
         includesOne: 'at position {{pos}} fails because {{reason}}',
@@ -23,9 +23,9 @@ export const joiRus = {
         includesRequiredBoth: 'does not contain {{knownMisses}} and {{unknownMisses}} other required value(s)',
         excludes: 'at position {{pos}} contains an excluded value',
         excludesSingle: 'single value of "{{!label}}" contains an excluded value',
-        min: 'must contain at least {{limit}} items',
-        max: 'must contain less than or equal to {{limit}} items',
-        length: 'must contain {{limit}} items',
+        min: ': в списке должно быть не менее {{limit}} позиц.',
+        max: ': в списке должно быть не более {{limit}} позиц.',
+        length: ': в списке должно быть {{limit}} позиц.',
         ordered: 'at position {{pos}} fails because {{reason}}',
         orderedLength: 'at position {{pos}} fails because array must contain at most {{limit}} items',
         ref: 'references "{{ref}}" which is not a positive integer',

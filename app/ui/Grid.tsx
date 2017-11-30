@@ -99,6 +99,7 @@ export class Grid extends Component<IGridProps> {
 
         if (this.props.onRowKeyDown)
             gridOptions.handlekeyboardnavigation = (event: any) => {
+                //console.log("handlekeyboardnavigation", event.keyCode, this.widget[0].offsetParent);
                 if (this.getWindow().disabled)
                     return false;
                 else

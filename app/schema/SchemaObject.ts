@@ -1,33 +1,21 @@
-import {IClassInfo} from "./IClassInfo";
 import * as Joi from "joi";
 import {joiRus} from "../i18n/joiRus";
 import {joiValidate} from "../validation/joiValidate";
+import {alternatives} from "joi";
+import {appState} from "../AppState";
 
 export interface ISchemaObjectProps {
-    id: string;
+    objectType: string;
     name: string;
-    className: string;
     description: string;
 }
 
-// export const SchemaObjectPropsValidator = Joi.object().keys({
-//     id: Joi.string().min(10).max(20),
-//     name: Joi.string().max(255),
-//     className: Joi.string().max(255),
-//     description: Joi.string().max(4096),
-// });
-
-
-export interface ISchemaObjectClassInfo<T> extends IClassInfo<T> {
-    //designerUrl: string;
-    title: string;
-    description: string;
-    designerPageId?: string;
-    //editOptions?:ISchemaTableEditOptions;
-}
 
 export class SchemaObject<T extends ISchemaObjectProps> {
     props: T;
+
+    static objectType = "?Object";
+    static objectTypeName = "?Объект";
 
     constructor(props: T) {
         this.props = props || {};
@@ -37,7 +25,8 @@ export class SchemaObject<T extends ISchemaObjectProps> {
     getValidator(): Joi.ObjectSchema {
 
         return Joi.object().options({language: joiRus}).keys({
-            name: Joi.string().max(12).required().label("имя объекта"),
+            objectType: Joi.string().required().only(appState.schemaObjectTypesAsArray.map((typ)=>typ.objectType)).label("тип объекта"),
+            name: Joi.string().required().max(127).required().label("имя объекта"),
             description: Joi.string().max(4096).label("описание"),
         })
     };
@@ -46,8 +35,6 @@ export class SchemaObject<T extends ISchemaObjectProps> {
         return joiValidate(this.props, this.getValidator());
     }
 
-//    static className = "platform-core:SchemaObject";
-//    static designerUrl = "admin/schema-object-designer";
 
     async save() {
         // let classInfo = (this.constructor as any).classInfo as ISchemaObjectClassInfo<any>;

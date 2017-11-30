@@ -102,7 +102,7 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
             maxHeight={600}
             minWidth={200}
             maxWidth={700}
-            width={Math.min(maxTextWidth * 1.2, 700)}
+            width={Math.min(maxTextWidth * 1.25, 700)}
             ref={(e) => w = e!}
             onKeyDown={async (keyCode: number): Promise<boolean> => {
                 if (keyCode === Keycode.Escape) {

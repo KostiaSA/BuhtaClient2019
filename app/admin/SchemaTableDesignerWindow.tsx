@@ -22,6 +22,7 @@ import {appState} from "../AppState";
 import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
 import {getConfirmation} from "../ui/modals/getConfirmation";
 import {config} from "../const/config";
+import {joiValidate} from "../validation/joiValidate";
 
 
 export interface ISchemaTableDesignerProps {
@@ -139,6 +140,15 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
 
         this.table.columns = this.tableColumnsArray.toArray();
 
+        let validator = new SchemaTable(this.table).getValidator();
+
+        let validationError = joiValidate(this.table, validator);
+
+        if (validationError) {
+            await showError(validationError);
+            return
+        }
+
         let req: ISavedSchemaObjectFiles = {
             filePath: this.props.tableId!,
             json: JSON.stringify(this.table)
@@ -165,6 +175,8 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
         let dt = appState.sqlDataTypes[row.dataType.id];
         return dt.getName(row.dataType);
     };
+
+
 
     render() {
 

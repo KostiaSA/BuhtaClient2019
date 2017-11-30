@@ -1,14 +1,14 @@
 import * as  React from "react";
-import {ISchemaObjectClassInfo, ISchemaObjectProps, SchemaObject} from "../SchemaObject";
+import { ISchemaObjectProps, SchemaObject} from "../SchemaObject";
 
 export interface ISchemaWindowProps extends ISchemaObjectProps {
 
 }
 
 
-export interface ISchemaWindowClassInfo extends ISchemaObjectClassInfo<typeof SchemaWindow> {
-
-}
+// export interface ISchemaWindowClassInfo extends ISchemaObjectClassInfo<typeof SchemaWindow> {
+//
+// }
 
 export class SchemaWindow extends SchemaObject<ISchemaWindowProps> { //implements ISchemaTableRow {
 

@@ -45,7 +45,7 @@ export function getGetConfirmationWindow(message: React.ReactNode, title: string
             maxHeight={600}
             minWidth={300}
             maxWidth={700}
-            width={Math.min(maxTextWidth * 1.2, 700)}
+            width={Math.min(maxTextWidth * 1.25, 700)}
             ref={(e) => win = e!}
             onKeyDown={async (keyCode: number): Promise<boolean> => {
                 if (keyCode === Keycode.Escape) {
