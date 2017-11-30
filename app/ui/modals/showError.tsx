@@ -91,7 +91,7 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
         }
     };
 
-    let renderedMessage=renderMessage();
+    let renderedMessage = renderMessage();
 
     return (
         <Window
@@ -129,6 +129,7 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
                     <Button
                         imgSrc={config.button.cancelIcon}
                         text="Закрыть"
+                        style={{border: config.button.focusedBorder}}
                         onClick={async () => w.close()}/>
                 </FlexItem>
             </FlexHPanel>

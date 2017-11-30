@@ -27,6 +27,7 @@ export let config: any = {
         insertRowIcon: "vendor/fugue/plus.png",
         changeRowIcon: "vendor/fugue/card--pencil.png",
         deleteRowIcon: "vendor/fugue/cross.png",
+        focusedBorder: "1px solid dodgerblue",
     },
     baseInput: {
         height: 24,

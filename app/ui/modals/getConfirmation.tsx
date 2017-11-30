@@ -78,7 +78,7 @@ export function getGetConfirmationWindow(message: React.ReactNode, title: string
                         imgSrc={config.button.okIcon}
                         text={yesButtonText}
                         tooltip={yesButtonText + " (ENTER)"}
-                        style={{marginRight: 10, border: "1px solid dodgerblue"}}
+                        style={{marginRight: 10, border: config.button.focusedBorder}}
                         onClick={async () => win.close(true)}
                     />
                     <Button
