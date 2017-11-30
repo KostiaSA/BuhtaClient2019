@@ -131,14 +131,13 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                             onClick={async () => {
 
                                 // удаление лишних props
-                                let dt = appState.sqlDataTypes[this.props.column!.dataType.id];
-                                if (dt)
-                                    this.props.column!.dataType = dt.copyProps(this.props.column!.dataType);
+                                let dataType = appState.sqlDataTypes[this.props.column!.dataType.id];
+                                if (dataType)
+                                    this.props.column!.dataType = dataType.copyProps(this.props.column!.dataType);
 
                                 let validationError = joiValidate(this.props.column!, validator);
 
                                 if (validationError) {
-                                    console.error("validationResult.error+++++++++++++++++++++", validationError);
                                     await showError(validationError);
                                 }
                                 else {

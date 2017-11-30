@@ -1,4 +1,10 @@
 export let config: any = {
+    font: {
+        family: "Ubuntu",
+        style: "normal",
+        size: 13
+
+    },
     formPanel: {
         inputVerticalSpace: 3,
 
@@ -31,6 +37,6 @@ export let config: any = {
         digits: 12,
         groupSeparator: " ",
         width: 150,
-        negativeColor:"red"
+        negativeColor: "red"
     }
 };

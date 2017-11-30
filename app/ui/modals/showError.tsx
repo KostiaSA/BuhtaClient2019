@@ -7,18 +7,20 @@ import {FlexHPanel} from "../FlexHPanel";
 import {Keycode} from "../../utils/Keycode";
 import {isString} from "util";
 import {config} from "../../const/config";
-import {replaceAll} from "../../utils/replaceAll";
+import {getTextWidth} from "../../utils/getTextWidth";
 
 export function getErrorWindow(message: any, title: string = "Ошибка"): React.ReactElement<any> {
     let w: Window;
+    let maxTextWidth = 0;
 
-    //debugger
-
-    let renderMultiline = (str: string): React.ReactNode => {
+    let renderMultiline = (text: string): React.ReactNode => {
         // делаем многострочные сообщения
         return (
             <span>
-                 {str.toString().split("\n").map((str: string, index: number) => {
+                 {text.toString().split("\n").map((str: string, index: number) => {
+                     let textWidth = getTextWidth(str);
+                     if (textWidth > maxTextWidth)
+                         maxTextWidth = textWidth;
                      return [<span key={index * 2}>{str}</span>, <br key={index * 2 + 1}/>];
                  })}
              </span>
@@ -28,11 +30,15 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
 
     let renderJoi = (joiMessage: any): React.ReactNode => {
         if (message.details && message.details.length > 0) {
+
             return (
                 <div>
                     {message.details.map((detail: any, index: number) => {
-                        //let path = detail.message.split(":")[1] || detail.message;
-                        return <div key={index}>{"\""+detail.path.join(".")+"\" "+detail.message.replace("\"","(").replace("\"",")")}</div>
+                        let str = "\"" + detail.path.join(".") + "\" " + detail.message.replace("\"", "(").replace("\"", ")");
+                        let textWidth = getTextWidth(str);
+                        if (textWidth > maxTextWidth)
+                            maxTextWidth = textWidth;
+                        return <div key={index}>{str}</div>
                     })}
                 </div>
             )
@@ -58,24 +64,34 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
 
 
     let renderMessage = (): React.ReactNode => {
-        if (!message)
+        if (!message) {
+            maxTextWidth = getTextWidth("ошибка?");
             return "ошибка?";
-        else if (message.$$typeof)
+        }
+        else if (message.$$typeof) {
+            maxTextWidth = 600;
             return message;
-        else if (message.isJoi)
+        }
+        else if (message.isJoi) {
             return renderJoi(message);
-        else if (isString(message))
+        }
+        else if (isString(message)) {
             return renderMultiline(message);
-        else if (isString(message.message))
+        }
+        else if (isString(message.message)) {
             return renderMultiline(message.message);
-        else if (message.toString)
+        }
+        else if (message.toString) {
             return renderMultiline(message.toString());
+        }
         else {
+            maxTextWidth = getTextWidth("неизвестный формат ошибки");
             console.error("неизвестный формат ошибки", message);
             return "неизвестный формат ошибки";
         }
     };
 
+    let renderedMessage=renderMessage();
 
     return (
         <Window
@@ -84,9 +100,9 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
             icon="vendor/fugue/exclamation-red.png"
             minHeight={150}
             maxHeight={600}
-            minWidth={300}
-            maxWidth={600}
-            width={300}
+            minWidth={200}
+            maxWidth={700}
+            width={Math.min(maxTextWidth * 1.2, 700)}
             ref={(e) => w = e!}
             onKeyDown={async (keyCode: number): Promise<boolean> => {
                 if (keyCode === Keycode.Escape) {
@@ -107,7 +123,7 @@ export function getErrorWindow(message: any, title: string = "Ошибка"): Re
                     justifyContent: "center",
                     overflow: "auto"
                 }}>
-                    {renderMessage()}
+                    {renderedMessage}
                 </FlexItem>
                 <FlexItem dock="bottom" style={{padding: 5, justifyContent: "center"}}>
                     <Button

@@ -6,14 +6,14 @@
         "primaryKey": true,
         "dataType": {
             "id": "Integer",
-            "size": "16"
+            "size": "64"
         },
         "description": "pos 01"
     }, {
-        "name": "Марка",
+        "name": "Марка22222222222222",
         "dataType": {
-            "id": "String",
-            "maxLen": 1001
+            "id": "Integer",
+            "size": "16"
         },
         "description": "pos 11"
     }, {
@@ -22,7 +22,7 @@
             "id": "Integer",
             "size": "8"
         },
-        "description": "pos 2ppp88ppppppppp111111111111111111111111111"
+        "description": "pos 2ppp88ppppppppp1111211111111111111111111111"
     }, {
         "name": "Гаражный номер",
         "description": "pos 3",
