@@ -20,6 +20,10 @@ export class AppState {
         return Object.keys(this.schemaObjectTypes).map((key: string) => this.schemaObjectTypes[key]);
     }
 
+    get userId(): string {
+        return "Иванов17-20";
+    }
+
     async start() {
         registerSqlDataTypes();
         registerSchemaObjectTypes();

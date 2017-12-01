@@ -39,7 +39,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     getColumnValidator(): Joi.ObjectSchema {
         return Joi.object().options({language: joiRus}).keys({
-            name: Joi.string().min(1).max(config.sql.maxIdentifierLength).required().label("имя"),
+            name: Joi.string().max(config.sql.maxIdentifierLength).required().label("имя"),
             primaryKey: Joi.boolean().label("первичный ключ"),
             description: Joi.string().max(config.sql.maxStringLength).label("описание"),
             notNull: Joi.boolean().label("not null"),

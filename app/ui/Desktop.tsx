@@ -72,17 +72,6 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                     }}>
                     test seveSchemaObjectFiles
                 </button>
-                <Window key="222" ref={(e) => {
-                    this.w = e!
-                }} left={10} top={50} height={300} width={600} title={this.t}>
-                    <button onClick={() => {
-                        this.t = "жопа";
-                        this.b = "ага";
-                        this.forceUpdate();
-                        this.w.updateProps({top: 300, left: 300, title: "уроды"});
-                    }
-                    }>ok2:{this.b}</button>
-                </Window>
                 {this.renderWindows()}
             </div>
         )
@@ -95,7 +84,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
 
             if (win.props.window) {
                 if (!win.props.window.id)
-                    win.props.window.id = "win_" + getRandomString();
+                    win.props.window.id = "rand_" + getRandomString();
                 else {
                     win.props.window.id = "win_" + getSHA1hex(win.props.window.id);
                     let jqxWin: any = $("#" + win.props.window.id);

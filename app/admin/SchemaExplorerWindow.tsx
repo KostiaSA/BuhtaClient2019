@@ -11,6 +11,8 @@ import {loadSchemaTree} from "./api/loadSchemaTree";
 import {appState} from "../AppState";
 import {getErrorWindow} from "../ui/modals/showError";
 import {SchemaObject} from "../schema/SchemaObject";
+import {config} from "../const/config";
+import {Button} from "../ui/Button";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -127,7 +129,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
                     <FlexItem dock="top">
                         шапка
                     </FlexItem>
-                    <FlexItem dock="fill">
+                    <FlexItem dock="fill" style={{padding: 5}}>
                         <Tree
                             source={this.objectsTree}
                             onItemDblClick={async (item) => {
@@ -137,7 +139,9 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
                         />
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
-                        подвал
+                        <Button imgSrc={config.button.cancelIcon}
+                                text="Закрыть"
+                                onClick={async ()=>{this.window.close()}}/>
                     </FlexItem>
                 </FlexHPanel>
 

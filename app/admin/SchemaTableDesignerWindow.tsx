@@ -12,7 +12,7 @@ import {Grid} from "../ui/Grid";
 import {GridColumn} from "../ui/GridColumn";
 import {Button} from "../ui/Button";
 import {SchemaTableColumnEditorWindow} from "./SchemaTableColumnEditorWindow";
-import {clone} from "ejson";
+import {clone, stringify} from "ejson";
 import {Keycode} from "../utils/Keycode";
 import {loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
 import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
@@ -152,7 +152,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
         let req: ISavedSchemaObjectFiles = {
             filePath: this.props.objectId!,
-            json: JSON.stringify(this.table)
+            json: stringify(this.table)
         };
 
         try {

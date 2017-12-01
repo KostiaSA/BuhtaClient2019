@@ -40,7 +40,7 @@ export class Grid extends Component<IGridProps> {
 
         if (!this.props.height || this.props.height === "100%") {
             this.resizeIntervalId = setInterval(() => {
-                let newH = this.widget.parent().innerHeight();
+                let newH = this.widget.parent().height();
 
                 // отановка таймера resize, если grid удалена
                 if ($("#" + this.$id).length !== 1) {

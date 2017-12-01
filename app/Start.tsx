@@ -9,8 +9,35 @@ import {FormPanelItem} from "./ui/FormPanelItem";
 import {TabsPanel} from "./ui/TabsPanel";
 import {TabsPanelItem} from "./ui/TabsPanelItem";
 import {Input} from "./ui/inputs/Input";
+import {config} from "./const/config";
 
 async function start() {
+
+    var requestedBytes = 1024 * 1024 * 100; // 10MB
+
+    (navigator as any).webkitPersistentStorage.requestQuota(
+        requestedBytes, function (grantedBytes: any) {
+            (window as any).requestFileSystem(1,
+                grantedBytes,
+                () => {
+                },
+                () => {
+                });
+
+        }, function (e: any) {
+            console.log('Error', e);
+        }
+    );
+
+
+    (navigator as any).webkitPersistentStorage.queryUsageAndQuota(
+        function (usedBytes: any, grantedBytes: any) {
+            console.log('we are using ', usedBytes, ' of ', grantedBytes, 'bytes');
+        },
+        function (e: any) {
+            console.log('Error', e);
+        }
+    );
 
     await appState.start();
     let w = (window as any);
@@ -28,10 +55,11 @@ async function start() {
 
     w.Input = Input;
 
+    w.config = config;
+
     // window.addEventListener('unhandledrejection', (event: any) => {
     //     console.error(event.reason.statusText || event.reason);
     // });
-
 
 
     // await require("./clientStartup").clientStartup();

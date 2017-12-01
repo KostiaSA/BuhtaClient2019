@@ -4,11 +4,15 @@ import * as PropTypes from "prop-types";
 import {Component} from "./Component";
 import {appState} from "../AppState";
 import {omit} from "../utils/omit";
+import {storageSet} from "../storage/storageSet";
+import {getClientMonitorSize} from "../storage/getClientMonitorSize";
+import {storageGet} from "../storage/storageGet";
 
 declare var jqxWindow: any;
 
 export interface IWindowProps {
     id?: string;
+    storageKey?: string;
     top?: number;
     left?: number;
     height?: number;
@@ -82,11 +86,36 @@ export class Window extends Component<IWindowProps> {
                 opt.position.y = props.top;
         }
 
+        if (this.props.storageKey) {
+            let storedPosition = storageGet(appState.userId, this.props.storageKey + ".position." + getClientMonitorSize());
+            if (!storedPosition) {
+                storedPosition = storageGet(appState.userId, this.props.storageKey + ".position");
+            }
+            if (storedPosition) {
+                opt.position = {x: storedPosition.left, y: storedPosition.top}
+            }
+        }
         this.widget.jqxWindow(opt);
         this.widget = $("#" + this.$id);
         this.widget.on("close", () => {
             this.close();
         });
+
+        let movedSizedEventHandler=(event: any) => {
+            if (this.props.storageKey) {
+                let left = event.args.x;
+                let top = event.args.y;
+                if (!this.$id.startsWith("rand_")) {
+                    storageSet(appState.userId, this.props.storageKey + ".position", {top, left});
+                    storageSet(appState.userId, this.props.storageKey + ".position." + getClientMonitorSize(), {top, left});
+                }
+                console.log("moved", this.$id, event);
+            }
+        };
+
+        this.widget.on("moved", movedSizedEventHandler);
+        this.widget.on("resized", movedSizedEventHandler);
+
         if (this.props.onKeyDown) {
             this.widget.on("keydown", async (event: any) => {
                 let resultOk = await this.props.onKeyDown!(event.keyCode);
