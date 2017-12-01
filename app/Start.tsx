@@ -13,32 +13,6 @@ import {config} from "./const/config";
 
 async function start() {
 
-    var requestedBytes = 1024 * 1024 * 100; // 10MB
-
-    (navigator as any).webkitPersistentStorage.requestQuota(
-        requestedBytes, function (grantedBytes: any) {
-            (window as any).requestFileSystem(1,
-                grantedBytes,
-                () => {
-                },
-                () => {
-                });
-
-        }, function (e: any) {
-            console.log('Error', e);
-        }
-    );
-
-
-    (navigator as any).webkitPersistentStorage.queryUsageAndQuota(
-        function (usedBytes: any, grantedBytes: any) {
-            console.log('we are using ', usedBytes, ' of ', grantedBytes, 'bytes');
-        },
-        function (e: any) {
-            console.log('Error', e);
-        }
-    );
-
     await appState.start();
     let w = (window as any);
     w.appState = appState;

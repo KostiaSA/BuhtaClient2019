@@ -64,7 +64,7 @@ export class Window extends Component<IWindowProps> {
 
     updateProps(props: IWindowProps) {
         let opt: any = {
-            ...omit(this.props, ["id", "children", "left", "top", "icon", "onClose", "title", "onKeyDown"]),
+            ...omit(this.props, ["id", "children", "left", "top", "icon", "onClose", "title", "onKeyDown", "storageKey"]),
             animationType: "none",
             modalOpacity: 0.2,
             showCloseButton: false,
@@ -87,6 +87,8 @@ export class Window extends Component<IWindowProps> {
         }
 
         if (this.props.storageKey) {
+            let pos=storageGet(this.props.storageKey, ["position", getClientMonitorSize()]);
+
             let storedPosition = storageGet(appState.userId, this.props.storageKey + ".position." + getClientMonitorSize());
             if (!storedPosition) {
                 storedPosition = storageGet(appState.userId, this.props.storageKey + ".position");
@@ -101,14 +103,20 @@ export class Window extends Component<IWindowProps> {
             this.close();
         });
 
-        let movedSizedEventHandler=(event: any) => {
+        let movedSizedEventHandler = (event: any) => {
             if (this.props.storageKey) {
-                let left = event.args.x;
-                let top = event.args.y;
-                if (!this.$id.startsWith("rand_")) {
-                    storageSet(appState.userId, this.props.storageKey + ".position", {top, left});
-                    storageSet(appState.userId, this.props.storageKey + ".position." + getClientMonitorSize(), {top, left});
-                }
+                let left = parseInt(this.widget.css("left"));
+                let top = parseInt(this.widget.css("top"));
+                let width = parseInt(this.widget.css("width"));
+                let height = parseInt(this.widget.css("height"));
+
+
+                storageSet(this.props.storageKey, ["position", getClientMonitorSize()], {
+                    top,
+                    left,
+                    width,
+                    height
+                });
                 console.log("moved", this.$id, event);
             }
         };

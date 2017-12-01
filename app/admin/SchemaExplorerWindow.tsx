@@ -117,6 +117,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
+                storageKey="SchemaExplorerWindow"
                 height={600}
                 title={"Объекты конфигурации"}
                 icon="vendor/fugue/sitemap-application-blue.png"
