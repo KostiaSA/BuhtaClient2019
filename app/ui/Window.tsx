@@ -87,14 +87,11 @@ export class Window extends Component<IWindowProps> {
         }
 
         if (this.props.storageKey) {
-            let pos=storageGet(this.props.storageKey, ["position", getClientMonitorSize()]);
-
-            let storedPosition = storageGet(appState.userId, this.props.storageKey + ".position." + getClientMonitorSize());
-            if (!storedPosition) {
-                storedPosition = storageGet(appState.userId, this.props.storageKey + ".position");
-            }
-            if (storedPosition) {
-                opt.position = {x: storedPosition.left, y: storedPosition.top}
+            let pos = storageGet(this.props.storageKey, ["position", getClientMonitorSize()]);
+            if (pos) {
+                opt.position = {x: pos.left, y: pos.top}
+                opt.height = pos.height;
+                opt.width = pos.width;
             }
         }
         this.widget.jqxWindow(opt);
@@ -117,7 +114,7 @@ export class Window extends Component<IWindowProps> {
                     width,
                     height
                 });
-                console.log("moved", this.$id, event);
+                //console.log("moved", this.$id, event);
             }
         };
 

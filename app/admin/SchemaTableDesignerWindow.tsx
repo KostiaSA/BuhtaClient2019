@@ -194,6 +194,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
+                storageKey="SchemaTableDesignerWindow"
                 title={"таблица: " + this.props.objectId}
                 icon="vendor/fugue/table.png"
                 ref={(e) => {
