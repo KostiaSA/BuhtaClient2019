@@ -1,4 +1,6 @@
 import * as  React from "react";
+import {CSSProperties} from "react";
+import * as ReactDOMServer from 'react-dom/server';
 import {IWindowProps, Window} from "../ui/Window";
 import {omit} from "../utils/omit";
 import {FlexHPanel} from "../ui/FlexHPanel";
@@ -6,6 +8,9 @@ import {FlexItem} from "../ui/FlexItem";
 import {ISchemaTableColumnProps, ISchemaTableProps} from "../schema/table/SchemaTable";
 import {Tree} from "../ui/Tree";
 import {loadSchemaTree} from "./api/loadSchemaTree";
+import {appState} from "../AppState";
+import {getErrorWindow} from "../ui/modals/showError";
+import {SchemaObject} from "../schema/SchemaObject";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -21,7 +26,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
     error: any;
 
     private preprocessDataSource(item: any, level: number, path: string) {
-        item.label = item.name;
+        let itemStr = item.name;
 
         if (level === 0)
             item.fileName = "";
@@ -30,16 +35,39 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
         else
             item.fileName = path + "/" + item.name;
 
+        item.id = item.fileName;
+
+        let style: CSSProperties = {};
+
         if (item.items) {
-            item.label = item.name;
+            itemStr = item.name;
             item.expanded = true;
             item.icon = "vendor/fugue/folder-horizontal.png";
-            item.items.forEach(((child: any) => this.preprocessDataSource(child, level + 1, item.fileName)))
+            item.items.forEach(((child: any) => this.preprocessDataSource(child, level + 1, item.fileName)));
+            item.objectType = "folder";
+            style.fontWeight = "bold";
+            style.color = "#505050eb";
         }
         else {
+
+            //item.objectType = itemStr.split(".").pop();
+            item.objectType = SchemaObject.getObjectTypeFromFileName(item.name);
+
+            if (item.objectType && appState.schemaObjectTypes[item.objectType])
+                item.icon = appState.schemaObjectTypes[item.objectType].icon;
+
             // убираем .json
-            item.label = item.name.slice(0, -5);
+            itemStr = item.name.slice(0, -5);
         }
+
+
+        item.html = ReactDOMServer.renderToStaticMarkup(
+            <span style={style}>
+                {itemStr}
+            </span>
+        );
+
+        //console.log("item.label",item.label);
     }
 
     async componentDidMount() {
@@ -48,7 +76,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
             let res = await loadSchemaTree();
             this.preprocessDataSource(res, 0, "");
             this.objectsTree = res.items;
-            console.log("this.objectsTree", this.objectsTree);
+            //console.log("this.objectsTree", this.objectsTree);
             this.forceUpdate();
         }
         catch (error) {
@@ -58,14 +86,36 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
 
     }
 
+    async handleOpenObjectDesigner(objectFileName: string) {
+        let objectType = SchemaObject.getObjectTypeFromFileName(objectFileName);
+        if (!appState.schemaObjectTypes[objectType])
+            throw "неверный тип объекта '" + objectType + "'";
+        let DesignerWindow = appState.schemaObjectTypes[objectType].designerWindow;
+
+        appState.desktop.openWindow(
+            <DesignerWindow
+                window={{id: "дизайнер:" + objectFileName, height: 444, width: 600}}
+                objectId={objectFileName}>
+            </DesignerWindow>
+        );
+
+    }
+
     render() {
         console.log("SchemaExplorerWindow");
+
+        if (this.error) {
+            return getErrorWindow(this.error);
+        }
+
         if (!this.objectsTree)
             return null;
+
 
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
+                height={600}
                 title={"Объекты конфигурации"}
                 icon="vendor/fugue/sitemap-application-blue.png"
 
@@ -78,7 +128,13 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
                         шапка
                     </FlexItem>
                     <FlexItem dock="fill">
-                        <Tree source={this.objectsTree}/>
+                        <Tree
+                            source={this.objectsTree}
+                            onItemDblClick={async (item) => {
+                                this.handleOpenObjectDesigner(item.id);
+                                console.log("=======================")
+                            }}
+                        />
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
                         подвал
@@ -89,6 +145,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
             </Window>
 
         )
+
     }
 
 }

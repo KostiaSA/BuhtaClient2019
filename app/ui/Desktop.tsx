@@ -8,6 +8,7 @@ import {IComponentProps} from "./Component";
 import {saveSchemaObjectFiles} from "../admin/api/saveSchemaObjectFiles";
 import {loadSchemaTree} from "../admin/api/loadSchemaTree";
 import {SchemaExplorerWindow} from "../admin/SchemaExplorerWindow";
+import {getSHA1hex} from "../utils/getSHA1hex";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -26,7 +27,6 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     w: Window;
     b: string = "бутон2";
     t: string = "title999";
-
 
     windows: React.ReactNode[] = [];
 
@@ -55,7 +55,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                 <button
                     onClick={() => {
                         this.openWindow(<SchemaTableDesignerWindow window={{height: 444, width: 600}}
-                                                                   tableId="buhta/test1/Автомобиль"></SchemaTableDesignerWindow>);
+                                                                   objectId="buhta/test1/Автомобиль"></SchemaTableDesignerWindow>);
                         //  this.openWindow(<div key="111" title="111">новое окно</div>);
                     }}>
                     open SchemaTableDesignerWindow
@@ -91,9 +91,19 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     async openWindow(win: React.ReactElement<any>): Promise<boolean> {
 
         return new Promise<boolean>((resolve: (result: boolean) => void, reject: (error: string) => void) => {
+
+
             if (win.props.window) {
                 if (!win.props.window.id)
-                    win.props.window.id = getRandomString();
+                    win.props.window.id = "win_" + getRandomString();
+                else {
+                    win.props.window.id = "win_" + getSHA1hex(win.props.window.id);
+                    let jqxWin: any = $("#" + win.props.window.id);
+                    if (jqxWin.length > 0) {
+                        jqxWin.jqxWindow("bringToFront");
+                        return;
+                    }
+                }
                 win.props.window.onClose = resolve;
                 this.windows.push(win);
             }

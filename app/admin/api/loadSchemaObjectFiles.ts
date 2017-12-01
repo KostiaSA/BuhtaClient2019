@@ -8,6 +8,9 @@ export interface ISchemaObjectFiles {
 
 export async function loadSchemaObjectFiles(filePath: string): Promise<ISchemaObjectFiles> {
 
+    if (filePath.endsWith(".json"))
+        filePath = filePath.slice(0, -5);
+
     let req = {
         filePath: filePath
     };

@@ -23,6 +23,7 @@ import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
 import {getConfirmation} from "../ui/modals/getConfirmation";
 import {config} from "../const/config";
 import {joiValidate} from "../validation/joiValidate";
+import {SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
 
 
 export interface ISchemaTableDesignerProps {
@@ -30,7 +31,7 @@ export interface ISchemaTableDesignerProps {
     window?: IWindowProps;
 }
 
-export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesignerProps, any> {
+export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
     saveButton: Button;
     closeButton: Button;
@@ -110,14 +111,14 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
     async componentDidMount() {
 
         try {
-            let res = await loadSchemaObjectFiles(this.props.tableId!);
+            let res = await loadSchemaObjectFiles(this.props.objectId!);
 
             if (res.json) {
                 this.table = JSON.parse(res.json);
                 this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
             }
             else {
-                this.error = "не найден объект: " + this.props.tableId;
+                this.error = "не найден объект: " + this.props.objectId;
             }
 
             let result = new SchemaTable(this.table).validate();
@@ -150,7 +151,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
         }
 
         let req: ISavedSchemaObjectFiles = {
-            filePath: this.props.tableId!,
+            filePath: this.props.objectId!,
             json: JSON.stringify(this.table)
         };
 
@@ -193,7 +194,7 @@ export class SchemaTableDesignerWindow extends React.Component<ISchemaTableDesig
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
-                title={"таблица: " + this.props.tableId}
+                title={"таблица: " + this.props.objectId}
                 icon="vendor/fugue/table.png"
                 ref={(e) => {
                     this.window = e!

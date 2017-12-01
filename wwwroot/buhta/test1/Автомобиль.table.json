@@ -1,7 +1,7 @@
 ﻿{
     "description": "Список 1",
     "name": "Автомбиль",
-    "objectType": "Table",
+    "objectType": "table",
     "columns": [{
         "name": "Ключ",
         "primaryKey": true,

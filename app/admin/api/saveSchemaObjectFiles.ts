@@ -10,6 +10,8 @@ export interface ISavedSchemaObjectFiles {
 declare var js_beautify: any;
 
 export async function saveSchemaObjectFiles(req: ISavedSchemaObjectFiles): Promise<void> {
+    if (req.filePath.endsWith(".json"))
+        req.filePath = req.filePath.slice(0, -5);
 
     if (req.json)
         req.json = js_beautify(req.json);

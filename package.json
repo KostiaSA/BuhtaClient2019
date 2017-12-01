@@ -11,6 +11,7 @@
   "dependencies": {
     "@types/antd": "^1.0.0",
     "@types/axios": "^0.14.0",
+    "@types/crypto-js": "^3.1.37",
     "@types/ejson": "^2.1.2",
     "@types/joi": "^13.0.0",
     "@types/jquery": "^3.2.16",
@@ -23,6 +24,7 @@
     "@types/validator": "^6.3.0",
     "antd": "^2.13.10",
     "axios": "^0.17.1",
+    "crypto-js": "^3.1.9-1",
     "ejson": "^2.1.2",
     "joi": "^13.0.2",
     "joi-browser": "^13.0.1",

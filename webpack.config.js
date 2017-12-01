@@ -63,6 +63,7 @@ module.exports = {
     externals: {
         "react": "React",
         "react-dom": "ReactDOM",
+        "react-dom/server": "ReactDOMServer",
         "antd": "antd",
         //"codemirror": "CodeMirror",
         "jquery": "$",

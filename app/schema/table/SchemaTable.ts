@@ -5,6 +5,7 @@ import {IBaseSqlDataTypeProps} from "./datatypes/BaseSqlDataType";
 import {joiRus} from "../../i18n/joiRus";
 import {appState} from "../../AppState";
 import {config} from "../../const/config";
+import {SchemaTableDesignerWindow} from "../../admin/SchemaTableDesignerWindow";
 
 
 export interface ISchemaTableProps extends ISchemaObjectProps {
@@ -31,8 +32,10 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         super(props);
     }
 
-    static objectType = "Table";
+    static objectType = "table";
     static objectTypeName = "Таблица";
+    static icon = "vendor/fugue/table.png";
+    static designerWindow = SchemaTableDesignerWindow;
 
     getColumnValidator(): Joi.ObjectSchema {
         return Joi.object().options({language: joiRus}).keys({

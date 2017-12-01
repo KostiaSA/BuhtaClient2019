@@ -1,8 +1,8 @@
 import * as Joi from "joi";
 import {joiRus} from "../i18n/joiRus";
 import {joiValidate} from "../validation/joiValidate";
-import {alternatives} from "joi";
 import {appState} from "../AppState";
+import {SchemaObjectBaseDesignerWindow} from "../admin/SchemaObjectBaseDesignerWindow";
 
 export interface ISchemaObjectProps {
     objectType: string;
@@ -11,11 +11,22 @@ export interface ISchemaObjectProps {
 }
 
 
-export class SchemaObject<T extends ISchemaObjectProps> {
+export class SchemaObject<T extends ISchemaObjectProps=ISchemaObjectProps> {
     props: T;
 
     static objectType = "?Object";
     static objectTypeName = "?Объект";
+    static icon = "";
+    static designerWindow: typeof SchemaObjectBaseDesignerWindow;// = SchemaObjectBaseDesignerWindow;
+
+    static getObjectTypeFromFileName(fileName: string): string {
+        let words = fileName.split(".");
+        if (words.length < 3)
+            throw "неверное имя файла объекта: '" + fileName + "'";
+        words.pop();
+        return words.pop()!;
+
+    }
 
     constructor(props: T) {
         this.props = props || {};
@@ -25,7 +36,7 @@ export class SchemaObject<T extends ISchemaObjectProps> {
     getValidator(): Joi.ObjectSchema {
 
         return Joi.object().options({language: joiRus}).keys({
-            objectType: Joi.string().required().only(appState.schemaObjectTypesAsArray.map((typ)=>typ.objectType)).label("тип объекта"),
+            objectType: Joi.string().required().only(appState.schemaObjectTypesAsArray.map((typ) => typ.objectType)).label("тип объекта"),
             name: Joi.string().required().max(127).required().label("имя объекта"),
             description: Joi.string().max(4096).label("описание"),
         })

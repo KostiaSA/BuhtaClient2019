@@ -1,7 +1,7 @@
 ﻿{
     "description": "Список 1",
     "name": "Автомбиль",
-    "objectType": "Table",
+    "objectType": "table",
     "columns": [{
         "name": "Ключ",
         "primaryKey": true,
@@ -35,9 +35,9 @@
         "name": "Номер и название",
         "dataType": {
             "id": "String",
-            "maxLen": "501"
+            "maxLen": 401
         },
-        "description": "pos 52222222"
+        "description": "pos 5222222211111111111111================="
     }, {
         "name": "ИНН ТС",
         "dataType": {

@@ -8,7 +8,8 @@ export interface ITreeProps extends IComponentProps {
     height?: string | number;
     width?: string | number;
     source?: any;
-    onItemClick?: (rowIndex: number) => void;
+    onItemClick?:  (rowItem: any) => Promise<void>;
+    onItemDblClick?: (rowItem: any) => Promise<void>;
 }
 
 export class Tree extends Component<ITreeProps> {
@@ -23,8 +24,8 @@ export class Tree extends Component<ITreeProps> {
         bindObj: PropTypes.object
     };
 
-     lastParentH: number;
-     resizeIntervalId: any;
+    lastParentH: number;
+    resizeIntervalId: any;
 
     componentDidMount() {
         this.widget = $("#" + this.$id);
@@ -49,12 +50,12 @@ export class Tree extends Component<ITreeProps> {
     }
 
     updateProps(props: ITreeProps, create: boolean) {
-        let treeOptions: any = omit(props, ["children", "onItemClick"]);
-        treeOptions.height = treeOptions.height || 350;
+        let treeOptions: any = omit(props, ["children", "onItemClick", "onItemDblClick"]);
+        treeOptions.height = treeOptions.height || "100%";
         treeOptions.width = treeOptions.width || "100%";
 
-        treeOptions.animationShowDuration=120;
-        treeOptions.animationHideDuration=120;
+        treeOptions.animationShowDuration = 100;
+        treeOptions.animationHideDuration = 100;
 
         this.widget.jqxTree(treeOptions);
         this.widget = $("#" + this.$id);
@@ -66,12 +67,33 @@ export class Tree extends Component<ITreeProps> {
         else
             this.widget.off("itemClick");
 
+        this.bindItemDblClickEvent();
+
+    }
+
+    bindItemDblClickEvent() {
+
+        if (this.props.onItemDblClick) {
+            let $items = this.widget.find(".jqx-tree-item");
+            $items.on("dblclick", async (event: any) => {
+
+                let item = this.widget.jqxTree("getItem", $(event.target).parents("li")[0]);
+                if (!item.hasItems) { // не folder
+                    console.log("dblclick",item);
+                    await this.props.onItemDblClick!(item);
+                    return true;
+                }
+            });
+        }
+        else
+            this.widget.off("dblclick");
+
     }
 
 
-    getSelectedRowIndex(): number {
-        return this.widget.jqxTree("getselectedrowindex");
-    }
+    // getSelectedRowIndex(): number {
+    //     return this.widget.jqxTree("getselectedrowindex");
+    // }
 
 
     focus() {
