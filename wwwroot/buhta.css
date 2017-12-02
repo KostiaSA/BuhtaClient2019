@@ -76,3 +76,7 @@ input[type=text].jqx-input {
 .jqx-fill-state-normal {
     border-color: #d2d2d2;
 }
+
+.jqx-menu-item {
+     padding: 1px 8px 1px 8px;
+}

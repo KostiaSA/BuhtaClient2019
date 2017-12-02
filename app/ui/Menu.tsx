@@ -23,7 +23,12 @@ export class Menu extends Component<IMenuProps> {
     }
 
     updateProps(props: IMenuProps) {
-        let opt: any = omit(this.props, ["children"]);
+        let opt: any = {
+            ...omit(this.props, ["children"]),
+            animationShowDuration: 0,
+            animationHideDuration: 0,
+            animationShowDelay: 0
+        };
 
 //          opt.height = opt.height || "auto";
 //        opt.width = opt.width || "100%";
@@ -32,24 +37,19 @@ export class Menu extends Component<IMenuProps> {
         this.widget = $("#" + this.$id);
     }
 
-    renderHeaders(): React.ReactNode {
-        return React.Children.toArray(this.props.children).map((child, index) => {
-            return <li key={index}>{(child as any).props.title}</li>
-        });
-    }
+    // renderHeaders(): React.ReactNode {
+    //     return React.Children.toArray(this.props.children).map((child, index) => {
+    //         return <li key={index}>{(child as any).props.title}</li>
+    //     });
+    // }
 
     render() {
-        console.log("render Menu");
+        console.log("render Menu",this.props.children);
         return (
-            <div id={this.$id} style={{}}>
-                <ul>
-                    {/*{this.renderHeaders()}*/}
-                    <li><a href="#Education">Education</a></li>
-                    <li><a href="#Financial">Financial services</a></li>
-                    <li><a href="#Government">Government</a></li>
-                    <li><a href="#Manufacturing">Manufacturing</a></li>
+            <div id={this.$id} style={{zIndex: 8888}}>
+                <ul style={{zIndex: 9999}}>
+                    {this.props.children}
                 </ul>
-                {/*{this.props.children}*/}
             </div>
         )
     }

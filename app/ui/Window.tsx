@@ -69,7 +69,8 @@ export class Window extends Component<IWindowProps> {
             modalOpacity: 0.2,
             showCloseButton: false,
             keyboardNavigation: false,
-            keyboardCloseKey: 0
+            keyboardCloseKey: 0,
+            zIndex:500,
         };
         if (!opt.maxHeight) {
             opt.maxHeight = 3000;
