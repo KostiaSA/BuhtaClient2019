@@ -1,4 +1,5 @@
 export let config: any = {
+    theme: "buhta",
     font: {
         family: "Ubuntu",
         style: "normal",

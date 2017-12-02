@@ -9,6 +9,7 @@ import {saveSchemaObjectFiles} from "../admin/api/saveSchemaObjectFiles";
 import {loadSchemaTree} from "../admin/api/loadSchemaTree";
 import {SchemaExplorerWindow} from "../admin/SchemaExplorerWindow";
 import {getSHA1hex} from "../utils/getSHA1hex";
+import {Menu} from "./Menu";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -38,6 +39,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         console.log("render desktop");
         return (
             <div id="desktop" style={{height: "100%", flex: "1 0 auto"}}>
+                <Menu mode="horizontal"/>
                 <button
                     onClick={async () => {
                         let result = await loadSchemaTree();

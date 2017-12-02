@@ -31,6 +31,8 @@ async function start() {
 
     w.config = config;
 
+    ($ as any).jqx.theme = config.theme;
+
     // window.addEventListener('unhandledrejection', (event: any) => {
     //     console.error(event.reason.statusText || event.reason);
     // });
