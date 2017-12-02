@@ -43,8 +43,11 @@ export class Desktop extends React.Component<IDesktopProps, any> {
             <div id="desktop" style={{height: "100%", flex: "1 0 auto"}}>
                 <Menu mode="horizontal">
                     <MenuItem title="Файл">
-                        <MenuItem title="Новый" icon={config.button.cancelIcon}></MenuItem>
-                        <MenuItem title="Старый" emptyIcon onClick={async ()=>{alert("fuf")}}></MenuItem>
+                        <MenuItem title="Новый Новый" icon={config.button.cancelIcon}></MenuItem>
+                        <MenuItem title="Старый 2" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                        <MenuItem title="Старый 333" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                        <MenuItem title="Старый 33333" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                        <MenuItem title="Старый +++" onClick={async ()=>{alert("fuf")}}></MenuItem>
                     </MenuItem>
                     <MenuItem title="Изменить"></MenuItem>
                 </Menu>

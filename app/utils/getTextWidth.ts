@@ -11,7 +11,7 @@ export function getTextWidth(text: string, fontSize: number = config.font.size, 
     let context = canvas.getContext("2d");
     context.font = fontSize.toString() + "px " + fontStyle + " " + fontFamily;
     let metrics = context.measureText(text);
-    return metrics.width;
+    return Math.round(metrics.width);
 }
 
 //console.log(getTextWidth("hello there!", "bold 12pt arial"));

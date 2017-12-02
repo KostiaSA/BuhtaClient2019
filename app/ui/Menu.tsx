@@ -1,7 +1,9 @@
 import * as  React from "react";
+import {CSSProperties} from "react";
 import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
-
+import {getTextWidth} from "../utils/getTextWidth";
+import {isString} from "util";
 
 export interface IMenuProps extends IComponentProps {
     mode: "horizontal" | "vertical" | "popup";
@@ -30,25 +32,39 @@ export class Menu extends Component<IMenuProps> {
             animationShowDelay: 0
         };
 
-//          opt.height = opt.height || "auto";
-//        opt.width = opt.width || "100%";
-
         this.widget.jqxMenu(opt);
         this.widget = $("#" + this.$id);
     }
 
-    // renderHeaders(): React.ReactNode {
-    //     return React.Children.toArray(this.props.children).map((child, index) => {
-    //         return <li key={index}>{(child as any).props.title}</li>
-    //     });
-    // }
 
     render() {
-        console.log("render Menu",this.props.children);
+        console.log("render Menu", this.props.children);
+
+        let style: CSSProperties = {};
+
+        let clonedChildren = this.props.children;
+
+        if (this.props.mode !== "horizontal") {
+            let maxWidth = 100;
+            let needEmptyIcons = false;
+
+            React.Children.toArray(this.props.children).forEach((child: any) => {
+                if (isString(child.props.title)) {
+                    maxWidth = Math.max(maxWidth, getTextWidth(child.props.title.substr(0, 50)) * 1.3 + 25);
+                }
+            });
+            style.width = maxWidth;
+
+            clonedChildren = React.Children.toArray(this.props.children).map((child: any) => {
+                return React.cloneElement(child, {emptyIcon: needEmptyIcons});
+            });
+
+        }
+
         return (
-            <div id={this.$id} style={{zIndex: 8888}}>
-                <ul style={{zIndex: 9999}}>
-                    {this.props.children}
+            <div id={this.$id}>
+                <ul style={style}>
+                    {clonedChildren}
                 </ul>
             </div>
         )
