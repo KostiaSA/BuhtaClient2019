@@ -38,6 +38,8 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         return this.windows.slice();
     }
 
+
+
     render() {
         console.log("render desktop");
         return (

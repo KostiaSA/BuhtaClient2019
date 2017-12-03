@@ -13,6 +13,9 @@ import {getErrorWindow} from "../ui/modals/showError";
 import {SchemaObject} from "../schema/SchemaObject";
 import {config} from "../const/config";
 import {Button} from "../ui/Button";
+import {MenuItem} from "../ui/MenuItem";
+import {Menu} from "../ui/Menu";
+import {MenuSeparator} from "../ui/MenuSeparator";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -102,6 +105,24 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
         );
 
     }
+    testPopup:any=(
+        <Menu mode="popup">
+            <MenuItem title="Файл">
+                <MenuItem title="Новый Новый" icon={config.button.cancelIcon}></MenuItem>
+                <MenuItem title="Старый 2" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                <MenuItem title="Старый 333" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                <MenuSeparator/>
+                <MenuItem title="Старый 33333" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                <MenuItem title="Старый +++" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                <MenuItem title="Старый 33333" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                <MenuItem title="Старый +++" onClick={async ()=>{alert("fuf")}}></MenuItem>
+
+                <MenuItem title="Старый 33333" startGroup onClick={async ()=>{alert("fuf")}}></MenuItem>
+                <MenuItem title="Старый +++" onClick={async ()=>{alert("fuf")}}></MenuItem>
+            </MenuItem>
+            <MenuItem title="Изменить"></MenuItem>
+        </Menu>
+    );
 
     render() {
         console.log("SchemaExplorerWindow");
@@ -137,6 +158,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
                                 this.handleOpenObjectDesigner(item.id);
                                 console.log("=======================")
                             }}
+                            popup={this.testPopup}
                         />
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>

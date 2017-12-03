@@ -7,6 +7,8 @@ import {isString} from "util";
 
 export interface IMenuProps extends IComponentProps {
     mode: "horizontal" | "vertical" | "popup";
+    left?: number;
+    top?: number;
     height?: string | number;
     width?: string | number;
 }
@@ -33,6 +35,9 @@ export class Menu extends Component<IMenuProps> {
         };
 
         this.widget.jqxMenu(opt);
+        if (this.props.mode === "popup")
+            this.widget.jqxMenu("open", this.props.left, this.props.top);
+
         this.widget = $("#" + this.$id);
     }
 

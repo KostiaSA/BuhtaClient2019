@@ -33,6 +33,12 @@ async function start() {
 
     ($ as any).jqx.theme = config.theme;
 
+
+    // disable the default browser's context menu.
+    $(document).on('contextmenu', (e) => {
+        return false;
+    });
+
     // window.addEventListener('unhandledrejection', (event: any) => {
     //     console.error(event.reason.statusText || event.reason);
     // });
