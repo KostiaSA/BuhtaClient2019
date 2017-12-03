@@ -55,16 +55,6 @@ export class MenuItem extends React.Component<IMenuItemProps> {
             return null;
     }
 
-    //     return React.Children.toArray(this.props.children).map((child, index) => {
-    //         return (
-    //             <ul>
-    //                 {this.props.children}
-    //             </ul>
-    //
-    //             <li key={index}>{(child as any).props.title}</li>
-    //         )
-    //     });
-    // }
 
     renderSeparator(): React.ReactNode {
         if (this.props.startGroup)

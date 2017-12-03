@@ -61,6 +61,23 @@ export class Window extends Component<IWindowProps> {
     // componentDidUpdate() {
     //     this.content.forceUpdate();
     // }
+    movedSizedEventHandler = (event: any) => {
+        if (this.props.storageKey) {
+            let left = parseInt(this.widget.css("left"));
+            let top = parseInt(this.widget.css("top"));
+            let width = parseInt(this.widget.css("width"));
+            let height = parseInt(this.widget.css("height"));
+
+
+            storageSet(this.props.storageKey, ["position", getClientMonitorSize()], {
+                top,
+                left,
+                width,
+                height
+            });
+            //console.log("moved", this.$id, event);
+        }
+    };
 
     updateProps(props: IWindowProps) {
         let opt: any = {
@@ -70,7 +87,7 @@ export class Window extends Component<IWindowProps> {
             showCloseButton: false,
             keyboardNavigation: false,
             keyboardCloseKey: 0,
-            zIndex:500,
+            zIndex: 500,
         };
         if (!opt.maxHeight) {
             opt.maxHeight = 3000;
@@ -101,26 +118,9 @@ export class Window extends Component<IWindowProps> {
             this.close();
         });
 
-        let movedSizedEventHandler = (event: any) => {
-            if (this.props.storageKey) {
-                let left = parseInt(this.widget.css("left"));
-                let top = parseInt(this.widget.css("top"));
-                let width = parseInt(this.widget.css("width"));
-                let height = parseInt(this.widget.css("height"));
 
-
-                storageSet(this.props.storageKey, ["position", getClientMonitorSize()], {
-                    top,
-                    left,
-                    width,
-                    height
-                });
-                //console.log("moved", this.$id, event);
-            }
-        };
-
-        this.widget.on("moved", movedSizedEventHandler);
-        this.widget.on("resized", movedSizedEventHandler);
+        this.widget.on("moved", this.movedSizedEventHandler);
+        this.widget.on("resized", this.movedSizedEventHandler);
 
         if (this.props.onKeyDown) {
             this.widget.on("keydown", async (event: any) => {
@@ -162,6 +162,7 @@ export class Window extends Component<IWindowProps> {
     }
 
     close(result: boolean = false) {
+        this.movedSizedEventHandler(null);
         if (this.props.onClose)
             this.props.onClose(result);
         appState.desktop.closeWindow(this);
