@@ -12,6 +12,7 @@ import {getSHA1hex} from "../utils/getSHA1hex";
 import {Menu} from "./Menu";
 import {MenuItem} from "./MenuItem";
 import {config} from "../const/config";
+import {MenuSeparator} from "./MenuSeparator";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -46,7 +47,13 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                         <MenuItem title="Новый Новый" icon={config.button.cancelIcon}></MenuItem>
                         <MenuItem title="Старый 2" onClick={async ()=>{alert("fuf")}}></MenuItem>
                         <MenuItem title="Старый 333" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                        <MenuSeparator/>
                         <MenuItem title="Старый 33333" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                        <MenuItem title="Старый +++" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                        <MenuItem title="Старый 33333" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                        <MenuItem title="Старый +++" onClick={async ()=>{alert("fuf")}}></MenuItem>
+
+                        <MenuItem title="Старый 33333" startGroup onClick={async ()=>{alert("fuf")}}></MenuItem>
                         <MenuItem title="Старый +++" onClick={async ()=>{alert("fuf")}}></MenuItem>
                     </MenuItem>
                     <MenuItem title="Изменить"></MenuItem>

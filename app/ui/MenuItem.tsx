@@ -2,6 +2,7 @@ import * as  React from "react";
 import {CSSProperties} from "react";
 import {isString} from "util";
 import {getTextWidth} from "../utils/getTextWidth";
+import {MenuSeparator} from "./MenuSeparator";
 
 export interface IMenuItemProps {
     title: string | React.ReactNode;
@@ -10,6 +11,7 @@ export interface IMenuItemProps {
     emptyIcon?: boolean;
     onClick?: () => Promise<void>;
     width?: string | number;
+    startGroup?: boolean;
 
 }
 
@@ -64,18 +66,29 @@ export class MenuItem extends React.Component<IMenuItemProps> {
     //     });
     // }
 
+    renderSeparator(): React.ReactNode {
+        if (this.props.startGroup)
+            return <MenuSeparator key="1"/>;
+        else
+            return null;
+    }
+
     render() {
         return (
-            <li
-                onClick={() => {
-                    if (this.props.onClick) this.props.onClick()
-                }}
-            >
-                {this.props.icon ? <img style={{float: "left", marginRight: 5}} src={this.props.icon}/> : null}
-                <span
-                    style={{marginLeft: (this.props.emptyIcon && !this.props.icon) ? 20 : 0}}>{this.props.title}</span>
-                {this.renderItems()}
-            </li>
+            [
+                this.renderSeparator(),
+                <li
+                    key="2"
+                    onClick={() => {
+                        if (this.props.onClick) this.props.onClick()
+                    }}
+                >
+                    {this.props.icon ? <img style={{float: "left", marginRight: 5}} src={this.props.icon}/> : null}
+                    <span
+                        style={{marginLeft: (this.props.emptyIcon && !this.props.icon) ? 20 : 0}}>{this.props.title}</span>
+                    {this.renderItems()}
+                </li>
+            ]
         );
     }
 
