@@ -1,11 +1,10 @@
 import * as  React from "react";
-import * as  ReactDOM from "react-dom";
 import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "./Component";
-import {isFunction} from "util";
 import {omit} from "../utils/omit";
 import {isMouseRightClickEvent} from "../utils/isMouseRightClickEvent";
 import {removeAllMenuPopups} from "../utils/removeAllMenuPopups";
+import {openMenuPopup} from "../utils/openMenuPopup";
 
 
 export interface ITreeProps extends IComponentProps {
@@ -29,9 +28,9 @@ export class Tree extends Component<ITreeProps> {
         bindObj: PropTypes.object
     };
 
-    popup: React.ReactNode | null = null;
-    popupLeft: number;
-    popupTop: number;
+    // popup: React.ReactNode | null = null;
+    // popupLeft: number;
+    // popupTop: number;
 
     lastParentH: number;
     resizeIntervalId: any;
@@ -83,7 +82,7 @@ export class Tree extends Component<ITreeProps> {
 
     bindMouseRightClickEvent() {
 
-        if (this.props.onItemDblClick) {
+        if (this.props.popup) {
             let $items = this.widget.find(".jqx-tree-item");
             $items.on("mousedown", async (event: MouseEvent) => {
                 if (isMouseRightClickEvent(event)) {
@@ -114,22 +113,20 @@ export class Tree extends Component<ITreeProps> {
                         //this.popup = this.props.popup;
                         let scrollTop = $(window).scrollTop();
                         let scrollLeft = $(window).scrollLeft();
-                        this.popupLeft = event.clientX + 5 + scrollLeft!;
-                        this.popupTop = event.clientY + 5 + scrollTop!;
+                        let left = event.clientX + 5 + scrollLeft!;
+                        let top = event.clientY + 5 + scrollTop!;
 
-                        var elemDiv = document.createElement('div');
-                        $(elemDiv).addClass("buhta-popup-menu");
-                        document.body.appendChild(elemDiv);
+                        openMenuPopup(this.props.popup, left, top, item);
 
-                        if (isFunction(this.props.popup)) {
-
-                            (window as any).ZZZ = ReactDOM.render(await (this.props.popup as any)(item), elemDiv);
-
-                        }
-                        //this.forceUpdate();
-                        //await this.props.onItemDblClick!(item);
-                        // event.preventDefault();
-                        // event.stopPropagation();
+                        // var elemDiv = document.createElement('div');
+                        // $(elemDiv).addClass("buhta-popup-menu");
+                        // document.body.appendChild(elemDiv);
+                        //
+                        // if (isFunction(this.props.popup)) {
+                        //
+                        //     (window as any).ZZZ = ReactDOM.render(await (this.props.popup as any)(item), elemDiv);
+                        //
+                        // }
                         return true;
                     }
 
