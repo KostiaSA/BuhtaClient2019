@@ -84,11 +84,9 @@ export class Tree extends Component<ITreeProps> {
                 if (isMouseRightClickEvent(event)) {
                     removeAllMenuPopups();
                     let item = this.widget.jqxTree("getItem", $(event.target).parents("li")[0]);
-                    if (!item.hasItems) { // не folder
-                        this.widget.jqxTree('selectItem', item);
-                        openMenuPopup(event, this.props.popup, item);
-                        return true;
-                    }
+                    this.widget.jqxTree('selectItem', item);
+                    openMenuPopup(event, this.props.popup, item);
+                    return true;
                 }
             });
         }

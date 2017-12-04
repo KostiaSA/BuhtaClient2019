@@ -107,41 +107,76 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
 
     }
 
-    testPopup: any = () => {
-        return (
-            <Menu mode="popup" key={getRandomString()}>
-                <MenuItem title="Файл">
-                    <MenuItem title="Новый Новый" icon={config.button.cancelIcon}></MenuItem>
-                    <MenuItem title="Старый 2" onClick={async () => {
-                        alert("fuf")
-                    }}></MenuItem>
-                    <MenuItem title="Старый 333" onClick={async () => {
-                        alert("fuf")
-                    }}></MenuItem>
-                    <MenuSeparator/>
-                    <MenuItem title="Старый 33333" onClick={async () => {
-                        alert("fuf")
-                    }}></MenuItem>
-                    <MenuItem title="Старый +++" onClick={async () => {
-                        alert("fuf")
-                    }}></MenuItem>
-                    <MenuItem title="Старый 33333" onClick={async () => {
-                        alert("fuf")
-                    }}></MenuItem>
-                    <MenuItem title="Старый +++" onClick={async () => {
-                        alert("fuf")
-                    }}></MenuItem>
+    async createPopupMenu(rowItem: any) {
 
-                    <MenuItem title="Старый 33333" startGroup onClick={async () => {
-                        alert("fuf")
-                    }}></MenuItem>
-                    <MenuItem title="Старый +++" onClick={async () => {
-                        alert("fuf")
-                    }}></MenuItem>
-                </MenuItem>
-                <MenuItem title={getRandomString()}></MenuItem>
-            </Menu>
-        )
+        if (rowItem.hasItems) {
+            return (
+                <Menu mode="popup" key={getRandomString()}>
+                    <MenuItem
+                        title="новая Таблица"
+                        onClick={async () => {
+                            alert("новая Таблица")
+                        }}>
+                    </MenuItem>
+                    <MenuItem
+                        title="новый Запрос"
+                        onClick={async () => {
+                            alert("новая Запрос")
+                        }}>
+                    </MenuItem>
+                    <MenuItem
+                        title="новая Форма"
+                        onClick={async () => {
+                            alert("новая Форма")
+                        }}>
+                    </MenuItem>
+                    <MenuSeparator/>
+                    <MenuItem
+                        title="новый каталог"
+                        icon="vendor/fugue/folder-horizontal.png"
+                        onClick={async () => {
+                            alert("новая Форма")
+                        }}>
+                    </MenuItem>
+
+                </Menu>
+            )
+        }
+        else
+            return (
+                <Menu mode="popup" key={getRandomString()}>
+                    <MenuItem title="Файл">
+                        <MenuItem title="Новый Новый" icon={config.button.cancelIcon}></MenuItem>
+                        <MenuItem title="Старый 2" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                        <MenuItem title="Старый 333" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                        <MenuSeparator/>
+                        <MenuItem title="Старый 33333" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                        <MenuItem title="Старый +++" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                        <MenuItem title="Старый 33333" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                        <MenuItem title="Старый +++" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+
+                        <MenuItem title="Старый 33333" startGroup onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                        <MenuItem title="Старый +++" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                    </MenuItem>
+                    <MenuItem title={getRandomString()}></MenuItem>
+                </Menu>
+            )
     };
 
     render() {
@@ -178,7 +213,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
                                 this.handleOpenObjectDesigner(item.id);
                                 console.log("=======================")
                             }}
-                            popup={this.testPopup}
+                            popup={this.createPopupMenu}
                         />
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>

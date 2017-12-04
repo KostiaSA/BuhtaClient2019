@@ -65,13 +65,16 @@ export class Menu extends Component<IMenuProps> {
         let clonedChildren = this.props.children;
 
         if (this.props.mode !== "horizontal") {
+
+
             let maxWidth = 100;
             let needEmptyIcons = false;
 
             React.Children.toArray(this.props.children).forEach((child: any) => {
                 if (isString(child.props.title)) {
-                    maxWidth = Math.max(maxWidth, getTextWidth(child.props.title.substr(0, 50)) * 1.3 + 25);
+                    maxWidth = Math.max(maxWidth, getTextWidth(child.props.title.substr(0, 50)) * 1.3 + 50);
                 }
+                needEmptyIcons = needEmptyIcons || child.props.icon;
             });
             style.width = maxWidth;
 

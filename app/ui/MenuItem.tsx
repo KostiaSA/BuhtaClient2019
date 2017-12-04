@@ -34,9 +34,9 @@ export class MenuItem extends React.Component<IMenuItemProps> {
         let needEmptyIcons = false;
         React.Children.toArray(this.props.children).forEach((child: any) => {
             if (isString(child.props.title)) {
-                maxWidth = Math.max(maxWidth, getTextWidth(child.props.title.substr(0, 50)) * 1.3 + 25);
-                needEmptyIcons = needEmptyIcons || child.props.icon;
+                maxWidth = Math.max(maxWidth, getTextWidth(child.props.title.substr(0, 50)) * 1.3 + 50);
             }
+            needEmptyIcons = needEmptyIcons || child.props.icon;
         });
 
         let clonedChildren = React.Children.toArray(this.props.children).map((child: any) => {
