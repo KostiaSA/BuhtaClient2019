@@ -1,9 +1,10 @@
 import * as  React from "react";
 import {CSSProperties} from "react";
+import {isString} from "util";
 import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
 import {getTextWidth} from "../utils/getTextWidth";
-import {isString} from "util";
+import {removeAllMenuPopups} from "../utils/removeAllMenuPopups";
 
 export interface IMenuProps extends IComponentProps {
     mode: "horizontal" | "vertical" | "popup";
@@ -24,7 +25,30 @@ export class Menu extends Component<IMenuProps> {
         console.log("didmount TabsPanel " + this.$id);
         this.widget = $("#" + this.$id);
         this.updateProps(this.props);
+
+        let intervalId = setInterval(() => {
+            if (this.widget.css("display") === "none") {
+                removeAllMenuPopups();
+                clearInterval(intervalId);
+            }
+        }, 200);
     }
+
+    // removeClosedPopus() {
+    //     // в body удаляем div с классом buhta-popup-menu и еще 2 элемента
+    //     let classToDelete = "del-" + getRandomString();
+    //     let updateMode = -1;
+    //     for (let div of $("body").children()) {
+    //         if ($(div).hasClass("buhta-popup-menu") && (!$(div).children() || $(div).children().first().attr("id") !== this.$id))
+    //             updateMode = 2;
+    //         if (updateMode > -1) {
+    //             $(div).addClass(classToDelete);
+    //             updateMode--;
+    //         }
+    //     }
+    //     $("." + classToDelete).remove();
+    //
+    // }
 
     updateProps(props: IMenuProps) {
         let opt: any = {
@@ -34,13 +58,20 @@ export class Menu extends Component<IMenuProps> {
             animationShowDelay: 0
         };
 
+        if (this.props.mode === "popup") {
+            // сначала удаляем все от предыдущего popup
+            removeAllMenuPopups(this.$id);
+        }
+
         this.widget.jqxMenu(opt);
-        if (this.props.mode === "popup")
+
+        if (this.props.mode === "popup") {
             this.widget.jqxMenu("open", this.props.left, this.props.top);
+        }
 
         this.widget = $("#" + this.$id);
-    }
 
+    }
 
     render() {
         console.log("render Menu", this.props.children);
