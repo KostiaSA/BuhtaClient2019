@@ -107,9 +107,22 @@ export class Window extends Component<IWindowProps> {
         if (this.props.storageKey) {
             let pos = storageGet(this.props.storageKey, ["position", getClientMonitorSize()]);
             if (pos) {
-                opt.position = {x: pos.left, y: pos.top}
+                opt.position = {x: pos.left, y: pos.top};
                 opt.height = pos.height;
                 opt.width = pos.width;
+
+                // поиск открытых окон с такими же координатами и сдвиг вниз и вправо, если найдем
+                for (let div of $("body>.jqx-window")) {
+                    let left = parseInt($(div).css("left"));
+                    let top = parseInt($(div).css("top"));
+                    if (Math.abs(opt.position.x - left) < 30) {
+                        opt.position.x = left + 30;
+                    }
+                    if (Math.abs(opt.position.y - top) < 30) {
+                        opt.position.y = top + 30;
+                    }
+                }
+
             }
         }
         this.widget.jqxWindow(opt);
