@@ -5,7 +5,7 @@ import {omit} from "../utils/omit";
 import {isMouseRightClickEvent} from "../utils/isMouseRightClickEvent";
 import {removeAllMenuPopups} from "../utils/removeAllMenuPopups";
 import {openMenuPopup} from "../utils/openMenuPopup";
-
+import {isString} from "util";
 
 export interface ITreeProps extends IComponentProps {
     height?: string | number;
@@ -116,6 +116,27 @@ export class Tree extends Component<ITreeProps> {
 
     focus() {
         this.widget.jqxTree("focus");
+    }
+
+    addTo(element: any, parentElement: any) {
+        this.widget.jqxTree("addTo", element, parentElement);
+        this.bindItemDblClickEvent();
+        this.bindMouseRightClickEvent();
+        this.selectItem(element);
+    }
+
+    selectItem(item: any) {
+        let id: string;
+        if (isString(item)) {
+            id = item;
+        }
+        else if (item.id) {
+            id = item.id;
+        }
+        else
+            throw "Tree.selectItem(): item должен быть объект со свойством 'id' или строка";
+
+        this.widget.jqxTree('selectItem', $("#" + id)[0]);
     }
 
     render() {

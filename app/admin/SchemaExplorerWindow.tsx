@@ -18,6 +18,7 @@ import {Menu} from "../ui/Menu";
 import {MenuSeparator} from "../ui/MenuSeparator";
 import {getRandomString} from "../utils/getRandomString";
 import {SchemaTableDesignerWindow} from "./SchemaTableDesignerWindow";
+import {getSHA1hex} from "../utils/getSHA1hex";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -42,7 +43,8 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
         else
             item.fileName = path + "/" + item.name;
 
-        item.id = item.fileName;
+        item.id = "schema_object_" + getSHA1hex(item.fileName);
+        item.value = item.fileName;
 
         let style: CSSProperties = {};
 
@@ -64,7 +66,8 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
                 item.icon = appState.schemaObjectTypes[item.objectType].icon;
 
             // убираем .json
-            itemStr = item.name.slice(0, -5);
+            if (item.name.endsWith(".json"))
+                itemStr = item.name.slice(0, -5);
         }
 
 
@@ -108,7 +111,8 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
 
     }
 
-    async handleOpenTableDesigner_for_create(newObjectPath: string) {
+    async handleOpenTableDesigner_for_create(parentItem: any) {
+        let newObjectPath = parentItem.value;
         let newTableName = await appState.desktop.openWindow(
             <SchemaTableDesignerWindow
                 window={{height: 500, width: 600}}
@@ -116,7 +120,11 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
             >
             </SchemaTableDesignerWindow>
         );
-        debugger
+        let item = {name: newTableName.split("/").pop()};
+        this.preprocessDataSource(item, 1, newObjectPath);
+        this.tree.addTo(item, parentItem);
+        this.window.bringToFront();
+
     }
 
     createPopupMenu = async (rowItem: any) => {
@@ -127,7 +135,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
                     <MenuItem
                         title="новая Таблица"
                         onClick={async () => {
-                            this.handleOpenTableDesigner_for_create(rowItem.id);
+                            this.handleOpenTableDesigner_for_create(rowItem);
                         }}>
                     </MenuItem>
                     <MenuItem
@@ -191,6 +199,8 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
             )
     };
 
+    tree: Tree;
+
     render() {
         console.log("SchemaExplorerWindow");
 
@@ -220,10 +230,10 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
                     </FlexItem>
                     <FlexItem dock="fill" style={{padding: 5}}>
                         <Tree
+                            ref={(e: any) => this.tree = e!}
                             source={this.objectsTree}
                             onItemDblClick={async (item) => {
-                                this.handleOpenObjectDesigner(item.id);
-                                console.log("=======================")
+                                this.handleOpenObjectDesigner(item.value);
                             }}
                             popup={this.createPopupMenu}
                         />

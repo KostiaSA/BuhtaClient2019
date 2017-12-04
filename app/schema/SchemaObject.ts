@@ -20,6 +20,9 @@ export class SchemaObject<T extends ISchemaObjectProps=ISchemaObjectProps> {
     static designerWindow: typeof SchemaObjectBaseDesignerWindow;// = SchemaObjectBaseDesignerWindow;
 
     static getObjectTypeFromFileName(fileName: string): string {
+        if (!fileName.endsWith(".json"))
+            fileName += ".json";
+
         let words = fileName.split(".");
         if (words.length < 3)
             throw "неверное имя файла объекта: '" + fileName + "'";
