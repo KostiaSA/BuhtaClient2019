@@ -28,10 +28,6 @@ export class Tree extends Component<ITreeProps> {
         bindObj: PropTypes.object
     };
 
-    // popup: React.ReactNode | null = null;
-    // popupLeft: number;
-    // popupTop: number;
-
     lastParentH: number;
     resizeIntervalId: any;
 
@@ -86,51 +82,13 @@ export class Tree extends Component<ITreeProps> {
             let $items = this.widget.find(".jqx-tree-item");
             $items.on("mousedown", async (event: MouseEvent) => {
                 if (isMouseRightClickEvent(event)) {
-
-
-                    // let item = this.widget.jqxTree("getItem", $(event.target).parents("li")[0]);
-                    // if (!item.hasItems) { // не folder
-                    //     this.widget.jqxTree('selectItem', item);
-                    //     console.log("popup------------------click", item);
-                    //     this.popup = this.props.popup;
-                    //     let scrollTop = $(window).scrollTop();
-                    //     let scrollLeft = $(window).scrollLeft();
-                    //     this.popupLeft = event.clientX + 5 + scrollLeft!;
-                    //     this.popupTop = event.clientY + 5 + scrollTop!;
-                    //     this.forceUpdate();
-                    //     //await this.props.onItemDblClick!(item);
-                    //     // event.preventDefault();
-                    //     // event.stopPropagation();
-                    //     return true;
-                    // }
-
                     removeAllMenuPopups();
-
                     let item = this.widget.jqxTree("getItem", $(event.target).parents("li")[0]);
                     if (!item.hasItems) { // не folder
                         this.widget.jqxTree('selectItem', item);
-                        console.log("popup------------------click", item);
-                        //this.popup = this.props.popup;
-                        let scrollTop = $(window).scrollTop();
-                        let scrollLeft = $(window).scrollLeft();
-                        let left = event.clientX + 5 + scrollLeft!;
-                        let top = event.clientY + 5 + scrollTop!;
-
-                        openMenuPopup(this.props.popup, left, top, item);
-
-                        // var elemDiv = document.createElement('div');
-                        // $(elemDiv).addClass("buhta-popup-menu");
-                        // document.body.appendChild(elemDiv);
-                        //
-                        // if (isFunction(this.props.popup)) {
-                        //
-                        //     (window as any).ZZZ = ReactDOM.render(await (this.props.popup as any)(item), elemDiv);
-                        //
-                        // }
+                        openMenuPopup(event, this.props.popup, item);
                         return true;
                     }
-
-
                 }
             });
         }
@@ -158,20 +116,12 @@ export class Tree extends Component<ITreeProps> {
     }
 
 
-    // getSelectedRowIndex(): number {
-    //     return this.widget.jqxTree("getselectedrowindex");
-    // }
-
-
     focus() {
         this.widget.jqxTree("focus");
     }
 
     render() {
-        // console.log("render Tree");
-        // if (this.popup) {
-        //     return [React.cloneElement(this.popup as any), <div key="2" id={this.$id}/>];
-        // }
+        console.log("render Tree");
         return (
             <div key="2" id={this.$id}/>
         )
