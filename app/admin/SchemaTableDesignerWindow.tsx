@@ -1,6 +1,6 @@
 import * as  React from "react";
 
-import {IWindowProps, Window} from "../ui/Window";
+import {Window} from "../ui/Window";
 import {TabsPanel} from "../ui/TabsPanel";
 import {TabsPanelItem} from "../ui/TabsPanelItem";
 import {omit} from "../utils/omit";
@@ -23,12 +23,12 @@ import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
 import {getConfirmation} from "../ui/modals/getConfirmation";
 import {config} from "../const/config";
 import {joiValidate} from "../validation/joiValidate";
-import {SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
+import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
 
 
-export interface ISchemaTableDesignerProps {
-    tableId?: string;
-    window?: IWindowProps;
+export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
+    //tableId?: string;
+    //window?: IWindowProps;
 }
 
 export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
@@ -110,28 +110,51 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
     async componentDidMount() {
 
-        try {
-            let res = await loadSchemaObjectFiles(this.props.objectId!);
 
-            if (res.json) {
-                this.table = JSON.parse(res.json);
-                this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
+        if (this.props.objectId) { // редактирование таблицы
+
+            try {
+                let res = await loadSchemaObjectFiles(this.props.objectId!);
+
+                if (res.json) {
+                    this.table = JSON.parse(res.json);
+                    this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
+                }
+                else {
+                    this.error = "не найден объект: " + this.props.objectId;
+                }
+
+                let result = new SchemaTable(this.table).validate();
+                if (result) {
+                    this.errorTitle = "Ошибка загрузки файла";
+                    throw result;
+                }
+
+                this.forceUpdate();
+
             }
-            else {
-                this.error = "не найден объект: " + this.props.objectId;
+            catch (error) {
+                this.error = error;
+                this.forceUpdate();
             }
-
-            let result = new SchemaTable(this.table).validate();
-            if (result) {
-                this.errorTitle = "Ошибка загрузки файла";
-                throw result;
-            }
-
-            this.forceUpdate();
-
         }
-        catch (error) {
-            this.error = error;
+        else { // создание новой таблицы
+
+            this.table = {
+                objectType: SchemaTable.objectType,
+                name: "новая таблица",
+                columns: [
+                    {
+                        "name": "Ключ",
+                        "dataType": {
+                            "id": "Integer",
+                            "size": "16"
+                        }
+                    } as any
+                ],
+            };
+            this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
+            let result = new SchemaTable(this.table).validate();
             this.forceUpdate();
         }
 
@@ -151,13 +174,13 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
         }
 
         let req: ISavedSchemaObjectFiles = {
-            filePath: this.props.objectId!,
+            filePath: this.props.objectId || this.props.newObjectPath + "/" + this.table.name + "." + SchemaTable.objectType,
             json: stringify(this.table)
         };
 
         try {
             await saveSchemaObjectFiles(req);
-            this.window.close(true);
+            this.window.close(req.filePath);
         }
         catch (err) {
             showError(err.toString());
@@ -178,7 +201,6 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
     };
 
 
-
     render() {
 
         if (this.error) {
@@ -195,7 +217,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
             <Window
                 {...omit(this.props.window, ["children"])}
                 storageKey="SchemaTableDesignerWindow"
-                title={"таблица: " + this.props.objectId}
+                title={this.props.objectId ? "таблица: " + this.props.objectId : "новая таблица в \"" + this.props.newObjectPath + "\""}
                 icon="vendor/fugue/table.png"
                 ref={(e) => {
                     this.window = e!

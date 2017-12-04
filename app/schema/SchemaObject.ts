@@ -7,7 +7,7 @@ import {SchemaObjectBaseDesignerWindow} from "../admin/SchemaObjectBaseDesignerW
 export interface ISchemaObjectProps {
     objectType: string;
     name: string;
-    description: string;
+    description?: string;
 }
 
 

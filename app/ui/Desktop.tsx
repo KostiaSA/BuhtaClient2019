@@ -99,9 +99,9 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         )
     }
 
-    async openWindow(win: React.ReactElement<any>): Promise<boolean> {
+    async openWindow(win: React.ReactElement<any>): Promise<any> {
 
-        return new Promise<boolean>((resolve: (result: boolean) => void, reject: (error: string) => void) => {
+        return new Promise<boolean>((resolve: (result: any) => void, reject: (error: string) => void) => {
 
 
             if (win.props.window) {

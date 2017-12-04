@@ -161,7 +161,7 @@ export class Window extends Component<IWindowProps> {
         this.forceUpdate();
     }
 
-    close(result: boolean = false) {
+    close(result: any = false) {
         this.movedSizedEventHandler(null);
         if (this.props.onClose)
             this.props.onClose(result);

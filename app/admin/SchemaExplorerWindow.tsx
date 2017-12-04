@@ -17,6 +17,7 @@ import {MenuItem} from "../ui/MenuItem";
 import {Menu} from "../ui/Menu";
 import {MenuSeparator} from "../ui/MenuSeparator";
 import {getRandomString} from "../utils/getRandomString";
+import {SchemaTableDesignerWindow} from "./SchemaTableDesignerWindow";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -107,7 +108,18 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
 
     }
 
-    async createPopupMenu(rowItem: any) {
+    async handleOpenTableDesigner_for_create(newObjectPath: string) {
+        let newTableName = await appState.desktop.openWindow(
+            <SchemaTableDesignerWindow
+                window={{height: 500, width: 600}}
+                newObjectPath={newObjectPath}
+            >
+            </SchemaTableDesignerWindow>
+        );
+        debugger
+    }
+
+    createPopupMenu = async (rowItem: any) => {
 
         if (rowItem.hasItems) {
             return (
@@ -115,7 +127,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
                     <MenuItem
                         title="новая Таблица"
                         onClick={async () => {
-                            alert("новая Таблица")
+                            this.handleOpenTableDesigner_for_create(rowItem.id);
                         }}>
                     </MenuItem>
                     <MenuItem
