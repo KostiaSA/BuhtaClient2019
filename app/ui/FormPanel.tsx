@@ -2,7 +2,7 @@ import * as  React from "react";
 import * as PropTypes from "prop-types";
 import * as Joi from "joi";
 import {Component, IComponentProps} from "./Component";
-import {clone} from "ejson";
+import {clone, equals} from "ejson";
 import {reassignObject} from "../utils/reassignObject";
 import {config} from "../const/config";
 
@@ -58,6 +58,10 @@ export class FormPanel extends Component<IFormPanelProps> {
         if (this.bindObj) {
             this.clonedBindObj = clone(this.bindObj);
         }
+    }
+
+    get needSaveChanges(): boolean {
+        return !this.clonedBindObj || !equals(this.clonedBindObj, this.bindObj);
     }
 
     cancelChanges() {

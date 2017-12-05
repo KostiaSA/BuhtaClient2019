@@ -12,7 +12,7 @@ import {Grid} from "../ui/Grid";
 import {GridColumn} from "../ui/GridColumn";
 import {Button} from "../ui/Button";
 import {SchemaTableColumnEditorWindow} from "./SchemaTableColumnEditorWindow";
-import {clone, stringify} from "ejson";
+import {clone, equals, stringify} from "ejson";
 import {Keycode} from "../utils/Keycode";
 import {loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
 import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
@@ -189,11 +189,18 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
     };
 
     handleClickCloseButton = async () => {
-        this.window.close();
+        let needConfirmation = this.form!.needSaveChanges;
+        needConfirmation = needConfirmation || !equals(this.table.columns, this.tableColumnsArray.toArray());
+
+        this.table.columns = this.tableColumnsArray.toArray();
+
+        if (!needConfirmation || await getConfirmation("Выйти без сохранения?"))
+            this.window.close();
     };
 
     window: Window;
     columnsGrid: Grid;
+    form: FormPanel;
 
     dataTypeColumnCompute = (row: ISchemaTableColumnProps): string => {
         let dt = appState.sqlDataTypes[row.dataType.id];
@@ -234,7 +241,8 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                         таблица контент ЗАГОЛОВОК
                                     </FlexItem>
                                     <FlexItem dock="fill">
-                                        <FormPanel bindObj={this.table} validator={validator}>
+                                        <FormPanel ref={(e) => this.form = e!} bindObj={this.table}
+                                                   validator={validator}>
 
                                             <Input
                                                 title="имя"

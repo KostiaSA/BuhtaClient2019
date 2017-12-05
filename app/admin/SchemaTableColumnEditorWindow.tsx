@@ -15,6 +15,7 @@ import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
 import {config} from "../const/config";
 import {showError} from "../ui/modals/showError";
 import {joiValidate} from "../validation/joiValidate";
+import {getConfirmation} from "../ui/modals/getConfirmation";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -27,7 +28,7 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
 
     window: Window;
 
-    form1: FormPanel | null;
+    form: FormPanel | null;
 
     getDataTypesSource(): any[] {
         let ret: any[] = [];
@@ -84,7 +85,7 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
 
                             <TabsPanelItem title="Колонка" style={{}}>
                                 <FormPanel
-                                    ref={(e) => this.form1 = e}
+                                    ref={(e) => this.form = e}
                                     bindObj={this.props.column}
                                     validator={validator}
                                 >
@@ -150,7 +151,8 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                             text="Отмена"
                             onClick={async () => {
                                 //this.form1!.cancelChanges();
-                                this.window.close(false);
+                                if (!this.form!.needSaveChanges || await getConfirmation("Выйти без сохранения?"))
+                                    this.window.close(false);
                             }}
                         />
                     </FlexItem>
