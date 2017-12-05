@@ -5,9 +5,12 @@ export interface ISchemaTree {
     items?: ISchemaTree[];
 }
 
-export async function loadSchemaTree(): Promise<ISchemaTree> {
+export async function loadSchemaTree(path: string = "", objectTypes: string[] = []): Promise<ISchemaTree> {
 
-    let req = {};
+    let req = {
+        path: path,
+        objectTypes: objectTypes
+    };
 
     let response: any = await axios.post('api/admin/loadSchemaTree', req);
 

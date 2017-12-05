@@ -1,6 +1,7 @@
 import * as  React from "react";
 import {CSSProperties} from "react";
 import {omit} from "../../utils/omit";
+import {isFunction} from "util";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {objectPathSet} from "../../utils/objectPathSet";
 import {BaseInput, IBaseInputProps} from "./BaseInput";
@@ -13,7 +14,9 @@ export interface IComboBoxProps extends IBaseInputProps {
     placeHolder?: string;
     displayMember?: string;
     valueMember?: string;
-    source?: any;
+    source?: any[] | (() => Promise<any[]>);
+    searchMode?: "none" | "contains" | "containsignorecase" | "equals" | "equalsignorecase" | "startswithignorecase" | "startswith" | "endswithignorecase" | "endswith";
+    itemHeight?:number;
 }
 
 export class ComboBox extends BaseInput<IComboBoxProps> {
@@ -37,7 +40,7 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
                 }
                 this.validate();
                 this.forceUpdate();
-                console.log("change");
+                console.log("combobox change");
             });
         this.widget.find("input").css("color", this.widget.css("color"));
         this.widget.find("input").css("background", this.widget.css("background"));
@@ -48,16 +51,30 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
         this.widget.find("input").css("background", this.widget.css("background"));
     }
 
-    updateProps(props: IComboBoxProps, create: boolean) {
-        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator"]);
+    async updateProps(props: IComboBoxProps, create: boolean) {
+        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator", "source"]);
 
         opt.animationType = "none";
         opt.autoDropDownHeight = true;
         opt.height = opt.height || config.baseInput.height;
         opt.width = opt.width || config.baseInput.width;
 
+        opt.searchMode = opt.searchMode || "containsignorecase";
+        opt.itemHeight = opt.itemHeight || config.comboBox.itemHeight;
+
         this.widget.jqxComboBox(opt);
         this.widget = $("#" + this.$id);
+
+        if (isFunction(this.props.source)) {
+            this.widget.jqxComboBox({source: await (this.props.source as any)()});
+            if (this.initialValue)
+                this.widget.jqxComboBox("val", this.initialValue);
+
+        }
+        else
+            this.widget.jqxComboBox({source: this.props.source});
+
+
     }
 
 

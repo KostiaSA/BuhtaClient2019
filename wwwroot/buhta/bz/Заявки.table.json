@@ -21,14 +21,15 @@
         "name": "Гаражный номер22",
         "description": "pos 3",
         "dataType": {
-            "id": "Integer",
-            "size": "16"
-        }
+            "id": "ForeignKey",
+            "fkTableId": "456456werwerwer"
+        },
+        "fkTableId": "456456werwerwer"
     }, {
         "name": "Грузоподъемность11",
         "dataType": {
-            "id": "Integer",
-            "size": "32"
+            "id": "ForeignKey",
+            "fkTableId": "buhta/test1/Автомобиль.table.json"
         },
         "description": "pos 4"
     }, {

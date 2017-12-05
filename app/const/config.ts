@@ -6,6 +6,9 @@ export let config: any = {
         size: 13
 
     },
+    comboBox: {
+        itemHeight: 20,
+    },
     formPanel: {
         inputVerticalSpace: 3,
 
