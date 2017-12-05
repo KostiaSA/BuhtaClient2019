@@ -28,7 +28,7 @@ export function storageSet(key: string, paths: string[], value: any, markAsNeedD
             objectPath.set(obj, paths[0] + "." + paths[1] + "." + paths[2], clone(value));
 
         localStorage.setItem(fullKey, stringify(obj));
-        //console.log("localStorage.setItem", key, obj);
+        console.log("localStorage.setItem", key, obj);
     }
 
 }

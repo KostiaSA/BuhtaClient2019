@@ -60,7 +60,7 @@ export class NumberInput extends BaseInput<INumberInputProps> {
     }
 
     updateProps(props: INumberInputProps, create: boolean) {
-        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator"]);
+        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator","storageKey","resizable"]);
 
         opt.height = opt.height || config.baseInput.height;
         opt.width = opt.width || config.numberInput.width;

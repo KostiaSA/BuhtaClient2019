@@ -46,7 +46,7 @@ export class Input extends BaseInput<IInputProps> {
     }
 
     updateProps(props: IInputProps, create: boolean) {
-        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator"]);
+        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator","storageKey","resizable"]);
 
         opt.height = opt.height || config.baseInput.height;
         opt.width = opt.width || config.baseInput.width;

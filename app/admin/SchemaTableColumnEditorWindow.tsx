@@ -70,7 +70,7 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                 {...omit(this.props.window, ["children"])}
                 title={"колонка: " + this.props.column!.name}
                 icon="vendor/fugue/table-insert-column.png"
-
+                storageKey="SchemaTableColumnEditorWindow"
                 ref={(e) => {
                     this.window = e!
                 }}>
@@ -89,7 +89,10 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                                     bindObj={this.props.column}
                                     validator={validator}
                                 >
-                                    <Input title="имя" bindProp="name" placeHolder="имя колонки" width={300}/>
+                                    <Input title="имя" bindProp="name" placeHolder="имя колонки" width={300}
+                                           resizable
+                                           storageKey="input:SchemaTable.name"
+                                    />
                                     <Input title="описание" bindProp="description" placeHolder="описание колонки"
                                            width={400}/>
                                     <ComboBox
@@ -98,9 +101,11 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                                         placeHolder="тип данных"
                                         valueMember="id"
                                         displayMember="name"
-                                        width={150}
+                                        width={200}
                                         source={this.getDataTypesSource()}
                                         onChange={this.handleDataTypeChange}
+                                        resizable
+                                        storageKey="input:SchemaTable.dataType"
                                     />
                                     {this.renderDataTypeEditors()}
                                 </FormPanel>

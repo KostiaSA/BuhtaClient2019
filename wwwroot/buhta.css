@@ -85,3 +85,12 @@ input[type=text].jqx-input {
     margin-bottom: 4px;
     margin-top: 4px;
 }
+
+.ui-resizable-e {
+    width: 9px;
+    right: -6px;
+}
+
+.ui-resizable-e:hover {
+    background-color: silver;
+}

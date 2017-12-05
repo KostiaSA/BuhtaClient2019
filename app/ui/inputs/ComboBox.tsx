@@ -6,6 +6,8 @@ import {objectPathGet} from "../../utils/objectPathGet";
 import {objectPathSet} from "../../utils/objectPathSet";
 import {BaseInput, IBaseInputProps} from "./BaseInput";
 import {config} from "../../const/config";
+import {storageSet} from "../../storage/storageSet";
+import {storageGet} from "../../storage/storageGet";
 
 //const Resizable = require("re-resizable").default;
 
@@ -27,6 +29,7 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
         this.context = context;
     }
 
+
     componentDidMount() {
         this.widget = $("#" + this.$id);
         this.updateProps(this.props, true);
@@ -46,7 +49,21 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
         this.widget.find("input").css("color", this.widget.css("color"));
         this.widget.find("input").css("background", this.widget.css("background"));
 
-        // resize?
+
+        if (this.props.resizable) {
+            this.widget.resizable();
+            this.widget.find(".ui-resizable-s,.ui-resizable-se").remove();
+            this.widget.on("resize", (event: any, ui: any) => {
+                this.widget.jqxComboBox({width: ui.size.width});
+            });
+
+            if (this.props.storageKey) {
+                this.widget.on("resizestop", (event: any, ui: any) => {
+                    storageSet(this.props.storageKey!, ["size", this.getWindow().props.storageKey!], {width: ui.size.width});
+                })
+            }
+
+        }
     }
 
     componentDidUpdate() {
@@ -55,12 +72,24 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
     }
 
     async updateProps(props: IComboBoxProps, create: boolean) {
-        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator", "source"]);
+        let opt: any = omit(props, [
+            "bindObj", "bindProp", "title", "children",
+            "onChange", "hidden", "validator", "source",
+            "storageKey", "resizable"
+        ]);
 
         opt.animationType = "none";
         opt.autoDropDownHeight = true;
+
+
+        if (this.props.storageKey) {
+            let storage = storageGet(this.props.storageKey, ["size", this.getWindow().props.storageKey!]);
+            opt.width = storage.width;
+        }
+        else
+            opt.width = opt.width || config.baseInput.width;
+
         opt.height = opt.height || config.baseInput.height;
-        opt.width = opt.width || config.baseInput.width;
 
         opt.searchMode = opt.searchMode || "containsignorecase";
         opt.itemHeight = opt.itemHeight || config.comboBox.itemHeight;
