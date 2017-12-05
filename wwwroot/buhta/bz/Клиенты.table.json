@@ -6,8 +6,8 @@
         "name": "Ключ",
         "primaryKey": true,
         "dataType": {
-            "id": "Integer",
-            "size": "64"
+            "id": "ForeignKey",
+            "fkTableId": "buhta/bz/новая т2234243234==аблица.table"
         },
         "description": "pos 01"
     }, {
