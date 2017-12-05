@@ -1,15 +1,11 @@
 .idea
 node_modules
-*.js
+app/**/*.js
 *.map
 *.rar
 *.zip
 *.lock
 
-!webpack.config.js
-!wwwroot/vendor/jqwidgets/jqxtabs.js
-!wwwroot/vendor/jqwidgets/jqxgrid.js
-!wwwroot/vendor/jqwidgets/jqxbuttons.js
-wwwroot/vendor
+wwwroot/vendor/fugue
 
 

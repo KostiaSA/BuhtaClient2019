@@ -191,7 +191,6 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
     handleClickCloseButton = async () => {
         let needConfirmation = this.form!.needSaveChanges;
         needConfirmation = needConfirmation || !equals(this.table.columns, this.tableColumnsArray.toArray());
-
         this.table.columns = this.tableColumnsArray.toArray();
 
         if (!needConfirmation || await getConfirmation("Выйти без сохранения?"))
