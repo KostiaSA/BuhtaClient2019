@@ -7,6 +7,7 @@ import {objectPathSet} from "../../utils/objectPathSet";
 import {BaseInput, IBaseInputProps} from "./BaseInput";
 import {config} from "../../const/config";
 
+//const Resizable = require("re-resizable").default;
 
 export interface IComboBoxProps extends IBaseInputProps {
     height?: string | number;
@@ -16,7 +17,7 @@ export interface IComboBoxProps extends IBaseInputProps {
     valueMember?: string;
     source?: any[] | (() => Promise<any[]>);
     searchMode?: "none" | "contains" | "containsignorecase" | "equals" | "equalsignorecase" | "startswithignorecase" | "startswith" | "endswithignorecase" | "endswith";
-    itemHeight?:number;
+    itemHeight?: number;
 }
 
 export class ComboBox extends BaseInput<IComboBoxProps> {
@@ -44,6 +45,8 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
             });
         this.widget.find("input").css("color", this.widget.css("color"));
         this.widget.find("input").css("background", this.widget.css("background"));
+
+        // resize?
     }
 
     componentDidUpdate() {

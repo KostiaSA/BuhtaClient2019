@@ -56,7 +56,7 @@ export class FkSqlDataType extends BaseSqlDataType<IFkSqlDataTypeProps> {
                 title="FK таблица"
                 bindProp="dataType.fkTableId"
                 placeHolder=""
-                width={350}
+                width={450}
                 hidden={props.id !== FkSqlDataType.id}
                 source={async () => this.schemaTreeToFlatArray(await loadSchemaTree(), [], "")}
             />

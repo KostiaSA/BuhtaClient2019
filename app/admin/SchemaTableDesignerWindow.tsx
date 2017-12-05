@@ -76,7 +76,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
             <SchemaTableColumnEditorWindow
                 table={this.table}
                 column={editedColumn}
-                window={{height: 500, width: 600}}
+                window={{height: 500, width: 700}}
             />
         );
         if (resultOk) {
