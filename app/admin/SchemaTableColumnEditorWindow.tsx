@@ -90,10 +90,12 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                                     validator={validator}
                                 >
                                     <Input title="имя" bindProp="name" placeHolder="имя колонки" width={300}
-                                           resizable
-                                           storageKey="input:SchemaTable.name"
+                                           resizable storageKey="input:SchemaTable.name"
+
                                     />
-                                    <Input title="описание" bindProp="description" placeHolder="описание колонки"
+                                    <Input title="описание" bindProp="description"
+                                           placeHolder="описание колонки"
+                                           resizable storageKey="input:SchemaTable.description"
                                            width={400}/>
                                     <ComboBox
                                         title="тип данных sql"
@@ -104,8 +106,7 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                                         width={200}
                                         source={this.getDataTypesSource()}
                                         onChange={this.handleDataTypeChange}
-                                        resizable
-                                        storageKey="input:SchemaTable.dataType"
+                                        resizable storageKey="input:SchemaTable.dataType"
                                     />
                                     {this.renderDataTypeEditors()}
                                 </FormPanel>
