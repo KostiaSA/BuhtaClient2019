@@ -50,6 +50,7 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
                 width={100}
                 decimalDigits={0}
                 hidden={props.id !== StringSqlDataType.id}
+                resizable storageKey="input:SchemaTableColumn.dataType.maxLen"
             />
         )
     }

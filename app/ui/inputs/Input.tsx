@@ -81,7 +81,7 @@ export class Input extends BaseInput<IInputProps> {
 
         if (this.props.storageKey) {
             let storage = storageGet(this.props.storageKey, ["size", this.getWindow().props.storageKey!]);
-            if (storage)
+            if (storage && storage.width)
                 opt.width = storage.width;
         }
 
