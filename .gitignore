@@ -1,7 +1,8 @@
 .idea
 node_modules
+app_bundle.js
 app/**/*.js
-!app/**/*.test.js
+app/**/*.jsx
 *.map
 *.rar
 *.zip
