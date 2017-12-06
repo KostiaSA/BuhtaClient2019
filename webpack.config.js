@@ -69,6 +69,8 @@ module.exports = {
         "jquery": "$",
         //"socket.io-client": "io",
         "joi": "Joi",
-        //"moment": "moment",
+        "moment": "moment",
+        "crypto-js": "CryptoJS",
+        "axios": "axios"
     }
 };

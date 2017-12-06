@@ -13,6 +13,7 @@ import {Menu} from "./Menu";
 import {MenuItem} from "./MenuItem";
 import {config} from "../const/config";
 import {MenuSeparator} from "./MenuSeparator";
+import {TestsExplorerWindow} from "../admin/TestsExplorerWindow";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -39,7 +40,6 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     }
 
 
-
     render() {
         console.log("render desktop");
         return (
@@ -47,18 +47,56 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                 <Menu mode="horizontal">
                     <MenuItem title="Файл">
                         <MenuItem title="Новый Новый" icon={config.button.cancelIcon}></MenuItem>
-                        <MenuItem title="Старый 2" onClick={async ()=>{alert("fuf")}}></MenuItem>
-                        <MenuItem title="Старый 333" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                        <MenuItem title="Старый 2" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                        <MenuItem title="Старый 333" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
                         <MenuSeparator/>
-                        <MenuItem title="Старый 33333" onClick={async ()=>{alert("fuf")}}></MenuItem>
-                        <MenuItem title="Старый +++" onClick={async ()=>{alert("fuf")}}></MenuItem>
-                        <MenuItem title="Старый 33333" onClick={async ()=>{alert("fuf")}}></MenuItem>
-                        <MenuItem title="Старый +++" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                        <MenuItem title="Старый 33333" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                        <MenuItem title="Старый +++" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                        <MenuItem title="Старый 33333" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                        <MenuItem title="Старый +++" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
 
-                        <MenuItem title="Старый 33333" startGroup onClick={async ()=>{alert("fuf")}}></MenuItem>
-                        <MenuItem title="Старый +++" onClick={async ()=>{alert("fuf")}}></MenuItem>
+                        <MenuItem title="Старый 33333" startGroup onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
+                        <MenuItem title="Старый +++" onClick={async () => {
+                            alert("fuf")
+                        }}></MenuItem>
                     </MenuItem>
                     <MenuItem title="Изменить"></MenuItem>
+                    <MenuSeparator/>
+                    <MenuItem title="Админ">
+                        <MenuItem
+                            title="Инспектор объектов"
+                            onClick={async () => {
+                                this.openWindow(<SchemaExplorerWindow
+                                    window={{height: 500, width: 400}}>
+
+                                </SchemaExplorerWindow>);
+                            }}>
+                        </MenuItem>
+                        <MenuSeparator/>
+                        <MenuItem
+                            title="Список тестов"
+                            onClick={async () => {
+                                this.openWindow(
+                                    <TestsExplorerWindow
+                                        window={{height: 600, width: 800}}>
+                                    </TestsExplorerWindow>
+                                );
+                            }}></MenuItem>
+                    </MenuItem>
                 </Menu>
                 <button
                     onClick={async () => {

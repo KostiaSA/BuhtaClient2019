@@ -2,7 +2,9 @@ import * as React from "react";
 import * as Joi from "joi";
 import {joiRus} from "../../../i18n/joiRus";
 import {appState} from "../../../AppState";
-export type SqlDialect = "mysql" | "postgres" | "mssql";
+import {SqlDialect} from "../../../sql/SqlEmitter";
+
+//export type SqlDialect = "mysql" | "postgres" | "mssql";
 
 export interface IBaseSqlDataTypeProps {
     id: string;
@@ -29,7 +31,7 @@ export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypePro
     setDefaultProps(props: any) {
     }
 
-    getName(props?:IBaseSqlDataTypeProps): string {
+    getName(props?: IBaseSqlDataTypeProps): string {
         return "?";
     }
 
@@ -51,9 +53,8 @@ export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypePro
         return null;
     }
 
-    dataTypeUserFriendly(props: P, parentReactComp: React.ReactElement<any>): React.ReactNode {
-        return <span>{this.getName()}</span>;
+    emitColumnDataType(dialect: SqlDialect, col: IBaseSqlDataTypeProps): string {
+        throw  "BaseSqlDataType.emitColumnDataType(): abstract error";
     }
-
 }
 

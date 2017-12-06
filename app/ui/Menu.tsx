@@ -25,12 +25,14 @@ export class Menu extends Component<IMenuProps> {
         this.widget = $("#" + this.$id);
         this.updateProps(this.props);
 
-        let intervalId = setInterval(() => {
-            if (this.widget.css("display") === "none") {
-                removeAllMenuPopups();
-                clearInterval(intervalId);
-            }
-        }, 200);
+        if (this.props.mode === "popup") {
+            let intervalId = setInterval(() => {
+                if (this.widget.css("display") === "none") {
+                    removeAllMenuPopups();
+                    clearInterval(intervalId);
+                }
+            }, 200);
+        }
     }
 
 
@@ -39,7 +41,7 @@ export class Menu extends Component<IMenuProps> {
             ...omit(this.props, ["children"]),
             animationShowDuration: 0,
             animationHideDuration: 0,
-            animationShowDelay: 0
+            animationShowDelay: 0,
         };
 
         if (this.props.mode === "popup") {

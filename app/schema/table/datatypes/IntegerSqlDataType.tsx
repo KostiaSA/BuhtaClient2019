@@ -2,6 +2,7 @@ import * as React from "react";
 import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {ComboBox} from "../../../ui/inputs/ComboBox";
+import {SqlDialect} from "../../../sql/SqlEmitter";
 
 
 export interface IIntegerSqlDataTypeProps extends IBaseSqlDataTypeProps {
@@ -57,12 +58,103 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
         )
     }
 
-    dataTypeUserFriendly(props: IIntegerSqlDataTypeProps, parentReactComp: React.ReactElement<any>): React.ReactNode {
-        return (
-            <span
-                style={{color: "teal"}}>{(props.unsigned ? "+" : "") + this.getName() + props.size + (props.autoIncrement ? ", autoInc" : "")}
-            </span>
-        );
+    // todo autoincrement
+    emitColumnDataType(dialect: SqlDialect, col: IIntegerSqlDataTypeProps): string {
+        if (dialect === "mssql") {
+            if (col.unsigned) {
+                switch (col.size) {
+                    case "8":
+                        return ("SMALLINT");
+                    case "16":
+                        return ("INT");
+                    case "32":
+                        return ("BIGINT");
+                    case "64":
+                        return ("BIGINT");
+                    default:
+                        throw "invalid col.size " + col.size;
+                }
+            }
+            else {
+                switch (col.size) {
+                    case "8":
+                        return ("TINYINT");
+                    case "16":
+                        return ("SMALLINT");
+                    case "32":
+                        return ("INT");
+                    case "64":
+                        return ("BIGINT");
+                    default:
+                        throw "invalid col.size " + col.size;
+                }
+            }
+        }
+        else if (dialect === "postgres") {
+            if (col.unsigned) {
+                switch (col.size) {
+                    case "8":
+                        return ("SMALLINT");
+                    case "16":
+                        return ("INT");
+                    case "32":
+                        return ("BIGINT");
+                    case "64":
+                        return ("BIGINT");
+                    default:
+                        throw "invalid col.size " + col.size;
+                }
+            }
+            else {
+                switch (col.size) {
+                    case "8":
+                        return ("SMALLINT");
+                    case "16":
+                        return ("SMALLINT");
+                    case "32":
+                        return ("INT");
+                    case "64":
+                        return ("BIGINT");
+                    default:
+                        throw "invalid col.size " + col.size;
+                }
+            }
+        }
+        else if (dialect === "mysql") {
+            if (col.unsigned) {
+                switch (col.size) {
+                    case "8":
+                        return ("TINYINT UNSIGNED");
+                    case "16":
+                        return ("SMALLINT UNSIGNED");
+                    case "32":
+                        return ("INT UNSIGNED");
+                    case "64":
+                        return ("BIGINT UNSIGNED");
+                    default:
+                        throw "invalid col.size " + col.size;
+                }
+            }
+            else {
+                switch (col.size) {
+                    case "8":
+                        return ("TINYINT");
+                    case "16":
+                        return ("SMALLINT");
+                    case "32":
+                        return ("INT");
+                    case "64":
+                        return ("BIGINT");
+                    default:
+                        throw "invalid col.size " + col.size;
+                }
+            }
+        }
+        else {
+            let msg = "IntegerSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
+            console.error(msg);
+            throw msg + ", " + __filename;
+        }
 
     }
 

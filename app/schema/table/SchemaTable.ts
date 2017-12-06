@@ -6,11 +6,13 @@ import {joiRus} from "../../i18n/joiRus";
 import {appState} from "../../AppState";
 import {config} from "../../const/config";
 import {SchemaTableDesignerWindow} from "../../admin/SchemaTableDesignerWindow";
+import {SqlBatch, SqlDialect, SqlEmitter} from "../../sql/SqlEmitter";
 
 
 export interface ISchemaTableProps extends ISchemaObjectProps {
     sqlName?: string;
     columns: ISchemaTableColumnProps[];
+    isTemp?: boolean;
     //  editOptions?: ISchemaTableEditOptions;
 }
 
@@ -64,6 +66,14 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         }
         else
             return undefined;
+    }
+
+    getPrimaryKeyColumn(): ISchemaTableColumnProps | null {
+        for (let col of this.props.columns) {
+            if (col.primaryKey)
+                return col;
+        }
+        return null;
     }
 
     // async openChangeRecordPage(recordId: string): Promise<void> {
@@ -175,5 +185,48 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
     //     let rowProps = (await tableGetRowApiRequest({dbId: dbId, tableId: this.props.id, recordId: recordId})).row;
     //     return new SchemaTableRow(dbId, this, rowProps);
     // }
+
+    emitCreateTableSql(dialect: SqlDialect): SqlBatch {
+
+        let e = new SqlEmitter(dialect);
+
+        let sql: string[] = [];
+
+        if (this.props.isTemp) {
+            if (dialect === "mssql")
+                sql.push("CREATE TABLE ");
+            else if (dialect === "postgres")
+                sql.push("CREATE TEMPORARY TABLE ");
+            else if (dialect === "mysql")
+                sql.push("CREATE TEMPORARY TABLE ");
+            else {
+                let msg = "emitCreateTableSql(): invalid sql dialect '" + dialect + "'";
+                console.error(msg);
+                throw msg + ", " + __filename;
+            }
+
+        }
+        else
+            sql.push("CREATE TABLE ");
+
+        sql.push(e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
+
+        sql.push("(\n");
+
+        let colsSql: string[] = [];
+        this.props.columns.forEach((col: ISchemaTableColumnProps, index: number) => {
+            let dataType = appState.sqlDataTypes[col.dataType.id];
+            let dataTypeStr = dataType.emitColumnDataType(dialect, col.dataType);
+            let notNullStr = col.notNull ? " NOT NULL" : "";
+            let pkStr = col.primaryKey ? " PRIMARY KEY" : "";
+            colsSql.push("  " + e.emit_NAME(col.name) + " " + dataTypeStr + notNullStr + pkStr);
+        });
+        sql.push(colsSql.join(",\n") + "\n");
+
+        sql.push(")\n");
+
+        return sql.join("");
+
+    }
 
 }

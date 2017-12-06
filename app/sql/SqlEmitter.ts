@@ -1,10 +1,12 @@
 import * as uuid from "uuid";
 import * as moment from "moment";
-import {isDate, isNumber} from "util";
 
 export type SqlDialect = "mssql" | "postgres" | "mysql";
 
+export type SqlBatch = string | string[];
+
 export class SqlEmitter {
+
     constructor(public dialect: SqlDialect) {
 
     }
@@ -59,17 +61,17 @@ export class SqlEmitter {
     }
 
 
-    toHexString(bytes: any) {
+    emit_HEX(bytes: any[]) {
         return bytes.map(function (byte: any) {
             return ("00" + (byte & 0xFF).toString(16)).slice(-2);
         }).join("");
     }
 
-    mysql_guid_to_str(guid: any): string {
-        return "0x" + this.toHexString(guid);
+    private mysql_guid_to_str(guid: any): string {
+        return "0x" + this.emit_HEX(guid);
     }
 
-    nullToSql(): string {
+    emit_NULL(): string {
 
         if (this.dialect === "mssql")
             return "NULL";
@@ -85,15 +87,15 @@ export class SqlEmitter {
 
     }
 
-    tableNameToSql(tableName: string, isTemp:boolean=false): string {
+    emit_TABLE_NAME(tableName: string, isTemp: boolean = false): string {
         if (isTemp && this.dialect === "mssql")
-            return this.identifierToSql("#" + tableName);
+            return this.emit_NAME("#" + tableName);
         else
-            return this.identifierToSql(tableName);
+            return this.emit_NAME(tableName);
     }
 
 
-    identifierToSql(name: string): string {
+    emit_NAME(name: string): string {
 
         if (this.dialect === "mssql")
             return "[" + name + "]";
@@ -109,9 +111,9 @@ export class SqlEmitter {
 
     }
 
-    stringToSql(value: string): string {
+    emit_STRING(value: string): string {
         if (value === null)
-            return this.nullToSql();
+            return this.emit_NULL();
         else {
             if (this.dialect === "mssql")
                 return "N'" + this.mssql_escape_string(value) + "'";
@@ -127,7 +129,7 @@ export class SqlEmitter {
         }
     }
 
-    guidToSql(value: string): string {
+    emit_GUID(value: string): string {
 
         if (this.dialect === "mssql")
             return "CONVERT(UNIQUEIDENTIFIER,'" + value + "')";
@@ -142,7 +144,7 @@ export class SqlEmitter {
         }
     }
 
-    datetimeToSql(value: Date): string {
+    emit_DATETIME(value: Date): string {
         if (this.dialect === "mssql")
             return "CONVERT(DATETIME2,'" + moment(value).format("YYYYMMDD HH:mm:ss.SSS") + "')";
         else if (this.dialect === "postgres")
@@ -158,7 +160,7 @@ export class SqlEmitter {
 
     }
 
-    dateToSql(value: Date): string {
+    emit_DATE(value: Date): string {
         if (this.dialect === "mssql")
             return "CONVERT(DATE,'" + moment(value).format("YYYYMMDD") + "')";
         else if (this.dialect === "postgres")

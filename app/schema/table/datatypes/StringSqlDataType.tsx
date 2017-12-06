@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
-import {Input} from "../../../ui/inputs/Input";
 import {NumberInput} from "../../../ui/inputs/NumberInput";
 import {config} from "../../../const/config";
+import {SqlDialect} from "../../../sql/SqlEmitter";
 
 export interface IStringSqlDataTypeProps extends IBaseSqlDataTypeProps {
     maxLen?: number;
@@ -68,5 +68,29 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
         );
     }
 
+    emitColumnDataType(dialect: SqlDialect, col: IStringSqlDataTypeProps): string {
+        if (dialect === "mssql") {
+            if (!col.maxLen || col.maxLen <= 0)
+                return (`NVARCHAR(MAX)`);
+            else
+                return (`NVARCHAR(${col.maxLen})`);
+        }
+        else if (dialect === "postgres") {
+            if (!col.maxLen || col.maxLen <= 0)
+                return (`TEXT`);
+            else
+                return (`NVARCHAR(${col.maxLen})`);
+        }
+        // else if (e.dialect === "postgres")
+        //     this.emitColumnDataTypePg(col, e);
+        // else if (e.dialect === "mysql")
+        //     this.emitColumnDataTypeMySql(col, e);
+        else {
+            let msg = "StringSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
+            console.error(msg);
+            throw msg + ", " + __filename;
+        }
+
+    }
 
 }
