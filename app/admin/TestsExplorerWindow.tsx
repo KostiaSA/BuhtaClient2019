@@ -6,10 +6,7 @@ import {omit} from "../utils/omit";
 import {FlexHPanel} from "../ui/FlexHPanel";
 import {FlexItem} from "../ui/FlexItem";
 import {Tree} from "../ui/Tree";
-import {loadSchemaTree} from "./api/loadSchemaTree";
-import {appState} from "../AppState";
 import {getErrorWindow} from "../ui/modals/showError";
-import {SchemaObject} from "../schema/SchemaObject";
 import {config} from "../const/config";
 import {Button} from "../ui/Button";
 import {MenuItem} from "../ui/MenuItem";
@@ -17,13 +14,15 @@ import {Menu} from "../ui/Menu";
 import {getRandomString} from "../utils/getRandomString";
 import {getSHA1hex} from "../utils/getSHA1hex";
 import {MenuSeparator} from "../ui/MenuSeparator";
-import {TreeGrid} from "../ui/TreeGrid";
+import {ITreeGridSource, TreeGrid} from "../ui/TreeGrid";
+import {TreeGridColumn} from "../ui/TreeGridColumn";
+import {loadTests} from "./api/loadTests";
 
 
 export class TestsExplorerWindow extends React.Component<any> {
 
     window: Window;
-    objectsTree: any;
+    treeGridSource: ITreeGridSource;
     error: any;
 
     private preprocessDataSource(item: any, level: number, path: string) {
@@ -36,8 +35,8 @@ export class TestsExplorerWindow extends React.Component<any> {
         else
             item.fileName = path + "/" + item.name;
 
-        item.id = "schema_object_" + getSHA1hex(item.fileName);
-        item.value = item.fileName;
+        //item.id = "test_" + getSHA1hex(item.fileName);
+        //item.value = item.fileName;
 
         let style: CSSProperties = {};
 
@@ -52,23 +51,23 @@ export class TestsExplorerWindow extends React.Component<any> {
         }
         else {
 
-            //item.objectType = itemStr.split(".").pop();
-            item.objectType = SchemaObject.getObjectTypeFromFileName(item.name);
-
-            if (item.objectType && appState.schemaObjectTypes[item.objectType])
-                item.icon = appState.schemaObjectTypes[item.objectType].icon;
-
-            // убираем .json
-            if (item.name.endsWith(".json"))
-                itemStr = item.name.slice(0, -5);
+            // //item.objectType = itemStr.split(".").pop();
+            // item.objectType = SchemaObject.getObjectTypeFromFileName(item.name);
+            //
+            // if (item.objectType && appState.schemaObjectTypes[item.objectType])
+            //     item.icon = appState.schemaObjectTypes[item.objectType].icon;
+            //
+            // // убираем .json
+             if (item.name.endsWith(".test.jsx"))
+                 item.name = item.name.slice(0, -9);
         }
 
 
-        item.html = ReactDOMServer.renderToStaticMarkup(
-            <span style={style}>
-                {itemStr}
-            </span>
-        );
+        // item.html = ReactDOMServer.renderToStaticMarkup(
+        //     <span style={style}>
+        //         {itemStr}
+        //     </span>
+        // );
 
         //console.log("item.label",item.label);
     }
@@ -76,9 +75,20 @@ export class TestsExplorerWindow extends React.Component<any> {
     async componentDidMount() {
 
         try {
-            let res = await loadSchemaTree();
+            let res = await loadTests();
             this.preprocessDataSource(res, 0, "");
-            this.objectsTree = res.items;
+            this.treeGridSource = {
+                localData: res.items,
+                dataType: "json",
+                id: "filename",
+                hierarchy: {
+                    root: "items"
+                },
+                // dataFields: [
+                //     {name: "name", type: "string"},
+                // ]
+            };
+
             //console.log("this.objectsTree", this.objectsTree);
             this.forceUpdate();
         }
@@ -137,7 +147,7 @@ export class TestsExplorerWindow extends React.Component<any> {
             return getErrorWindow(this.error);
         }
 
-        if (!this.objectsTree)
+        if (!this.treeGridSource)
             return null;
 
 
@@ -154,18 +164,24 @@ export class TestsExplorerWindow extends React.Component<any> {
                 }}>
 
                 <FlexHPanel>
-                    <FlexItem dock="top">
+                    <FlexItem dock="top" resizer="bottom" storageKey="TestsExplorerWindow:topResizer" style={{height:100, padding: 5}}>
                         шапка
                     </FlexItem>
                     <FlexItem dock="fill" style={{padding: 5}}>
                         <TreeGrid
                             ref={(e: any) => this.tree = e!}
-                            source={this.objectsTree}
+                            source={this.treeGridSource}
                             onRowDoubleClick={async (item) => {
                                 //this.handleOpenObjectDesigner(item.value);
                             }}
                             popup={this.createPopupMenu}
-                        />
+
+                        >
+                            <TreeGridColumn text="Тест" datafield="name"/>
+
+                        </TreeGrid>
+                    </FlexItem>
+                    <FlexItem dock="bottom" resizer="top" storageKey="TestsExplorerWindow:bottomResizer" style={{height:150, padding: 5, justifyContent: "flex-end"}}>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
                         <Button imgSrc={config.button.cancelIcon}

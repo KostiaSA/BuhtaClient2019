@@ -1,6 +1,11 @@
-import {BaseTest} from "../../test/BaseTest";
 
-export class Test extends BaseTest {
+
+class Test extends buhta.test.BaseTest {
+
+    _localProc(){
+        return "ага!"
+    }
+
     async test1() {
         return "ok"
     }

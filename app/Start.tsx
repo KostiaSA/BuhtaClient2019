@@ -2,34 +2,14 @@ import * as  React from "react";
 import * as  ReactDOM from "react-dom";
 import {Desktop} from "./ui/Desktop";
 import {appState} from "./AppState";
-import {SchemaWindow} from "./schema/window/SchemaWindow";
-import {Window} from "./ui/Window";
-import {FormPanel} from "./ui/FormPanel";
-import {FormPanelItem} from "./ui/FormPanelItem";
-import {TabsPanel} from "./ui/TabsPanel";
-import {TabsPanelItem} from "./ui/TabsPanelItem";
-import {Input} from "./ui/inputs/Input";
 import {config} from "./const/config";
+import {registerHost} from "./registerHost";
 
 async function start() {
 
     await appState.start();
-    let w = (window as any);
-    w.appState = appState;
-    w.React = React;
 
-    w.Window = Window;
-    w.SchemaWindow = SchemaWindow;
-
-    w.FormPanel = FormPanel;
-    w.FormPanelItem = FormPanelItem;
-
-    w.TabsPanel = TabsPanel;
-    w.TabsPanelItem = TabsPanelItem;
-
-    w.Input = Input;
-
-    w.config = config;
+    registerHost();
 
     ($ as any).jqx.theme = config.theme;
 

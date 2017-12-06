@@ -3,15 +3,26 @@ import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
 import {Keycode} from "../utils/Keycode";
-import {escapeHtml} from "../utils/escapeHtml";
-import {config} from "../const/config";
 import {ITreeGridColumnProps, TreeGridColumn} from "./TreeGridColumn";
 
+export interface ITreeGridSourcHierarchy {
+    root?: string; // 'children'
+    keyDataField?: { name: string },          // id
+    parentDataField?: { name: string }  // parentId
+}
+
+export interface ITreeGridSource {
+    localData: any;
+    dataType: "json" | "array";
+    id: string,
+    hierarchy?: ITreeGridSourcHierarchy;
+    dataFields?: any[];
+}
 
 export interface ITreeGridProps extends IComponentProps {
     height?: string | number;
     width?: string | number;
-    source?: any;
+    source: ITreeGridSource;
     sortable?: boolean;
     onRowDoubleClick?: (rowIndex: number) => void;
     onRowKeyDown?: (rowIndex: number, keyCode: Keycode) => boolean;
@@ -56,17 +67,20 @@ export class TreeGrid extends Component<ITreeGridProps> {
     }
 
     updateProps(props: ITreeGridProps, create: boolean) {
-        let treeGridOptions: any = omit(props, ["children", "source", "onRowDoubleClick", "onRowKeyDown","popup"]);
+        let treeGridOptions: any = omit(props, ["children", "source", "onRowDoubleClick", "onRowKeyDown", "popup"]);
         treeGridOptions.height = treeGridOptions.height || 350;
         treeGridOptions.width = treeGridOptions.width || "100%";
 
         if (treeGridOptions.sortable !== false)
             treeGridOptions.sortable = true;
 
-        treeGridOptions.source = {
-            localdata: props.source,
-            datatype: "array",
-        };
+        // treeGridOptions.source = {
+        //     localdata: props.source,
+        //     datatype: "array",
+        // };
+
+        treeGridOptions.source = new (($ as any).jqx.dataAdapter)(props.source);
+
 
         treeGridOptions.columns = [];
         for (let col of React.Children.toArray(this.props.children)) {
@@ -75,22 +89,22 @@ export class TreeGrid extends Component<ITreeGridProps> {
                 let columnOptions = omit(colProps, ["children", "compute"]);
                 if (!columnOptions.text)
                     columnOptions.text = columnOptions.datafield || "?datafield";
-                if (colProps.compute) {
-                    columnOptions.cellsrenderer = (rowIndex: number, columnfield: any, value: any, defaulthtml: string): string => {
-                        let defaultHtmlStart = defaulthtml.replace("</div>", "");
-                        let defaultHtmlEnd = "</div>";
-                        let row = props.source[rowIndex];
-                        let computedValue: string;
-                        try {
-                            computedValue = escapeHtml(colProps.compute!(row));
-                        }
-                        catch (e) {
-                            computedValue = "<span style='color: indianred'>" + escapeHtml("Ошибка в compute(): " + e.toString().substr(0, 40)) + "</span>";
-                            console.error("Ошибка в compute(): " + e.toString());
-                        }
-                        return defaultHtmlStart + computedValue + defaultHtmlEnd;
-                    };
-                }
+                // if (colProps.compute) {
+                //     columnOptions.cellsrenderer = (rowIndex: number, columnfield: any, value: any, defaulthtml: string): string => {
+                //         let defaultHtmlStart = defaulthtml.replace("</div>", "");
+                //         let defaultHtmlEnd = "</div>";
+                //         let row = props.source[rowIndex];
+                //         let computedValue: string;
+                //         try {
+                //             computedValue = escapeHtml(colProps.compute!(row));
+                //         }
+                //         catch (e) {
+                //             computedValue = "<span style='color: indianred'>" + escapeHtml("Ошибка в compute(): " + e.toString().substr(0, 40)) + "</span>";
+                //             console.error("Ошибка в compute(): " + e.toString());
+                //         }
+                //         return defaultHtmlStart + computedValue + defaultHtmlEnd;
+                //     };
+                // }
                 treeGridOptions.columns.push(columnOptions);
             }
         }
@@ -104,7 +118,7 @@ export class TreeGrid extends Component<ITreeGridProps> {
                     return this.props.onRowKeyDown!(this.getSelectedRowIndex(), event.keyCode);
             };
 
-        console.log("treeGridOptions==============================",treeGridOptions);
+        console.log("treeGridOptions==============================", treeGridOptions);
         try {
             this.widget.jqxTreeGrid(treeGridOptions);
         }

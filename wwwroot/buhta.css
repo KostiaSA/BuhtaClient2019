@@ -95,3 +95,7 @@ input[type=text].jqx-input {
 .ui-resizable-e:hover {
     background-color: silver;
 }
+
+.buhta-resizer:hover {
+    background-color: #c0c0c078;
+}
