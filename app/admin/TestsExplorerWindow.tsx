@@ -144,7 +144,7 @@ export class TestsExplorerWindow extends React.Component<any> {
     testedItems: {
         name: string,
         level: number,
-        result: "run" | "ok" | "error",
+        result: "folder" | "run" | "ok" | "error",
     }[] = [];
 
     async runTests() {
@@ -161,7 +161,9 @@ export class TestsExplorerWindow extends React.Component<any> {
                 testedItem.result = "run";
                 this.forceUpdate();
                 // выполняем тест
-                await sleep(500);
+                await sleep(1300);
+                testedItem.result = "ok";
+                this.forceUpdate();
             }
             this.forceUpdate();
         }
@@ -226,7 +228,34 @@ export class TestsExplorerWindow extends React.Component<any> {
                                 width: "100%"
                             }}>
                             {this.testedItems.map((item) => {
-                                return <div>{item.name}</div>
+                                return (
+                                    <div
+                                        style={{
+                                            marginLeft: item.level * 15,
+                                            fontWeight: (item.result === "folder" ? "bold" : undefined)
+                                        }}>
+
+                                        <span style={{marginRight: 5}}>{item.name}</span>
+
+                                        <span style={{
+                                            display: item.result === "run" ? "inline" : "none",
+                                            color: "orange"
+                                        }}>
+                                            <i className="fa fa-cog fa-spin fa-fw"></i>
+                                        </span>
+                                        <span style={{
+                                            display: item.result === "ok" ? "inline" : "none",
+                                            color: "green"
+                                        }}>
+                                            <i className="fa fa-check"></i>
+                                        </span>
+                                        <span style={{
+                                            display: item.result === "error" ? "inline" : "none",
+                                            color: "red"
+                                        }}>
+                                            <i className="fa fa-exclamation-circle"></i>
+                                        </span>
+                                    </div>);
                             })}
                         </div>
 
