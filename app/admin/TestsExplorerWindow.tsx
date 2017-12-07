@@ -34,9 +34,6 @@ export class TestsExplorerWindow extends React.Component<any> {
         else
             item.fileName = path + "/" + item.name;
 
-        //item.id = "test_" + getSHA1hex(item.fileName);
-        //item.value = item.fileName;
-
         let style: CSSProperties = {};
 
         if (item.items) {
@@ -49,28 +46,13 @@ export class TestsExplorerWindow extends React.Component<any> {
             style.color = "#505050eb";
         }
         else {
-            //item.icon = "vendor/fugue/tick-white.png";
             item.icon = "vendor/fugue/fruit-lime.png";
 
-            // //item.objectType = itemStr.split(".").pop();
-            // item.objectType = SchemaObject.getObjectTypeFromFileName(item.name);
-            //
-            // if (item.objectType && appState.schemaObjectTypes[item.objectType])
-            //     item.icon = appState.schemaObjectTypes[item.objectType].icon;
-            //
-            // // убираем .json
+            // убираем .test.jsx
             if (item.name.endsWith(".test.jsx"))
                 item.name = item.name.slice(0, -9);
         }
 
-
-        // item.html = ReactDOMServer.renderToStaticMarkup(
-        //     <span style={style}>
-        //         {itemStr}
-        //     </span>
-        // );
-
-        //console.log("item.label",item.label);
     }
 
     async componentDidMount() {
@@ -90,7 +72,6 @@ export class TestsExplorerWindow extends React.Component<any> {
                 // ]
             };
 
-            //console.log("this.objectsTree", this.objectsTree);
             this.forceUpdate();
         }
         catch (error) {
