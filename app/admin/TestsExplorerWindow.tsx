@@ -4,7 +4,6 @@ import {Window} from "../ui/Window";
 import {omit} from "../utils/omit";
 import {FlexHPanel} from "../ui/FlexHPanel";
 import {FlexItem} from "../ui/FlexItem";
-import {Tree} from "../ui/Tree";
 import {getErrorWindow} from "../ui/modals/showError";
 import {config} from "../const/config";
 import {Button} from "../ui/Button";
@@ -16,6 +15,7 @@ import {ITreeGridSource, TreeGrid} from "../ui/TreeGrid";
 import {TreeGridColumn} from "../ui/TreeGridColumn";
 import {loadTests} from "./api/loadTests";
 import {FlexVPanel} from "../ui/FlexVPanel";
+import {sleep} from "../utils/sleep";
 
 
 export class TestsExplorerWindow extends React.Component<any> {
@@ -139,7 +139,33 @@ export class TestsExplorerWindow extends React.Component<any> {
             )
     };
 
-    tree: Tree;
+    treeGrid: TreeGrid;
+
+    testedItems: {
+        name: string,
+        level: number,
+        result: "run" | "ok" | "error",
+    }[] = [];
+
+    async runTests() {
+        console.log("this.treeGrid.getCheckedRows--------------------------->", this.treeGrid.getCheckedRows());
+        this.testedItems = [];
+        for (let item of this.treeGrid.getCheckedRows()) {
+            let testedItem: any = {
+                name: item.name,
+                level: item.level,
+                result: "folder"
+            };
+            this.testedItems.push(testedItem);
+            if (!item.items) {
+                testedItem.result = "run";
+                this.forceUpdate();
+                // выполняем тест
+                await sleep(500);
+            }
+            this.forceUpdate();
+        }
+    }
 
     render() {
         console.log("TestsExplorerWindow");
@@ -165,13 +191,15 @@ export class TestsExplorerWindow extends React.Component<any> {
                 }}>
 
                 <FlexHPanel>
+                    {/**************************** шапка с фильтом *************************/}
                     <FlexItem dock="top" resizer="bottom" storageKey="TestsExplorerWindow:topResizer"
                               style={{height: 100, padding: 5}}>
                         шапка
                     </FlexItem>
-                    <FlexItem dock="fill" style={{padding: 5}}>
+                    {/**************************** список тестов в виде дерева *************/}
+                    <FlexItem dock="fill" style={{padding: 5, paddingBottom: 2}}>
                         <TreeGrid
-                            ref={(e: any) => this.tree = e!}
+                            ref={(e: any) => this.treeGrid = e!}
                             source={this.treeGridSource}
                             onRowDoubleClick={async (item) => {
                                 //this.handleOpenObjectDesigner(item.value);
@@ -185,17 +213,33 @@ export class TestsExplorerWindow extends React.Component<any> {
 
                         </TreeGrid>
                     </FlexItem>
+                    {/**************************** панель с результатами *******************/}
                     <FlexItem dock="bottom" resizer="top" storageKey="TestsExplorerWindow:bottomResizer"
-                              style={{height: 150, padding: 5, justifyContent: "flex-end"}}>
+                              style={{height: 150, padding: 5, paddingTop: 0, justifyContent: "flex-end"}}>
+
+                        <div
+                            style={{
+                                overflow: "auto",
+                                padding: 5,
+                                border: config.border,
+                                height: "100%",
+                                width: "100%"
+                            }}>
+                            {this.testedItems.map((item) => {
+                                return <div>{item.name}</div>
+                            })}
+                        </div>
+
                     </FlexItem>
-                    <FlexItem dock="bottom" style={{padding: 5, /*justifyContent: "flex-end"*/}}>
+                    {/**************************** нижние кнопки ***************************/}
+                    <FlexItem dock="bottom" style={{padding: 5, paddingTop: 10 /*justifyContent: "flex-end"*/}}>
                         <FlexVPanel>
                             <FlexItem dock="left">
                                 <Button
                                     imgSrc="vendor/fugue/fruit-lime.png"
                                     text="запуск тестов"
                                     onClick={async () => {
-                                        // this.window.close()
+                                        this.runTests();
                                     }}
                                 />
                             </FlexItem>

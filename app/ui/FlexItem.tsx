@@ -100,6 +100,7 @@ export class FlexItem extends React.Component<IFlexItemProps> {
                     ref={(e) => this.bottomResizer = e!}
                     className="buhta-resizer"
                     style={{
+                        display:"flex",
                         cursor: "s-resize",
                         width: "100%",
                         height: 5,

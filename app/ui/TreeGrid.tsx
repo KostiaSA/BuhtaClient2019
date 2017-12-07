@@ -113,14 +113,16 @@ export class TreeGrid extends Component<ITreeGridProps> {
             }
         }
 
-        if (this.props.onRowKeyDown)
-            treeGridOptions.handlekeyboardnavigation = (event: any) => {
-                //console.log("handlekeyboardnavigation", event.keyCode, this.widget[0].offsetParent);
-                if (this.getWindow().disabled)
-                    return false;
-                else
-                    return this.props.onRowKeyDown!(this.getSelectedRowIndex(), event.keyCode);
-            };
+        // todo getSelectedRowIndex не работает
+        if (this.props.onRowKeyDown) {
+            // treeGridOptions.handlekeyboardnavigation = (event: any) => {
+            //     //console.log("handlekeyboardnavigation", event.keyCode, this.widget[0].offsetParent);
+            //     if (this.getWindow().disabled)
+            //         return false;
+            //     else
+            //         return this.props.onRowKeyDown!(this.getSelectedRowIndex(), event.keyCode);
+            // };
+        }
 
         console.log("treeGridOptions==============================", treeGridOptions);
         try {
@@ -140,28 +142,22 @@ export class TreeGrid extends Component<ITreeGridProps> {
 
     }
 
+    getCheckedRows():any[]{
+        return this.widget.jqxTreeGrid("getCheckedRows");
+    }
+
     clearSelection() {
-        this.widget.jqxTreeGrid("clearselection");
+        this.widget.jqxTreeGrid("clearSelection");
     }
 
-    getSelectedRowIndex(): number {
-        return this.widget.jqxTreeGrid("getselectedrowindex");
+
+
+    selectRow(rowId: string) {
+        this.widget.jqxTreeGrid("selectRow", rowId);
     }
 
-    getSelectedRowIndexes(): number[] {
-        return this.widget.jqxTreeGrid("getselectedrowindexes");
-    }
-
-    selectAllRows() {
-        this.widget.jqxTreeGrid("selectallrows");
-    }
-
-    selectRow(rowIndex: number) {
-        this.widget.jqxTreeGrid("selectrow", rowIndex);
-    }
-
-    unselectRow(rowIndex: number) {
-        this.widget.jqxTreeGrid("unselectrow", rowIndex);
+    unselectRow(rowId: string) {
+        this.widget.jqxTreeGrid("unselectRow", rowId);
     }
 
     focus() {
