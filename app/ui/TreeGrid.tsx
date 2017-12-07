@@ -27,6 +27,10 @@ export interface ITreeGridProps extends IComponentProps {
     onRowDoubleClick?: (rowIndex: number) => void;
     onRowKeyDown?: (rowIndex: number, keyCode: Keycode) => boolean;
     popup?: React.ReactNode | ((rowItem: any) => Promise<React.ReactNode>);
+    icons?: boolean;
+    checkboxes?: boolean;
+    hierarchicalCheckboxes?: boolean;
+    enableHover?: boolean;
 }
 
 export class TreeGrid extends Component<ITreeGridProps> {

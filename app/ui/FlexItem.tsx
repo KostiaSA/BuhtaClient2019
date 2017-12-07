@@ -83,7 +83,7 @@ export class FlexItem extends React.Component<IFlexItemProps> {
                     style={{
                         cursor: "n-resize",
                         width: "100%",
-                        height: 6,
+                        height: 5,
                     }}
                 >
                 </div>
@@ -102,7 +102,7 @@ export class FlexItem extends React.Component<IFlexItemProps> {
                     style={{
                         cursor: "s-resize",
                         width: "100%",
-                        height: 6,
+                        height: 5,
                     }}
                 >
                 </div>

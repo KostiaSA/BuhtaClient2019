@@ -99,3 +99,7 @@ input[type=text].jqx-input {
 .buhta-resizer:hover {
     background-color: #c0c0c078;
 }
+
+.jqx-checkbox-check-indeterminate {
+    opacity: 0.3;
+}

@@ -1,6 +1,5 @@
 import * as  React from "react";
 import {CSSProperties} from "react";
-import * as ReactDOMServer from 'react-dom/server';
 import {Window} from "../ui/Window";
 import {omit} from "../utils/omit";
 import {FlexHPanel} from "../ui/FlexHPanel";
@@ -12,11 +11,11 @@ import {Button} from "../ui/Button";
 import {MenuItem} from "../ui/MenuItem";
 import {Menu} from "../ui/Menu";
 import {getRandomString} from "../utils/getRandomString";
-import {getSHA1hex} from "../utils/getSHA1hex";
 import {MenuSeparator} from "../ui/MenuSeparator";
 import {ITreeGridSource, TreeGrid} from "../ui/TreeGrid";
 import {TreeGridColumn} from "../ui/TreeGridColumn";
 import {loadTests} from "./api/loadTests";
+import {FlexVPanel} from "../ui/FlexVPanel";
 
 
 export class TestsExplorerWindow extends React.Component<any> {
@@ -50,6 +49,8 @@ export class TestsExplorerWindow extends React.Component<any> {
             style.color = "#505050eb";
         }
         else {
+            //item.icon = "vendor/fugue/tick-white.png";
+            item.icon = "vendor/fugue/fruit-lime.png";
 
             // //item.objectType = itemStr.split(".").pop();
             // item.objectType = SchemaObject.getObjectTypeFromFileName(item.name);
@@ -58,8 +59,8 @@ export class TestsExplorerWindow extends React.Component<any> {
             //     item.icon = appState.schemaObjectTypes[item.objectType].icon;
             //
             // // убираем .json
-             if (item.name.endsWith(".test.jsx"))
-                 item.name = item.name.slice(0, -9);
+            if (item.name.endsWith(".test.jsx"))
+                item.name = item.name.slice(0, -9);
         }
 
 
@@ -80,7 +81,7 @@ export class TestsExplorerWindow extends React.Component<any> {
             this.treeGridSource = {
                 localData: res.items,
                 dataType: "json",
-                id: "filename",
+                id: "fileName",
                 hierarchy: {
                     root: "items"
                 },
@@ -164,7 +165,8 @@ export class TestsExplorerWindow extends React.Component<any> {
                 }}>
 
                 <FlexHPanel>
-                    <FlexItem dock="top" resizer="bottom" storageKey="TestsExplorerWindow:topResizer" style={{height:100, padding: 5}}>
+                    <FlexItem dock="top" resizer="bottom" storageKey="TestsExplorerWindow:topResizer"
+                              style={{height: 100, padding: 5}}>
                         шапка
                     </FlexItem>
                     <FlexItem dock="fill" style={{padding: 5}}>
@@ -175,20 +177,38 @@ export class TestsExplorerWindow extends React.Component<any> {
                                 //this.handleOpenObjectDesigner(item.value);
                             }}
                             popup={this.createPopupMenu}
+                            icons checkboxes hierarchicalCheckboxes
+                            enableHover={false}
 
                         >
                             <TreeGridColumn text="Тест" datafield="name"/>
 
                         </TreeGrid>
                     </FlexItem>
-                    <FlexItem dock="bottom" resizer="top" storageKey="TestsExplorerWindow:bottomResizer" style={{height:150, padding: 5, justifyContent: "flex-end"}}>
+                    <FlexItem dock="bottom" resizer="top" storageKey="TestsExplorerWindow:bottomResizer"
+                              style={{height: 150, padding: 5, justifyContent: "flex-end"}}>
                     </FlexItem>
-                    <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
-                        <Button imgSrc={config.button.cancelIcon}
-                                text="Закрыть"
-                                onClick={async () => {
-                                    this.window.close()
-                                }}/>
+                    <FlexItem dock="bottom" style={{padding: 5, /*justifyContent: "flex-end"*/}}>
+                        <FlexVPanel>
+                            <FlexItem dock="left">
+                                <Button
+                                    imgSrc="vendor/fugue/fruit-lime.png"
+                                    text="запуск тестов"
+                                    onClick={async () => {
+                                        // this.window.close()
+                                    }}
+                                />
+                            </FlexItem>
+                            <FlexItem dock="fill" style={{justifyContent: "flex-end"}}>
+                                <Button
+                                    imgSrc={config.button.cancelIcon}
+                                    text="Закрыть"
+                                    onClick={async () => {
+                                        this.window.close()
+                                    }}
+                                />
+                            </FlexItem>
+                        </FlexVPanel>
                     </FlexItem>
                 </FlexHPanel>
 
