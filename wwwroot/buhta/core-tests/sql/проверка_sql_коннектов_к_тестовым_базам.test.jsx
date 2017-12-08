@@ -1,6 +1,6 @@
 
 
-class Test extends buhta.test.BaseTest {
+export class Test extends buhta.test.BaseTest {
 
     _localProc(){
         return "ага!"

@@ -16,7 +16,11 @@ import {TreeGridColumn} from "../ui/TreeGridColumn";
 import {loadTests} from "./api/loadTests";
 import {FlexVPanel} from "../ui/FlexVPanel";
 import {sleep} from "../utils/sleep";
+import {loadTestFile} from "./api/loadTestFile";
+import {babelTransform} from "../utils/babelTransform";
 
+
+declare var $$BuhtaTestClassForRun:any;
 
 export class TestsExplorerWindow extends React.Component<any> {
 
@@ -141,8 +145,30 @@ export class TestsExplorerWindow extends React.Component<any> {
             if (!item.items) {
                 testedItem.result = "run";
                 this.forceUpdate();
+
+
                 // выполняем тест
+                let testSourceFile = item.fileName;
+                let code = await loadTestFile(testSourceFile);
+                code = babelTransform(code);
+                console.log("code----------------------------->", code);
+
+                //console.log(className, compiledScript);
+                code="window.$$BuhtaTestClassForRun="+code+";window.$$BuhtaTestClassForRun_keys=Object.keys(new window.$$BuhtaTestClassForRun());";
+                eval(code);
+                console.log("$$BuhtaTestClassForRun-------------->",$$BuhtaTestClassForRun);
+
+                let test=new $$BuhtaTestClassForRun();
+
+
+                for (let name of Object.getOwnPropertyNames($$BuhtaTestClassForRun)) {
+                    let method = $$BuhtaTestClassForRun[name];
+                    console.log("name3*****************************************", name,method);
+                }
+
                 await sleep(1300);
+
+
                 testedItem.result = "ok";
                 this.forceUpdate();
             }
