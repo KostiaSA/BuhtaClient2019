@@ -8,12 +8,16 @@ import {TabsPanel} from "./ui/TabsPanel";
 import {TabsPanelItem} from "./ui/TabsPanelItem";
 import {SchemaWindow} from "./schema/window/SchemaWindow";
 import {Window} from "./ui/Window";
+import {executeSql} from "./admin/api/executeSql";
 
 
 export function registerHost() {
 
     (window as any).buhta = {
         appState: appState,
+        admin: {
+            executeSql: executeSql
+        },
         test: {
             BaseTest: BaseTest
         },

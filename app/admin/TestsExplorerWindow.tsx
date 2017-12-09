@@ -23,22 +23,6 @@ import {isFunction} from "util";
 
 declare var $$BuhtaTestClassForRun: any;
 
-(window as any).xxx7 = class Test extends BaseTest {
-
-    _localProc() {
-        return "ага!"
-    }
-
-    async test1() {
-        return "ok"
-    }
-
-    async test2() {
-        throw "";
-    }
-
-}
-
 export class TestsExplorerWindow extends React.Component<any> {
 
     window: Window;
@@ -383,9 +367,6 @@ export class TestsExplorerWindow extends React.Component<any> {
 
 
             </Window>
-
         )
-
     }
-
 }
