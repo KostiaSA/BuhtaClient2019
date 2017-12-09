@@ -194,14 +194,16 @@ export class TestsExplorerWindow extends React.Component<any> {
                             result: "run",
                             message: ""
                         };
-                        testedItem.items.push(subItem);
+
+                        if (!name.startsWith("_"))
+                            testedItem.items.push(subItem);
+
                         if (testedItem.result !== "error")
                             testedItem.result = "run";
 
                         this.forceUpdate();
 
                         try {
-                            await sleep(500);
                             await method();
                             subItem.result = "ok";
                         }
@@ -209,6 +211,8 @@ export class TestsExplorerWindow extends React.Component<any> {
                             subItem.result = "error";
                             subItem.message = e.message || e.toString();
                             testedItem.result = "error";
+                            if (name.startsWith("_"))
+                                testedItem.items.push(subItem);
                         }
                         this.forceUpdate();
 

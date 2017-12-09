@@ -7,7 +7,8 @@ class Test extends buhta.test.BaseTest {
     }
 
     async _before(){
-        return "аqweeqwга!"
+        throw "не рабо бефо 6786";
+        //return "аqweeqwга!"
     }
 
     async test1() {
