@@ -18,9 +18,26 @@ import {FlexVPanel} from "../ui/FlexVPanel";
 import {sleep} from "../utils/sleep";
 import {loadTestFile} from "./api/loadTestFile";
 import {babelTransform} from "../utils/babelTransform";
+import {BaseTest} from "../test/BaseTest";
+import {isFunction} from "util";
 
+declare var $$BuhtaTestClassForRun: any;
 
-declare var $$BuhtaTestClassForRun:any;
+(window as any).xxx7 = class Test extends BaseTest {
+
+    _localProc() {
+        return "ага!"
+    }
+
+    async test1() {
+        return "ok"
+    }
+
+    async test2() {
+        throw "";
+    }
+
+}
 
 export class TestsExplorerWindow extends React.Component<any> {
 
@@ -130,6 +147,11 @@ export class TestsExplorerWindow extends React.Component<any> {
         name: string,
         level: number,
         result: "folder" | "run" | "ok" | "error",
+        items: {
+            name: string,
+            result: "run" | "ok" | "error",
+            message?: string,
+        }[]
     }[] = [];
 
     async runTests() {
@@ -139,7 +161,8 @@ export class TestsExplorerWindow extends React.Component<any> {
             let testedItem: any = {
                 name: item.name,
                 level: item.level,
-                result: "folder"
+                result: "folder",
+                items: []
             };
             this.testedItems.push(testedItem);
             if (!item.items) {
@@ -151,25 +174,51 @@ export class TestsExplorerWindow extends React.Component<any> {
                 let testSourceFile = item.fileName;
                 let code = await loadTestFile(testSourceFile);
                 code = babelTransform(code);
-                console.log("code----------------------------->", code);
 
                 //console.log(className, compiledScript);
-                code="window.$$BuhtaTestClassForRun="+code+";window.$$BuhtaTestClassForRun_keys=Object.keys(new window.$$BuhtaTestClassForRun());";
+                code = "window.$$BuhtaTestClassForRun=" + code;
+                //loadScript(code);
                 eval(code);
-                console.log("$$BuhtaTestClassForRun-------------->",$$BuhtaTestClassForRun);
+                //console.log("$$BuhtaTestClassForRun-------------->", $$BuhtaTestClassForRun);
 
-                let test=new $$BuhtaTestClassForRun();
+                let $$testObject = new $$BuhtaTestClassForRun();
 
 
-                for (let name of Object.getOwnPropertyNames($$BuhtaTestClassForRun)) {
-                    let method = $$BuhtaTestClassForRun[name];
-                    console.log("name3*****************************************", name,method);
+                let methodNames = Object.getOwnPropertyNames($$BuhtaTestClassForRun.prototype).filter((name) => !name.startsWith("_") && name !== "constructor");
+
+                for (let name of ["_before", ...methodNames, "_after"]) {
+                    let method = $$testObject[name];
+                    if (isFunction(method)) {
+                        let subItem = {
+                            name: name,
+                            result: "run",
+                            message: ""
+                        };
+                        testedItem.items.push(subItem);
+                        if (testedItem.result !== "error")
+                            testedItem.result = "run";
+
+                        this.forceUpdate();
+
+                        try {
+                            await sleep(500);
+                            await method();
+                            subItem.result = "ok";
+                        }
+                        catch (e) {
+                            subItem.result = "error";
+                            subItem.message = e.message || e.toString();
+                            testedItem.result = "error";
+                        }
+                        this.forceUpdate();
+
+                        //console.log("name19***", name, subItem.result);
+                    }
                 }
 
-                await sleep(1300);
+                if (testedItem.result !== "error")
+                    testedItem.result = "ok";
 
-
-                testedItem.result = "ok";
                 this.forceUpdate();
             }
             this.forceUpdate();
@@ -262,6 +311,42 @@ export class TestsExplorerWindow extends React.Component<any> {
                                         }}>
                                             <i className="fa fa-exclamation-circle"></i>
                                         </span>
+                                        {item.items.map((subItem) => {
+                                            return (
+                                                <div
+                                                    style={{
+                                                        marginLeft: 15,
+                                                        fontStyle: "italic"
+                                                    }}>
+
+                                                    <span style={{marginRight: 5}}>{subItem.name}</span>
+
+                                                    <span style={{
+                                                        display: subItem.result === "run" ? "inline" : "none",
+                                                        color: "orange"
+                                                    }}>
+                                                         <i className="fa fa-cog fa-spin fa-fw"></i>
+                                                    </span>
+                                                    <span style={{
+                                                        display: subItem.result === "ok" ? "inline" : "none",
+                                                        color: "green"
+                                                    }}>
+                                                         <i className="fa fa-check"></i>
+                                                    </span>
+                                                    <span style={{
+                                                        display: subItem.result === "error" ? "inline" : "none",
+                                                        color: "red"
+                                                    }}>
+                                                         <i className="fa fa-exclamation-circle"></i>
+                                                        <span
+                                                            style={{
+                                                                marginLeft: 5,
+                                                                color: "red"
+                                                            }}>{(subItem.message || "").substr(0, 50)}</span>
+                                                    </span>
+                                                </div>);
+                                        })
+                                        }
                                     </div>);
                             })}
                         </div>

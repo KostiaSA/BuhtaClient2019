@@ -1,9 +1,13 @@
 
 
-export class Test extends buhta.test.BaseTest {
+class Test extends buhta.test.BaseTest {
 
     _localProc(){
         return "ага!"
+    }
+
+    async _before(){
+        return "аqweeqwга!"
     }
 
     async test1() {
@@ -11,7 +15,10 @@ export class Test extends buhta.test.BaseTest {
     }
 
     async test2() {
-        throw "";
+        throw "ошибка 6786";
     }
 
+    async _after(){
+        return "аqweeqwга!"
+    }
 }
