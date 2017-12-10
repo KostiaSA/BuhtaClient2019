@@ -11,9 +11,18 @@ class Test extends buhta.test.BaseTest {
     //     //return "аqweeqwга!"
     // }
 
-    async test1() {
+    async test10000() {
+        let res=await buhta.admin.executeSql("mag3666","select top 10000 * from ТМЦ");
+        return "ok"
+    }
+
+    async test20000() {
         let res=await buhta.admin.executeSql("mag3666","select top 20000 * from ТМЦ");
-        debugger
+        return "ok"
+    }
+
+    async test80000() {
+        let res=await buhta.admin.executeSql("mag3666","select top 80000 номер,название from ТМЦ");
         return "ok"
     }
 
