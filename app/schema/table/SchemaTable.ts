@@ -7,6 +7,7 @@ import {appState} from "../../AppState";
 import {config} from "../../const/config";
 import {SchemaTableDesignerWindow} from "../../admin/SchemaTableDesignerWindow";
 import {SqlBatch, SqlDialect, SqlEmitter} from "../../sql/SqlEmitter";
+import {isArray} from "../../utils/isArray";
 
 
 export interface ISchemaTableProps extends ISchemaObjectProps {
@@ -281,4 +282,47 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     }
 
+    emitSelectRowSql(dialect: SqlDialect, rowId: any, columns?: string[], skipColumns?: string[]): SqlBatch {
+        if (columns && !isArray(columns))
+            throw "SchemaTable.emitSelectRowSql(): параметр 'columns' должен быть массивом строк";
+
+        if (skipColumns && !isArray(skipColumns))
+            throw "SchemaTable.emitSelectRowSql(): параметр 'skipColumns' должен быть массивом строк";
+
+        let e = new SqlEmitter(dialect);
+
+        let sql: string[] = [];
+        let colNames: string[] = [];
+
+        sql.push("SELECT ");
+
+        let primaryKeyColumn = this.getPrimaryKeyColumn();
+        if (!primaryKeyColumn)
+            throw "SchemaTable.emitSelectRowSql(): не определен первичный ключ в таблице '" + this.props.name + "'";
+
+        for (let col of this.props.columns) {
+            if (col.primaryKey)
+                primaryKeyColumn = col;
+
+            let colOk = true;
+            if (columns && columns.indexOf(col.name) === -1)
+                colOk = colOk && false;
+            if (skipColumns && skipColumns.indexOf(col.name) > -1)
+                colOk = colOk && false;
+
+            if (colOk) {
+                colNames.push(e.emit_NAME(col.name));
+            }
+        }
+
+        sql.push(colNames.join(","));
+
+        sql.push(" FROM " + e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
+
+        let dataType = appState.sqlDataTypes[primaryKeyColumn.dataType.id];
+        sql.push(" WHERE " + e.emit_NAME(primaryKeyColumn.name) + "=" + dataType.emitValue(dialect, primaryKeyColumn.dataType, rowId));// this.valueToSql(primaryKeyColumn, this.rowId));
+
+        return sql.join("");
+
+    }
 }

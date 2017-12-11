@@ -140,6 +140,19 @@ class Test extends buhta.test.BaseTest {
         await this._executeSql(sql);
     }
 
+    async select_row_with_min_values() {
+        let sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getMinRow().id);
+        let res = await this._executeSql(sql);
+        let row=res[0].rows[0];
+    }
+
+    async select_row_with_max_values() {
+        let sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getMaxRow().id);
+        let res = await this._executeSql(sql);
+        let row=res[0].rows[0];
+        debugger
+    }
+
     async drop_table() {
         let sql = this._getSchemaTable().emitDropTableSql(this._getDialect());
         await this._executeSql(sql);
