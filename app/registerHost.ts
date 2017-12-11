@@ -9,6 +9,8 @@ import {TabsPanelItem} from "./ui/TabsPanelItem";
 import {SchemaWindow} from "./schema/window/SchemaWindow";
 import {Window} from "./ui/Window";
 import {executeSql} from "./admin/api/executeSql";
+import {SchemaTable} from "./schema/table/SchemaTable";
+import {SchemaObject} from "./schema/SchemaObject";
 
 
 export function registerHost() {
@@ -23,6 +25,10 @@ export function registerHost() {
         },
         const: {
             config: config,
+        },
+        schema: {
+            SchemaObject: SchemaObject,
+            SchemaTable: SchemaTable,
         },
         ui: {
             Input: Input,

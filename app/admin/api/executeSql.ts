@@ -8,6 +8,8 @@ declare let TextDecoder: any;
 declare let TextEncoder: any;
 
 export async function executeSql(database: string, sql: SqlBatch): Promise<any> {
+    if (!isString(database))
+        throw "executeSql(): database должен быть строкой";
 
     let req: any = {database};
     if (isString(sql))

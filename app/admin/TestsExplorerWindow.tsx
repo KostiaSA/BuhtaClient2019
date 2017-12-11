@@ -188,7 +188,7 @@ export class TestsExplorerWindow extends React.Component<any> {
                         this.forceUpdate();
 
                         try {
-                            await method();
+                            await method.call($$testObject);
                             subItem.result = "ok";
                         }
                         catch (e) {
@@ -330,7 +330,7 @@ export class TestsExplorerWindow extends React.Component<any> {
                                                             style={{
                                                                 marginLeft: 5,
                                                                 color: "red"
-                                                            }}>{(subItem.message || "").substr(0, 50)}</span>
+                                                            }}>{(subItem.message || "").substr(0, 100)}</span>
                                                     </span>
                                                 </div>);
                                         })
