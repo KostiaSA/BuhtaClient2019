@@ -192,6 +192,7 @@ export class TestsExplorerWindow extends React.Component<any> {
                             subItem.result = "ok";
                         }
                         catch (e) {
+                            console.error(e);
                             subItem.result = "error";
                             subItem.message = e.message || e.toString();
                             testedItem.result = "error";

@@ -373,7 +373,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         let sql: string[] = [];
         let colSets: string[] = [];
 
-        sql.push("DELETE " + e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
+        sql.push("DELETE FROM " + e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
 
         let primaryKeyColumn = this.getPrimaryKeyColumn();
         if (!primaryKeyColumn)
