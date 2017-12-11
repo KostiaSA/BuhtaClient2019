@@ -35,6 +35,59 @@ class Test extends buhta.test.BaseTest {
                         size: "8"
                     },
                 },
+                {
+                    name: "uint8",
+                    dataType: {
+                        id: "Integer",
+                        size: "8",
+                        unsigned: true
+                    },
+                },
+                {
+                    name: "int16",
+                    dataType: {
+                        id: "Integer",
+                        size: "16"
+                    },
+                },
+                {
+                    name: "uint16",
+                    dataType: {
+                        id: "Integer",
+                        size: "16",
+                        unsigned: true
+                    },
+                },
+                {
+                    name: "int32",
+                    dataType: {
+                        id: "Integer",
+                        size: "32"
+                    },
+                },
+                {
+                    name: "uint32",
+                    dataType: {
+                        id: "Integer",
+                        size: "32",
+                        unsigned: true
+                    },
+                },
+                {
+                    name: "int64",
+                    dataType: {
+                        id: "Integer",
+                        size: "64"
+                    },
+                },
+                {
+                    name: "uint64",
+                    dataType: {
+                        id: "Integer",
+                        size: "64",
+                        unsigned: true
+                    },
+                },
 
             ]
         };
@@ -46,6 +99,13 @@ class Test extends buhta.test.BaseTest {
             id: -1,
             string500: "",
             int8: CONST.MIN_INT8,
+            uint8: 0,
+            int16: CONST.MIN_INT16,
+            uint16: 0,
+            int32: CONST.MIN_INT32,
+            uint32: 0,
+            int64: CONST.MIN_INT64,
+            uint64: 0,
 
         }
     }
@@ -55,6 +115,13 @@ class Test extends buhta.test.BaseTest {
             id: 1,
             string500: "Я".repeat(500),
             int8: CONST.MAX_INT8,
+            uint8: CONST.MAX_UINT8,
+            int16: CONST.MAX_INT16,
+            uint16: CONST.MAX_UINT16,
+            int32: CONST.MAX_INT32,
+            uint32: CONST.MAX_UINT32,
+            int64: CONST.MAX_INT64,
+            uint64: CONST.MAX_UINT64,
         }
     }
 

@@ -162,24 +162,24 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
 
     emitValue(dialect: SqlDialect, colDataType: IIntegerSqlDataTypeProps, value: any): string {
         if (!isIntegerOrNull(value))
-            throw  "значение должно быть целое число или null";
+            throw  "значение (" + value + ") должно быть целое число или null";
 
         if (colDataType.unsigned) {
             switch (colDataType.size) {
                 case "8":
-                    if (value < 0 || value > CONST.MAX_INT8)
-                        throw "значение должно быть целое число от 0 до " + CONST.MAX_INT8;
+                    if (value < 0 || value > CONST.MAX_UINT8)
+                        throw "значение (" + value + ") должно быть целое число от 0 до " + CONST.MAX_UINT8;
                     break;
                 case "16":
-                    if (value < 0 || value > CONST.MAX_INT16)
-                        throw "значение должно быть целое число от 0 до " + CONST.MAX_INT16;
+                    if (value < 0 || value > CONST.MAX_UINT16)
+                        throw "значение (" + value + ") должно быть целое число от 0 до " + CONST.MAX_UINT16;
                     break;
                 case "32":
-                    if (value < 0 || value > CONST.MAX_INT32)
-                        throw "значение должно быть целое число от 0 до " + CONST.MAX_INT32;
+                    if (value < 0 || value > CONST.MAX_UINT32)
+                        throw "значение (" + value + ") должно быть целое число от 0 до " + CONST.MAX_UINT32;
                 case "64":
                     if (value < 0 || value > CONST.MAX_SAFE_INTEGER_FLOAT64)
-                        throw "значение должно быть целое число от 0 до " + CONST.MAX_SAFE_INTEGER_FLOAT64;
+                        throw "значение (" + value + ") должно быть целое число от 0 до " + CONST.MAX_SAFE_INTEGER_FLOAT64;
                     break;
                 default:
                     throw "invalid col.size " + colDataType.size;
@@ -189,19 +189,19 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
             switch (colDataType.size) {
                 case "8":
                     if (value < CONST.MIN_INT8 || value > CONST.MAX_INT8)
-                        throw "значение должно быть целое число от " + CONST.MIN_INT8 + " до " + CONST.MAX_INT8;
+                        throw "значение (" + value + ") должно быть целое число от " + CONST.MIN_INT8 + " до " + CONST.MAX_INT8;
                     break;
                 case "16":
                     if (value < CONST.MIN_INT16 || value > CONST.MAX_INT16)
-                        throw "значение должно быть целое число от " + CONST.MIN_INT16 + " до " + CONST.MAX_INT16;
+                        throw "значение (" + value + ") должно быть целое число от " + CONST.MIN_INT16 + " до " + CONST.MAX_INT16;
                     break;
                 case "32":
                     if (value < CONST.MIN_INT32 || value > CONST.MAX_INT32)
-                        throw "значение должно быть целое число от " + CONST.MIN_INT32 + " до " + CONST.MAX_INT32;
+                        throw "значение (" + value + ") должно быть целое число от " + CONST.MIN_INT32 + " до " + CONST.MAX_INT32;
                     break;
                 case "64":
                     if (value < CONST.MIN_SAFE_INTEGER_FLOAT64 || value > CONST.MAX_SAFE_INTEGER_FLOAT64)
-                        throw "значение должно быть целое число от " + CONST.MIN_SAFE_INTEGER_FLOAT64 + " до " + CONST.MAX_SAFE_INTEGER_FLOAT64;
+                        throw "значение (" + value + ") должно быть целое число от " + CONST.MIN_SAFE_INTEGER_FLOAT64 + " до " + CONST.MAX_SAFE_INTEGER_FLOAT64;
                 default:
                     throw "invalid col.size " + colDataType.size;
             }
