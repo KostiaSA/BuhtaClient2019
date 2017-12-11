@@ -366,4 +366,24 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     }
 
+    emitDeleteRowSql(dialect: SqlDialect, rowId: any): SqlBatch {
+
+        let e = new SqlEmitter(dialect);
+
+        let sql: string[] = [];
+        let colSets: string[] = [];
+
+        sql.push("DELETE " + e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
+
+        let primaryKeyColumn = this.getPrimaryKeyColumn();
+        if (!primaryKeyColumn)
+            throw "SchemaTable.emitUpdateRowSql(): не определен первичный ключ в таблице '" + this.props.name + "'";
+
+        let pkDataType = appState.sqlDataTypes[primaryKeyColumn.dataType.id];
+        sql.push(" WHERE " + e.emit_NAME(primaryKeyColumn.name) + "=" + pkDataType.emitValue(dialect, primaryKeyColumn.dataType, rowId));
+
+        return sql.join("");
+
+    }
+
 }

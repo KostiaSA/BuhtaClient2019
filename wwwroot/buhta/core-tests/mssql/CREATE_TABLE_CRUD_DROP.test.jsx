@@ -171,6 +171,21 @@ class Test extends buhta.test.BaseTest {
         assert.deepEqual(row, newRow);
     }
 
+    async delete_max_row() {
+        let newRow = this._getMaxRow();
+        let sql = this._getSchemaTable().emitDeleteRowSql(this._getDialect(), newRow.id);
+        await this._executeSql(sql);
+
+        sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), newRow.id);
+        let res = await this._executeSql(sql);
+        assert.equal(res[0].rows.length, 0);
+
+        sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getMinRow().id);
+        res = await this._executeSql(sql);
+        assert.equal(res[0].rows.length, 1);
+
+    }
+
     async drop_table() {
         let sql = this._getSchemaTable().emitDropTableSql(this._getDialect());
         await this._executeSql(sql);
