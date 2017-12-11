@@ -101,6 +101,9 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
         if (!isStringOrNull(value))
             throw  "значение должно быть строкой или null";
 
+        if (value === null)
+            return new SqlEmitter(dialect).emit_NULL();
+
         if (colDataType.maxLen && colDataType.maxLen > 0) {
             if (value.length > colDataType.maxLen) {
                 throw "длина строки превышает " + colDataType.maxLen;

@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {ComboBox} from "../../../ui/inputs/ComboBox";
-import {SqlDialect} from "../../../sql/SqlEmitter";
+import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isIntegerOrNull} from "../../../utils/isIntegerOrNull";
 
 let CONST = require("numeric-constants");
@@ -163,6 +163,9 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
     emitValue(dialect: SqlDialect, colDataType: IIntegerSqlDataTypeProps, value: any): string {
         if (!isIntegerOrNull(value))
             throw  "значение (" + value + ") должно быть целое число или null";
+
+        if (value === null)
+            return new SqlEmitter(dialect).emit_NULL();
 
         if (colDataType.unsigned) {
             switch (colDataType.size) {

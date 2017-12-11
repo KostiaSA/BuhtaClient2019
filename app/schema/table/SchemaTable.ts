@@ -303,8 +303,8 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
             throw "SchemaTable.emitSelectRowSql(): не определен первичный ключ в таблице '" + this.props.name + "'";
 
         for (let col of this.props.columns) {
-            if (col.primaryKey)
-                primaryKeyColumn = col;
+            // if (col.primaryKey)
+            //     primaryKeyColumn = col;
 
             let colOk = true;
             if (columns && columns.indexOf(col.name) === -1)
@@ -327,4 +327,43 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         return sql.join("");
 
     }
+
+    emitUpdateRowSql(dialect: SqlDialect, row: any): SqlBatch {
+
+        let e = new SqlEmitter(dialect);
+
+        let sql: string[] = [];
+        let colSets: string[] = [];
+
+        sql.push("UPDATE " + e.emit_TABLE_NAME(this.props.sqlName || this.props.name) + " SET");
+
+        let primaryKeyColumn = this.getPrimaryKeyColumn();
+        if (!primaryKeyColumn)
+            throw "SchemaTable.emitUpdateRowSql(): не определен первичный ключ в таблице '" + this.props.name + "'";
+
+        for (let col of this.props.columns) {
+            if (col.primaryKey)
+                continue;
+
+            if (row[col.name] !== undefined) {
+                let dataType = appState.sqlDataTypes[col.dataType.id];
+                try {
+                    colSets.push("  " + e.emit_NAME(col.name) + "=" + dataType.emitValue(dialect, col.dataType, row[col.name]));
+                }
+                catch (e) {
+                    throw "SchemaTable.emitUpdateRowSql(): колонка '" + col.name + "' в таблице '" + this.props.name + "': " + e.toString();
+                }
+
+            }
+        }
+
+        sql.push(colSets.join(","));
+
+        let pkDataType = appState.sqlDataTypes[primaryKeyColumn.dataType.id];
+        sql.push(" WHERE " + e.emit_NAME(primaryKeyColumn.name) + "=" + pkDataType.emitValue(dialect, primaryKeyColumn.dataType, row[primaryKeyColumn.name]));
+
+        return sql.join("\n");
+
+    }
+
 }
