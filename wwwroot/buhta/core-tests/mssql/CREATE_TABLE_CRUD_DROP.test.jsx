@@ -104,7 +104,7 @@ class Test extends buhta.test.BaseTest {
             uint16: 0,
             int32: CONST.MIN_INT32,
             uint32: 0,
-            int64: CONST.MIN_INT64,
+            int64: CONST.MIN_SAFE_INTEGER_FLOAT64,
             uint64: 0,
 
         }
@@ -120,8 +120,8 @@ class Test extends buhta.test.BaseTest {
             uint16: CONST.MAX_UINT16,
             int32: CONST.MAX_INT32,
             uint32: CONST.MAX_UINT32,
-            int64: CONST.MAX_INT64,
-            uint64: CONST.MAX_UINT64,
+            int64: CONST.MAX_SAFE_INTEGER_FLOAT64,
+            uint64: CONST.MAX_SAFE_INTEGER_FLOAT64,
         }
     }
 
@@ -143,14 +143,17 @@ class Test extends buhta.test.BaseTest {
     async select_row_with_min_values() {
         let sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getMinRow().id);
         let res = await this._executeSql(sql);
-        let row=res[0].rows[0];
+        assert.equal(res[0].rows.length, 1);
+        let row = res[0].rows[0];
+        assert.deepEqual(row, this._getMinRow());
     }
 
     async select_row_with_max_values() {
         let sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getMaxRow().id);
         let res = await this._executeSql(sql);
-        let row=res[0].rows[0];
-        debugger
+        assert.equal(res[0].rows.length, 1);
+        let row = res[0].rows[0];
+        assert.deepEqual(row, this._getMaxRow());
     }
 
     async drop_table() {

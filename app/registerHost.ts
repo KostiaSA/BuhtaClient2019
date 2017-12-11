@@ -12,11 +12,16 @@ import {executeSql} from "./admin/api/executeSql";
 import {SchemaTable} from "./schema/table/SchemaTable";
 import {SchemaObject} from "./schema/SchemaObject";
 
+declare const chai: any;
+declare const window: any;
+
 export function registerHost() {
 
-    (window as any).CONST = require("numeric-constants");
+    window.CONST = require("numeric-constants");
 
-    (window as any).buhta = {
+    window.assert = chai.assert;
+
+    window.buhta = {
         appState: appState,
         admin: {
             executeSql: executeSql

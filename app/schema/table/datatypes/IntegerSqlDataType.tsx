@@ -202,6 +202,7 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
                 case "64":
                     if (value < CONST.MIN_SAFE_INTEGER_FLOAT64 || value > CONST.MAX_SAFE_INTEGER_FLOAT64)
                         throw "значение (" + value + ") должно быть целое число от " + CONST.MIN_SAFE_INTEGER_FLOAT64 + " до " + CONST.MAX_SAFE_INTEGER_FLOAT64;
+                    break;
                 default:
                     throw "invalid col.size " + colDataType.size;
             }

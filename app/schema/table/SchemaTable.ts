@@ -259,19 +259,21 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         let colNames: string[] = [];
         let colValues: string[] = [];
         this.props.columns.forEach((col: ISchemaTableColumnProps, index: number) => {
-            if (row[col.name]) {
-                let dataType = appState.sqlDataTypes[col.dataType.id];
-                colNames.push(e.emit_NAME(col.name));
-                try {
-                    colValues.push(dataType.emitValue(dialect, col.dataType, row[col.name]));
+            if (row[col.name] !== undefined) {
+                if (row[col.name] !== null) {
+                    let dataType = appState.sqlDataTypes[col.dataType.id];
+                    colNames.push(e.emit_NAME(col.name));
+                    try {
+                        colValues.push(dataType.emitValue(dialect, col.dataType, row[col.name]));
+                    }
+                    catch (e) {
+                        throw "SchemaTable.emitInsertRowSql(): колонка '" + col.name + "' в таблице '" + this.props.name + "': " + e.toString();
+                    }
                 }
-                catch (e) {
-                    throw "SchemaTable.emitInsertRowSql(): колонка '" + col.name + "' в таблице '" + this.props.name + "': " + e.toString();
-                }
-            }
-            else {
-                if (col.notNull) {
-                    throw "SchemaTable.emitInsertRowSql(): колонка '" + col.name + "' не может быть NULL в таблице '" + this.props.name + "'";
+                else {
+                    if (col.notNull) {
+                        throw "SchemaTable.emitInsertRowSql(): колонка '" + col.name + "' не может быть NULL в таблице '" + this.props.name + "'";
+                    }
                 }
             }
         });
