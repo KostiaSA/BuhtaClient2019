@@ -110,6 +110,22 @@ class Test extends buhta.test.BaseTest {
         }
     }
 
+    _getNullRow() {
+        return {
+            id: 0,
+            string500: null,
+            int8: null,
+            uint8: null,
+            int16: null,
+            uint16: null,
+            int32: null,
+            uint32: null,
+            int64: null,
+            uint64: null,
+
+        }
+    }
+
     _getMaxRow() {
         return {
             id: 1,
@@ -135,6 +151,11 @@ class Test extends buhta.test.BaseTest {
         await this._executeSql(sql);
     }
 
+    async insert_row_with_null_values() {
+        let sql = this._getSchemaTable().emitInsertRowSql(this._getDialect(), this._getNullRow());
+        await this._executeSql(sql);
+    }
+
     async insert_row_with_max_values() {
         let sql = this._getSchemaTable().emitInsertRowSql(this._getDialect(), this._getMaxRow());
         await this._executeSql(sql);
@@ -146,6 +167,14 @@ class Test extends buhta.test.BaseTest {
         assert.equal(res[0].rows.length, 1);
         let row = res[0].rows[0];
         assert.deepEqual(row, this._getMinRow());
+    }
+
+    async select_row_with_null_values() {
+        let sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getNullRow().id);
+        let res = await this._executeSql(sql);
+        assert.equal(res[0].rows.length, 1);
+        let row = res[0].rows[0];
+        assert.deepEqual(row, this._getNullRow());
     }
 
     async select_row_with_max_values() {
@@ -184,6 +213,9 @@ class Test extends buhta.test.BaseTest {
         res = await this._executeSql(sql);
         assert.equal(res[0].rows.length, 1);
 
+        sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getNullRow().id);
+        res = await this._executeSql(sql);
+        assert.equal(res[0].rows.length, 1);
     }
 
     async drop_table() {
