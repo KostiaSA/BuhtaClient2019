@@ -83,7 +83,7 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
             if (!col.maxLen || col.maxLen <= 0)
                 return (`TEXT`);
             else
-                return (`NVARCHAR(${col.maxLen})`);
+                return (`VARCHAR(${col.maxLen})`);
         }
         // else if (e.dialect === "postgres")
         //     this.emitColumnDataTypePg(col, e);
