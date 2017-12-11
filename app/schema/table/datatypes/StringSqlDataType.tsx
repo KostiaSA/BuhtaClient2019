@@ -3,7 +3,11 @@ import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {NumberInput} from "../../../ui/inputs/NumberInput";
 import {config} from "../../../const/config";
-import {SqlDialect} from "../../../sql/SqlEmitter";
+import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
+import {isStringOrNull} from "../../../utils/isStringOrNull";
+
+declare let TextEncoder: any;
+
 
 export interface IStringSqlDataTypeProps extends IBaseSqlDataTypeProps {
     maxLen?: number;
@@ -90,6 +94,20 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
             console.error(msg);
             throw msg + ", " + __filename;
         }
+
+    }
+
+    emitValue(dialect: SqlDialect, colDataType: IStringSqlDataTypeProps, value: any): string {
+        if (!isStringOrNull(value))
+            throw  "значение должно быть строкой или null";
+
+        if (colDataType.maxLen && colDataType.maxLen > 0) {
+            if (value.length > colDataType.maxLen) {
+                throw "длина строки превышает " + colDataType.maxLen;
+            }
+        }
+
+        return new SqlEmitter(dialect).emit_STRING(value);
 
     }
 

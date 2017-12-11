@@ -3,7 +3,9 @@ import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {ComboBox} from "../../../ui/inputs/ComboBox";
 import {SqlDialect} from "../../../sql/SqlEmitter";
+import {isIntegerOrNull} from "../../../utils/isIntegerOrNull";
 
+let CONST = require("numeric-constants");
 
 export interface IIntegerSqlDataTypeProps extends IBaseSqlDataTypeProps {
     size?: "8" | "16" | "32" | "64";
@@ -64,7 +66,7 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
             if (col.unsigned) {
                 switch (col.size) {
                     case "8":
-                        return ("SMALLINT");
+                        return ("TINYINT");
                     case "16":
                         return ("INT");
                     case "32":
@@ -78,7 +80,7 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
             else {
                 switch (col.size) {
                     case "8":
-                        return ("TINYINT");
+                        return ("SMALLINT");
                     case "16":
                         return ("SMALLINT");
                     case "32":
@@ -155,6 +157,56 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
             console.error(msg);
             throw msg + ", " + __filename;
         }
+
+    }
+
+    emitValue(dialect: SqlDialect, colDataType: IIntegerSqlDataTypeProps, value: any): string {
+        if (!isIntegerOrNull(value))
+            throw  "значение должно быть целое число или null";
+
+        if (colDataType.unsigned) {
+            switch (colDataType.size) {
+                case "8":
+                    if (value < 0 || value > CONST.MAX_INT8)
+                        throw "значение должно быть целое число от 0 до " + CONST.MAX_INT8;
+                    break;
+                case "16":
+                    if (value < 0 || value > CONST.MAX_INT16)
+                        throw "значение должно быть целое число от 0 до " + CONST.MAX_INT16;
+                    break;
+                case "32":
+                    if (value < 0 || value > CONST.MAX_INT32)
+                        throw "значение должно быть целое число от 0 до " + CONST.MAX_INT32;
+                case "64":
+                    if (value < 0 || value > CONST.MAX_SAFE_INTEGER_FLOAT64)
+                        throw "значение должно быть целое число от 0 до " + CONST.MAX_SAFE_INTEGER_FLOAT64;
+                    break;
+                default:
+                    throw "invalid col.size " + colDataType.size;
+            }
+        }
+        else {
+            switch (colDataType.size) {
+                case "8":
+                    if (value < CONST.MIN_INT8 || value > CONST.MAX_INT8)
+                        throw "значение должно быть целое число от " + CONST.MIN_INT8 + " до " + CONST.MAX_INT8;
+                    break;
+                case "16":
+                    if (value < CONST.MIN_INT16 || value > CONST.MAX_INT16)
+                        throw "значение должно быть целое число от " + CONST.MIN_INT16 + " до " + CONST.MAX_INT16;
+                    break;
+                case "32":
+                    if (value < CONST.MIN_INT32 || value > CONST.MAX_INT32)
+                        throw "значение должно быть целое число от " + CONST.MIN_INT32 + " до " + CONST.MAX_INT32;
+                    break;
+                case "64":
+                    if (value < CONST.MIN_SAFE_INTEGER_FLOAT64 || value > CONST.MAX_SAFE_INTEGER_FLOAT64)
+                        throw "значение должно быть целое число от " + CONST.MIN_SAFE_INTEGER_FLOAT64 + " до " + CONST.MAX_SAFE_INTEGER_FLOAT64;
+                default:
+                    throw "invalid col.size " + colDataType.size;
+            }
+        }
+        return value.toString();
 
     }
 

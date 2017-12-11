@@ -229,4 +229,56 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     }
 
+    emitDropTableSql(dialect: SqlDialect): SqlBatch {
+
+        let e = new SqlEmitter(dialect);
+
+        let sql: string[] = [];
+
+        sql.push("DROP TABLE ");
+
+        sql.push(e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
+
+        sql.push("\n");
+
+        return sql.join("");
+
+    }
+
+    emitInsertRowSql(dialect: SqlDialect, row: any): SqlBatch {
+
+        let e = new SqlEmitter(dialect);
+
+        let sql: string[] = [];
+
+        sql.push("INSERT INTO ");
+
+        sql.push(e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
+
+        let colNames: string[] = [];
+        let colValues: string[] = [];
+        this.props.columns.forEach((col: ISchemaTableColumnProps, index: number) => {
+            if (row[col.name]) {
+                let dataType = appState.sqlDataTypes[col.dataType.id];
+                colNames.push(e.emit_NAME(col.name));
+                try {
+                    colValues.push(dataType.emitValue(dialect, col.dataType, row[col.name]));
+                }
+                catch (e) {
+                    throw "SchemaTable.emitInsertRowSql(): колонка '" + col.name + "' в таблице '" + this.props.name + "': " + e.toString();
+                }
+            }
+            else {
+                if (col.notNull) {
+                    throw "SchemaTable.emitInsertRowSql(): колонка '" + col.name + "' не может быть NULL в таблице '" + this.props.name + "'";
+                }
+            }
+        });
+
+        sql.push("(" + colNames.join(",") + ") \nVALUES(" + colValues.join(",") + ")\n");
+
+        return sql.join("");
+
+    }
+
 }

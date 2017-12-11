@@ -14,7 +14,7 @@ class Test extends buhta.test.BaseTest {
             objectType: "table",
             columns: [
                 {
-                    name: "Ключ",
+                    name: "id",
                     primaryKey: true,
                     dataType: {
                         id: "Integer",
@@ -29,7 +29,7 @@ class Test extends buhta.test.BaseTest {
                     },
                 },
                 {
-                    name: "int_8_min",
+                    name: "int8",
                     dataType: {
                         id: "Integer",
                         size: "8"
@@ -41,36 +41,40 @@ class Test extends buhta.test.BaseTest {
         return new buhta.schema.SchemaTable(props);
     }
 
-    // async _before(){
-    //     throw "не рабо бефо 6786";
-    //     //return "аqweeqwга!"
-    // }
+    _getMinRow() {
+        return {
+            id: -1,
+            string500: "",
+            int8: CONST.MIN_INT8,
+
+        }
+    }
+
+    _getMaxRow() {
+        return {
+            id: 1,
+            string500: "Я".repeat(500),
+            int8: CONST.MAX_INT8,
+        }
+    }
 
     async create_table() {
         let sql = this._getSchemaTable().emitCreateTableSql(this._getDialect());
-        this._executeSql(sql);
+        await this._executeSql(sql);
     }
 
-    // async test10000() {
-    //     let res=await buhta.admin.executeSql("testmssql","select top 10000 * from ТМЦ");
-    //     return "ok"
-    // }
-    //
-    // async test20000() {
-    //     let res=await buhta.admin.executeSql("testmssql","select top 20000 * from ТМЦ");
-    //     return "ok"
-    // }
-    //
-    // async test80000() {
-    //     let res=await buhta.admin.executeSql("testmssql","select top 80000 номер,название from ТМЦ");
-    //     return "ok"
-    // }
+    async insert_row_with_min_values() {
+        let sql = this._getSchemaTable().emitInsertRowSql(this._getDialect(), this._getMinRow());
+        await this._executeSql(sql);
+    }
 
-    // async test2() {
-    //     throw "ошибка 6786";
-    // }
-    //
-    // async _after(){
-    //     return "аqweeqwга!"
-    // }
+    async insert_row_with_max_values() {
+        let sql = this._getSchemaTable().emitInsertRowSql(this._getDialect(), this._getMaxRow());
+        await this._executeSql(sql);
+    }
+
+    async drop_table() {
+        let sql = this._getSchemaTable().emitDropTableSql(this._getDialect());
+        await this._executeSql(sql);
+    }
 }

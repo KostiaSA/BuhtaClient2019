@@ -330,7 +330,7 @@ export class TestsExplorerWindow extends React.Component<any> {
                                                             style={{
                                                                 marginLeft: 5,
                                                                 color: "red"
-                                                            }}>{(subItem.message || "").substr(0, 100)}</span>
+                                                            }}>{(subItem.message || "").substr(0, 255)}</span>
                                                     </span>
                                                 </div>);
                                         })

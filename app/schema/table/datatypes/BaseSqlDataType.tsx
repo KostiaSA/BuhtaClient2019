@@ -3,6 +3,7 @@ import * as Joi from "joi";
 import {joiRus} from "../../../i18n/joiRus";
 import {appState} from "../../../AppState";
 import {SqlDialect} from "../../../sql/SqlEmitter";
+import {ISchemaTableColumnProps} from "../SchemaTable";
 
 //export type SqlDialect = "mysql" | "postgres" | "mssql";
 
@@ -55,6 +56,10 @@ export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypePro
 
     emitColumnDataType(dialect: SqlDialect, col: IBaseSqlDataTypeProps): string {
         throw  "BaseSqlDataType.emitColumnDataType(): abstract error";
+    }
+
+    emitValue(dialect: SqlDialect, colDataType: IBaseSqlDataTypeProps, value: any): string {
+        throw  "BaseSqlDataType.emitValue(): abstract error";
     }
 }
 

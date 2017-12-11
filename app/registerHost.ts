@@ -12,8 +12,9 @@ import {executeSql} from "./admin/api/executeSql";
 import {SchemaTable} from "./schema/table/SchemaTable";
 import {SchemaObject} from "./schema/SchemaObject";
 
-
 export function registerHost() {
+
+    (window as any).CONST = require("numeric-constants");
 
     (window as any).buhta = {
         appState: appState,
