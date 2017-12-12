@@ -31,9 +31,9 @@ class Test extends buhta.test.BaseTest {
     //     return "ok"
     // }
 
-    // async test2() {
-    //     throw "ошибка 6786";
-    // }
+    async test2() {
+        throw "ошибка 6786";
+    }
     //
     // async _after(){
     //     return "аqweeqwга!"

@@ -15,10 +15,8 @@ import {ITreeGridSource, TreeGrid} from "../ui/TreeGrid";
 import {TreeGridColumn} from "../ui/TreeGridColumn";
 import {loadTests} from "./api/loadTests";
 import {FlexVPanel} from "../ui/FlexVPanel";
-import {sleep} from "../utils/sleep";
 import {loadTestFile} from "./api/loadTestFile";
 import {babelTransform} from "../utils/babelTransform";
-import {BaseTest} from "../test/BaseTest";
 import {isFunction} from "util";
 
 declare var $$BuhtaTestClassForRun: any;
@@ -84,6 +82,13 @@ export class TestsExplorerWindow extends React.Component<any> {
             this.forceUpdate();
         }
 
+        $(this.resultPanel).scrollTop($(this.resultPanel)[0].scrollHeight);
+    }
+
+    resultPanel: HTMLElement;
+
+    componentDidUpdate() {
+        $(this.resultPanel).scrollTop($(this.resultPanel)[0].scrollHeight);
     }
 
     async handleOpenObjectDesigner(objectFileName: string) {
@@ -138,8 +143,11 @@ export class TestsExplorerWindow extends React.Component<any> {
         }[]
     }[] = [];
 
+    totalErrorCount: number | null = null;
+
     async runTests() {
         console.log("this.treeGrid.getCheckedRows--------------------------->", this.treeGrid.getCheckedRows());
+        this.totalErrorCount = null;
         this.testedItems = [];
         for (let item of this.treeGrid.getCheckedRows()) {
             let testedItem: any = {
@@ -193,6 +201,9 @@ export class TestsExplorerWindow extends React.Component<any> {
                         }
                         catch (e) {
                             console.error(e);
+                            if (this.totalErrorCount === null)
+                                this.totalErrorCount = 0;
+                            this.totalErrorCount++;
                             subItem.result = "error";
                             subItem.message = e.message || e.toString();
                             testedItem.result = "error";
@@ -212,6 +223,10 @@ export class TestsExplorerWindow extends React.Component<any> {
             }
             this.forceUpdate();
         }
+        if (this.totalErrorCount === null)
+            this.totalErrorCount = 0;
+        this.forceUpdate();
+
     }
 
     render() {
@@ -265,12 +280,14 @@ export class TestsExplorerWindow extends React.Component<any> {
                               style={{height: 150, padding: 5, paddingTop: 0, justifyContent: "flex-end"}}>
 
                         <div
+                            ref={(e) => this.resultPanel = e!}
                             style={{
                                 overflow: "auto",
                                 padding: 5,
                                 border: config.border,
                                 height: "100%",
-                                width: "100%"
+                                width: "100%",
+                                background: this.totalErrorCount! > 0 ? "#fdebeb" : "white"
                             }}>
                             {this.testedItems.map((item) => {
                                 return (
@@ -338,6 +355,18 @@ export class TestsExplorerWindow extends React.Component<any> {
                                         }
                                     </div>);
                             })}
+                            {(() => {
+                                if (this.totalErrorCount === null)
+                                    return null;
+                                else if (this.totalErrorCount > 0) {
+                                    return <div style={{fontWeight: "bold", margin: 10, color: "red"}}>
+                                        Ошибок: {this.totalErrorCount}</div>
+                                }
+                                else
+                                    return <div style={{fontWeight: "bold", margin: 10, color: "green"}}>Ошибок
+                                        нет</div>;
+                            })()}
+
                         </div>
 
                     </FlexItem>
