@@ -88,6 +88,12 @@ class Test extends buhta.test.BaseTest {
                         unsigned: true
                     },
                 },
+                {
+                    name: "guid",
+                    dataType: {
+                        id: "Guid"
+                    },
+                },
 
             ]
         };
@@ -106,6 +112,7 @@ class Test extends buhta.test.BaseTest {
             uint32: 0,
             int64: CONST.MIN_SAFE_INTEGER_FLOAT64,
             uint64: 0,
+            guid:"00000000-0000-0000-0000-000000000000"
 
         }
     }
@@ -122,7 +129,7 @@ class Test extends buhta.test.BaseTest {
             uint32: null,
             int64: null,
             uint64: null,
-
+            guid: null,
         }
     }
 
@@ -138,6 +145,7 @@ class Test extends buhta.test.BaseTest {
             uint32: CONST.MAX_UINT32,
             int64: CONST.MAX_SAFE_INTEGER_FLOAT64,
             uint64: CONST.MAX_SAFE_INTEGER_FLOAT64,
+            guid:"ffffffff-ffff-ffff-ffff-ffffffffffff"
         }
     }
 

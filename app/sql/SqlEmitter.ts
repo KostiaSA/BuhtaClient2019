@@ -129,6 +129,17 @@ export class SqlEmitter {
         }
     }
 
+
+    uuidToBytes(uuid:string) {
+        let bytes:any[] = [];
+        uuid.replace(/[a-fA-F0-9]{2}/g, function(hex) {
+            bytes.push(parseInt(hex, 16));
+            return "fake";
+        });
+
+        return bytes;
+    }
+
     emit_GUID(value: string): string {
 
         if (this.dialect === "mssql")
@@ -136,7 +147,7 @@ export class SqlEmitter {
         else if (this.dialect === "postgres")
             return "UUID '" + value + "'";
         else if (this.dialect === "mysql")
-            return "convert(" + this.mysql_guid_to_str((uuid as any).parse(value)) + ",binary(16))";
+            return "convert(" + this.mysql_guid_to_str(this.uuidToBytes(value)) + ",binary(16))";
         else {
             let msg = "invalid sql dialect " + this.dialect;
             console.error(msg);

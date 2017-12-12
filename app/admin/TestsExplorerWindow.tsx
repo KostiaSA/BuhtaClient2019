@@ -21,6 +21,7 @@ import {isFunction} from "util";
 
 declare var $$BuhtaTestClassForRun: any;
 
+// todo задизаблить баттоны на время тестов
 export class TestsExplorerWindow extends React.Component<any> {
 
     window: Window;

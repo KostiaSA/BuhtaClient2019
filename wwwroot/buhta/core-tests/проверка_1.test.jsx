@@ -11,7 +11,7 @@ class Test extends buhta.test.BaseTest {
     }
 
     async test2() {
-        throw "ошибка ужасная 6786";
+        //throw "ошибка ужасная 6786";
     }
 
 }
