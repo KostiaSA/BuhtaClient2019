@@ -24,8 +24,11 @@ export class SchemaObject<T extends ISchemaObjectProps=ISchemaObjectProps> {
             fileName += ".json";
 
         let words = fileName.split(".");
-        if (words.length < 3)
-            throw "неверное имя файла объекта: '" + fileName + "'";
+        if (words.length < 3) {
+            let msg="неверное имя файла объекта: '" + fileName + "'";
+            console.error(msg);
+            throw msg;
+        }
         words.pop();
         return words.pop()!;
 

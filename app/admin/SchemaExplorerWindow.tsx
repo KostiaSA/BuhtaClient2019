@@ -48,26 +48,33 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
 
         let style: CSSProperties = {};
 
-        if (item.items) {
+        if (item.isFolder) {
             itemStr = item.name;
             item.expanded = true;
             item.icon = "vendor/fugue/folder-horizontal.png";
-            item.items.forEach(((child: any) => this.preprocessDataSource(child, level + 1, item.fileName)));
+            if (item.items)
+                item.items.forEach(((child: any) => this.preprocessDataSource(child, level + 1, item.fileName)));
             item.objectType = "folder";
             style.fontWeight = "bold";
             style.color = "#505050eb";
         }
         else {
 
-            //item.objectType = itemStr.split(".").pop();
-            item.objectType = SchemaObject.getObjectTypeFromFileName(item.name);
+            if (item.name.endsWith(".test.jsx")){
+                item.icon = "vendor/fugue/fruit-lime.png";
+                itemStr = item.name;
+            }
+            else {
+                //item.objectType = itemStr.split(".").pop();
+                item.objectType = SchemaObject.getObjectTypeFromFileName(item.name);
 
-            if (item.objectType && appState.schemaObjectTypes[item.objectType])
-                item.icon = appState.schemaObjectTypes[item.objectType].icon;
+                if (item.objectType && appState.schemaObjectTypes[item.objectType])
+                    item.icon = appState.schemaObjectTypes[item.objectType].icon;
 
-            // убираем .json
-            if (item.name.endsWith(".json"))
-                itemStr = item.name.slice(0, -5);
+                // убираем .json
+                if (item.name.endsWith(".json"))
+                    itemStr = item.name.slice(0, -5);
+            }
         }
 
 
