@@ -5,6 +5,7 @@ import {NumberInput} from "../../../ui/inputs/NumberInput";
 import {config} from "../../../config";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isStringOrNull} from "../../../utils/isStringOrNull";
+import {isString} from "../../../utils/isString";
 
 declare let TextEncoder: any;
 
@@ -73,20 +74,27 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
     }
 
     emitColumnDataType(dialect: SqlDialect, col: IStringSqlDataTypeProps): string {
+        let maxLen: any = col.maxLen;
+        if (isString(maxLen))
+            maxLen = parseInt(maxLen);
+
         if (dialect === "mssql") {
-            if (!col.maxLen || col.maxLen <= 0)
+            if (!maxLen || maxLen <= 0)
                 return (`NVARCHAR(MAX)`);
             else
-                return (`NVARCHAR(${col.maxLen})`);
+                return (`NVARCHAR(${maxLen})`);
         }
         else if (dialect === "postgres") {
-            if (!col.maxLen || col.maxLen <= 0)
+            if (!maxLen || maxLen <= 0)
                 return (`TEXT`);
             else
-                return (`VARCHAR(${col.maxLen})`);
+                return (`VARCHAR(${maxLen})`);
         }
         else if (dialect === "mysql") {
-            return (`VARCHAR(${col.maxLen})`);
+            if (!maxLen || maxLen <= 0)
+                return (`LONGTEXT`);
+            else
+                return (`VARCHAR(${maxLen})`);
         }
         else {
             let msg = "StringSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";

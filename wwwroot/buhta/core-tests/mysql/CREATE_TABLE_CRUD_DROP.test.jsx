@@ -22,10 +22,17 @@ class Test extends buhta.test.BaseTest {
                     },
                 },
                 {
-                    name: "string500",
+                    name: "string4000",
                     dataType: {
                         id: "String",
-                        maxLen: "500"
+                        maxLen: "4000"
+                    },
+                },
+                {
+                    name: "stringMax",
+                    dataType: {
+                        id: "String",
+                        maxLen: 0
                     },
                 },
                 {
@@ -256,7 +263,8 @@ class Test extends buhta.test.BaseTest {
     _getMinRow() {
         return {
             id: -1,
-            string500: "",
+            string4000: "",
+            stringMax: "",
             int8: CONST.MIN_INT8,
             uint8: 0,
             int16: CONST.MIN_INT16,
@@ -295,7 +303,8 @@ class Test extends buhta.test.BaseTest {
     _getNullRow() {
         return {
             id: 0,
-            string500: null,
+            string4000: null,
+            stringMax: null,
             int8: null,
             uint8: null,
             int16: null,
@@ -333,7 +342,8 @@ class Test extends buhta.test.BaseTest {
     _getMaxRow() {
         return {
             id: 1,
-            string500: "Я".repeat(500),
+            string4000: "Я".repeat(4000),
+            stringMax: "Ямай首頁>所有分類ка1238".repeat(100000),
             int8: CONST.MAX_INT8,
             uint8: CONST.MAX_UINT8,
             int16: CONST.MAX_INT16,
@@ -367,7 +377,7 @@ class Test extends buhta.test.BaseTest {
             decimal_9_7: buhta.config.sql.maxDecimal["9,7"],
         }
     }
-
+ы
     async create_table() {
         let sql = this._getSchemaTable().emitCreateTableSql(this._getDialect());
         await this._executeSql(sql);
@@ -414,7 +424,7 @@ class Test extends buhta.test.BaseTest {
 
     async update_max_row() {
         let newRow = this._getMaxRow();
-        newRow.string500 = null;
+        newRow.string4000 = null;
         newRow.int16 = null;
         newRow.int32 = -508983;
         let sql = this._getSchemaTable().emitUpdateRowSql(this._getDialect(), newRow);
