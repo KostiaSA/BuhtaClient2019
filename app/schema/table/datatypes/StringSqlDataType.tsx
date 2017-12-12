@@ -85,10 +85,9 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
             else
                 return (`VARCHAR(${col.maxLen})`);
         }
-        // else if (e.dialect === "postgres")
-        //     this.emitColumnDataTypePg(col, e);
-        // else if (e.dialect === "mysql")
-        //     this.emitColumnDataTypeMySql(col, e);
+        else if (dialect === "mysql") {
+            return (`VARCHAR(${col.maxLen})`);
+        }
         else {
             let msg = "StringSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
             console.error(msg);
