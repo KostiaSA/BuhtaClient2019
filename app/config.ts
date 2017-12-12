@@ -1,3 +1,5 @@
+import * as moment from "moment";
+
 export let config: any = {
     theme: "buhta",
     border: "1px solid #d4d4d4",
@@ -73,7 +75,10 @@ export let config: any = {
             "16,12": 6999.999999999999,
             "16,13": 699.9999999999999,
             "16,14": 69.99999999999999,
-        }
+        },
+        minDate: moment([1, 1, 1]),
+        maxDate: moment([9999, 12, 31])
+
     },
     grid: {
         rowsHeight: 22

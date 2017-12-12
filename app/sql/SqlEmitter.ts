@@ -1,5 +1,6 @@
 import * as uuid from "uuid";
 import * as moment from "moment";
+import {Moment} from "moment";
 
 export type SqlDialect = "mssql" | "postgres" | "mysql";
 
@@ -171,14 +172,14 @@ export class SqlEmitter {
 
     }
 
-    emit_DATE(value: Date): string {
+    emit_DATE(value: Moment): string {
         if (this.dialect === "mssql")
-            return "CONVERT(DATE,'" + moment(value).format("YYYYMMDD") + "')";
+            return "CONVERT(DATE,'" + value.format("YYYYMMDD") + "')";
         else if (this.dialect === "postgres")
-            return "TIMESTAMP(3)'" + moment(value).format("YYYY-MM-DD") + "'";
+            return "TIMESTAMP(3)'" + value.format("YYYY-MM-DD") + "'";
         else if (this.dialect === "mysql")
         // timezone не воспринимает
-            return "STR_TO_DATE('" + moment(value).format("YYYY-MM-DD") + "','%Y-%c-%d')";
+            return "STR_TO_DATE('" + value.format("YYYY-MM-DD") + "','%Y-%c-%d')";
         else {
             let msg = "invalid sql dialect " + this.dialect;
             console.error(msg);
