@@ -94,6 +94,159 @@ class Test extends buhta.test.BaseTest {
                         id: "Guid"
                     },
                 },
+                {
+                    name: "money",
+                    dataType: {
+                        id: "Money"
+                    },
+                },
+                {
+                    name: "decimal_16_1",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,1"
+                    },
+                },
+                {
+                    name: "decimal_16_2",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,2"
+                    },
+                },
+                {
+                    name: "decimal_16_3",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,3"
+                    },
+                },
+                {
+                    name: "decimal_16_4",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,4"
+                    },
+                },
+                {
+                    name: "decimal_16_5",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,5"
+                    },
+                },
+                {
+                    name: "decimal_16_6",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,6"
+                    },
+                },
+                {
+                    name: "decimal_16_7",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,7"
+                    },
+                },
+                {
+                    name: "decimal_16_8",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,8"
+                    },
+                },
+                {
+                    name: "decimal_16_9",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,9"
+                    },
+                },
+                {
+                    name: "decimal_16_10",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,10"
+                    },
+                },
+                {
+                    name: "decimal_16_11",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,11"
+                    },
+                },
+                {
+                    name: "decimal_16_12",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,12"
+                    },
+                },
+                {
+                    name: "decimal_16_13",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,13"
+                    },
+                },
+                {
+                    name: "decimal_16_14",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "16,14"
+                    },
+                },
+                {
+                    name: "decimal_9_1",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "9,1"
+                    },
+                },
+                {
+                    name: "decimal_9_2",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "9,2"
+                    },
+                },
+                {
+                    name: "decimal_9_3",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "9,3"
+                    },
+                },
+                {
+                    name: "decimal_9_4",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "9,4"
+                    },
+                },
+                {
+                    name: "decimal_9_5",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "9,5"
+                    },
+                },
+                {
+                    name: "decimal_9_6",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "9,6"
+                    },
+                },
+                {
+                    name: "decimal_9_7",
+                    dataType: {
+                        id: "Decimal",
+                        scale: "9,7"
+                    },
+                },
 
             ]
         };
@@ -112,7 +265,29 @@ class Test extends buhta.test.BaseTest {
             uint32: 0,
             int64: CONST.MIN_SAFE_INTEGER_FLOAT64,
             uint64: 0,
-            guid:"00000000-0000-0000-0000-000000000000"
+            guid: "00000000-0000-0000-0000-000000000000",
+            money: buhta.config.sql.minMoneyValue,
+            decimal_16_1: -buhta.config.sql.maxDecimal["16,1"],
+            decimal_16_2: -buhta.config.sql.maxDecimal["16,2"],
+            decimal_16_3: -buhta.config.sql.maxDecimal["16,3"],
+            decimal_16_4: -buhta.config.sql.maxDecimal["16,4"],
+            decimal_16_5: -buhta.config.sql.maxDecimal["16,5"],
+            decimal_16_6: -buhta.config.sql.maxDecimal["16,6"],
+            decimal_16_7: -buhta.config.sql.maxDecimal["16,7"],
+            decimal_16_8: -buhta.config.sql.maxDecimal["16,8"],
+            decimal_16_9: -buhta.config.sql.maxDecimal["16,9"],
+            decimal_16_10: -buhta.config.sql.maxDecimal["16,10"],
+            decimal_16_11: -buhta.config.sql.maxDecimal["16,11"],
+            decimal_16_12: -buhta.config.sql.maxDecimal["16,12"],
+            decimal_16_13: -buhta.config.sql.maxDecimal["16,13"],
+            decimal_16_14: -buhta.config.sql.maxDecimal["16,14"],
+            decimal_9_1: -buhta.config.sql.maxDecimal["9,1"],
+            decimal_9_2: -buhta.config.sql.maxDecimal["9,2"],
+            decimal_9_3: -buhta.config.sql.maxDecimal["9,3"],
+            decimal_9_4: -buhta.config.sql.maxDecimal["9,4"],
+            decimal_9_5: -buhta.config.sql.maxDecimal["9,5"],
+            decimal_9_6: -buhta.config.sql.maxDecimal["9,6"],
+            decimal_9_7: -buhta.config.sql.maxDecimal["9,7"],
 
         }
     }
@@ -130,6 +305,28 @@ class Test extends buhta.test.BaseTest {
             int64: null,
             uint64: null,
             guid: null,
+            money: null,
+            decimal_16_1: null,
+            decimal_16_2: null,
+            decimal_16_3: null,
+            decimal_16_4: null,
+            decimal_16_5: null,
+            decimal_16_6: null,
+            decimal_16_7: null,
+            decimal_16_8: null,
+            decimal_16_9: null,
+            decimal_16_10: null,
+            decimal_16_11: null,
+            decimal_16_12: null,
+            decimal_16_13: null,
+            decimal_16_14: null,
+            decimal_9_1: null,
+            decimal_9_2: null,
+            decimal_9_3: null,
+            decimal_9_4: null,
+            decimal_9_5: null,
+            decimal_9_6: null,
+            decimal_9_7: null,
         }
     }
 
@@ -145,7 +342,29 @@ class Test extends buhta.test.BaseTest {
             uint32: CONST.MAX_UINT32,
             int64: CONST.MAX_SAFE_INTEGER_FLOAT64,
             uint64: CONST.MAX_SAFE_INTEGER_FLOAT64,
-            guid:"ffffffff-ffff-ffff-ffff-ffffffffffff"
+            guid: "ffffffff-ffff-ffff-ffff-ffffffffffff",
+            money: buhta.config.sql.maxMoneyValue,
+            decimal_16_1: buhta.config.sql.maxDecimal["16,1"],
+            decimal_16_2: buhta.config.sql.maxDecimal["16,2"],
+            decimal_16_3: buhta.config.sql.maxDecimal["16,3"],
+            decimal_16_4: buhta.config.sql.maxDecimal["16,4"],
+            decimal_16_5: buhta.config.sql.maxDecimal["16,5"],
+            decimal_16_6: buhta.config.sql.maxDecimal["16,6"],
+            decimal_16_7: buhta.config.sql.maxDecimal["16,7"],
+            decimal_16_8: buhta.config.sql.maxDecimal["16,8"],
+            decimal_16_9: buhta.config.sql.maxDecimal["16,9"],
+            decimal_16_10: buhta.config.sql.maxDecimal["16,10"],
+            decimal_16_11: buhta.config.sql.maxDecimal["16,11"],
+            decimal_16_12: buhta.config.sql.maxDecimal["16,12"],
+            decimal_16_13: buhta.config.sql.maxDecimal["16,13"],
+            decimal_16_14: buhta.config.sql.maxDecimal["16,14"],
+            decimal_9_1: buhta.config.sql.maxDecimal["9,1"],
+            decimal_9_2: buhta.config.sql.maxDecimal["9,2"],
+            decimal_9_3: buhta.config.sql.maxDecimal["9,3"],
+            decimal_9_4: buhta.config.sql.maxDecimal["9,4"],
+            decimal_9_5: buhta.config.sql.maxDecimal["9,5"],
+            decimal_9_6: buhta.config.sql.maxDecimal["9,6"],
+            decimal_9_7: buhta.config.sql.maxDecimal["9,7"],
         }
     }
 
