@@ -49,6 +49,8 @@ export let config: any = {
         maxIdentifierLength: 127,
         maxStringLength: 4096,
         maxColumnsInTable: 4096,
+        maxMoneyValue: (Number.MAX_SAFE_INTEGER - 1) / 100,
+        minMoneyValue: (Number.MIN_SAFE_INTEGER + 1) / 100
     },
     grid: {
         rowsHeight: 22

@@ -94,6 +94,12 @@ class Test extends buhta.test.BaseTest {
                         id: "Guid"
                     },
                 },
+                {
+                    name: "money",
+                    dataType: {
+                        id: "Money"
+                    },
+                },
 
             ]
         };
@@ -112,7 +118,8 @@ class Test extends buhta.test.BaseTest {
             uint32: 0,
             int64: CONST.MIN_SAFE_INTEGER_FLOAT64,
             uint64: 0,
-            guid:"00000000-0000-0000-0000-000000000000"
+            guid:"00000000-0000-0000-0000-000000000000",
+            money:buhta.config.sql.minMoneyValue
 
         }
     }
@@ -145,7 +152,8 @@ class Test extends buhta.test.BaseTest {
             uint32: CONST.MAX_UINT32,
             int64: CONST.MAX_SAFE_INTEGER_FLOAT64,
             uint64: CONST.MAX_SAFE_INTEGER_FLOAT64,
-            guid:"ffffffff-ffff-ffff-ffff-ffffffffffff"
+            guid:"ffffffff-ffff-ffff-ffff-ffffffffffff",
+            money:buhta.config.sql.minMoneyValue
         }
     }
 
