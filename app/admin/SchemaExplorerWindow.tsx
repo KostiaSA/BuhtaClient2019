@@ -11,7 +11,7 @@ import {loadSchemaTree} from "./api/loadSchemaTree";
 import {appState} from "../AppState";
 import {getErrorWindow} from "../ui/modals/showError";
 import {SchemaObject} from "../schema/SchemaObject";
-import {config} from "../const/config";
+import {config} from "../config";
 import {Button} from "../ui/Button";
 import {MenuItem} from "../ui/MenuItem";
 import {Menu} from "../ui/Menu";

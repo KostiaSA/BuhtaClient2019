@@ -6,7 +6,7 @@ import {FlexItem} from "../FlexItem";
 import {FlexHPanel} from "../FlexHPanel";
 import {Keycode} from "../../utils/Keycode";
 import {isString} from "util";
-import {config} from "../../const/config";
+import {config} from "../../config";
 import {getTextWidth} from "../../utils/getTextWidth";
 
 export function getErrorWindow(message: any, title: string = "Ошибка"): React.ReactElement<any> {

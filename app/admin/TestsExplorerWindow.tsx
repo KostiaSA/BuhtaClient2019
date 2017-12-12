@@ -5,7 +5,7 @@ import {omit} from "../utils/omit";
 import {FlexHPanel} from "../ui/FlexHPanel";
 import {FlexItem} from "../ui/FlexItem";
 import {getErrorWindow} from "../ui/modals/showError";
-import {config} from "../const/config";
+import {config} from "../config";
 import {Button} from "../ui/Button";
 import {MenuItem} from "../ui/MenuItem";
 import {Menu} from "../ui/Menu";

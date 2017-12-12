@@ -137,6 +137,7 @@ class Test extends buhta.test.BaseTest {
             int64: null,
             uint64: null,
             guid: null,
+            money:null
         }
     }
 
@@ -153,7 +154,7 @@ class Test extends buhta.test.BaseTest {
             int64: CONST.MAX_SAFE_INTEGER_FLOAT64,
             uint64: CONST.MAX_SAFE_INTEGER_FLOAT64,
             guid:"ffffffff-ffff-ffff-ffff-ffffffffffff",
-            money:buhta.config.sql.minMoneyValue
+            money:buhta.config.sql.maxMoneyValue
         }
     }
 
@@ -198,6 +199,7 @@ class Test extends buhta.test.BaseTest {
         let res = await this._executeSql(sql);
         assert.equal(res[0].rows.length, 1);
         let row = res[0].rows[0];
+        debugger
         assert.deepEqual(row, this._getMaxRow());
     }
 

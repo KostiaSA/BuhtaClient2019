@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {NumberInput} from "../../../ui/inputs/NumberInput";
-import {config} from "../../../const/config";
+import {config} from "../../../config";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isStringOrNull} from "../../../utils/isStringOrNull";
 

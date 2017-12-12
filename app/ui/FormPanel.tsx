@@ -4,7 +4,7 @@ import * as Joi from "joi";
 import {Component, IComponentProps} from "./Component";
 import {clone, equals} from "ejson";
 import {reassignObject} from "../utils/reassignObject";
-import {config} from "../const/config";
+import {config} from "../config";
 
 
 export interface IFormPanelProps extends IComponentProps {

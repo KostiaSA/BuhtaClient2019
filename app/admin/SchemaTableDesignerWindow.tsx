@@ -21,7 +21,7 @@ import {ISchemaTableColumnProps, ISchemaTableProps, SchemaTable} from "../schema
 import {appState} from "../AppState";
 import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
 import {getConfirmation} from "../ui/modals/getConfirmation";
-import {config} from "../const/config";
+import {config} from "../config";
 import {joiValidate} from "../validation/joiValidate";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
 

@@ -4,7 +4,7 @@ import {ISchemaObjectProps, SchemaObject} from "../SchemaObject";
 import {IBaseSqlDataTypeProps} from "./datatypes/BaseSqlDataType";
 import {joiRus} from "../../i18n/joiRus";
 import {appState} from "../../AppState";
-import {config} from "../../const/config";
+import {config} from "../../config";
 import {SchemaTableDesignerWindow} from "../../admin/SchemaTableDesignerWindow";
 import {SqlBatch, SqlDialect, SqlEmitter} from "../../sql/SqlEmitter";
 import {isArray} from "../../utils/isArray";

@@ -1,4 +1,4 @@
-import {config} from "./const/config";
+import {config} from "./config";
 import {appState} from "./AppState";
 import {BaseTest} from "./test/BaseTest";
 import {FormPanel} from "./ui/FormPanel";
@@ -29,9 +29,7 @@ export function registerHost() {
         test: {
             BaseTest: BaseTest
         },
-        const: {
-            config: config,
-        },
+        config: config,
         schema: {
             SchemaObject: SchemaObject,
             SchemaTable: SchemaTable,

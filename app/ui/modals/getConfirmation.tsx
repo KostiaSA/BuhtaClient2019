@@ -5,7 +5,7 @@ import {Button} from "../Button";
 import {FlexItem} from "../FlexItem";
 import {FlexHPanel} from "../FlexHPanel";
 import {Keycode} from "../../utils/Keycode";
-import {config} from "../../const/config";
+import {config} from "../../config";
 import {getTextWidth} from "../../utils/getTextWidth";
 import {isString} from "util";
 

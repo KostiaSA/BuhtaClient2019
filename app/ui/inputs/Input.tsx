@@ -5,7 +5,7 @@ import {omit} from "../../utils/omit";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {objectPathSet} from "../../utils/objectPathSet";
 import {BaseInput, IBaseInputProps} from "./BaseInput";
-import {config} from "../../const/config";
+import {config} from "../../config";
 import {storageGet} from "../../storage/storageGet";
 import {storageSet} from "../../storage/storageSet";
 

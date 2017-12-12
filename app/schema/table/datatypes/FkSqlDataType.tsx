@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
-import {config} from "../../../const/config";
+import {config} from "../../../config";
 import {ComboBox} from "../../../ui/inputs/ComboBox";
 import {ISchemaTree, loadSchemaTree} from "../../../admin/api/loadSchemaTree";
 import {removeJsonExt} from "../../../utils/removeJsonExt";

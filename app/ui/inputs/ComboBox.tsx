@@ -5,7 +5,7 @@ import {isFunction} from "util";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {objectPathSet} from "../../utils/objectPathSet";
 import {BaseInput, IBaseInputProps} from "./BaseInput";
-import {config} from "../../const/config";
+import {config} from "../../config";
 import {storageSet} from "../../storage/storageSet";
 import {storageGet} from "../../storage/storageGet";
 

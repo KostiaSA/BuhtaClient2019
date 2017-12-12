@@ -1,5 +1,5 @@
 
-import {config} from "../const/config";
+import {config} from "../config";
 
 let canvas: any;
 

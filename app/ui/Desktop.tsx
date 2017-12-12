@@ -11,7 +11,7 @@ import {SchemaExplorerWindow} from "../admin/SchemaExplorerWindow";
 import {getSHA1hex} from "../utils/getSHA1hex";
 import {Menu} from "./Menu";
 import {MenuItem} from "./MenuItem";
-import {config} from "../const/config";
+import {config} from "../config";
 import {MenuSeparator} from "./MenuSeparator";
 import {TestsExplorerWindow} from "../admin/TestsExplorerWindow";
 

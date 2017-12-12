@@ -5,7 +5,7 @@ import {ValidationError} from "joi";
 import {Component, IComponentProps} from "../Component";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {stringify} from "ejson";
-import {config} from "../../const/config";
+import {config} from "../../config";
 import {joiValidate} from "../../validation/joiValidate";
 
 

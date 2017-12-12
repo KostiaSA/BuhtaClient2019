@@ -12,7 +12,7 @@ import {ISchemaTableColumnProps, ISchemaTableProps, SchemaTable} from "../schema
 import {ComboBox} from "../ui/inputs/ComboBox";
 import {appState} from "../AppState";
 import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
-import {config} from "../const/config";
+import {config} from "../config";
 import {showError} from "../ui/modals/showError";
 import {joiValidate} from "../validation/joiValidate";
 import {getConfirmation} from "../ui/modals/getConfirmation";

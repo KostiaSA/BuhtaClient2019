@@ -5,7 +5,7 @@ import {omit} from "../utils/omit";
 import {GridColumn, IGridColumnProps} from "./GridColumn";
 import {Keycode} from "../utils/Keycode";
 import {escapeHtml} from "../utils/escapeHtml";
-import {config} from "../const/config";
+import {config} from "../config";
 
 
 export interface IGridProps extends IComponentProps {

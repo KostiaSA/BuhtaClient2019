@@ -2,7 +2,7 @@ import * as React from "react";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isMoneyOrNull} from "../../../utils/isMoneyOrNull";
-import {config} from "../../../const/config";
+import {config} from "../../../config";
 
 declare let TextEncoder: any;
 

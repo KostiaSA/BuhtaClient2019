@@ -2,7 +2,7 @@ import * as  React from "react";
 import * as  ReactDOM from "react-dom";
 import {Desktop} from "./ui/Desktop";
 import {appState} from "./AppState";
-import {config} from "./const/config";
+import {config} from "./config";
 import {registerHost} from "./registerHost";
 
 async function start() {
