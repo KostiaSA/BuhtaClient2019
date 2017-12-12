@@ -49,15 +49,15 @@
     }, {
         "name": "Мощность",
         "dataType": {
-            "id": "Integer",
-            "size": "64"
+            "id": "Decimal",
+            "scale": "16,4"
         },
         "description": "pos 7"
     }, {
         "name": "Номер",
         "dataType": {
-            "id": "Integer",
-            "size": "32"
+            "id": "Decimal",
+            "scale": "9,2"
         },
         "description": "pos 8"
     }, {
