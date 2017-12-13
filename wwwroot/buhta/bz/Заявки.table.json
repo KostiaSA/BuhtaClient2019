@@ -49,8 +49,7 @@
     }, {
         "name": "Мощность",
         "dataType": {
-            "id": "Decimal",
-            "scale": "16,4"
+            "id": "DateTime"
         },
         "description": "pos 7"
     }, {
@@ -80,5 +79,9 @@
     "pic": "<<<<BufferArray>C29BED81-7842-41FF-8D04-BAC2CC6C62B3^B",
     "date1": {
         "$date": 1513109005545
-    }
+    },
+    "createdBy": "Иванов17-20",
+    "createdDate": "<Date>2017-12-13 18:56:48.794",
+    "changedBy": "Иванов17-20",
+    "changedDate": "<Date>2017-12-13 18:56:48.794"
 }

@@ -6,6 +6,7 @@ import {GuidSqlDataType} from "./GuidSqlDataType";
 import {MoneySqlDataType} from "./MoneySqlDataType";
 import {DecimalSqlDataType} from "./DecimalSqlDataType";
 import {DateSqlDataType} from "./DateSqlDataType";
+import {DateTimeSqlDataType} from "./DateTimeSqlDataType";
 
 export function registerSqlDataTypes(){
     appState.sqlDataTypes[IntegerSqlDataType.id] = new IntegerSqlDataType();
@@ -15,5 +16,6 @@ export function registerSqlDataTypes(){
     appState.sqlDataTypes[MoneySqlDataType.id] = new MoneySqlDataType();
     appState.sqlDataTypes[DecimalSqlDataType.id] = new DecimalSqlDataType();
     appState.sqlDataTypes[DateSqlDataType.id] = new DateSqlDataType();
+    appState.sqlDataTypes[DateTimeSqlDataType.id] = new DateTimeSqlDataType();
 
 }

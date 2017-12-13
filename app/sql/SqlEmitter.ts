@@ -156,14 +156,14 @@ export class SqlEmitter {
         }
     }
 
-    emit_DATETIME(value: Date): string {
+    emit_DATETIME(value: Moment): string {
         if (this.dialect === "mssql")
-            return "CONVERT(DATETIME2,'" + moment(value).format("YYYYMMDD HH:mm:ss.SSS") + "')";
+            return "CONVERT(DATETIME2,'" + value.format("YYYYMMDD HH:mm:ss.SSS") + "')";
         else if (this.dialect === "postgres")
-            return "TIMESTAMP(3)'" + moment(value).format("YYYY-MM-DD HH:mm:ss.SSS") + "'";
+            return "TIMESTAMP(3)'" + value.format("YYYY-MM-DD HH:mm:ss.SSS") + "'";
         else if (this.dialect === "mysql")
         // timezone не воспринимает
-            return "STR_TO_DATE('" + moment(value).format("YYYY-MM-DD HH:mm:ss.SSS") + "','%Y-%c-%d %k:%i:%s.%f')";
+            return "STR_TO_DATE('" + value.format("YYYY-MM-DD HH:mm:ss.SSS") + "','%Y-%c-%d %k:%i:%s.%f')";
         else {
             let msg = "invalid sql dialect " + this.dialect;
             console.error(msg);

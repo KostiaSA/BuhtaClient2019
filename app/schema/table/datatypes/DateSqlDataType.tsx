@@ -50,7 +50,7 @@ export class DateSqlDataType extends BaseSqlDataType<IDateSqlDataTypeProps> {
             return new SqlEmitter(dialect).emit_NULL();
 
         if (date.isBefore(config.sql.minDate) || date.isAfter(config.sql.maxDate))
-            throw  "значение даты должно быть в пределах '1 янв 0001 г' и '31 дек 9999 г'";
+            throw  "значение даты должно быть в пределах '2 янв 0001 г' и '31 дек 9999 г'";
 
 
         return new SqlEmitter(dialect).emit_DATE(date);

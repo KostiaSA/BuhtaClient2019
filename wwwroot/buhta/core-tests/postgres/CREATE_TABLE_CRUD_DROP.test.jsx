@@ -260,6 +260,12 @@ class Test extends buhta.test.BaseTest {
                         id: "Date",
                     },
                 },
+                {
+                    name: "dateTime",
+                    dataType: {
+                        id: "DateTime",
+                    },
+                },
 
             ]
         };
@@ -302,7 +308,8 @@ class Test extends buhta.test.BaseTest {
             decimal_9_5: -buhta.config.sql.maxDecimal["9,5"],
             decimal_9_6: -buhta.config.sql.maxDecimal["9,6"],
             decimal_9_7: -buhta.config.sql.maxDecimal["9,7"],
-            date:moment("0001-01-02"),
+            date: buhta.config.sql.minDate,
+            dateTime: buhta.config.sql.minDateTime,
 
         }
     }
@@ -343,8 +350,8 @@ class Test extends buhta.test.BaseTest {
             decimal_9_5: null,
             decimal_9_6: null,
             decimal_9_7: null,
-            date:null,
-
+            date: null,
+            dateTime: null,
         }
     }
 
@@ -384,7 +391,8 @@ class Test extends buhta.test.BaseTest {
             decimal_9_5: buhta.config.sql.maxDecimal["9,5"],
             decimal_9_6: buhta.config.sql.maxDecimal["9,6"],
             decimal_9_7: buhta.config.sql.maxDecimal["9,7"],
-            date:moment("9999-12-31"),
+            date: buhta.config.sql.maxDate,
+            dateTime: buhta.config.sql.maxDateTime,
 
         }
     }
