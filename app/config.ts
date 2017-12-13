@@ -76,8 +76,8 @@ export let config: any = {
             "16,13": 699.9999999999999,
             "16,14": 69.99999999999999,
         },
-        minDate: moment([1, 1, 1]),
-        maxDate: moment([9999, 12, 31])
+        minDate: moment("0001-01-02"),
+        maxDate: moment("9999-12-31")
 
     },
     grid: {
