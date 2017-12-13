@@ -62,8 +62,7 @@
     }, {
         "name": "Код вида ТС",
         "dataType": {
-            "id": "String",
-            "maxLen": "108"
+            "id": "Blob"
         },
         "description": "pos 9"
     }, {
@@ -83,5 +82,5 @@
     "createdBy": "Иванов17-20",
     "createdDate": "<Date>2017-12-13 18:56:48.794",
     "changedBy": "Иванов17-20",
-    "changedDate": "<Date>2017-12-13 18:56:48.794"
+    "changedDate": "<Date>2017-12-13 19:31:01.997"
 }

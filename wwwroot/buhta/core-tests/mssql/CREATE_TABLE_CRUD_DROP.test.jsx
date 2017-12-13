@@ -266,6 +266,12 @@ class Test extends buhta.test.BaseTest {
                         id: "DateTime",
                     },
                 },
+                {
+                    name: "blob",
+                    dataType: {
+                        id: "Blob",
+                    },
+                },
 
             ]
         };
@@ -310,6 +316,7 @@ class Test extends buhta.test.BaseTest {
             decimal_9_7: -buhta.config.sql.maxDecimal["9,7"],
             date: buhta.config.sql.minDate,
             dateTime: buhta.config.sql.minDateTime,
+            blob:new Uint8Array(0).buffer
 
         }
     }
@@ -352,10 +359,20 @@ class Test extends buhta.test.BaseTest {
             decimal_9_7: null,
             date: null,
             dateTime: null,
+            blob:null
+
         }
     }
 
+
     _getMaxRow() {
+        if (!this.blob_array) {
+            this.blob_array = new Uint8Array(100);
+            crypto.getRandomValues(this.blob_array);
+            console.log("**************************000000000000000000000000000000000*****************************************");
+            console.log(btoa(new Uint8Array(this.blob_array.buffer)));
+        }
+
         return {
             id: 1,
             string4000: "Я".repeat(4000),
@@ -393,7 +410,7 @@ class Test extends buhta.test.BaseTest {
             decimal_9_7: buhta.config.sql.maxDecimal["9,7"],
             date: buhta.config.sql.maxDate,
             dateTime: buhta.config.sql.maxDateTime,
-
+            blob:this.blob_array.buffer,
         }
     }
 
@@ -415,6 +432,7 @@ class Test extends buhta.test.BaseTest {
     async insert_row_with_max_values() {
         let sql = this._getSchemaTable().emitInsertRowSql(this._getDialect(), this._getMaxRow());
         await this._executeSql(sql);
+        debugger
     }
 
     async select_row_with_min_values() {
@@ -438,6 +456,9 @@ class Test extends buhta.test.BaseTest {
         let res = await this._executeSql(sql);
         assert.equal(res[0].rows.length, 1);
         let row = res[0].rows[0];
+        console.log("*******************************************************************************");
+        console.log(btoa(new Uint8Array(row.blob)));
+        console.log(btoa(new Uint8Array(this._getMaxRow().blob)));
         assert.deepEqual(row, this._getMaxRow());
     }
 
