@@ -72,7 +72,8 @@ export class BlobSqlDataType extends BaseSqlDataType<IBlobSqlDataTypeProps> {
         if (value === null)
             return new SqlEmitter(dialect).emit_NULL();
 
-        return "0x" + new SqlEmitter(dialect).emit_HEX(Array.from(new Uint8Array(value)));
+        return new SqlEmitter(dialect).emit_BLOB(value);
+        //return "0x" + new SqlEmitter(dialect).emit_HEX(Array.from(new Uint8Array(value)));
     }
 
 }

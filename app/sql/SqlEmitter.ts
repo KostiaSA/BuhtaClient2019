@@ -156,6 +156,21 @@ export class SqlEmitter {
         }
     }
 
+    emit_BLOB(value: ArrayBuffer): string {
+
+        if (this.dialect === "mssql")
+            return "0x" + this.emit_HEX(Array.from(new Uint8Array(value)));
+        else if (this.dialect === "postgres")
+            return "BYTEA '0x" + this.emit_HEX(Array.from(new Uint8Array(value))) + "'";
+        else if (this.dialect === "mysql")
+            return "convert(X'" + this.emit_HEX(Array.from(new Uint8Array(value))) + "',binary)";
+        else {
+            let msg = "invalid sql dialect " + this.dialect;
+            console.error(msg);
+            throw msg + ", " + __filename;
+        }
+    }
+
     emit_DATETIME(value: Moment): string {
         if (this.dialect === "mssql")
             return "CONVERT(DATETIME2,'" + value.format("YYYYMMDD HH:mm:ss.SSS") + "')";
