@@ -1,7 +1,7 @@
 
 // https://stackoverflow.com/questions/21797299/convert-base64-string-to-arraybuffer
 
-export function base64ToArrayBuffer(base64:string):any {
+export function base64ToArrayBuffer(base64:string):ArrayBuffer {
     let binary_string =  window.atob(base64);
     let len = binary_string.length;
     let bytes = new Uint8Array( len );

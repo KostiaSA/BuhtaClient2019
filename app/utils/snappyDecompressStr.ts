@@ -1,4 +1,4 @@
-import {base64ToArrayBuffer} from "./base64ToByteArray";
+import {base64ToArrayBuffer} from "./base64ToArrayBuffer";
 
 declare let SnappyJS: any;
 declare let TextDecoder: any;

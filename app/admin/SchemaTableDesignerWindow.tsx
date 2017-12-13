@@ -173,6 +173,8 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
             return
         }
 
+        (this.table as any).date1=new Date();
+
         let req: ISavedSchemaObjectFiles = {
             filePath: this.props.objectId || this.props.newObjectPath + "/" + this.table.name + "." + SchemaTable.objectType,
             json: stringify(this.table)

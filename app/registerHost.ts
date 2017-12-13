@@ -11,6 +11,9 @@ import {Window} from "./ui/Window";
 import {executeSql} from "./admin/api/executeSql";
 import {SchemaTable} from "./schema/table/SchemaTable";
 import {SchemaObject} from "./schema/SchemaObject";
+import {base64ToArrayBuffer} from "./utils/base64ToArrayBuffer";
+import {arrayBufferToBase64} from "./utils/arrayBufferToBase64";
+import {BJSON_parse, BJSON_stringify} from "./utils/bjson";
 
 declare const chai: any;
 declare const window: any;
@@ -43,6 +46,12 @@ export function registerHost() {
             Window: Window,
             SchemaWindow: SchemaWindow,
 
+        },
+        util: {
+            base64ToArrayBuffer:base64ToArrayBuffer,
+            arrayBufferToBase64:arrayBufferToBase64,
+            BJSON_stringify:BJSON_stringify,
+            BJSON_parse:BJSON_parse,
         }
     };
 

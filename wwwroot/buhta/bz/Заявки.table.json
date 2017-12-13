@@ -1,5 +1,5 @@
 ﻿{
-    "description": "Список 1",
+    "description": "Список 12",
     "name": "Автомбиль",
     "objectType": "table",
     "columns": [{
@@ -73,5 +73,12 @@
             "id": "String",
             "maxLen": 50
         }
-    }]
+    }],
+    "time1":"<Time>2011-10-12 12:90:01",
+    "time2":"<Date>2011-10-12",
+    "id":"<Uint8Aray>C29BED81-7842-41FF-8D04-BAC2CC6C62B3^G",
+    "pic":"<BufferArray>C29BED81-7842-41FF-8D04-BAC2CC6C62B3^B",
+    "date1": {
+        "$date": 1513109005545
+    }
 }
