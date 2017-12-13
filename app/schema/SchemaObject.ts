@@ -63,10 +63,8 @@ export class SchemaObject<T extends ISchemaObjectProps=ISchemaObjectProps> {
             this.props.createdBy = appState.userId;
         if (!this.props.createdDate)
             this.props.createdDate = moment();
-        if (!this.props.changedBy)
-            this.props.changedBy = appState.userId;
-        if (!this.props.changedDate)
-            this.props.changedDate = moment();
+        this.props.changedBy = appState.userId;
+        this.props.changedDate = moment();
 
     }
 

@@ -1,5 +1,5 @@
 ﻿{
-    "description": "<<Список 1222==22",
+    "description": "<<Список 1222==220-----------",
     "name": "Клиенты",
     "objectType": "table",
     "columns": [{
@@ -76,11 +76,11 @@
         "name": "новая колонка33",
         "dataType": {
             "id": "String",
-            "maxLen": 50
+            "maxLen": 850
         }
     }],
     "createdBy": "Иванов17-20",
     "createdDate": "<Date>2017-12-13 17:52:49.199",
     "changedBy": "Иванов17-20",
-    "changedDate": "<Date>2017-12-13 17:52:49.199"
+    "changedDate": "<Date>2017-12-13 18:00:35.744"
 }
