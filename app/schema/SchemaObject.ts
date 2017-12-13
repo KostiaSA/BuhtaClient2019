@@ -3,11 +3,17 @@ import {joiRus} from "../i18n/joiRus";
 import {joiValidate} from "../validation/joiValidate";
 import {appState} from "../AppState";
 import {SchemaObjectBaseDesignerWindow} from "../admin/SchemaObjectBaseDesignerWindow";
+import {Moment} from "moment";
+import moment = require("moment");
 
 export interface ISchemaObjectProps {
     objectType: string;
     name: string;
     description?: string;
+    createdBy?: string;
+    createdDate?: Moment;
+    changedBy?: string;
+    changedDate?: Moment;
 }
 
 
@@ -25,7 +31,7 @@ export class SchemaObject<T extends ISchemaObjectProps=ISchemaObjectProps> {
 
         let words = fileName.split(".");
         if (words.length < 3) {
-            let msg="неверное имя файла объекта: '" + fileName + "'";
+            let msg = "неверное имя файла объекта: '" + fileName + "'";
             console.error(msg);
             throw msg;
         }
@@ -52,6 +58,17 @@ export class SchemaObject<T extends ISchemaObjectProps=ISchemaObjectProps> {
         return joiValidate(this.props, this.getValidator());
     }
 
+    setChangedUserAndDate() {
+        if (!this.props.createdBy)
+            this.props.createdBy = appState.userId;
+        if (!this.props.createdDate)
+            this.props.createdDate = moment();
+        if (!this.props.changedBy)
+            this.props.changedBy = appState.userId;
+        if (!this.props.changedDate)
+            this.props.changedDate = moment();
+
+    }
 
     async save() {
         // let classInfo = (this.constructor as any).classInfo as ISchemaObjectClassInfo<any>;

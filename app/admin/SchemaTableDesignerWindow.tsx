@@ -12,7 +12,6 @@ import {Grid} from "../ui/Grid";
 import {GridColumn} from "../ui/GridColumn";
 import {Button} from "../ui/Button";
 import {SchemaTableColumnEditorWindow} from "./SchemaTableColumnEditorWindow";
-import {clone, equals, stringify} from "ejson";
 import {Keycode} from "../utils/Keycode";
 import {loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
 import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
@@ -24,6 +23,8 @@ import {getConfirmation} from "../ui/modals/getConfirmation";
 import {config} from "../config";
 import {joiValidate} from "../validation/joiValidate";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
+import {XJSON_clone, XJSON_equals, XJSON_parse, XJSON_stringify} from "../utils/xjson";
+import {SchemaObject} from "../schema/SchemaObject";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
@@ -70,7 +71,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
             return;
         }
 
-        let editedColumn = clone(this.tableColumnsArray.get(columnIndex));
+        let editedColumn = XJSON_clone(this.tableColumnsArray.get(columnIndex));
 
         let resultOk = await this.window.openParentWindow(
             <SchemaTableColumnEditorWindow
@@ -92,7 +93,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
             return;
         }
 
-        let editedColumn = clone(this.tableColumnsArray.get(columnIndex));
+        let editedColumn = XJSON_clone(this.tableColumnsArray.get(columnIndex));
 
         let confirmed = await getConfirmation("Удалить колонку '" + editedColumn.name + "'?", "Удаление", "Удалить", "Отмена");
 
@@ -117,7 +118,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                 let res = await loadSchemaObjectFiles(this.props.objectId!);
 
                 if (res.json) {
-                    this.table = JSON.parse(res.json);
+                    this.table = XJSON_parse(res.json);
                     this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
                 }
                 else {
@@ -173,11 +174,11 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
             return
         }
 
-        (this.table as any).date1=new Date();
+        new SchemaObject(this.table).setChangedUserAndDate();
 
         let req: ISavedSchemaObjectFiles = {
             filePath: this.props.objectId || this.props.newObjectPath + "/" + this.table.name + "." + SchemaTable.objectType,
-            json: stringify(this.table)
+            json: XJSON_stringify(this.table)
         };
 
         try {
@@ -192,7 +193,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
     handleClickCloseButton = async () => {
         let needConfirmation = this.form!.needSaveChanges;
-        needConfirmation = needConfirmation || !equals(this.table.columns, this.tableColumnsArray.toArray());
+        needConfirmation = needConfirmation || !XJSON_equals(this.table.columns, this.tableColumnsArray.toArray());
         this.table.columns = this.tableColumnsArray.toArray();
 
         if (!needConfirmation || await getConfirmation("Выйти без сохранения?"))

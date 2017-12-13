@@ -13,7 +13,7 @@ import {SchemaTable} from "./schema/table/SchemaTable";
 import {SchemaObject} from "./schema/SchemaObject";
 import {base64ToArrayBuffer} from "./utils/base64ToArrayBuffer";
 import {arrayBufferToBase64} from "./utils/arrayBufferToBase64";
-import {XJSON_parse, XJSON_stringify} from "./utils/xjson";
+import {XJSON_parse, XJSON_parse_postprocess, XJSON_stringify} from "./utils/xjson";
 
 declare const chai: any;
 declare const window: any;
@@ -52,6 +52,7 @@ export function registerHost() {
             arrayBufferToBase64:arrayBufferToBase64,
             XJSON_stringify:XJSON_stringify,
             XJSON_parse:XJSON_parse,
+            XJSON_parse_postprocess:XJSON_parse_postprocess,
         }
     };
 

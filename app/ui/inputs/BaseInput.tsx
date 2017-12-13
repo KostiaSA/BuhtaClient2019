@@ -4,9 +4,10 @@ import * as Joi from "joi";
 import {ValidationError} from "joi";
 import {Component, IComponentProps} from "../Component";
 import {objectPathGet} from "../../utils/objectPathGet";
-import {stringify} from "ejson";
+
 import {config} from "../../config";
 import {joiValidate} from "../../validation/joiValidate";
+import {XJSON_stringify} from "../../utils/xjson";
 
 
 export interface IBaseInputProps extends IComponentProps {
@@ -45,7 +46,7 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
         if (!this.initialValue)
             return false;
         else
-            return stringify(this.initialValue) !== stringify(objectPathGet(this.bindObj, this.props.bindProp));
+            return XJSON_stringify(this.initialValue) !== XJSON_stringify(objectPathGet(this.bindObj, this.props.bindProp));
     }
 
     initialValue: any;

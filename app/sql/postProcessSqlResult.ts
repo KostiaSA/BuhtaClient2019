@@ -1,4 +1,5 @@
 import {snappyDecompressStr} from "../utils/snappyDecompressStr";
+import {XJSON_parse} from "../utils/xjson";
 
 //declare let SnappyJS: any;
 declare let TextDecoder: any;
@@ -12,11 +13,11 @@ export function postProcessSqlResult(responseData: any): any {
     let res: any;
 
     if (responseData.json) {
-        res = JSON.parse(responseData.json);
+        res = XJSON_parse(responseData.json);
     }
     else { // было упаковано на стороне сервера
         let json = snappyDecompressStr(responseData.compressed);
-        res = JSON.parse(json);
+        res = XJSON_parse(json);
     }
 
     for (let rowsetIndex = 0; rowsetIndex < res.rowsets.length; rowsetIndex++) {

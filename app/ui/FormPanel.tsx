@@ -2,9 +2,10 @@ import * as  React from "react";
 import * as PropTypes from "prop-types";
 import * as Joi from "joi";
 import {Component, IComponentProps} from "./Component";
-import {clone, equals} from "ejson";
+
 import {reassignObject} from "../utils/reassignObject";
 import {config} from "../config";
+import {XJSON_clone, XJSON_equals} from "../utils/xjson";
 
 
 export interface IFormPanelProps extends IComponentProps {
@@ -56,12 +57,12 @@ export class FormPanel extends Component<IFormPanelProps> {
         // //ReactDOM.render(<Div ref={(e)=>{this.content=e}}>{this.state.children}.......</Div>, document.getElementById(this.$contentId));
         // this.updateProps(this.props);
         if (this.bindObj) {
-            this.clonedBindObj = clone(this.bindObj);
+            this.clonedBindObj = XJSON_clone(this.bindObj);
         }
     }
 
     get needSaveChanges(): boolean {
-        return !this.clonedBindObj || !equals(this.clonedBindObj, this.bindObj);
+        return !this.clonedBindObj || !XJSON_equals(this.clonedBindObj, this.bindObj);
     }
 
     cancelChanges() {

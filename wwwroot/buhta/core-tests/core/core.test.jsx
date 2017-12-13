@@ -24,6 +24,10 @@ class Test extends buhta.test.BaseTest {
             date1: moment("0001-12-13 16:25:13.023"),
             date2: moment("5217-12-13 16:44:58.049"),
             date3: moment("2017-11-30"),
+            time0: moment("0000-01-01 14:56:12.123"),
+            time1: moment("0000-01-01 14:56:12.3"),
+            time2: moment("0000-01-01 14:56:12"),
+            time3: moment("0000-01-01 14:56"),
             array1: [1, {o: "ooo", a876: ["<<<23>>>", 45]}, true, false, [34, 45]],
         };
 
@@ -39,6 +43,10 @@ class Test extends buhta.test.BaseTest {
         assert(obj.date2.isSame(clone.date2), "error on 'Date/Moment' 2");
         assert(obj.date3.isSame(clone.date3), "error on 'Date/Moment' 3");
         assert(JSON.stringify(obj.array1) === JSON.stringify(clone.array1), "error on array");
+        assert(obj.time0.isSame(clone.time0), "error on 'Time' 0");
+        assert(obj.time1.isSame(clone.time1), "error on 'Time' 1");
+        assert(obj.time2.isSame(clone.time2), "error on 'Time' 2");
+        assert(obj.time3.isSame(clone.time3), "error on 'Time' 3");
 
     }
 

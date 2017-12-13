@@ -1,5 +1,6 @@
-import {parse} from "ejson";
+
 import {appState} from "../AppState";
+import {XJSON_parse} from "../utils/xjson";
 
 let objectPath = require("object-path");
 
@@ -18,7 +19,7 @@ export function storageGet(key: string, paths: string[], defaultValue: any = nul
         let objStr = localStorage.getItem(fullKey);
 
         if (objStr) {
-            let obj = parse(objStr);
+            let obj = XJSON_parse(objStr);
             if (paths[2]) {
                 let value = objectPath.get(obj, paths[0] + "." + paths[1] + "." + paths[2], null);
                 if (value) return value;

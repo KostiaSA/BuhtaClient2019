@@ -29,10 +29,13 @@ function stringify_prepare(obj: any): any {
                 return null;
             }
             else if (obj instanceof Date) {
-                throw "XJSON_stringify(): тип 'Date' недопустим, используйте 'Moment'";;
+                throw "XJSON_stringify(): тип 'Date' недопустим, используйте 'Moment'";
             }
             else if (obj._isAMomentObject) {
-                return "<Date>" + obj.format("YYYY-MM-DD HH:mm:ss.SSS").replace("00:00:00.000", "");
+                if (obj.year() === 0 && obj.month() === 1 && obj.date() === 1)
+                    return "<Time>" + obj.format("HH:mm:ss.SSS");
+                else
+                    return "<Date>" + obj.format("YYYY-MM-DD HH:mm:ss.SSS").replace("00:00:00.000", "");
             }
             else if (Array.isArray(obj)) {
                 return obj.map((item) => stringify_prepare(item))
@@ -57,11 +60,11 @@ function stringify_prepare(obj: any): any {
 
 export function XJSON_parse(json: string): any {
     let obj = JSON.parse(json);
-    obj = parse_postprocess(obj);
+    obj = XJSON_parse_postprocess(obj);
     return obj;
 }
 
-function parse_postprocess(obj: any): any {
+export function XJSON_parse_postprocess(obj: any): any {
     switch (typeof obj) {
         case "string":
             if (obj.startsWith("<")) {
@@ -74,6 +77,9 @@ function parse_postprocess(obj: any): any {
                 else if (obj.startsWith("<Date>")) {
                     return moment(obj.substr("<Date>".length))
                 }
+                else if (obj.startsWith("<Time>")) {
+                    return moment("0000-01-01 "+obj.substr("<Time>".length))
+                }
                 else
                     return obj.substr(1);
             }
@@ -84,12 +90,12 @@ function parse_postprocess(obj: any): any {
                 return obj;
             }
             else if (Array.isArray(obj)) {
-                obj.forEach((item: any, index: number) => obj[index] = parse_postprocess(item));
+                obj.forEach((item: any, index: number) => obj[index] = XJSON_parse_postprocess(item));
                 return obj;
             }
             else {
                 for (let key of Object.keys(obj)) {
-                    obj[key] = parse_postprocess(obj[key]);
+                    obj[key] = XJSON_parse_postprocess(obj[key]);
                 }
                 return obj;
             }
@@ -97,5 +103,13 @@ function parse_postprocess(obj: any): any {
         default:
             return obj;
     }
-    //throw "parse_postprocess():internal error";
+    //throw "XJSON_parse_postprocess():internal error";
+}
+
+export function XJSON_clone(obj: any): any {
+    return XJSON_parse(XJSON_stringify(obj));
+}
+
+export function XJSON_equals(obj1: any, obj2: any): any {
+    return XJSON_stringify(obj1) === XJSON_stringify(obj2);
 }
