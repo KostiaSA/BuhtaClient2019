@@ -161,7 +161,7 @@ export class SqlEmitter {
         if (this.dialect === "mssql")
             return "0x" + this.emit_HEX(Array.from(new Uint8Array(value)));
         else if (this.dialect === "postgres")
-            return "BYTEA '0x" + this.emit_HEX(Array.from(new Uint8Array(value))) + "'";
+            return "E'\\\\x" + this.emit_HEX(Array.from(new Uint8Array(value))) + "'";
         else if (this.dialect === "mysql")
             return "convert(X'" + this.emit_HEX(Array.from(new Uint8Array(value))) + "',binary)";
         else {
