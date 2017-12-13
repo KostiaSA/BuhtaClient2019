@@ -8,6 +8,7 @@ import {DecimalSqlDataType} from "./DecimalSqlDataType";
 import {DateSqlDataType} from "./DateSqlDataType";
 import {DateTimeSqlDataType} from "./DateTimeSqlDataType";
 import {BlobSqlDataType} from "./BlobSqlDataType";
+import {BooleanSqlDataType} from "./BooleanSqlDataType";
 
 export function registerSqlDataTypes(){
     appState.sqlDataTypes[IntegerSqlDataType.id] = new IntegerSqlDataType();
@@ -19,5 +20,6 @@ export function registerSqlDataTypes(){
     appState.sqlDataTypes[DateSqlDataType.id] = new DateSqlDataType();
     appState.sqlDataTypes[DateTimeSqlDataType.id] = new DateTimeSqlDataType();
     appState.sqlDataTypes[BlobSqlDataType.id] = new BlobSqlDataType();
+    appState.sqlDataTypes[BooleanSqlDataType.id] = new BooleanSqlDataType();
 
 }

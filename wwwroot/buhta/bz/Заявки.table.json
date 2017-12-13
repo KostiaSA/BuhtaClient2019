@@ -68,8 +68,7 @@
     }, {
         "name": "новая колонка22",
         "dataType": {
-            "id": "String",
-            "maxLen": 50
+            "id": "Boolean"
         }
     }],
     "time1": "<<<<Time>2011-10-12 12:90:01",
@@ -82,5 +81,5 @@
     "createdBy": "Иванов17-20",
     "createdDate": "<Date>2017-12-13 18:56:48.794",
     "changedBy": "Иванов17-20",
-    "changedDate": "<Date>2017-12-13 19:31:01.997"
+    "changedDate": "<Date>2017-12-14 00:34:52.037"
 }

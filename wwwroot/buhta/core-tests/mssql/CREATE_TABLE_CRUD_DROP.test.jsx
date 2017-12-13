@@ -272,6 +272,12 @@ class Test extends buhta.test.BaseTest {
                         id: "Blob",
                     },
                 },
+                {
+                    name: "boolean",
+                    dataType: {
+                        id: "Boolean",
+                    },
+                },
 
             ]
         };
@@ -316,8 +322,8 @@ class Test extends buhta.test.BaseTest {
             decimal_9_7: -buhta.config.sql.maxDecimal["9,7"],
             date: buhta.config.sql.minDate,
             dateTime: buhta.config.sql.minDateTime,
-            blob: new Uint8Array(0).buffer
-
+            blob: new Uint8Array(0).buffer,
+            boolean:false,
         }
     }
 
@@ -359,8 +365,8 @@ class Test extends buhta.test.BaseTest {
             decimal_9_7: null,
             date: null,
             dateTime: null,
-            blob: null
-
+            blob: null,
+            boolean:null,
         }
     }
 
@@ -409,6 +415,7 @@ class Test extends buhta.test.BaseTest {
             date: buhta.config.sql.maxDate,
             dateTime: buhta.config.sql.maxDateTime,
             blob: this.blob_array.buffer,
+            boolean:true,
         }
     }
 

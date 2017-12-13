@@ -1,5 +1,3 @@
-import * as uuid from "uuid";
-import * as moment from "moment";
 import {Moment} from "moment";
 
 export type SqlDialect = "mssql" | "postgres" | "mysql";
@@ -131,9 +129,9 @@ export class SqlEmitter {
     }
 
 
-    uuidToBytes(uuid:string) {
-        let bytes:any[] = [];
-        uuid.replace(/[a-fA-F0-9]{2}/g, function(hex) {
+    uuidToBytes(uuid: string) {
+        let bytes: any[] = [];
+        uuid.replace(/[a-fA-F0-9]{2}/g, function (hex) {
             bytes.push(parseInt(hex, 16));
             return "fake";
         });
@@ -149,6 +147,21 @@ export class SqlEmitter {
             return "UUID '" + value + "'";
         else if (this.dialect === "mysql")
             return "convert(" + this.mysql_guid_to_str(this.uuidToBytes(value)) + ",binary(16))";
+        else {
+            let msg = "invalid sql dialect " + this.dialect;
+            console.error(msg);
+            throw msg + ", " + __filename;
+        }
+    }
+
+    emit_BOOLEAN(value: boolean): string {
+
+        if (this.dialect === "mssql")
+            return value === true ? "1" : "0";
+        else if (this.dialect === "postgres")
+            return value === true ? "TRUE" : "FALSE";
+        else if (this.dialect === "mysql")
+            return value === true ? "1" : "0";
         else {
             let msg = "invalid sql dialect " + this.dialect;
             console.error(msg);
