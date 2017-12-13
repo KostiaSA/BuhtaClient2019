@@ -2,12 +2,12 @@ import {arrayBufferToBase64} from "./arrayBufferToBase64";
 import {base64ToArrayBuffer} from "./base64ToArrayBuffer";
 import * as moment from "moment";
 
-export function BJSON_stringify(obj: any): string {
-    return JSON.stringify(BJSON_stringify_prepare(obj));
+export function XJSON_stringify(obj: any): string {
+    return JSON.stringify(stringify_prepare(obj));
 }
 
 
-function BJSON_stringify_prepare(obj: any): any {
+function stringify_prepare(obj: any): any {
     switch (typeof obj) {
         case "undefined":
             return undefined;
@@ -16,9 +16,9 @@ function BJSON_stringify_prepare(obj: any): any {
         case "number":
             return obj;
         case "symbol":
-            throw "BJSON_stringify(): тип 'Symbol' недопустим";
+            throw "XJSON_stringify(): тип 'Symbol' недопустим";
         case "function":
-            throw "BJSON_stringify(): тип 'Function ' недопустим";
+            throw "XJSON_stringify(): тип 'Function ' недопустим";
         case "string":
             if (obj.startsWith("<"))
                 return "<" + obj;
@@ -29,13 +29,13 @@ function BJSON_stringify_prepare(obj: any): any {
                 return null;
             }
             else if (obj instanceof Date) {
-                throw "BJSON_stringify(): тип 'Date' недопустим, используйте 'Moment'";;
+                throw "XJSON_stringify(): тип 'Date' недопустим, используйте 'Moment'";;
             }
             else if (obj._isAMomentObject) {
                 return "<Date>" + obj.format("YYYY-MM-DD HH:mm:ss.SSS").replace("00:00:00.000", "");
             }
             else if (Array.isArray(obj)) {
-                return obj.map((item) => BJSON_stringify_prepare(item))
+                return obj.map((item) => stringify_prepare(item))
             }
             else if (obj instanceof ArrayBuffer) {
                 return "<ArrayBuffer>" + arrayBufferToBase64(obj);
@@ -46,22 +46,22 @@ function BJSON_stringify_prepare(obj: any): any {
             else {
                 let cloned: any = {};
                 for (let key of Object.keys(obj)) {
-                    cloned[key] = BJSON_stringify_prepare(obj[key])
+                    cloned[key] = stringify_prepare(obj[key])
                 }
                 return cloned;
             }
         }
     }
-    throw "BJSON_stringify_prepare():internal error";
+    throw "stringify_prepare():internal error";
 }
 
-export function BJSON_parse(json: string): any {
+export function XJSON_parse(json: string): any {
     let obj = JSON.parse(json);
-    obj = BJSON_parse_postprocess(obj);
+    obj = parse_postprocess(obj);
     return obj;
 }
 
-function BJSON_parse_postprocess(obj: any): any {
+function parse_postprocess(obj: any): any {
     switch (typeof obj) {
         case "string":
             if (obj.startsWith("<")) {
@@ -84,12 +84,12 @@ function BJSON_parse_postprocess(obj: any): any {
                 return obj;
             }
             else if (Array.isArray(obj)) {
-                obj.forEach((item: any, index: number) => obj[index] = BJSON_stringify_prepare(item));
+                obj.forEach((item: any, index: number) => obj[index] = parse_postprocess(item));
                 return obj;
             }
             else {
                 for (let key of Object.keys(obj)) {
-                    obj[key] = BJSON_parse_postprocess(obj[key]);
+                    obj[key] = parse_postprocess(obj[key]);
                 }
                 return obj;
             }
@@ -97,5 +97,5 @@ function BJSON_parse_postprocess(obj: any): any {
         default:
             return obj;
     }
-    //throw "BJSON_parse_postprocess():internal error";
+    //throw "parse_postprocess():internal error";
 }
