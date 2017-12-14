@@ -110,6 +110,7 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                                         resizable storageKey="input:SchemaTable.dataType"
                                     />
                                     {this.renderDataTypeEditors()}
+                                    <CheckBox title="NOT NULL" bindProp="notNull" width={300}/>
                                     <CheckBox title="первичный ключ" bindProp="primaryKey" width={300}/>
                                 </FormPanel>
                             </TabsPanelItem>

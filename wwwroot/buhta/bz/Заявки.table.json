@@ -7,9 +7,11 @@
         "primaryKey": true,
         "dataType": {
             "id": "Integer",
-            "size": "64"
+            "size": "64",
+            "unsigned": true
         },
-        "description": "pos 01"
+        "description": "pos 01",
+        "notNull": true
     }, {
         "name": "Марка22222222222222",
         "dataType": {
@@ -69,7 +71,9 @@
         "name": "новая колонка22",
         "dataType": {
             "id": "Boolean"
-        }
+        },
+        "primaryKey": false,
+        "notNull": true
     }, {
         "name": "новая колонка00000000000",
         "dataType": {
@@ -91,5 +95,5 @@
     "createdBy": "Иванов17-20",
     "createdDate": "<Date>2017-12-13 18:56:48.794",
     "changedBy": "Иванов17-20",
-    "changedDate": "<Date>2017-12-14 18:14:47.047"
+    "changedDate": "<Date>2017-12-14 18:24:27.697"
 }

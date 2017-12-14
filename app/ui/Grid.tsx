@@ -96,6 +96,8 @@ export class Grid extends Component<IGridProps> {
                 ]);
 
 
+                columnOptions.align = columnOptions.align || "left";
+
                 columnOptions.cellsalign = columnOptions.align;
 
                 columnOptions.text = colProps.headerText;

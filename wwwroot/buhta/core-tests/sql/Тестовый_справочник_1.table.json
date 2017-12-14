@@ -9,7 +9,8 @@
             "id": "Integer",
             "size": "32"
         },
-        "description": "pos 01"
+        "description": "pos 01",
+        "notNull": true
     }, {
         "name": "Номер",
         "dataType": {
@@ -28,6 +29,6 @@
     "createdBy": "Иванов17-20",
     "createdDate": "<Date>2017-12-13 18:56:48.794",
     "changedBy": "Иванов17-20",
-    "changedDate": "<Date>2017-12-14 12:30:26.690",
+    "changedDate": "<Date>2017-12-14 18:26:17.239",
     "note": "primary key не менять !!!"
 }
