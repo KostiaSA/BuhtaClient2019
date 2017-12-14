@@ -206,7 +206,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
     dataTypeColumnCompute = (row: ISchemaTableColumnProps): React.ReactNode => {
         let dt = appState.sqlDataTypes[row.dataType.id];
-        return dt.getName(row.dataType);
+        return <span style={{color:dt.getDesignerColor()}}>{dt.getName(row.dataType)}</span>;
     };
 
     pkColumnCompute = (row: ISchemaTableColumnProps): React.ReactNode => {
@@ -304,9 +304,9 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             }}
                                         >
                                             <GridColumn headerText="PK" getText={this.pkColumnCompute} align="center" width={40} pinned/>
-                                            <GridColumn headerText="Колонка" datafield="name" pinned color="green"/>
+                                            <GridColumn headerText="Колонка" datafield="name" pinned fontWeight="500"/>
                                             <GridColumn headerText="Тип данных" getText={this.dataTypeColumnCompute}/>
-                                            <GridColumn headerText="Описание" datafield="description" getColor={(row)=>{return 12 as any}}/>
+                                            <GridColumn headerText="Описание" datafield="description"/>
                                         </Grid>
                                     </FlexItem>
                                     <FlexItem dock="bottom" style={{paddingTop: 8, paddingBottom: 10}}>

@@ -26,6 +26,10 @@ export class FkSqlDataType extends BaseSqlDataType<IFkSqlDataTypeProps> {
         }
     }
 
+    getDesignerColor(): string {
+        return "darkcyan";
+    }
+
     getPropsNames(): string[] {
         return [...super.getPropsNames(), "fkTableId"];
     }

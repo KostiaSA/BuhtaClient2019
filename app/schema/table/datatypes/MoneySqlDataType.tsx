@@ -19,6 +19,10 @@ export class MoneySqlDataType extends BaseSqlDataType<IMoneySqlDataTypeProps> {
         return "Деньги";
     }
 
+    getDesignerColor(): string {
+        return "forestgreen";
+    }
+
     // getPropsNames(): string[] {
     //     return [...super.getPropsNames()];
     // }

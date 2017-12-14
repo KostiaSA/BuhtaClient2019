@@ -20,6 +20,10 @@ export class DateTimeSqlDataType extends BaseSqlDataType<IDateTimeSqlDataTypePro
         return "ДатаВремя";
     }
 
+    getDesignerColor(): string {
+        return "royalblue";
+    }
+
 
     async emitColumnDataType(dialect: SqlDialect, col: IDateTimeSqlDataTypeProps): Promise<string> {
         if (dialect === "mssql") {

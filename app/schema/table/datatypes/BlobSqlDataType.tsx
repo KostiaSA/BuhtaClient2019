@@ -18,6 +18,10 @@ export class BlobSqlDataType extends BaseSqlDataType<IBlobSqlDataTypeProps> {
         return "Image/BLOB";
     }
 
+    getDesignerColor(): string {
+        return "olive";
+    }
+
     // getPropsNames(): string[] {
     //     return [...super.getPropsNames()];
     // }

@@ -21,6 +21,10 @@ export class BooleanSqlDataType extends BaseSqlDataType<IBooleanSqlDataTypeProps
         return "Да/Нет (boolean)";
     }
 
+    getDesignerColor(): string {
+        return "tomato";
+    }
+
     // getPropsNames(): string[] {
     //     return [...super.getPropsNames()];
     // }

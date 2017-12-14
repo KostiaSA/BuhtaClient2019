@@ -36,6 +36,10 @@ export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypePro
         return "?";
     }
 
+    getDesignerColor(): string {
+        return "black";
+    }
+
     getValidator(): Joi.ObjectSchema {
         return Joi.object().options({language: joiRus}).keys({
             id: Joi.string().only(Object.keys(appState.sqlDataTypes)).label("тип данных"),

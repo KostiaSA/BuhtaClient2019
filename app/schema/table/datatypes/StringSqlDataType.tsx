@@ -32,6 +32,10 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
         }
     }
 
+    getDesignerColor(): string {
+        return "brown";
+    }
+
     getPropsNames(): string[] {
         return [...super.getPropsNames(), "maxLen"];
     }

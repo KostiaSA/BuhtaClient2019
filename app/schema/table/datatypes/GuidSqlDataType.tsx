@@ -22,6 +22,10 @@ export class GuidSqlDataType extends BaseSqlDataType<IGuidSqlDataTypeProps> {
         return "Guid";
     }
 
+    getDesignerColor(): string {
+        return "darkorange";
+    }
+
     // getPropsNames(): string[] {
     //     return [...super.getPropsNames()];
     // }

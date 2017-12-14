@@ -104,14 +104,21 @@ export class Grid extends Component<IGridProps> {
 
                 columnOptions.cellsrenderer = (rowIndex: number, columnfield: any, value: any, defaulthtml: string): string => {
 
-                    if (!colProps.getText && !colProps.color && !colProps.getColor)
+                    if (!colProps.getText &&
+                        !colProps.color && !colProps.getColor &&
+                        !colProps.background && !colProps.getBackground &&
+                        !colProps.fontStyle && !colProps.getFontStyle &&
+                        !colProps.fontWeight && !colProps.getFontWeight &&
+                        !colProps.fontFamily && !colProps.getFontFamily &&
+                        !colProps.fontSize && !colProps.getFontSize
+                    )
                         return defaulthtml;
 
                     let el = document.createElement("div");
                     el.innerHTML = defaulthtml;
                     let defaultSpan = el.childNodes[0] as HTMLElement;
 
-                    let err = (message: string) => {
+                    let createError = (message: string) => {
                         defaultSpan.innerText = "ошибка: " + message;
                         defaultSpan.title = "ошибка: " + message;
                         defaultSpan.style.color = "red";
@@ -119,52 +126,146 @@ export class Grid extends Component<IGridProps> {
                         return defaultSpan.outerHTML;
                     };
 
-///                    let style: CSSProperties = {};
                     let row = props.source[rowIndex];
 
                     // --------------------------- color --------------------------
                     if (colProps.color) {
                         if (!isString(colProps.color))
-                            return err("'color' должен быть строкой");
+                            return createError("'color' должен быть строкой");
                         defaultSpan.style.color = colProps.color;
                     }
                     if (colProps.getColor) {
                         if (!isFunction(colProps.getColor!))
-                            return err("'getColor' должен быть функцией");
+                            return createError("'getColor' должен быть функцией");
 
                         try {
                             let value = colProps.getColor(row);
                             if (!isString(value))
-                                return err("'getColor' должен возвращать строку");
+                                return createError("'getColor' должен возвращать строку");
                             defaultSpan.style.color = value;
                         }
                         catch (e) {
-                            return err(e.toString());
+                            return createError(" в 'getColor': " + e.toString());
+                        }
+                    }
+
+                    // --------------------------- background --------------------------
+                    if (colProps.background) {
+                        if (!isString(colProps.background))
+                            return createError("'background' должен быть строкой");
+                        defaultSpan.style.background = colProps.background;
+                    }
+                    if (colProps.getBackground) {
+                        if (!isFunction(colProps.getBackground!))
+                            return createError("'getBackground' должен быть функцией");
+
+                        try {
+                            let value = colProps.getBackground(row);
+                            if (!isString(value))
+                                return createError("'getBackground' должен возвращать строку");
+                            defaultSpan.style.background = value;
+                        }
+                        catch (e) {
+                            return createError(" в 'getBackground': " + e.toString());
+                        }
+                    }
+
+                    // --------------------------- fontStyle --------------------------
+                    if (colProps.fontStyle) {
+                        if (!isString(colProps.fontStyle))
+                            return createError("'fontStyle' должен быть строкой");
+                        defaultSpan.style.fontStyle = colProps.fontStyle;
+                    }
+                    if (colProps.getFontStyle) {
+                        if (!isFunction(colProps.getFontStyle!))
+                            return createError("'getFontStyle' должен быть функцией");
+
+                        try {
+                            let value = colProps.getFontStyle(row);
+                            if (!isString(value))
+                                return createError("'getFontStyle' должен возвращать строку");
+                            defaultSpan.style.fontStyle = value;
+                        }
+                        catch (e) {
+                            return createError(" в 'getFontStyle': " + e.toString());
+                        }
+                    }
+
+                    // --------------------------- fontWeight --------------------------
+                    if (colProps.fontWeight) {
+                        if (!isString(colProps.fontWeight))
+                            return createError("'fontWeight' должен быть строкой");
+                        defaultSpan.style.fontWeight = colProps.fontWeight;
+                    }
+                    if (colProps.getFontWeight) {
+                        if (!isFunction(colProps.getFontWeight!))
+                            return createError("'getFontWeight' должен быть функцией");
+
+                        try {
+                            let value = colProps.getFontWeight(row);
+                            if (!isString(value))
+                                return createError("'getFontWeight' должен возвращать строку");
+                            defaultSpan.style.fontWeight = value;
+                        }
+                        catch (e) {
+                            return createError(" в 'getFontWeight': " + e.toString());
+                        }
+                    }
+
+                    // --------------------------- fontFamily --------------------------
+                    if (colProps.fontFamily) {
+                        if (!isString(colProps.fontFamily))
+                            return createError("'fontFamily' должен быть строкой");
+                        defaultSpan.style.fontFamily = colProps.fontFamily;
+                    }
+                    if (colProps.getFontFamily) {
+                        if (!isFunction(colProps.getFontFamily!))
+                            return createError("'getFontFamily' должен быть функцией");
+
+                        try {
+                            let value = colProps.getFontFamily(row);
+                            if (!isString(value))
+                                return createError("'getFontFamily' должен возвращать строку");
+                            defaultSpan.style.fontFamily = value;
+                        }
+                        catch (e) {
+                            return createError(" в 'getFontFamily': " + e.toString());
+                        }
+                    }
+
+                    // --------------------------- fontSize --------------------------
+                    if (colProps.fontSize) {
+                        if (!isString(colProps.fontSize))
+                            return createError("'fontSize' должен быть строкой");
+                        defaultSpan.style.fontSize = colProps.fontSize;
+                    }
+                    if (colProps.getFontSize) {
+                        if (!isFunction(colProps.getFontSize!))
+                            return createError("'getFontSize' должен быть функцией");
+
+                        try {
+                            let value = colProps.getFontSize(row);
+                            if (!isString(value))
+                                return createError("'getFontSize' должен возвращать строку");
+                            defaultSpan.style.fontSize = value;
+                        }
+                        catch (e) {
+                            return createError(" в 'getFontSize': " + e.toString());
                         }
                     }
 
 
                     if (colProps.getText) {
-                        let computedTextOrNode: any;
                         try {
-                            computedTextOrNode = colProps.getText(row);
+                            defaultSpan.innerHTML = ReactDOMServer.renderToStaticMarkup(
+                                <span>{colProps.getText(row)}</span>);
                         }
                         catch (e) {
-                            return err(e.toString());
-                            // defaultSpan.innerHTML = "<span style='color: indianred'>" + escapeHtml("Ошибка в getText(): " + e.toString().substr(0, 40)) + "</span>";
-                            // console.error("Ошибка в getText(): " + e.toString());
-                            // return defaultSpan.outerHTML;
+                            return createError(" в 'getText': " + e.toString());
                         }
-                        defaultSpan.innerHTML = ReactDOMServer.renderToStaticMarkup(
-                            <span>
-                                         {computedTextOrNode}
-                                     </span>
-                        );
                     }
 
                     return defaultSpan.outerHTML;
-                    //console.log("rendered-------------------->>>", rendered);
-                    //return defaultHtmlStart + rendered + defaultHtmlEnd;
                 };
 
                 gridOptions.columns.push(columnOptions);
