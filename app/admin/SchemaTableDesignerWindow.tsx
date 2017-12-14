@@ -306,7 +306,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             <GridColumn headerText="PK" getText={this.pkColumnCompute} align="center" width={40} pinned/>
                                             <GridColumn headerText="Колонка" datafield="name" pinned color="green"/>
                                             <GridColumn headerText="Тип данных" getText={this.dataTypeColumnCompute}/>
-                                            <GridColumn headerText="Описание" datafield="description"/>
+                                            <GridColumn headerText="Описание" datafield="description" getColor={(row)=>{return 12 as any}}/>
                                         </Grid>
                                     </FlexItem>
                                     <FlexItem dock="bottom" style={{paddingTop: 8, paddingBottom: 10}}>

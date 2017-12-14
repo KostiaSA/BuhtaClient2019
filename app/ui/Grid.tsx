@@ -1,14 +1,13 @@
 import * as  React from "react";
-import {CSSProperties} from "react";
 import * as ReactDOMServer from 'react-dom/server';
 import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
 import {GridColumn, IGridColumnProps} from "./GridColumn";
 import {Keycode} from "../utils/Keycode";
-import {escapeHtml} from "../utils/escapeHtml";
 import {config} from "../config";
 import {isString} from "../utils/isString";
+import {isFunction} from "../utils/isFunction";
 
 
 export interface IGridProps extends IComponentProps {
@@ -113,33 +112,51 @@ export class Grid extends Component<IGridProps> {
                     let defaultSpan = el.childNodes[0] as HTMLElement;
 
                     let err = (message: string) => {
-                        defaultSpan.innerText = "ошибка в getText(): " + message;
+                        defaultSpan.innerText = "ошибка: " + message;
+                        defaultSpan.title = "ошибка: " + message;
+                        defaultSpan.style.color = "red";
                         console.error(defaultSpan.innerText);
                         return defaultSpan.outerHTML;
                     };
 
-                    let style: CSSProperties = {};
+///                    let style: CSSProperties = {};
+                    let row = props.source[rowIndex];
 
+                    // --------------------------- color --------------------------
                     if (colProps.color) {
                         if (!isString(colProps.color))
                             return err("'color' должен быть строкой");
                         defaultSpan.style.color = colProps.color;
                     }
+                    if (colProps.getColor) {
+                        if (!isFunction(colProps.getColor!))
+                            return err("'getColor' должен быть функцией");
+
+                        try {
+                            let value = colProps.getColor(row);
+                            if (!isString(value))
+                                return err("'getColor' должен возвращать строку");
+                            defaultSpan.style.color = value;
+                        }
+                        catch (e) {
+                            return err(e.toString());
+                        }
+                    }
 
 
                     if (colProps.getText) {
                         let computedTextOrNode: any;
-                        let row = props.source[rowIndex];
                         try {
                             computedTextOrNode = colProps.getText(row);
                         }
                         catch (e) {
-                            defaultSpan.innerHTML = "<span style='color: indianred'>" + escapeHtml("Ошибка в getText(): " + e.toString().substr(0, 40)) + "</span>";
-                            console.error("Ошибка в getText(): " + e.toString());
-                            return defaultSpan.outerHTML;
+                            return err(e.toString());
+                            // defaultSpan.innerHTML = "<span style='color: indianred'>" + escapeHtml("Ошибка в getText(): " + e.toString().substr(0, 40)) + "</span>";
+                            // console.error("Ошибка в getText(): " + e.toString());
+                            // return defaultSpan.outerHTML;
                         }
                         defaultSpan.innerHTML = ReactDOMServer.renderToStaticMarkup(
-                            <span style={style}>
+                            <span>
                                          {computedTextOrNode}
                                      </span>
                         );
