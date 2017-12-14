@@ -4,6 +4,7 @@ import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {ComboBox} from "../../../ui/inputs/ComboBox";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isIntegerOrNull} from "../../../utils/isIntegerOrNull";
+import {CheckBox} from "../../../ui/inputs/CheckBox";
 
 let CONST = require("numeric-constants");
 
@@ -45,17 +46,19 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
     renderPropsEditors(props: IIntegerSqlDataTypeProps): React.ReactNode {
         //return ()<Input title="макс. длина" bindProp="dataType.maxLen" placeHolder="макс. длина" width={100}/>
         this.setDefaultProps(props);
-        return (
-            <ComboBox
-                title="размерность"
-                width={80}
-                bindProp="dataType.size"
-                placeHolder="размерность"
-                displayMember="d"
-                valueMember="v"
-                source={[{v: "8", d: "8bit"}, {v: "16", d: "16bit"}, {v: "32", d: "32bit"}, {v: "64", d: "64bit"}]}
-                hidden={props.id !== IntegerSqlDataType.id}
-            />
+        return ([
+                <ComboBox
+                    title="размерность"
+                    width={80}
+                    bindProp="dataType.size"
+                    placeHolder="размерность"
+                    displayMember="d"
+                    valueMember="v"
+                    source={[{v: "8", d: "8bit"}, {v: "16", d: "16bit"}, {v: "32", d: "32bit"}, {v: "64", d: "64bit"}]}
+                    hidden={props.id !== IntegerSqlDataType.id}
+                />,
+                <CheckBox title="беззнаковое" bindProp="dataType.unsigned" width={200} hidden={props.id !== IntegerSqlDataType.id}/>
+            ]
 
         )
     }

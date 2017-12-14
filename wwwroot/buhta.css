@@ -103,3 +103,7 @@ input[type=text].jqx-input {
 .jqx-checkbox-check-indeterminate {
     opacity: 0.3;
 }
+
+.jqx-checkbox-default {
+    margin-left: 0px;
+}

@@ -6,6 +6,7 @@ import {Component, IComponentProps} from "./Component";
 import {reassignObject} from "../utils/reassignObject";
 import {config} from "../config";
 import {XJSON_clone, XJSON_equals} from "../utils/xjson";
+import {CheckBox} from "./inputs/CheckBox";
 
 
 export interface IFormPanelProps extends IComponentProps {
@@ -74,6 +75,11 @@ export class FormPanel extends Component<IFormPanelProps> {
 
     renderItems(): React.ReactNode {
         return React.Children.toArray(this.props.children).map((child, index) => {
+
+            let title = (child as any).props.title || (child as any).props.bindProp;
+            if ((child as any).type === CheckBox)
+                title = "";
+
             return (
                 <tr key={index}
                     style={{
@@ -87,7 +93,7 @@ export class FormPanel extends Component<IFormPanelProps> {
                             height: (child as any).props.height,
                             color: config.formPanel.labelColor
                         }}>
-                            {(child as any).props.title || (child as any).props.bindProp}
+                            {title}
                         </div>
                     </td>
                     <td style={{paddingTop: index > 0 ? config.formPanel.inputVerticalSpace : 0}}>

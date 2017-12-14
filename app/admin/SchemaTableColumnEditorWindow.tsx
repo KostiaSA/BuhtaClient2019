@@ -16,6 +16,7 @@ import {config} from "../config";
 import {showError} from "../ui/modals/showError";
 import {joiValidate} from "../validation/joiValidate";
 import {getConfirmation} from "../ui/modals/getConfirmation";
+import {CheckBox} from "../ui/inputs/CheckBox";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -109,6 +110,7 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                                         resizable storageKey="input:SchemaTable.dataType"
                                     />
                                     {this.renderDataTypeEditors()}
+                                    <CheckBox title="первичный ключ" bindProp="primaryKey" width={300}/>
                                 </FormPanel>
                             </TabsPanelItem>
 
