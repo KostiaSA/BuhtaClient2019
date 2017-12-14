@@ -278,6 +278,13 @@ class Test extends buhta.test.BaseTest {
                         id: "Boolean",
                     },
                 },
+                {
+                    name: "fk1",
+                    dataType: {
+                        "id": "ForeignKey",
+                        "fkTableId": "buhta/core-tests/sql/Тестовый_справочник_1.table"
+                    }
+                },
 
             ]
         };
@@ -324,6 +331,7 @@ class Test extends buhta.test.BaseTest {
             dateTime: buhta.config.sql.minDateTime,
             blob: new Uint8Array(0).buffer,
             boolean:false,
+            fk1:CONST.MIN_INT32,
         }
     }
 
@@ -367,6 +375,7 @@ class Test extends buhta.test.BaseTest {
             dateTime: null,
             blob: null,
             boolean:null,
+            fk1:null,
         }
     }
 
@@ -416,31 +425,32 @@ class Test extends buhta.test.BaseTest {
             dateTime: buhta.config.sql.maxDateTime,
             blob: this.blob_array.buffer,
             boolean:true,
+            fk1:CONST.MAX_INT32,
         }
     }
 
     async create_table() {
-        let sql = this._getSchemaTable().emitCreateTableSql(this._getDialect());
+        let sql = await  this._getSchemaTable().emitCreateTableSql(this._getDialect());
         await this._executeSql(sql);
     }
 
     async insert_row_with_min_values() {
-        let sql = this._getSchemaTable().emitInsertRowSql(this._getDialect(), this._getMinRow());
+        let sql = await  this._getSchemaTable().emitInsertRowSql(this._getDialect(), this._getMinRow());
         await this._executeSql(sql);
     }
 
     async insert_row_with_null_values() {
-        let sql = this._getSchemaTable().emitInsertRowSql(this._getDialect(), this._getNullRow());
+        let sql = await  this._getSchemaTable().emitInsertRowSql(this._getDialect(), this._getNullRow());
         await this._executeSql(sql);
     }
 
     async insert_row_with_max_values() {
-        let sql = this._getSchemaTable().emitInsertRowSql(this._getDialect(), this._getMaxRow());
+        let sql = await  this._getSchemaTable().emitInsertRowSql(this._getDialect(), this._getMaxRow());
         await this._executeSql(sql);
     }
 
     async select_row_with_min_values() {
-        let sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getMinRow().id);
+        let sql = await  this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getMinRow().id);
         let res = await this._executeSql(sql);
         assert.equal(res[0].rows.length, 1);
         let row = res[0].rows[0];
@@ -448,7 +458,7 @@ class Test extends buhta.test.BaseTest {
     }
 
     async select_row_with_null_values() {
-        let sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getNullRow().id);
+        let sql = await  this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getNullRow().id);
         let res = await this._executeSql(sql);
         assert.equal(res[0].rows.length, 1);
         let row = res[0].rows[0];
@@ -456,7 +466,7 @@ class Test extends buhta.test.BaseTest {
     }
 
     async select_row_with_max_values() {
-        let sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getMaxRow().id);
+        let sql = await  this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getMaxRow().id);
         let res = await this._executeSql(sql);
         assert.equal(res[0].rows.length, 1);
         let row = res[0].rows[0];
@@ -468,10 +478,10 @@ class Test extends buhta.test.BaseTest {
         newRow.string4000 = null;
         newRow.int16 = null;
         newRow.int32 = -508983;
-        let sql = this._getSchemaTable().emitUpdateRowSql(this._getDialect(), newRow);
+        let sql = await  this._getSchemaTable().emitUpdateRowSql(this._getDialect(), newRow);
         await this._executeSql(sql);
 
-        sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), newRow.id);
+        sql = await this._getSchemaTable().emitSelectRowSql(this._getDialect(), newRow.id);
         let res = await this._executeSql(sql);
         assert.equal(res[0].rows.length, 1);
         let row = res[0].rows[0];
@@ -480,24 +490,24 @@ class Test extends buhta.test.BaseTest {
 
     async delete_max_row() {
         let newRow = this._getMaxRow();
-        let sql = this._getSchemaTable().emitDeleteRowSql(this._getDialect(), newRow.id);
+        let sql = await  this._getSchemaTable().emitDeleteRowSql(this._getDialect(), newRow.id);
         await this._executeSql(sql);
 
-        sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), newRow.id);
+        sql = await this._getSchemaTable().emitSelectRowSql(this._getDialect(), newRow.id);
         let res = await this._executeSql(sql);
         assert.equal(res[0].rows.length, 0);
 
-        sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getMinRow().id);
+        sql = await this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getMinRow().id);
         res = await this._executeSql(sql);
         assert.equal(res[0].rows.length, 1);
 
-        sql = this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getNullRow().id);
+        sql = await this._getSchemaTable().emitSelectRowSql(this._getDialect(), this._getNullRow().id);
         res = await this._executeSql(sql);
         assert.equal(res[0].rows.length, 1);
     }
 
     async drop_table() {
-        let sql = this._getSchemaTable().emitDropTableSql(this._getDialect());
+        let sql = await  this._getSchemaTable().emitDropTableSql(this._getDialect());
         await this._executeSql(sql);
     }
 }

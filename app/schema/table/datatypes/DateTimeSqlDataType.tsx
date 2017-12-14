@@ -21,7 +21,7 @@ export class DateTimeSqlDataType extends BaseSqlDataType<IDateTimeSqlDataTypePro
     }
 
 
-    emitColumnDataType(dialect: SqlDialect, col: IDateTimeSqlDataTypeProps): string {
+    async emitColumnDataType(dialect: SqlDialect, col: IDateTimeSqlDataTypeProps): Promise<string> {
         if (dialect === "mssql") {
            return ("DATETIME2");
         }
@@ -39,7 +39,7 @@ export class DateTimeSqlDataType extends BaseSqlDataType<IDateTimeSqlDataTypePro
 
     }
 
-    emitValue(dialect: SqlDialect, colDataType: IDateTimeSqlDataTypeProps, date: Moment): string {
+    async emitValue(dialect: SqlDialect, colDataType: IDateTimeSqlDataTypeProps, date: Moment): Promise<string> {
         if (!isDateOrNull(date))
             throw  "значение ДатаВремя должно быть объектом типа Moment или null";
 

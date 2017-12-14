@@ -50,7 +50,7 @@ export class BooleanSqlDataType extends BaseSqlDataType<IBooleanSqlDataTypeProps
     // }
 
 
-    emitColumnDataType(dialect: SqlDialect, col: IBooleanSqlDataTypeProps): string {
+    async emitColumnDataType(dialect: SqlDialect, col: IBooleanSqlDataTypeProps): Promise<string> {
         if (dialect === "mssql") {
            return ("BIT");
         }
@@ -68,7 +68,7 @@ export class BooleanSqlDataType extends BaseSqlDataType<IBooleanSqlDataTypeProps
 
     }
 
-    emitValue(dialect: SqlDialect, colDataType: IBooleanSqlDataTypeProps, value: any): string {
+    async emitValue(dialect: SqlDialect, colDataType: IBooleanSqlDataTypeProps, value: any): Promise<string> {
         if (!isBooleanOrNull(value))
             throw  "значение должно быть true/false или null";
 

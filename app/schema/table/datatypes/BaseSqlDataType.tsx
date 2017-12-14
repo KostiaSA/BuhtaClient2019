@@ -54,11 +54,11 @@ export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypePro
         return null;
     }
 
-    emitColumnDataType(dialect: SqlDialect, col: IBaseSqlDataTypeProps): string {
+    async emitColumnDataType(dialect: SqlDialect, col: IBaseSqlDataTypeProps): Promise<string> {
         throw  "BaseSqlDataType.emitColumnDataType(): abstract error";
     }
 
-    emitValue(dialect: SqlDialect, colDataType: IBaseSqlDataTypeProps, value: any): string {
+    async emitValue(dialect: SqlDialect, colDataType: IBaseSqlDataTypeProps, value: any): Promise<string> {
         throw  "BaseSqlDataType.emitValue(): abstract error";
     }
 }

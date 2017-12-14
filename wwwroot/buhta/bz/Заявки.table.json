@@ -1,85 +1,95 @@
 ﻿{
-    "description": "Список 1211",
-    "name": "Автомбиль2",
-    "objectType": "table",
-    "columns": [{
-        "name": "Ключ",
-        "primaryKey": true,
-        "dataType": {
-            "id": "Integer",
-            "size": "64"
-        },
-        "description": "pos 01"
-    }, {
-        "name": "Марка22222222222222",
-        "dataType": {
-            "id": "Integer",
-            "size": "16"
-        },
-        "description": "pos 11"
-    }, {
-        "name": "Гаражный номер22",
-        "description": "pos 32",
-        "dataType": {
-            "id": "ForeignKey",
-            "fkTableId": "456456werwerwer"
-        },
-        "fkTableId": "456456werwerwer"
-    }, {
-        "name": "Грузоподъемность11",
-        "dataType": {
-            "id": "ForeignKey",
-            "fkTableId": "buhta/test1/Автомобиль.table.json"
-        },
-        "description": "pos 4"
-    }, {
-        "name": "Номер и название",
-        "dataType": {
-            "id": "String",
-            "maxLen": 401
-        },
-        "description": "pos 5222222211111111111111================="
-    }, {
-        "name": "ИНН ТС",
-        "dataType": {
-            "id": "String",
-            "maxLen": 30
-        },
-        "description": "pos 6"
-    }, {
-        "name": "Мощность",
-        "dataType": {
-            "id": "DateTime"
-        },
-        "description": "pos 7"
-    }, {
-        "name": "Номер",
-        "dataType": {
-            "id": "Decimal",
-            "scale": "9,2"
-        },
-        "description": "pos 8"
-    }, {
-        "name": "Код вида ТС",
-        "dataType": {
-            "id": "Blob"
-        },
-        "description": "pos 9"
-    }, {
-        "name": "новая колонка22",
-        "dataType": {
-            "id": "Boolean"
-        }
-    }],
-    "time1": "<<<<Time>2011-10-12 12:90:01",
-    "time2": "<<<<Date>2011-10-12",
-    "id": "<<<<Uint8Aray>C29BED81-7842-41FF-8D04-BAC2CC6C62B3^G",
-    "pic": "<<<<BufferArray>C29BED81-7842-41FF-8D04-BAC2CC6C62B3^B",
-    "date1": {
-        "$date": 1513109005545
+  "description": "Список 1211",
+  "name": "Автомбиль2",
+  "objectType": "table",
+  "columns": [
+    {
+      "name": "Ключ",
+      "primaryKey": true,
+      "dataType": {
+        "id": "Integer",
+        "size": "64"
+      },
+      "description": "pos 01"
     },
-    "createdBy": "Иванов17-20",
-    "createdDate": "<Date>2017-12-13 18:56:48.794",
-    "changedBy": "Иванов17-20",
-    "changedDate": "<Date>2017-12-14 00:34:52.037"
+    {
+      "name": "Марка22222222222222",
+      "dataType": {
+        "id": "Integer",
+        "size": "16"
+      },
+      "description": "pos 11"
+    },
+    {
+      "name": "Гаражный номер22",
+      "description": "pos 32",
+      "dataType": {
+        "id": "ForeignKey",
+        "fkTableId": "buhta/core-tests/sql/Тестовый_справочник_1.table"
+      }
+    },
+    {
+      "name": "Грузоподъемность11",
+      "dataType": {
+        "id": "ForeignKey",
+        "fkTableId": "buhta/test1/Автомобиль.table.json"
+      },
+      "description": "pos 4"
+    },
+    {
+      "name": "Номер и название",
+      "dataType": {
+        "id": "String",
+        "maxLen": 401
+      },
+      "description": "pos 5222222211111111111111================="
+    },
+    {
+      "name": "ИНН ТС",
+      "dataType": {
+        "id": "String",
+        "maxLen": 30
+      },
+      "description": "pos 6"
+    },
+    {
+      "name": "Мощность",
+      "dataType": {
+        "id": "DateTime"
+      },
+      "description": "pos 7"
+    },
+    {
+      "name": "Номер",
+      "dataType": {
+        "id": "Decimal",
+        "scale": "9,2"
+      },
+      "description": "pos 8"
+    },
+    {
+      "name": "Код вида ТС",
+      "dataType": {
+        "id": "Blob"
+      },
+      "description": "pos 9"
+    },
+    {
+      "name": "новая колонка22",
+      "dataType": {
+        "id": "Boolean"
+      }
+    }
+  ],
+  "time1": "<<<<Time>2011-10-12 12:90:01",
+  "time2": "<<<<Date>2011-10-12",
+  "id": "<<<<Uint8Aray>C29BED81-7842-41FF-8D04-BAC2CC6C62B3^G",
+  "pic": "<<<<BufferArray>C29BED81-7842-41FF-8D04-BAC2CC6C62B3^B",
+  "date1": {
+    "$date": 1513109005545
+  },
+  "createdBy": "Иванов17-20",
+  "createdDate": "<Date>2017-12-13 18:56:48.794",
+  "changedBy": "Иванов17-20",
+  "changedDate": "<Date>2017-12-14 10:48:04.241"
 }

@@ -61,7 +61,7 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
     }
 
     // todo autoincrement
-    emitColumnDataType(dialect: SqlDialect, col: IIntegerSqlDataTypeProps): string {
+    async emitColumnDataType(dialect: SqlDialect, col: IIntegerSqlDataTypeProps): Promise<string> {
         if (dialect === "mssql") {
             if (col.unsigned) {
                 switch (col.size) {
@@ -160,7 +160,7 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
 
     }
 
-    emitValue(dialect: SqlDialect, colDataType: IIntegerSqlDataTypeProps, value: any): string {
+    async emitValue(dialect: SqlDialect, colDataType: IIntegerSqlDataTypeProps, value: any): Promise<string> {
         if (!isIntegerOrNull(value))
             throw  "значение (" + value + ") должно быть целое число или null";
 

@@ -48,7 +48,7 @@ export class MoneySqlDataType extends BaseSqlDataType<IMoneySqlDataTypeProps> {
     // }
 
 
-    emitColumnDataType(dialect: SqlDialect, col: IMoneySqlDataTypeProps): string {
+    async emitColumnDataType(dialect: SqlDialect, col: IMoneySqlDataTypeProps): Promise<string> {
         if (dialect === "mssql") {
             return ("DECIMAL(16,2)");
         }
@@ -66,7 +66,7 @@ export class MoneySqlDataType extends BaseSqlDataType<IMoneySqlDataTypeProps> {
 
     }
 
-    emitValue(dialect: SqlDialect, colDataType: IMoneySqlDataTypeProps, value: any): string {
+    async emitValue(dialect: SqlDialect, colDataType: IMoneySqlDataTypeProps, value: any): Promise<string> {
         if (!isMoneyOrNull(value))
             throw  "значение 'деньги' должно быть числом или null";
 

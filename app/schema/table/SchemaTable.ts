@@ -187,7 +187,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
     //     return new SchemaTableRow(dbId, this, rowProps);
     // }
 
-    emitCreateTableSql(dialect: SqlDialect): SqlBatch {
+    async emitCreateTableSql(dialect: SqlDialect): Promise<SqlBatch> {
 
         let e = new SqlEmitter(dialect);
 
@@ -215,13 +215,14 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         sql.push("(\n");
 
         let colsSql: string[] = [];
-        this.props.columns.forEach((col: ISchemaTableColumnProps, index: number) => {
+        for (let col of this.props.columns) {
             let dataType = appState.sqlDataTypes[col.dataType.id];
-            let dataTypeStr = dataType.emitColumnDataType(dialect, col.dataType);
+            let dataTypeStr = await dataType.emitColumnDataType(dialect, col.dataType);
             let notNullStr = col.notNull ? " NOT NULL" : "";
             let pkStr = col.primaryKey ? " PRIMARY KEY" : "";
             colsSql.push("  " + e.emit_NAME(col.name) + " " + dataTypeStr + notNullStr + pkStr);
-        });
+        }
+
         sql.push(colsSql.join(",\n") + "\n");
 
         sql.push(")\n");
@@ -230,7 +231,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     }
 
-    emitDropTableSql(dialect: SqlDialect): SqlBatch {
+    async emitDropTableSql(dialect: SqlDialect): Promise<SqlBatch> {
 
         let e = new SqlEmitter(dialect);
 
@@ -246,7 +247,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     }
 
-    emitInsertRowSql(dialect: SqlDialect, row: any): SqlBatch {
+    async emitInsertRowSql(dialect: SqlDialect, row: any): Promise<SqlBatch> {
 
         let e = new SqlEmitter(dialect);
 
@@ -258,13 +259,13 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
         let colNames: string[] = [];
         let colValues: string[] = [];
-        this.props.columns.forEach((col: ISchemaTableColumnProps, index: number) => {
+        for (let col of this.props.columns) {
             if (row[col.name] !== undefined) {
                 if (row[col.name] !== null) {
                     let dataType = appState.sqlDataTypes[col.dataType.id];
                     colNames.push(e.emit_NAME(col.name));
                     try {
-                        colValues.push(dataType.emitValue(dialect, col.dataType, row[col.name]));
+                        colValues.push(await dataType.emitValue(dialect, col.dataType, row[col.name]));
                     }
                     catch (e) {
                         throw "SchemaTable.emitInsertRowSql(): колонка '" + col.name + "' в таблице '" + this.props.name + "': " + e.toString();
@@ -276,7 +277,8 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
                     }
                 }
             }
-        });
+
+        }
 
         sql.push("(" + colNames.join(",") + ") \nVALUES(" + colValues.join(",") + ")\n");
 
@@ -284,7 +286,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     }
 
-    emitSelectRowSql(dialect: SqlDialect, rowId: any, columns?: string[], skipColumns?: string[]): SqlBatch {
+    async emitSelectRowSql(dialect: SqlDialect, rowId: any, columns?: string[], skipColumns?: string[]): Promise<SqlBatch> {
         if (columns && !isArray(columns))
             throw "SchemaTable.emitSelectRowSql(): параметр 'columns' должен быть массивом строк";
 
@@ -322,13 +324,13 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         sql.push(" FROM " + e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
 
         let dataType = appState.sqlDataTypes[primaryKeyColumn.dataType.id];
-        sql.push(" WHERE " + e.emit_NAME(primaryKeyColumn.name) + "=" + dataType.emitValue(dialect, primaryKeyColumn.dataType, rowId));// this.valueToSql(primaryKeyColumn, this.rowId));
+        sql.push(" WHERE " + e.emit_NAME(primaryKeyColumn.name) + "=" + await dataType.emitValue(dialect, primaryKeyColumn.dataType, rowId));// this.valueToSql(primaryKeyColumn, this.rowId));
 
         return sql.join("");
 
     }
 
-    emitUpdateRowSql(dialect: SqlDialect, row: any): SqlBatch {
+    async emitUpdateRowSql(dialect: SqlDialect, row: any): Promise<SqlBatch> {
 
         let e = new SqlEmitter(dialect);
 
@@ -348,7 +350,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
             if (row[col.name] !== undefined) {
                 let dataType = appState.sqlDataTypes[col.dataType.id];
                 try {
-                    colSets.push("  " + e.emit_NAME(col.name) + "=" + dataType.emitValue(dialect, col.dataType, row[col.name]));
+                    colSets.push("  " + e.emit_NAME(col.name) + "=" + await dataType.emitValue(dialect, col.dataType, row[col.name]));
                 }
                 catch (e) {
                     throw "SchemaTable.emitUpdateRowSql(): колонка '" + col.name + "' в таблице '" + this.props.name + "': " + e.toString();
@@ -360,13 +362,13 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         sql.push(colSets.join(","));
 
         let pkDataType = appState.sqlDataTypes[primaryKeyColumn.dataType.id];
-        sql.push(" WHERE " + e.emit_NAME(primaryKeyColumn.name) + "=" + pkDataType.emitValue(dialect, primaryKeyColumn.dataType, row[primaryKeyColumn.name]));
+        sql.push(" WHERE " + e.emit_NAME(primaryKeyColumn.name) + "=" + await pkDataType.emitValue(dialect, primaryKeyColumn.dataType, row[primaryKeyColumn.name]));
 
         return sql.join("\n");
 
     }
 
-    emitDeleteRowSql(dialect: SqlDialect, rowId: any): SqlBatch {
+    async emitDeleteRowSql(dialect: SqlDialect, rowId: any): Promise<SqlBatch> {
 
         let e = new SqlEmitter(dialect);
 
@@ -380,7 +382,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
             throw "SchemaTable.emitUpdateRowSql(): не определен первичный ключ в таблице '" + this.props.name + "'";
 
         let pkDataType = appState.sqlDataTypes[primaryKeyColumn.dataType.id];
-        sql.push(" WHERE " + e.emit_NAME(primaryKeyColumn.name) + "=" + pkDataType.emitValue(dialect, primaryKeyColumn.dataType, rowId));
+        sql.push(" WHERE " + e.emit_NAME(primaryKeyColumn.name) + "=" + await pkDataType.emitValue(dialect, primaryKeyColumn.dataType, rowId));
 
         return sql.join("");
 

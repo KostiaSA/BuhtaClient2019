@@ -51,7 +51,7 @@ export class GuidSqlDataType extends BaseSqlDataType<IGuidSqlDataTypeProps> {
     // }
 
 
-    emitColumnDataType(dialect: SqlDialect, col: IGuidSqlDataTypeProps): string {
+    async emitColumnDataType(dialect: SqlDialect, col: IGuidSqlDataTypeProps): Promise<string> {
         if (dialect === "mssql") {
            return ("UNIQUEIDENTIFIER");
         }
@@ -69,7 +69,7 @@ export class GuidSqlDataType extends BaseSqlDataType<IGuidSqlDataTypeProps> {
 
     }
 
-    emitValue(dialect: SqlDialect, colDataType: IGuidSqlDataTypeProps, value: any): string {
+    async emitValue(dialect: SqlDialect, colDataType: IGuidSqlDataTypeProps, value: any): Promise<string> {
         if (!isGuidOrNull(value))
             throw  "значение должно быть guid-строкой или null";
 

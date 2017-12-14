@@ -73,7 +73,7 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
         );
     }
 
-    emitColumnDataType(dialect: SqlDialect, col: IStringSqlDataTypeProps): string {
+    async emitColumnDataType(dialect: SqlDialect, col: IStringSqlDataTypeProps): Promise<string> {
         let maxLen: any = col.maxLen;
         if (isString(maxLen))
             maxLen = parseInt(maxLen);
@@ -104,7 +104,7 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
 
     }
 
-    emitValue(dialect: SqlDialect, colDataType: IStringSqlDataTypeProps, value: any): string {
+    async emitValue(dialect: SqlDialect, colDataType: IStringSqlDataTypeProps, value: any): Promise<string> {
         if (!isStringOrNull(value))
             throw  "значение должно быть строкой или null";
 

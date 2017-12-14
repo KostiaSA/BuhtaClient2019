@@ -47,7 +47,7 @@ export class BlobSqlDataType extends BaseSqlDataType<IBlobSqlDataTypeProps> {
     // }
 
 
-    emitColumnDataType(dialect: SqlDialect, col: IBlobSqlDataTypeProps): string {
+    async emitColumnDataType(dialect: SqlDialect, col: IBlobSqlDataTypeProps): Promise<string> {
         if (dialect === "mssql") {
             return ("IMAGE");
         }
@@ -65,7 +65,7 @@ export class BlobSqlDataType extends BaseSqlDataType<IBlobSqlDataTypeProps> {
 
     }
 
-    emitValue(dialect: SqlDialect, colDataType: IBlobSqlDataTypeProps, value: ArrayBuffer): string {
+    async emitValue(dialect: SqlDialect, colDataType: IBlobSqlDataTypeProps, value: ArrayBuffer): Promise<string> {
         if (!isBlobOrNull(value))
             throw  "значение должно быть ArrayBuffer или null";
 

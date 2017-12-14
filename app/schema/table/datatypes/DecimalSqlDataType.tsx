@@ -77,7 +77,7 @@ export class DecimalSqlDataType extends BaseSqlDataType<IDecimalSqlDataTypeProps
         )
     }
 
-    emitColumnDataType(dialect: SqlDialect, col: IDecimalSqlDataTypeProps): string {
+    async emitColumnDataType(dialect: SqlDialect, col: IDecimalSqlDataTypeProps): Promise<string> {
         if (dialect === "mssql") {
             return "DECIMAL(" + col.scale + ")";
         }
@@ -95,7 +95,7 @@ export class DecimalSqlDataType extends BaseSqlDataType<IDecimalSqlDataTypeProps
 
     }
 
-    emitValue(dialect: SqlDialect, colDataType: IDecimalSqlDataTypeProps, value: any): string {
+    async emitValue(dialect: SqlDialect, colDataType: IDecimalSqlDataTypeProps, value: any): Promise<string> {
         if (!isDecimalOrNull(value))
             throw  "дробное значение (" + value + ") должно быть целое число или null";
 
