@@ -77,31 +77,43 @@ export class Grid extends Component<IGridProps> {
             if ((col as any).type === GridColumn) {
                 let colProps = (col as any).props as IGridColumnProps;
                 let columnOptions = omit(colProps, ["children", "compute"]);
-                columnOptions.cellsalign=columnOptions.align;
+                columnOptions.cellsalign = columnOptions.align;
                 if (!columnOptions.text)
                     columnOptions.text = columnOptions.datafield || "?datafield";
-                if (colProps.compute) {
-                    columnOptions.cellsrenderer = (rowIndex: number, columnfield: any, value: any, defaulthtml: string): string => {
-                        let defaultHtmlStart = defaulthtml.replace("</div>", "");
-                        let defaultHtmlEnd = "</div>";
+
+                columnOptions.cellsrenderer = (rowIndex: number, columnfield: any, value: any, defaulthtml: string): string => {
+
+                    if (!colProps.compute && !colProps.compute)
+                        return defaulthtml;
+
+                    let el = document.createElement("div");
+                    el.innerHTML = defaulthtml;
+                    let defaultSpan = el.childNodes[0] as HTMLElement;
+
+                    let computedTextOrNode: any;
+
+                    if (colProps.compute) {
                         let row = props.source[rowIndex];
-                        let computedValue: string;
                         try {
-                            let computedTextOrNode: any = colProps.compute!(row);
-                            if (computedTextOrNode === undefined || computedTextOrNode === null)
-                                computedValue = "";
-                            else if (!computedTextOrNode.type)
-                                computedValue = escapeHtml(computedTextOrNode.toString());
-                            else
-                                computedValue = ReactDOMServer.renderToStaticMarkup(computedTextOrNode);
+                            computedTextOrNode = colProps.compute(row);
                         }
                         catch (e) {
-                            computedValue = "<span style='color: indianred'>" + escapeHtml("Ошибка в compute(): " + e.toString().substr(0, 40)) + "</span>";
+                            defaultSpan.innerHTML = "<span style='color: indianred'>" + escapeHtml("Ошибка в compute(): " + e.toString().substr(0, 40)) + "</span>";
                             console.error("Ошибка в compute(): " + e.toString());
+                            return defaultSpan.outerHTML;
                         }
-                        return defaultHtmlStart + computedValue + defaultHtmlEnd;
-                    };
-                }
+                    }
+
+                    defaultSpan.innerHTML = ReactDOMServer.renderToStaticMarkup(
+                        <span>
+                            {computedTextOrNode}
+                        </span>
+                    );
+                    return defaultSpan.outerHTML;
+                    //console.log("rendered-------------------->>>", rendered);
+                    //return defaultHtmlStart + rendered + defaultHtmlEnd;
+                };
+
                 gridOptions.columns.push(columnOptions);
             }
         }
