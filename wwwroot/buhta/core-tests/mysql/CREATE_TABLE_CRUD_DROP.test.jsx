@@ -278,6 +278,34 @@ class Test extends buhta.test.BaseTest {
                         id: "Boolean",
                     },
                 },
+                {
+                    name: "fk1",
+                    dataType: {
+                        "id": "ForeignKey",
+                        "fkTableId": "buhta/core-tests/sql/Тестовый_справочник_1.table"
+                    }
+                },
+                {
+                    name: "fk2",
+                    dataType: {
+                        "id": "ForeignKey",
+                        "fkTableId": "buhta/core-tests/sql/Тестовый_справочник_2.table"
+                    }
+                },
+                {
+                    name: "fk3",
+                    dataType: {
+                        "id": "ForeignKey",
+                        "fkTableId": "buhta/core-tests/sql/Тестовый_справочник_3.table"
+                    }
+                },
+                {
+                    name: "fk4",
+                    dataType: {
+                        "id": "ForeignKey",
+                        "fkTableId": "buhta/core-tests/sql/Тестовый_справочник_4.table"
+                    }
+                },
 
             ]
         };
@@ -324,6 +352,10 @@ class Test extends buhta.test.BaseTest {
             dateTime: buhta.config.sql.minDateTime,
             blob: new Uint8Array(0).buffer,
             boolean:false,
+            fk1:CONST.MIN_INT32,
+            fk2:0,
+            fk3: "00000000-0000-0000-0000-000000000000",
+            fk4: "",
         }
     }
 
@@ -367,6 +399,10 @@ class Test extends buhta.test.BaseTest {
             dateTime: null,
             blob: null,
             boolean:null,
+            fk1:null,
+            fk2:null,
+            fk3:null,
+            fk4:null,
         }
     }
 
@@ -416,6 +452,11 @@ class Test extends buhta.test.BaseTest {
             dateTime: buhta.config.sql.maxDateTime,
             blob: this.blob_array.buffer,
             boolean:true,
+            fk1:CONST.MAX_INT32,
+            fk2:CONST.MAX_SAFE_INTEGER_FLOAT64,
+            fk3: "ffffffff-ffff-ffff-ffff-ffffffffffff",
+            fk4: "Ямай首頁>所有分類ка12389834fdc8",
+
         }
     }
 

@@ -1,0 +1,33 @@
+﻿{
+    "description": "Тестовый справочник 4",
+    "name": "Тестовый_справочник_4",
+    "objectType": "table",
+    "columns": [{
+        "name": "Ключ",
+        "primaryKey": true,
+        "dataType": {
+            "id": "String",
+            "maxLen": 25
+        },
+        "description": "pos 01"
+    }, {
+        "name": "Номер",
+        "dataType": {
+            "id": "String",
+            "maxLen": 50
+        },
+        "description": "pos 8"
+    }, {
+        "name": "Название",
+        "dataType": {
+            "id": "String",
+            "maxLen": 150
+        },
+        "description": "pos 9"
+    }],
+    "createdBy": "Иванов17-20",
+    "createdDate": "<Date>2017-12-13 18:56:48.794",
+    "changedBy": "Иванов17-20",
+    "changedDate": "<Date>2017-12-14 12:12:40.256",
+    "note": "<<2>"
+}

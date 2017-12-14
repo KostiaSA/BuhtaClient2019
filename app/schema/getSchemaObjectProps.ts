@@ -3,19 +3,19 @@ import {loadSchemaObjectFiles} from "../api/loadSchemaObjectFiles";
 import {isString} from "../utils/isString";
 import {XJSON_parse} from "../utils/xjson";
 
-export let schemaObjectJsonCache: { [objectId: string]: string; } = {};
+export let schemaObjectJsonCache: { [objectId: string]: ISchemaObjectProps; } = {};
 
 export async function getSchemaObjectProps<P extends ISchemaObjectProps=ISchemaObjectProps>(objectId: string): Promise<P> {
 
     if (!isString(objectId))
         throw "getSchemaObjectProps(): 'objectId' должен быть строкой";
 
-    let json = schemaObjectJsonCache[objectId];
-    if (!json) {
+    let props = schemaObjectJsonCache[objectId] as P;
+    if (!props) {
         let res = await loadSchemaObjectFiles(objectId);
-        schemaObjectJsonCache[objectId] = res.json!;
-        json = res.json!;
+        props = XJSON_parse(res.json!);
+        schemaObjectJsonCache[objectId] = props;
     }
 
-    return XJSON_parse(json);
+    return props;
 }
