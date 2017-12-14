@@ -1,4 +1,5 @@
 import * as  React from "react";
+import * as ReactDOMServer from 'react-dom/server';
 import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
@@ -57,7 +58,7 @@ export class Grid extends Component<IGridProps> {
     }
 
     updateProps(props: IGridProps, create: boolean) {
-        let gridOptions: any = omit(props, ["children", "source", "onRowDoubleClick", "onRowKeyDown","popup"]);
+        let gridOptions: any = omit(props, ["children", "source", "onRowDoubleClick", "onRowKeyDown", "popup"]);
         gridOptions.height = gridOptions.height || 350;
         gridOptions.width = gridOptions.width || "100%";
         gridOptions.rowsheight = gridOptions.rowsheight || config.grid.rowsHeight;
@@ -76,6 +77,7 @@ export class Grid extends Component<IGridProps> {
             if ((col as any).type === GridColumn) {
                 let colProps = (col as any).props as IGridColumnProps;
                 let columnOptions = omit(colProps, ["children", "compute"]);
+                columnOptions.cellsalign=columnOptions.align;
                 if (!columnOptions.text)
                     columnOptions.text = columnOptions.datafield || "?datafield";
                 if (colProps.compute) {
@@ -85,7 +87,13 @@ export class Grid extends Component<IGridProps> {
                         let row = props.source[rowIndex];
                         let computedValue: string;
                         try {
-                            computedValue = escapeHtml(colProps.compute!(row));
+                            let computedTextOrNode: any = colProps.compute!(row);
+                            if (computedTextOrNode === undefined || computedTextOrNode === null)
+                                computedValue = "";
+                            else if (!computedTextOrNode.type)
+                                computedValue = escapeHtml(computedTextOrNode.toString());
+                            else
+                                computedValue = ReactDOMServer.renderToStaticMarkup(computedTextOrNode);
                         }
                         catch (e) {
                             computedValue = "<span style='color: indianred'>" + escapeHtml("Ошибка в compute(): " + e.toString().substr(0, 40)) + "</span>";

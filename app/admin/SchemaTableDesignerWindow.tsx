@@ -204,9 +204,16 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
     columnsGrid: Grid;
     form: FormPanel;
 
-    dataTypeColumnCompute = (row: ISchemaTableColumnProps): string => {
+    dataTypeColumnCompute = (row: ISchemaTableColumnProps): React.ReactNode => {
         let dt = appState.sqlDataTypes[row.dataType.id];
         return dt.getName(row.dataType);
+    };
+
+    pkColumnCompute = (row: ISchemaTableColumnProps): React.ReactNode => {
+        if (row.primaryKey)
+            return <img src="vendor/fugue/key.png"/>;
+        else
+            return null;
     };
 
 
@@ -296,6 +303,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                     return false;
                                             }}
                                         >
+                                            <GridColumn text="PK" compute={this.pkColumnCompute} align="center"/>
                                             <GridColumn text="Колонка" datafield="name"/>
                                             <GridColumn text="Тип данных" compute={this.dataTypeColumnCompute}/>
                                             <GridColumn text="Описание" datafield="description"/>

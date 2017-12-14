@@ -8,7 +8,8 @@ export interface IGridColumnProps {
     cellsformat?: string;
     aggregates?: string[];
 //    cellsrenderer?: (row: any,columnfield: any, value: any, defaulthtml: any) => string;
-    compute?: (row: any) => string;
+    compute?: (row: any) => React.ReactNode;
+    align?: "left" | "center" | "right";
 }
 
 export class GridColumn extends React.Component<IGridColumnProps> {
