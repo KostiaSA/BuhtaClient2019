@@ -303,8 +303,8 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                     return false;
                                             }}
                                         >
-                                            <GridColumn text="PK" compute={this.pkColumnCompute} align="center"/>
-                                            <GridColumn text="Колонка" datafield="name"/>
+                                            {/*<GridColumn text="PK" compute={this.pkColumnCompute} align="center" width={60} pinned/>*/}
+                                            <GridColumn text="Колонка" datafield="name" pinned/>
                                             <GridColumn text="Тип данных" compute={this.dataTypeColumnCompute}/>
                                             <GridColumn text="Описание" datafield="description"/>
                                         </Grid>

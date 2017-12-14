@@ -10,6 +10,12 @@ export interface IGridColumnProps {
 //    cellsrenderer?: (row: any,columnfield: any, value: any, defaulthtml: any) => string;
     compute?: (row: any) => React.ReactNode;
     align?: "left" | "center" | "right";
+    width?: number;
+    maxWidth?: number;
+    minWidth?: number;
+    resizable?: boolean;
+    draggable?: boolean;
+    pinned?: boolean;
 }
 
 export class GridColumn extends React.Component<IGridColumnProps> {

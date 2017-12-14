@@ -83,6 +83,6 @@ export let config: any = {
 
     },
     grid: {
-        rowsHeight: 22
+        rowsHeight: 21
     }
 };

@@ -107,3 +107,12 @@ input[type=text].jqx-input {
 .jqx-checkbox-default {
     margin-left: 0px;
 }
+
+.jqx-widget-header-buhta, .jqx-grid-buhta .jqx-widget-header-buhta {
+    background-color: #f7f7f7;
+    background-image:initial;
+}
+
+.jqx-widget-buhta .jqx-grid-cell-pinned-buhta {
+    background-color: #ffeb3b0a;
+}
