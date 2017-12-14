@@ -90,21 +90,21 @@ export class TreeGrid extends Component<ITreeGridProps> {
         for (let col of React.Children.toArray(this.props.children)) {
             if ((col as any).type === TreeGridColumn) {
                 let colProps = (col as any).props as ITreeGridColumnProps;
-                let columnOptions = omit(colProps, ["children", "compute"]);
+                let columnOptions = omit(colProps, ["children", "getText"]);
                 if (!columnOptions.text)
                     columnOptions.text = columnOptions.datafield || "?datafield";
-                // if (colProps.compute) {
+                // if (colProps.getText) {
                 //     columnOptions.cellsrenderer = (rowIndex: number, columnfield: any, value: any, defaulthtml: string): string => {
                 //         let defaultHtmlStart = defaulthtml.replace("</div>", "");
                 //         let defaultHtmlEnd = "</div>";
                 //         let row = props.source[rowIndex];
                 //         let computedValue: string;
                 //         try {
-                //             computedValue = escapeHtml(colProps.compute!(row));
+                //             computedValue = escapeHtml(colProps.getText!(row));
                 //         }
                 //         catch (e) {
-                //             computedValue = "<span style='color: indianred'>" + escapeHtml("Ошибка в compute(): " + e.toString().substr(0, 40)) + "</span>";
-                //             console.error("Ошибка в compute(): " + e.toString());
+                //             computedValue = "<span style='color: indianred'>" + escapeHtml("Ошибка в getText(): " + e.toString().substr(0, 40)) + "</span>";
+                //             console.error("Ошибка в getText(): " + e.toString());
                 //         }
                 //         return defaultHtmlStart + computedValue + defaultHtmlEnd;
                 //     };

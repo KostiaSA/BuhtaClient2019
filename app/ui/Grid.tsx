@@ -1,4 +1,5 @@
 import * as  React from "react";
+import {CSSProperties} from "react";
 import * as ReactDOMServer from 'react-dom/server';
 import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "./Component";
@@ -7,6 +8,7 @@ import {GridColumn, IGridColumnProps} from "./GridColumn";
 import {Keycode} from "../utils/Keycode";
 import {escapeHtml} from "../utils/escapeHtml";
 import {config} from "../config";
+import {isString} from "../utils/isString";
 
 
 export interface IGridProps extends IComponentProps {
@@ -76,39 +78,73 @@ export class Grid extends Component<IGridProps> {
         for (let col of React.Children.toArray(this.props.children)) {
             if ((col as any).type === GridColumn) {
                 let colProps = (col as any).props as IGridColumnProps;
-                let columnOptions = omit(colProps, ["children", "compute"]);
+
+                let columnOptions = omit(colProps, [
+                    "children",
+                    "headerText",
+                    "color",
+                    "background",
+                    "fontWeight",
+                    "fontStyle",
+                    "fontFamily",
+                    "getColor",
+                    "getBackground",
+                    "getFontSize",
+                    "getFontWeight",
+                    "getFontStyle",
+                    "getFontFamily",
+                    "getText"
+                ]);
+
+
                 columnOptions.cellsalign = columnOptions.align;
+
+                columnOptions.text = colProps.headerText;
                 if (!columnOptions.text)
                     columnOptions.text = columnOptions.datafield || "?datafield";
 
                 columnOptions.cellsrenderer = (rowIndex: number, columnfield: any, value: any, defaulthtml: string): string => {
 
-                    if (!colProps.compute && !colProps.compute)
+                    if (!colProps.getText && !colProps.color && !colProps.getColor)
                         return defaulthtml;
 
                     let el = document.createElement("div");
                     el.innerHTML = defaulthtml;
                     let defaultSpan = el.childNodes[0] as HTMLElement;
 
-                    let computedTextOrNode: any;
+                    let err = (message: string) => {
+                        defaultSpan.innerText = "ошибка в getText(): " + message;
+                        console.error(defaultSpan.innerText);
+                        return defaultSpan.outerHTML;
+                    };
 
-                    if (colProps.compute) {
-                        let row = props.source[rowIndex];
-                        try {
-                            computedTextOrNode = colProps.compute(row);
-                        }
-                        catch (e) {
-                            defaultSpan.innerHTML = "<span style='color: indianred'>" + escapeHtml("Ошибка в compute(): " + e.toString().substr(0, 40)) + "</span>";
-                            console.error("Ошибка в compute(): " + e.toString());
-                            return defaultSpan.outerHTML;
-                        }
+                    let style: CSSProperties = {};
+
+                    if (colProps.color) {
+                        if (!isString(colProps.color))
+                            return err("'color' должен быть строкой");
+                        defaultSpan.style.color = colProps.color;
                     }
 
-                    defaultSpan.innerHTML = ReactDOMServer.renderToStaticMarkup(
-                        <span>
-                            {computedTextOrNode}
-                        </span>
-                    );
+
+                    if (colProps.getText) {
+                        let computedTextOrNode: any;
+                        let row = props.source[rowIndex];
+                        try {
+                            computedTextOrNode = colProps.getText(row);
+                        }
+                        catch (e) {
+                            defaultSpan.innerHTML = "<span style='color: indianred'>" + escapeHtml("Ошибка в getText(): " + e.toString().substr(0, 40)) + "</span>";
+                            console.error("Ошибка в getText(): " + e.toString());
+                            return defaultSpan.outerHTML;
+                        }
+                        defaultSpan.innerHTML = ReactDOMServer.renderToStaticMarkup(
+                            <span style={style}>
+                                         {computedTextOrNode}
+                                     </span>
+                        );
+                    }
+
                     return defaultSpan.outerHTML;
                     //console.log("rendered-------------------->>>", rendered);
                     //return defaultHtmlStart + rendered + defaultHtmlEnd;
