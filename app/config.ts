@@ -79,10 +79,21 @@ export let config: any = {
         minDate: moment("0001-01-02"),
         maxDate: moment("9999-12-31"),
         minDateTime: moment("0001-01-02 00:00:00.001"),
-        maxDateTime: moment("9999-12-31 23:59:59.999")
+        maxDateTime: moment("9999-12-31 23:59:59.999"),
+
+        fkDataTypeColor: "darkcyan",
+        blobDataTypeColor: "olive",
+        booleanDataTypeColor: "tomato",
+        dateDataTypeColor: "royalblue",
+        dateTimeDataTypeColor: "royalblue",
+        decimalDataTypeColor: "black",
+        integerDataTypeColor: "black",
+        moneyDataTypeColor: "forestgreen",
+        guidDataTypeColor: "darkorange",
+        stringDataTypeColor: "brown",
 
     },
     grid: {
         rowsHeight: 21
-    }
+    },
 };

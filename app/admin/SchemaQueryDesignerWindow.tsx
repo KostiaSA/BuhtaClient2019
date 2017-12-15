@@ -1,4 +1,5 @@
 import * as  React from "react";
+import {CSSProperties} from "react";
 
 import {Window} from "../ui/Window";
 import {TabsPanel} from "../ui/TabsPanel";
@@ -11,7 +12,7 @@ import {FlexItem} from "../ui/FlexItem";
 import {Button} from "../ui/Button";
 import {loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
 import {getErrorWindow} from "../ui/modals/showError";
-import {ISchemaQueryProps, SchemaQuery} from "../schema/query/SchemaQuery";
+import {ISchemaQueryColumnProps, ISchemaQueryProps, SchemaQuery} from "../schema/query/SchemaQuery";
 import {config} from "../config";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
 import {XJSON_parse} from "../utils/xjson";
@@ -27,6 +28,7 @@ export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
     //queryId?: string;
     //window?: IWindowProps;
 }
+
 
 export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
@@ -251,6 +253,31 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
             )
     };
 
+    getRootColumnText = (row: ISchemaQueryColumnProps): React.ReactNode => {
+        let style: CSSProperties = {};
+
+        if (!!row.tableId && !row.fieldSource)
+            return <span style={{fontWeight: "bold"}}>{row.tableId}</span>;
+        else if (!row.tableId && !!row.fieldSource)
+            return <span>{row.fieldSource}</span>;
+        else
+            return <span style={{fontWeight: "bold"}}>{row.fieldSource}<span
+                style={{fontWeight: 500, color:config.sql.fkDataTypeColor}}>->{row.tableId}</span></span>;
+
+    };
+
+    getColumnCaptionText = (row: ISchemaQueryColumnProps): React.ReactNode => {
+        let style: CSSProperties = {};
+
+        if (row.tableId)
+            return null;
+        else if (row.fieldCaption)
+            return <span>{row.fieldCaption}</span>;
+        else
+            return <span style={{color: "silver"}}>{row.fieldSource}</span>;
+
+    };
+
     render() {
 
         if (this.error) {
@@ -324,10 +351,13 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                 }}
                                                 popup={this.createPopupMenu}
                                                 enableHover={false}
+                                                expandAll
 
                                             >
-                                                <TreeGridColumn text="Тест" datafield="fieldSource"/>
-                                                <TreeGridColumn text="Тест2" datafield="tableId"/>
+                                                <TreeGridColumn headerText="Таблица/Колонка"
+                                                                getText={this.getRootColumnText}/>
+                                                <TreeGridColumn headerText="Заголовок"
+                                                                getText={this.getColumnCaptionText}/>
 
                                             </TreeGrid>
                                         </FlexItem>

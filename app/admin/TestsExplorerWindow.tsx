@@ -272,7 +272,7 @@ export class TestsExplorerWindow extends React.Component<any> {
                             enableHover={false}
 
                         >
-                            <TreeGridColumn text="Тест" datafield="name"/>
+                            <TreeGridColumn headerText="Тест" datafield="name"/>
 
                         </TreeGrid>
                     </FlexItem>

@@ -20,7 +20,7 @@ export class MoneySqlDataType extends BaseSqlDataType<IMoneySqlDataTypeProps> {
     }
 
     getDesignerColor(): string {
-        return "forestgreen";
+        return config.sql.moneyDataTypeColor;
     }
 
     // getPropsNames(): string[] {

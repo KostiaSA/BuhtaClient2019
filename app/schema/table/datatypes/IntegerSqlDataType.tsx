@@ -5,6 +5,7 @@ import {ComboBox} from "../../../ui/inputs/ComboBox";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isIntegerOrNull} from "../../../utils/isIntegerOrNull";
 import {CheckBox} from "../../../ui/inputs/CheckBox";
+import {config} from "../../../config";
 
 let CONST = require("numeric-constants");
 
@@ -32,6 +33,10 @@ export class IntegerSqlDataType extends BaseSqlDataType<IIntegerSqlDataTypeProps
         else {
             return (props.unsigned ? "+" : "") + this.getName() + props.size + (props.autoIncrement ? ", autoInc" : "")
         }
+    }
+
+    getDesignerColor(): string {
+        return config.sql.integerDataTypeColor;
     }
 
     getValidator(): Joi.ObjectSchema {

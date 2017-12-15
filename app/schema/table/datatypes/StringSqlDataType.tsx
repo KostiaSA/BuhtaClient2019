@@ -33,7 +33,7 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
     }
 
     getDesignerColor(): string {
-        return "brown";
+        return config.sql.stringDataTypeColor;
     }
 
     getPropsNames(): string[] {

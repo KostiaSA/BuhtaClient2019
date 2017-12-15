@@ -19,6 +19,9 @@ export interface IGridProps extends IComponentProps {
     sortable?: boolean;
     onRowDoubleClick?: (rowIndex: number) => void;
     onRowKeyDown?: (rowIndex: number, keyCode: Keycode) => boolean;
+    columnsResize?: boolean;
+    columnsReorder?: boolean;
+
 }
 
 export class Grid extends Component<IGridProps> {
@@ -67,6 +70,9 @@ export class Grid extends Component<IGridProps> {
 
         if (gridOptions.sortable !== false)
             gridOptions.sortable = true;
+
+        if (gridOptions.columnsResize !== false)
+            gridOptions.columnsResize = true;
 
         gridOptions.source = {
             localdata: props.source,

@@ -2,6 +2,7 @@ import * as React from "react";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isBlobOrNull} from "../../../utils/isBlobOrNull";
+import {config} from "../../../config";
 
 declare let TextEncoder: any;
 
@@ -19,7 +20,7 @@ export class BlobSqlDataType extends BaseSqlDataType<IBlobSqlDataTypeProps> {
     }
 
     getDesignerColor(): string {
-        return "olive";
+        return config.sql.blobDataTypeColor;
     }
 
     // getPropsNames(): string[] {

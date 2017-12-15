@@ -21,7 +21,7 @@ export class DateTimeSqlDataType extends BaseSqlDataType<IDateTimeSqlDataTypePro
     }
 
     getDesignerColor(): string {
-        return "royalblue";
+        return config.sql.dateTimeDataTypeColor;
     }
 
 

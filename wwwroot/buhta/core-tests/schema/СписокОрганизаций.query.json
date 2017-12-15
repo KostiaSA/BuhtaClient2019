@@ -21,11 +21,13 @@
         "children":[
           {
             "key": "key5",
-            "fieldSource":"Номер"
+            "fieldSource":"Номер",
+            "fieldCaption":"ДирНомер"
           },
           {
             "key": "key6",
-            "fieldSource":"Фамилия"
+            "fieldSource":"Фамилия",
+            "fieldCaption":"ДирФамилия"
           }
         ]
       }

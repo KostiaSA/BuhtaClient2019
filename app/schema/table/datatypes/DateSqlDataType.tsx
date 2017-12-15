@@ -24,7 +24,7 @@ export class DateSqlDataType extends BaseSqlDataType<IDateSqlDataTypeProps> {
     }
 
     getDesignerColor(): string {
-        return "royalblue";
+        return config.sql.dateDataTypeColor;
     }
 
     async emitColumnDataType(dialect: SqlDialect, col: IDateSqlDataTypeProps): Promise<string> {

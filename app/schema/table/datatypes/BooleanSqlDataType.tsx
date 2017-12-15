@@ -22,7 +22,7 @@ export class BooleanSqlDataType extends BaseSqlDataType<IBooleanSqlDataTypeProps
     }
 
     getDesignerColor(): string {
-        return "tomato";
+        return config.sql.booleanDataTypeColor;
     }
 
     // getPropsNames(): string[] {

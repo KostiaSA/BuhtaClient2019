@@ -56,6 +56,10 @@ export class DecimalSqlDataType extends BaseSqlDataType<IDecimalSqlDataTypeProps
         }
     }
 
+    getDesignerColor(): string {
+        return config.sql.decimalDataTypeColor;
+    }
+
     getValidator(): Joi.ObjectSchema {
         return super.getValidator().keys({
             scale: Joi.string().only(DecimalScale).label("размерность"),
