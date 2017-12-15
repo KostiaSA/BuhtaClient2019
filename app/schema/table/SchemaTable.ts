@@ -44,7 +44,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         return Joi.object().options({language: joiRus}).keys({
             name: Joi.string().max(config.sql.maxIdentifierLength).required().label("имя"),
             primaryKey: Joi.boolean().label("первичный ключ"),
-            description: Joi.string().max(config.sql.maxStringLength).label("описание"),
+            description: Joi.string().max(config.sql.maxStringLength).allow("").label("описание"),
             notNull: Joi.boolean().label("not null"),
             dataType: alternatives(appState.sqlDataTypesAsArray.map((dt) => dt.getValidator())).label("тип данных"),
         })

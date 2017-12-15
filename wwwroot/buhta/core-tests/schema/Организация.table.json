@@ -1,0 +1,46 @@
+﻿{
+    "description": "Справочник организаций",
+    "name": "Организация",
+    "objectType": "table",
+    "columns": [{
+        "name": "Ключ",
+        "primaryKey": true,
+        "dataType": {
+            "id": "Integer",
+            "size": "32",
+            "unsigned": false
+        },
+        "notNull": true
+    }, {
+        "name": "Номер",
+        "dataType": {
+            "id": "String",
+            "maxLen": 20
+        },
+        "description": ""
+    }, {
+        "name": "Название",
+        "dataType": {
+            "id": "String",
+            "maxLen": 30
+        },
+        "description": " "
+    }, {
+        "name": "ИНН",
+        "dataType": {
+            "id": "String",
+            "maxLen": 12
+        },
+        "description": " "
+    }, {
+        "name": "Директор",
+        "dataType": {
+            "id": "ForeignKey",
+            "fkTableId": "buhta/core-tests/schema/Сотрудник.table"
+        }
+    }],
+    "createdBy": "Иванов17-20",
+    "createdDate": "<Date>2017-12-15 11:03:45.046",
+    "changedBy": "Иванов17-20",
+    "changedDate": "<Date>2017-12-15 12:02:07.475"
+}

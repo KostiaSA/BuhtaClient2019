@@ -1,0 +1,34 @@
+﻿{
+  "description": "Справочник организаций",
+  "name": "СписокОрганизаций",
+  "objectType": "query",
+  "root": {
+    "key": "key1",
+    "tableId":"buhta/core-tests/schema/Организация.table",
+    "children":[
+      {
+        "key": "key2",
+        "fieldSource":"Номер"
+      },
+      {
+        "key": "key3",
+        "fieldSource":"Название"
+      },
+      {
+        "key": "key4",
+        "fieldSource":"Директор",
+        "tableId":"buhta/core-tests/schema/Сотрудник.table",
+        "children":[
+          {
+            "key": "key5",
+            "fieldSource":"Номер"
+          },
+          {
+            "key": "key6",
+            "fieldSource":"Фамилия"
+          }
+        ]
+      }
+    ]
+  }
+}
