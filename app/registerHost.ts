@@ -14,6 +14,18 @@ import {SchemaObject} from "./schema/SchemaObject";
 import {base64ToArrayBuffer} from "./utils/base64ToArrayBuffer";
 import {arrayBufferToBase64} from "./utils/arrayBufferToBase64";
 import {XJSON_parse, XJSON_parse_postprocess, XJSON_stringify} from "./utils/xjson";
+import {
+    checkGuid,
+    emptyGuid,
+    guidFromBase64, guidFromHex,
+    guidToBase64, guidToHex,
+    isGuid,
+    isGuidOrNull,
+    isGuidsEqual,
+    maxGuid,
+    minGuid,
+    newGuid
+} from "./utils/guid";
 
 declare const chai: any;
 declare const window: any;
@@ -48,11 +60,24 @@ export function registerHost() {
 
         },
         util: {
-            base64ToArrayBuffer:base64ToArrayBuffer,
-            arrayBufferToBase64:arrayBufferToBase64,
-            XJSON_stringify:XJSON_stringify,
-            XJSON_parse:XJSON_parse,
-            XJSON_parse_postprocess:XJSON_parse_postprocess,
+            base64ToArrayBuffer: base64ToArrayBuffer,
+            arrayBufferToBase64: arrayBufferToBase64,
+            XJSON_stringify: XJSON_stringify,
+            XJSON_parse: XJSON_parse,
+            XJSON_parse_postprocess: XJSON_parse_postprocess,
+            newGuid: newGuid,
+            emptyGuid: emptyGuid,
+            minGuid: minGuid,
+            maxGuid: maxGuid,
+            isGuid: isGuid,
+            isGuidOrNull: isGuidOrNull,
+            checkGuid: checkGuid,
+            guidFromBase64: guidFromBase64,
+            guidToBase64: guidToBase64,
+            isGuidsEqual: isGuidsEqual,
+            guidFromHex: guidFromHex,
+            guidToHex: guidToHex,
+
         }
     };
 

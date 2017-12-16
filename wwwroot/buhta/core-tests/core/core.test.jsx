@@ -20,6 +20,7 @@ class Test extends buhta.test.BaseTest {
             str2: "<Date>???",
             arrayBuffer: buhta.util.base64ToArrayBuffer(base64),
             uint8Array: new Uint8Array(buhta.util.base64ToArrayBuffer(base64)),
+            guid: buhta.util.newGuid(),
 
             date1: moment("0001-12-13 16:25:13.023"),
             date2: moment("5217-12-13 16:44:58.049"),
@@ -39,6 +40,7 @@ class Test extends buhta.test.BaseTest {
         assert(obj.str2 === clone.str2, "error on 'String' 2");
         assert(btoa(obj.arrayBuffer) === btoa(clone.arrayBuffer), "error on 'ArrayBuffer'");
         assert(btoa(obj.uint8Array) === btoa(clone.uint8Array), "error on 'Uint8Array'");
+        assert(btoa(obj.guid) === btoa(clone.guid), "error on 'Guid'");
         assert(obj.date1.isSame(clone.date1), "error on 'Date/Moment' 1");
         assert(obj.date2.isSame(clone.date2), "error on 'Date/Moment' 2");
         assert(obj.date3.isSame(clone.date3), "error on 'Date/Moment' 3");
@@ -48,6 +50,27 @@ class Test extends buhta.test.BaseTest {
         assert(obj.time2.isSame(clone.time2), "error on 'Time' 2");
         assert(obj.time3.isSame(clone.time3), "error on 'Time' 3");
 
+    }
+
+    async newGuid() {
+        let guid=buhta.util.newGuid();
+    }
+
+    async guidBase64ToFrom() {
+        let guid=buhta.util.newGuid();
+        let base64=buhta.util.guidToBase64(guid);
+        let guid2=buhta.util.guidFromBase64(base64);
+        let base64_2=buhta.util.guidToBase64(guid2);
+        assert(base64 === base64_2, "ошибка кодирования");
+        assert(buhta.util.isGuidsEqual(guid,guid2), "ошибка кодирования");
+        assert(!buhta.util.isGuidsEqual(guid,buhta.util.newGuid()), "ошибка кодирования");
+    }
+
+    async guidHexToFrom() {
+        let hex = "8d950d6b-0929-4de1-b79c-eb06ab932caf";
+        let guid=buhta.util.guidFromHex(hex);
+        let hex2=buhta.util.guidToHex(guid);
+        assert(hex === hex2, "ошибка кодирования");
     }
 
 

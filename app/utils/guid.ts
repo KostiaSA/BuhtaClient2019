@@ -29,6 +29,10 @@ export function isGuid(value: any): boolean {
     return value && value.constructor === Uint32Array && value.length === 4;
 }
 
+export function isGuidOrNull(value: any): boolean {
+    return value === null || isGuid(value);
+}
+
 export function checkGuid(value: any, message: string = "ошибка") {
     if (!isGuid(value))
         throw message + ": неверный формат Guid";
@@ -54,6 +58,24 @@ export function guidToBase64(value: Guid): string {
     return window.btoa(binary);
 }
 
+export function guidToHex(value: Guid): string {
+    checkGuid(value, "guidToHex");
+
+    let bytes = new DataView(value.buffer);
+    let str = "";
+    for (let i = 0; i < 16; i++) {
+        str += '0' + (bytes.getUint8(i) & 0xFF).toString(16).slice(-2);
+    }
+    return str;
+}
+
+export function guidFromHex(hex: string): Guid {
+    if (!isString(hex))
+        throw "guidFromHex(): hex должно быть строкой в формате '8d950d6b-0929-4de1-b79c-eb06ab932caf'";
+
+    return new Uint32Array(4);
+}
+
 export function guidFromBase64(base64: string): Guid {
     if (!isString(base64))
         throw "guidFromBase64(): base64 должно быть строкой";
@@ -68,5 +90,4 @@ export function guidFromBase64(base64: string): Guid {
         bytes.setUint8(i, binary_string.charCodeAt(i));
     }
     return guid;
-
 }
