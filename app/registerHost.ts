@@ -17,8 +17,10 @@ import {XJSON_parse, XJSON_parse_postprocess, XJSON_stringify} from "./utils/xjs
 import {
     checkGuid,
     emptyGuid,
-    guidFromBase64, guidFromHex,
-    guidToBase64, guidToHex,
+    guidFromBase64,
+    guidFromHex,
+    guidToBase64,
+    guidToHex,
     isGuid,
     isGuidOrNull,
     isGuidsEqual,
@@ -26,6 +28,8 @@ import {
     minGuid,
     newGuid
 } from "./utils/guid";
+import {hexStringToUint8Array} from "./utils/hexStringToUint8Array";
+import {arrayToHexString} from "./utils/arrayToHexString";
 
 declare const chai: any;
 declare const window: any;
@@ -60,6 +64,8 @@ export function registerHost() {
 
         },
         util: {
+            hexStringToUint8Array: hexStringToUint8Array,
+            arrayToHexString: arrayToHexString,
             base64ToArrayBuffer: base64ToArrayBuffer,
             arrayBufferToBase64: arrayBufferToBase64,
             XJSON_stringify: XJSON_stringify,

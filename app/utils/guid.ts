@@ -1,4 +1,5 @@
 import {isString} from "./isString";
+import {hexStringToUint8Array} from "./hexStringToUint8Array";
 
 export type Guid = Uint32Array;
 
@@ -58,24 +59,6 @@ export function guidToBase64(value: Guid): string {
     return window.btoa(binary);
 }
 
-export function guidToHex(value: Guid): string {
-    checkGuid(value, "guidToHex");
-
-    let bytes = new DataView(value.buffer);
-    let str = "";
-    for (let i = 0; i < 16; i++) {
-        str += '0' + (bytes.getUint8(i) & 0xFF).toString(16).slice(-2);
-    }
-    return str;
-}
-
-export function guidFromHex(hex: string): Guid {
-    if (!isString(hex))
-        throw "guidFromHex(): hex должно быть строкой в формате '8d950d6b-0929-4de1-b79c-eb06ab932caf'";
-
-    return new Uint32Array(4);
-}
-
 export function guidFromBase64(base64: string): Guid {
     if (!isString(base64))
         throw "guidFromBase64(): base64 должно быть строкой";
@@ -91,3 +74,24 @@ export function guidFromBase64(base64: string): Guid {
     }
     return guid;
 }
+
+export function guidToHex(value: Guid): string {
+    checkGuid(value, "guidToHex");
+
+    let bytes = new DataView(value.buffer);
+    let str = "";
+    for (let i = 0; i < 16; i++) {
+        str += ("0" + (bytes.getUint8(i) & 0xFF).toString(16)).slice(-2);
+        if (i === 3 || i == 5 || i == 7 || i == 9)
+            str += "-";
+    }
+    return str;
+}
+
+export function guidFromHex(hex: string): Guid {
+    if (!isString(hex))
+        throw "guidFromHex(hex): 'hex' должен быть строкой в формате '8d950d6b-0929-4de1-b79c-eb06ab932caf'";
+
+    return new Uint32Array(hexStringToUint8Array(hex).buffer);
+}
+

@@ -13,6 +13,44 @@ class Test extends buhta.test.BaseTest {
     }
 
 
+    async hexStringToUint8Array() {
+        let arr=new Uint8Array(4);
+        arr[0]=0x1A;
+        arr[1]=0x2B;
+        arr[2]=0x78;
+        arr[3]=0xF4;
+        let arr2=buhta.util.hexStringToUint8Array("1A2B78F4");
+        assert(btoa(arr) === btoa(arr2), "ошибка кодирования");
+
+    }
+
+
+    async newGuid() {
+        let guid=buhta.util.newGuid();
+    }
+
+    async guidBase64ToFrom() {
+        let guid=buhta.util.newGuid();
+        let base64=buhta.util.guidToBase64(guid);
+        let guid2=buhta.util.guidFromBase64(base64);
+        let base64_2=buhta.util.guidToBase64(guid2);
+        assert(base64 === base64_2, "ошибка кодирования");
+        assert(buhta.util.isGuidsEqual(guid,guid2), "ошибка кодирования");
+        assert(!buhta.util.isGuidsEqual(guid,buhta.util.newGuid()), "ошибка кодирования");
+    }
+
+    async guidHexToFrom() {
+        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",buhta.util.guidToHex(buhta.util.maxGuid()));
+        assert(buhta.util.guidToHex(buhta.util.minGuid()) === "00000000-0000-0000-0000-000000000000", "ошибка кодирования minGuid");
+        assert(buhta.util.guidToHex(buhta.util.maxGuid()) === "ffffffff-ffff-ffff-ffff-ffffffffffff", "ошибка кодирования maxGuid");
+
+        let hex = "8d950d6b-0929-4de1-b79c-eb06ab932caf";
+
+        let guid=buhta.util.guidFromHex(hex);
+        let hex2=buhta.util.guidToHex(guid);
+        assert(hex === hex2, "ошибка кодирования");
+    }
+
     async XJSON() {
         let base64 = "0KLQtdGB0YLQkdCw0LfQsDY0LVRlc3RCYXNlNjQ=";
         let obj = {
@@ -51,27 +89,5 @@ class Test extends buhta.test.BaseTest {
         assert(obj.time3.isSame(clone.time3), "error on 'Time' 3");
 
     }
-
-    async newGuid() {
-        let guid=buhta.util.newGuid();
-    }
-
-    async guidBase64ToFrom() {
-        let guid=buhta.util.newGuid();
-        let base64=buhta.util.guidToBase64(guid);
-        let guid2=buhta.util.guidFromBase64(base64);
-        let base64_2=buhta.util.guidToBase64(guid2);
-        assert(base64 === base64_2, "ошибка кодирования");
-        assert(buhta.util.isGuidsEqual(guid,guid2), "ошибка кодирования");
-        assert(!buhta.util.isGuidsEqual(guid,buhta.util.newGuid()), "ошибка кодирования");
-    }
-
-    async guidHexToFrom() {
-        let hex = "8d950d6b-0929-4de1-b79c-eb06ab932caf";
-        let guid=buhta.util.guidFromHex(hex);
-        let hex2=buhta.util.guidToHex(guid);
-        assert(hex === hex2, "ошибка кодирования");
-    }
-
 
 }

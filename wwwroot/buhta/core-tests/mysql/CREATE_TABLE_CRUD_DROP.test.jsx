@@ -325,7 +325,7 @@ class Test extends buhta.test.BaseTest {
             uint32: 0,
             int64: CONST.MIN_SAFE_INTEGER_FLOAT64,
             uint64: 0,
-            guid: "00000000-0000-0000-0000-000000000000",
+            guid: buhta.util.minGuid(),
             money: buhta.config.sql.minMoneyValue,
             decimal_16_1: -buhta.config.sql.maxDecimal["16,1"],
             decimal_16_2: -buhta.config.sql.maxDecimal["16,2"],
@@ -354,7 +354,7 @@ class Test extends buhta.test.BaseTest {
             boolean:false,
             fk1:CONST.MIN_INT32,
             fk2:0,
-            fk3: "00000000-0000-0000-0000-000000000000",
+            fk3: buhta.util.minGuid(),
             fk4: "",
         }
     }
@@ -425,7 +425,7 @@ class Test extends buhta.test.BaseTest {
             uint32: CONST.MAX_UINT32,
             int64: CONST.MAX_SAFE_INTEGER_FLOAT64,
             uint64: CONST.MAX_SAFE_INTEGER_FLOAT64,
-            guid: "ffffffff-ffff-ffff-ffff-ffffffffffff",
+            guid: buhta.util.minGuid(),
             money: buhta.config.sql.maxMoneyValue,
             decimal_16_1: buhta.config.sql.maxDecimal["16,1"],
             decimal_16_2: buhta.config.sql.maxDecimal["16,2"],
@@ -454,7 +454,7 @@ class Test extends buhta.test.BaseTest {
             boolean:true,
             fk1:CONST.MAX_INT32,
             fk2:CONST.MAX_SAFE_INTEGER_FLOAT64,
-            fk3: "ffffffff-ffff-ffff-ffff-ffffffffffff",
+            fk3: buhta.util.maxGuid(),
             fk4: "Ямай首頁>所有分類ка12389834fdc8",
 
         }

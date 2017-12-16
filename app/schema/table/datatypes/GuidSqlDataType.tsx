@@ -5,7 +5,7 @@ import {NumberInput} from "../../../ui/inputs/NumberInput";
 import {config} from "../../../config";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isStringOrNull} from "../../../utils/isStringOrNull";
-import {isGuidOrNull} from "../../../utils/isGuidOrNull";
+import {Guid, isGuidOrNull} from "../../../utils/guid";
 
 declare let TextEncoder: any;
 
@@ -74,9 +74,9 @@ export class GuidSqlDataType extends BaseSqlDataType<IGuidSqlDataTypeProps> {
 
     }
 
-    async emitValue(dialect: SqlDialect, colDataType: IGuidSqlDataTypeProps, value: any): Promise<string> {
+    async emitValue(dialect: SqlDialect, colDataType: IGuidSqlDataTypeProps, value: Guid): Promise<string> {
         if (!isGuidOrNull(value))
-            throw  "значение должно быть guid-строкой или null";
+            throw  "значение должно быть Guid или null";
 
         if (value === null)
             return new SqlEmitter(dialect).emit_NULL();

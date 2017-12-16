@@ -1,4 +1,6 @@
 import {Moment} from "moment";
+import {Guid, guidToHex} from "../utils/guid";
+import {arrayToHexString} from "../utils/arrayToHexString";
 
 export type SqlDialect = "mssql" | "postgres" | "mysql";
 
@@ -139,14 +141,14 @@ export class SqlEmitter {
         return bytes;
     }
 
-    emit_GUID(value: string): string {
+    emit_GUID(value: Guid): string {
 
         if (this.dialect === "mssql")
-            return "CONVERT(UNIQUEIDENTIFIER,'" + value + "')";
+            return "CONVERT(UNIQUEIDENTIFIER,'" + guidToHex(value) + "')";
         else if (this.dialect === "postgres")
-            return "UUID '" + value + "'";
+            return "UUID '" + guidToHex(value) + "'";
         else if (this.dialect === "mysql")
-            return "convert(" + this.mysql_guid_to_str(this.uuidToBytes(value)) + ",binary(16))";
+            return "convert(0x" + arrayToHexString(new Uint8Array(value.buffer)) + ",binary(16))";
         else {
             let msg = "invalid sql dialect " + this.dialect;
             console.error(msg);
