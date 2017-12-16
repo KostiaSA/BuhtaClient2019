@@ -14,6 +14,8 @@ export interface ISchemaObjectProps {
     createdDate?: Moment;
     changedBy?: string;
     changedDate?: Moment;
+    jsxFiles?: string[];
+    sqlFiles?: string[];
 }
 
 

@@ -22,6 +22,9 @@ import {getRandomString} from "../utils/getRandomString";
 import {MenuItem} from "../ui/MenuItem";
 import {MenuSeparator} from "../ui/MenuSeparator";
 import {TreeGridColumn} from "../ui/TreeGridColumn";
+import {FlexVPanel} from "../ui/FlexVPanel";
+import {SchemaQueryDesignerSqlWindow} from "./SchemaQueryDesignerSqlWindow";
+import {appState} from "../AppState";
 
 
 export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
@@ -295,7 +298,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                 {...omit(this.props.window, ["children"])}
                 storageKey="SchemaQueryDesignerWindow"
                 title={this.props.objectId ? "запрос: " + this.props.objectId : "новая запрос в \"" + this.props.newObjectPath + "\""}
-                icon="vendor/fugue/query.png"
+                icon={SchemaQuery.icon}
                 ref={(e) => {
                     this.window = e!
                 }}>
@@ -397,16 +400,34 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                         </TabsPanel>
                     </FlexItem>
-                    <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
-                        <Button imgSrc={config.button.saveIcon}
-                                text="Сохранить"
-                                style={{marginRight: 5}}
-                                ref={(e) => this.saveButton = e!}
-                                onClick={this.handleClickSaveButton}/>
-                        <Button imgSrc={config.button.cancelIcon}
-                                text="Отмена"
-                                ref={(e) => this.closeButton = e!}
-                                onClick={this.handleClickCloseButton}/>
+                    <FlexItem dock="bottom" style={{padding: 5, paddingTop: 10 /*justifyContent: "flex-end"*/}}>
+                        <FlexVPanel>
+                            <FlexItem dock="left">
+                                {/**************************** Button "Показать SQL"а *************/}
+                                <Button
+                                    text="Показать SQL"
+                                    onClick={async () => {
+                                        appState.desktop.openWindow(
+                                            <SchemaQueryDesignerSqlWindow
+                                                sql={"delete from xxx2"}
+                                                window={{height: 500, width: 700}}
+                                            />
+                                        );
+                                    }}
+                                />
+                            </FlexItem>
+                            <FlexItem dock="fill" style={{justifyContent: "flex-end"}}>
+                                <Button imgSrc={config.button.saveIcon}
+                                        text="Сохранить"
+                                        style={{marginRight: 5}}
+                                        ref={(e) => this.saveButton = e!}
+                                        onClick={this.handleClickSaveButton}/>
+                                <Button imgSrc={config.button.cancelIcon}
+                                        text="Отмена"
+                                        ref={(e) => this.closeButton = e!}
+                                        onClick={this.handleClickCloseButton}/>
+                            </FlexItem>
+                        </FlexVPanel>
                     </FlexItem>
                 </FlexHPanel>
 

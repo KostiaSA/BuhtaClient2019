@@ -65,7 +65,7 @@ module.exports = {
         "react-dom": "ReactDOM",
         "react-dom/server": "ReactDOMServer",
         "antd": "antd",
-        //"codemirror": "CodeMirror",
+        "codemirror": "CodeMirror",
         "jquery": "$",
         //"socket.io-client": "io",
         "joi": "Joi",

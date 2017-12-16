@@ -58,7 +58,6 @@ export class Button extends Component<IButtonProps> {
                         win.disable({cursor: "wait"});
                         await this.props.onClick!();
                         win.enable();
-                        win.bringToFront();
                     }
                     else
                         this.props.onClick!();

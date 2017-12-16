@@ -4,6 +4,7 @@ import axios from "axios";
 export interface ISchemaObjectFiles {
     json?: string;
     jsx?: string;
+    sql?: string;
 }
 
 export async function loadSchemaObjectFiles(filePath: string): Promise<ISchemaObjectFiles> {

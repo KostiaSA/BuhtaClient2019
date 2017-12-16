@@ -19,6 +19,7 @@ export interface IBaseInputProps extends IComponentProps {
     validator?: Joi.ObjectSchema;
     storageKey?: string;
     resizable?: boolean;
+    readOnly?: boolean;
 }
 
 export class BaseInput<P extends IBaseInputProps> extends Component<P> {
