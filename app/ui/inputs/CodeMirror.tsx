@@ -1,13 +1,11 @@
 import * as  React from "react";
-import {CSSProperties} from "react";
-import {omit} from "../../utils/omit";
 import {objectPathGet} from "../../utils/objectPathGet";
 import {objectPathSet} from "../../utils/objectPathSet";
 import {BaseInput, IBaseInputProps} from "./BaseInput";
-import {config} from "../../config";
-import {storageGet} from "../../storage/storageGet";
 import {storageSet} from "../../storage/storageSet";
 import {EditorConfiguration, EditorFromTextArea} from "codemirror";
+import {config} from "../../config";
+
 const CodeMirror = require("codemirror");
 
 
@@ -28,10 +26,44 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
     editor: EditorFromTextArea;
     textArea: HTMLElement;
 
+    componentWillUnmount() {
+
+    }
+
     componentDidMount() {
-        //this.widget = $("#" + this.$id);
-        console.log("CodeMirror did mount $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" );
-        this.editor = CodeMirror.fromTextArea(this.textArea, this.props.options);
+        this.widget = $("#" + this.$id);
+        console.log("CodeMirror did mount $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        this.editor = CodeMirror.fromTextArea(this.textArea, {autoRefresh: true, ...this.props.options});
+        let $e = $((this.editor as any).display.wrapper);
+        this.editor.setSize("100%", "100%");
+        // $e.css("width", "100%");
+        // $e.css("he", "100%");
+        $e.css("border", config.border);
+//        $e.css("border", "0px solid blue");
+
+        // let lastHeight: any;
+        // let lastWidth: any;
+        let resizeIntervalId = setInterval(() => {
+            console.log("timer");
+            // отановка таймера resize, если grid удалена
+            if (this.widget.length !== 1) {
+                clearInterval(resizeIntervalId);
+            }
+            this.editor.refresh();
+
+            // let h = this.widget.height();
+            // let w = this.widget.width();
+            // if (h !== lastHeight || w !== lastWidth) {
+            //     lastWidth = w;
+            //     lastHeight = h;
+            //     this.editor.refresh();
+            //     //this.editor.setSize(5, 5);
+            //     //this.editor.setSize(w-3, h-3);
+            //     console.log("timer-refresh");
+            // }
+        }, 1000);
+
+
         this.editor.on("change", async (event: any) => {
 
             objectPathSet(this.bindObj, this.props.bindProp, this.editor.getValue());
@@ -46,7 +78,7 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
         this.updateProps(this.props, true);
         this.initialValue = objectPathGet(this.bindObj, this.props.bindProp);
         //if (this.initialValue)
-          //  this.widget.jqxCodeMirror("val", this.initialValue);
+        //  this.widget.jqxCodeMirror("val", this.initialValue);
 
         // this.widget.on("change",
         //     async (event: any) => {
@@ -67,25 +99,25 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
 
         if (this.props.resizable) {
 
-            let resizer = this.widget.parents("table").first().find(".resizer");
-
-            let initWidth: number;
-            resizer.draggable({
-                appendTo: "body",
-                helper: "clone",
-                axis: "x",
-                start: () => {
-                    initWidth = this.widget.jqxCodeMirror("width");
-                },
-                drag: (event: any, ui: any) => {
-                    this.widget.jqxCodeMirror({width: Math.max(50, initWidth + ui.position.left - ui.originalPosition.left)})
-                },
-                stop: () => {
-                    if (this.props.storageKey) {
-                        storageSet(this.props.storageKey!, ["size", this.getWindow().props.storageKey!], {width: this.widget.jqxCodeMirror("width")});
-                    }
-                }
-            });
+            // let resizer = this.widget.parents("table").first().find(".resizer");
+            //
+            // let initWidth: number;
+            // resizer.draggable({
+            //     appendTo: "body",
+            //     helper: "clone",
+            //     axis: "x",
+            //     start: () => {
+            //         initWidth = this.widget.jqxCodeMirror("width");
+            //     },
+            //     drag: (event: any, ui: any) => {
+            //         this.widget.jqxCodeMirror({width: Math.max(50, initWidth + ui.position.left - ui.originalPosition.left)})
+            //     },
+            //     stop: () => {
+            //         if (this.props.storageKey) {
+            //             storageSet(this.props.storageKey!, ["size", this.getWindow().props.storageKey!], {width: this.widget.jqxCodeMirror("width")});
+            //         }
+            //     }
+            // });
         }
 
     }
@@ -112,45 +144,82 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
         console.log("render CodeMirror");
         let renderedValidationResult = this.renderValidationResult();
 
-        let style: CSSProperties = {};
-        if (this.isChanged)
-            style.color = config.formPanel.inputChangedColor;
-        else
-            style.color = config.formPanel.labelColor;
-        if (renderedValidationResult)
-            style.background = config.formPanel.errorInputBackground;
+        // let style: CSSProperties = {
+        //     border:config.border
+        // };
+        // if (this.isChanged)
+        //     style.color = config.formPanel.inputChangedColor;
+        // else
+        //     style.color = config.formPanel.labelColor;
+        // if (renderedValidationResult)
+        //     style.background = config.formPanel.errorInputBackground;
 
+        // return (
+        //     [
+        //
+        //             <table id={this.$id}
+        //                    key={1}
+        //                    style={{
+        //                        width: this.props.width || "100%",
+        //                        height: this.props.height || "100%",
+        //                     //   borderCollapse: "collapse",
+        //                        borderSpacing: 0,
+        //                        border: "1px solid red",
+        //                        overflow:"hidden"
+        //                    }}
+        //             >
+        //                 <tbody>
+        //                 <tr>
+        //                     <td style={{padding: 0}}>
+        //                     <textarea
+        //                         ref={(e) => {
+        //                             this.textArea = e!
+        //                         }}
+        //                         value={objectPathGet(this.bindObj, this.props.bindProp)}
+        //                         readOnly={this.props.readOnly}
+        //                     />
+        //                     </td>
+        //                     <td style={{padding: 0}}>
+        //                         <div
+        //                             className="resizer"
+        //                             style={{
+        //                                 cursor: "e-resize",
+        //                                 borderLeft: "1px solid rgba(192, 192, 192, 0.20)",
+        //                                 width: 10,
+        //                                 height: this.props.height || config.baseInput.height,
+        //                                 display: this.props.resizable ? "block" : "none"
+        //                             }}
+        //                         >
+        //                         </div>
+        //                     </td>
+        //                 </tr>
+        //                 </tbody>
+        //             </table>
+        //
+        //         ,
+        //         renderedValidationResult
+        //     ]
+        // )
         return (
             [
-                <table key={1} style={{borderCollapse: "collapse", borderSpacing: 0}}>
-                    <tbody>
-                    <tr>
-                        <td style={{padding: 0}}>
-                            <textarea
-                                ref={(e) => {
-                                    this.textArea = e!
-                                }}
-                                style={{...style, height: "100%"}}
-                                value={objectPathGet(this.bindObj, this.props.bindProp)}
-                                readOnly={this.props.readOnly}
-                            />
-                        </td>
-                        <td style={{padding: 0}}>
-                            <div
-                                className="resizer"
-                                style={{
-                                    cursor: "e-resize",
-                                    borderLeft: "1px solid rgba(192, 192, 192, 0.20)",
-                                    width: 10,
-                                    height: this.props.height || config.baseInput.height,
-                                    display: this.props.resizable ? "block" : "none"
-                                }}
-                            >
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>,
+                <div id={this.$id}
+                     key={1}
+                     style={{
+                         width: this.props.width || "100%",
+                         height: this.props.height || "100%",
+                         border: "0px solid red",
+                     }}
+                >
+                    <textarea
+                        ref={(e) => {
+                            this.textArea = e!
+                        }}
+                        value={objectPathGet(this.bindObj, this.props.bindProp)}
+                        readOnly={this.props.readOnly}
+                    />
+                </div>
+
+                ,
                 renderedValidationResult
             ]
         )
