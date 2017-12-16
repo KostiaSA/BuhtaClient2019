@@ -34,8 +34,13 @@ function stringify_prepare(obj: any): any {
             else if (obj._isAMomentObject) {
                 if (obj.year() === 0 && obj.month() === 1 && obj.date() === 1)
                     return "<Time>" + obj.format("HH:mm:ss.SSS");
-                else
-                    return "<Date>" + obj.format("YYYY-MM-DD HH:mm:ss.SSS").replace("00:00:00.000", "");
+                else {
+                    let str = obj.format("YYYY-MM-DD HH:mm:ss.SSS").replace(" 00:00:00.000", "");
+                    if (str.length === 10)
+                        return "<Date>" + str;
+                    else
+                        return "<DateTime>" + str;
+                }
             }
             else if (Array.isArray(obj)) {
                 return obj.map((item) => stringify_prepare(item))
@@ -77,8 +82,11 @@ export function XJSON_parse_postprocess(obj: any): any {
                 else if (obj.startsWith("<Date>")) {
                     return moment(obj.substr("<Date>".length))
                 }
+                else if (obj.startsWith("<DateTime>")) {
+                    return moment(obj.substr("<DateTime>".length))
+                }
                 else if (obj.startsWith("<Time>")) {
-                    return moment("0000-01-01 "+obj.substr("<Time>".length))
+                    return moment("0000-01-01 " + obj.substr("<Time>".length))
                 }
                 else
                     return obj.substr(1);

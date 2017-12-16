@@ -1,3 +1,4 @@
+
 SELECT
     [Проводка].[Входит в сумму] [Входит в сумму],
     [Проводка.Вид].[Номер и название] [Вид провоки],
@@ -30,4 +31,17 @@ WHERE
 GO
 SELECT [Проводка].[Входит в сумму] [Входит в сумму],
       go
-SELECT [Пра].[Входит в сумму] [Входит в сумму],
+SELECT int1 {{int1}}
+SELECT float2 {{float2}}
+SELECT b1 {{bol1}}
+SELECT b32 {{болbolй0}}
+
+{{#each arr}}
+    SELECT arr0 {{this}}
+{{/each}}
+
+select date1={{createdDate}}
+select datetime1={{createdDateTime}}
+select guid1={{guid1}}
+select pic1={{pic1}}
+
