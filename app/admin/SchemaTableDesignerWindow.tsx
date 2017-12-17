@@ -268,7 +268,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             <Input width={400} bindProp="note" placeHolder="note"
                                                    title={<span style={{color: "red"}}>SchemaObject:</span>}/>
 
-                                            <CodeEditor title="sql" bindProp="note" resizable resizeOnlyHeight height={100}/>
+                                            <CodeEditor storageKey="sql-code" title="sql" bindProp="note" resizable resizeOnlyHeight height={100}/>
 
                                         </FormPanel>
                                     </FlexItem>

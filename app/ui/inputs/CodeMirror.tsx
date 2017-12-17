@@ -4,6 +4,8 @@ import {objectPathSet} from "../../utils/objectPathSet";
 import {BaseInput, IBaseInputProps} from "./BaseInput";
 import {EditorConfiguration, EditorFromTextArea} from "codemirror";
 import {config} from "../../config";
+import {storageGet} from "../../storage/storageGet";
+import {storageSet} from "../../storage/storageSet";
 
 const CodeMirror = require("codemirror");
 
@@ -34,10 +36,17 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
         $e.css("position", "absolute");
         $e.css("border", config.border);
 
+        if (this.props.resizable && this.props.storageKey) {
+            let storage = storageGet(this.props.storageKey, ["size", this.getWindow().props.storageKey!]);
+            if (storage && storage.width &&  !this.props.resizeOnlyHeight)
+                this.widget.css("width",storage.width);
+            if (storage && storage.height && !this.props.resizeOnlyWidth)
+                this.widget.css("height",storage.height);
+        }
+
         let lastHeight: any;
         let lastWidth: any;
         let resizeIntervalId = setInterval(() => {
-            //console.log("timer", $("#" + this.$id));
             let widget=$("#" + this.$id);
             if (widget.length!==1){
                 clearInterval(resizeIntervalId);
@@ -49,7 +58,6 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
                 lastWidth = w;
                 lastHeight = h;
                 this.editor.refresh();
-                console.log("размер----------------------REFRESH-------------->")
             }
         }, 200);
 
@@ -78,6 +86,12 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
                 minHeight: 60,
                 minWidth: 100,
                 handles:handles,
+                stop: () => {
+                    if (this.props.storageKey) {
+                        storageSet(this.props.storageKey!, ["size", this.getWindow().props.storageKey!], {width: this.widget.width(),height: this.widget.height()});
+                    }
+                }
+
             });
         }
 

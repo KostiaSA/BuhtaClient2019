@@ -53,10 +53,6 @@ export class FormPanel extends Component<IFormPanelProps> {
     clonedBindObj: any;
 
     componentDidMount() {
-        // console.log("didmount FormPanel " + this.$id);
-        // this.widget = $("#" + this.$id);
-        // //ReactDOM.render(<Div ref={(e)=>{this.content=e}}>{this.state.children}.......</Div>, document.getElementById(this.$contentId));
-        // this.updateProps(this.props);
         if (this.bindObj) {
             this.clonedBindObj = XJSON_clone(this.bindObj);
         }
