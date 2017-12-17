@@ -25,7 +25,6 @@ import {joiValidate} from "../validation/joiValidate";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
 import {XJSON_clone, XJSON_equals, XJSON_parse, XJSON_stringify} from "../utils/xjson";
 import {SchemaObject} from "../schema/SchemaObject";
-import {CodeEditor} from "../ui/inputs/CodeMirror";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
@@ -120,6 +119,8 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                 if (res.json) {
                     this.table = XJSON_parse(res.json);
+                    this.table.objectId = this.props.objectId;
+
                     this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
                 }
                 else {
@@ -263,12 +264,13 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             />
 
                                             <Input title="описание" bindProp="description"
+                                                   placeHolder="краткое описание"/>
+
+                                            <Input title="sql имя" bindProp="sqlName"
                                                    placeHolder="введите sql имя таблицы"/>
 
-                                            <Input width={400} bindProp="note" placeHolder="note"
-                                                   title={<span style={{color: "red"}}>SchemaObject:</span>}/>
+                                            <Input width={400} bindProp="note" placeHolder="note" title="примечание"/>
 
-                                            <CodeEditor storageKey="sql-code" title="sql" bindProp="note" resizable resizeOnlyHeight height={100}/>
 
                                         </FormPanel>
                                     </FlexItem>

@@ -120,6 +120,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                 if (res.json) {
                     this.query = XJSON_parse(res.json);
+                    this.query.objectId = this.props.objectId;
                     //this.queryColumnsArray = new ($ as any).jqx.observableArray(this.query.columns);
                 }
                 else {
@@ -265,7 +266,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
             return <span>{row.fieldSource}</span>;
         else
             return <span style={{fontWeight: "bold"}}>{row.fieldSource}<span
-                style={{fontWeight: 500, color:config.sql.fkDataTypeColor}}>->{row.tableId}</span></span>;
+                style={{fontWeight: 500, color: config.sql.fkDataTypeColor}}>->{row.tableId}</span></span>;
 
     };
 
@@ -407,9 +408,10 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 <Button
                                     text="Показать SQL"
                                     onClick={async () => {
+                                        let sql = await new SchemaQuery(this.query).emitSqlTemplate();
                                         appState.desktop.openWindow(
                                             <SchemaQueryDesignerSqlWindow
-                                                sql={"delete from xxx2\n\n\n\n\n\n\n\n\n\n\n2222222222222222222222222\n00000000000000000000000000"}
+                                                sql={sql}
                                                 window={{height: 500, width: 700}}
                                             />
                                         );

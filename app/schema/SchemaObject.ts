@@ -7,6 +7,7 @@ import {Moment} from "moment";
 import moment = require("moment");
 
 export interface ISchemaObjectProps {
+    objectId?:string;
     objectType: string;
     name: string;
     description?: string;

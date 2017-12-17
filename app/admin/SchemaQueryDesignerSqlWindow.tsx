@@ -72,7 +72,7 @@ export class SchemaQueryDesignerSqlWindow extends React.Component<ISchemaQueryDe
 
                 <FlexHPanel>
                     {/**************************** шапка *************************/}
-                    <FlexItem dock="top" style={{height: 100, padding: 5}}>
+                    <FlexItem dock="top" style={{height: 30, padding: 5}}>
                         шапка
                     </FlexItem>
                     {/**************************** тестовый редактор *************/}
@@ -96,9 +96,6 @@ export class SchemaQueryDesignerSqlWindow extends React.Component<ISchemaQueryDe
                             </TabsPanelItem>
 
                         </TabsPanel>
-                        {/*<div style={{flex: 1}}>*/}
-                            {/*<CodeEditor title="" bindObj={this} bindProp="sql"/>*/}
-                        {/*</div>*/}
                     </FlexItem>
                     {/**************************** нижние кнопки ***************************/}
                     <FlexItem dock="bottom" style={{padding: 5, paddingTop: 10 /*justifyContent: "flex-end"*/}}>

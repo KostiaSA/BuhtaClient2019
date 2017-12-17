@@ -8,6 +8,7 @@ import {config} from "../../config";
 import {SchemaTableDesignerWindow} from "../../admin/SchemaTableDesignerWindow";
 import {SqlBatch, SqlDialect, SqlEmitter} from "../../sql/SqlEmitter";
 import {isArray} from "../../utils/isArray";
+import {replaceAll} from "../../utils/replaceAll";
 
 
 export interface ISchemaTableProps extends ISchemaObjectProps {
@@ -75,6 +76,20 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
                 return col;
         }
         return null;
+    }
+
+    getFullSqlName(): string {
+        if (this.props.sqlName)
+            return this.props.sqlName;
+
+        let words = this.props.objectId!.split("/");
+        let lastIndex=words.length-1;
+        words[lastIndex]=words[lastIndex].replace(".table","");
+        return replaceAll(words.join("_"),"-","_");
+    }
+
+    getShortSqlName(): string {
+        return this.props.name;
     }
 
     // async openChangeRecordPage(recordId: string): Promise<void> {

@@ -5,7 +5,6 @@ import {config} from "../../config";
 import {SchemaQueryDesignerWindow} from "../../admin/SchemaQueryDesignerWindow";
 import {ISchemaTableProps, SchemaTable} from "../table/SchemaTable";
 import {getRandomString} from "../../utils/getRandomString";
-import {SqlEmitter} from "../../sql/SqlEmitter";
 import {getSchemaObjectProps} from "../getSchemaObjectProps";
 import {SqlSelectEmitter} from "../../sql/SqlSelectEmitter";
 
@@ -57,11 +56,7 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
         })
     };
 
-    generateSqlTemplate(): string {
-        return "это sql";
-    }
-
-    async emitSql(): Promise<string> {
+    async emitSqlTemplate(): Promise<string> {
 
         let emitter = new SqlSelectEmitter("mssql");
 
@@ -127,9 +122,13 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
     async emitColumn(column: SchemaQueryColumn, emitter: SqlSelectEmitter, level: number) {
 
         if (!column.parent) {
+
+            emitter.select.push("-- запрос: " + this.props.objectId);
+            emitter.select.push("");
+
             emitter.select.push("SELECT");
             emitter.from.push(this.levelToStr(level) + "FROM");
-            emitter.from.push(this.levelToStr(level) + "    " + emitter.emit_NAME(column.joinTable.props.name) + " AS " + emitter.emit_NAME(column.joinTableAlias));
+            emitter.from.push(this.levelToStr(level) + "    " + emitter.emit_NAME(column.joinTable.getFullSqlName()) + " AS " + emitter.emit_NAME(column.joinTableAlias));
             for (let childColumn of column.columns) {
                 await this.emitColumn(childColumn, emitter, level + 1);
             }
@@ -141,7 +140,7 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
 
         }
         else if (column.joinTable) {
-            emitter.from.push(this.levelToStr(level) + "LEFT JOIN " + emitter.emit_NAME(column.joinTable.props.name) + " AS " + emitter.emit_NAME(column.joinTableAlias));
+            emitter.from.push(this.levelToStr(level) + "LEFT JOIN " + emitter.emit_NAME(column.joinTable.getFullSqlName()) + " AS " + emitter.emit_NAME(column.joinTableAlias));
             for (let childColumn of column.columns) {
                 await this.emitColumn(childColumn, emitter, level + 1);
             }
@@ -158,7 +157,7 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
                     "    " +
                     emitter.emit_NAME(column.parent.joinTableAlias) + "." + emitter.emit_NAME(column.props.fieldSource!) +
                     " AS " +
-                    emitter.emit_NAME(column.props.fieldCaption!));
+                    emitter.emit_NAME(column.props.fieldCaption || column.props.fieldSource!));
             }
         }
 
@@ -176,8 +175,8 @@ export class SchemaQueryColumn {
 
     get joinTableAlias(): string {
         if (this.parent)
-            return this.parent.joinTableAlias + "." + this.joinTable.props.name;
+            return this.parent.joinTableAlias + "." + this.joinTable.getShortSqlName();
         else
-            return this.joinTable.props.name;
+            return this.joinTable.getShortSqlName();
     }
 }

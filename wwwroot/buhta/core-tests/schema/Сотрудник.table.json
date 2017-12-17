@@ -1,66 +1,59 @@
 ﻿{
-  "description": "Справочник сотрудников",
-  "name": "Сотрудник",
-  "objectType": "table",
-  "columns": [
-    {
-      "name": "Ключ",
-      "primaryKey": true,
-      "dataType": {
-        "id": "Guid"
-      },
-      "notNull": true
-    },
-    {
-      "name": "Номер",
-      "dataType": {
-        "id": "String",
-        "maxLen": 20
-      },
-      "description": ""
-    },
-    {
-      "name": "Фамилия",
-      "dataType": {
-        "id": "String",
-        "maxLen": 30
-      },
-      "description": ""
-    },
-    {
-      "name": "Имя",
-      "dataType": {
-        "id": "String",
-        "maxLen": 30
-      },
-      "description": ""
-    },
-    {
-      "name": "Отчество",
-      "dataType": {
-        "id": "String",
-        "maxLen": 30
-      },
-      "description": ""
-    },
-    {
-      "name": "ИНН",
-      "dataType": {
-        "id": "String",
-        "maxLen": 12
-      },
-      "description": ""
-    },
-    {
-      "name": "ДатаРождения",
-      "dataType": {
-        "id": "Date"
-      },
-      "description": ""
-    }
-  ],
-  "createdBy": "Иванов17-20",
-  "createdDate": "<Date>2017-12-15 11:03:45.046",
-  "changedBy": "Иванов17-20",
-  "changedDate": "<Date>2017-12-15 11:18:37.817"
+    "description": "Справочник сотрудников",
+    "name": "Сотрудник",
+    "objectType": "table",
+    "columns": [{
+        "name": "Ключ",
+        "primaryKey": true,
+        "dataType": {
+            "id": "Guid"
+        },
+        "notNull": true
+    }, {
+        "name": "Номер",
+        "dataType": {
+            "id": "String",
+            "maxLen": 20
+        },
+        "description": ""
+    }, {
+        "name": "Фамилия",
+        "dataType": {
+            "id": "String",
+            "maxLen": 30
+        },
+        "description": ""
+    }, {
+        "name": "Имя",
+        "dataType": {
+            "id": "String",
+            "maxLen": 30
+        },
+        "description": ""
+    }, {
+        "name": "Отчество",
+        "dataType": {
+            "id": "String",
+            "maxLen": 30
+        },
+        "description": ""
+    }, {
+        "name": "ИНН",
+        "dataType": {
+            "id": "String",
+            "maxLen": 12
+        },
+        "description": ""
+    }, {
+        "name": "ДатаРождения",
+        "dataType": {
+            "id": "Date"
+        },
+        "description": ""
+    }],
+    "createdBy": "Иванов17-20",
+    "createdDate": "<DateTime>2017-12-15 11:03:45.046",
+    "changedBy": "Иванов17-20",
+    "changedDate": "<DateTime>2017-12-17 23:18:55.132",
+    "sqlName": "СотрXXX"
 }
