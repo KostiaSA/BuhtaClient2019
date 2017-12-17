@@ -409,7 +409,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                     onClick={async () => {
                                         appState.desktop.openWindow(
                                             <SchemaQueryDesignerSqlWindow
-                                                sql={"delete from xxx2"}
+                                                sql={"delete from xxx2\n\n\n\n\n\n\n\n\n\n\n2222222222222222222222222\n00000000000000000000000000"}
                                                 window={{height: 500, width: 700}}
                                             />
                                         );

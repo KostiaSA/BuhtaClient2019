@@ -86,7 +86,7 @@ export class FormPanel extends Component<IFormPanelProps> {
                         display: (child as any).props.hidden ? "none" : undefined
                     }}
                 >
-                    <td>
+                    <td style={{ verticalAlign: "top"}}>
                         <div style={{
                             textAlign: "right",
                             paddingRight: 8,
@@ -96,7 +96,7 @@ export class FormPanel extends Component<IFormPanelProps> {
                             {title}
                         </div>
                     </td>
-                    <td style={{paddingTop: index > 0 ? config.formPanel.inputVerticalSpace : 0}}>
+                    <td style={{paddingTop: index > 0 ? config.formPanel.inputVerticalSpace : 0, verticalAlign: "top"}}>
                         {child}
                     </td>
                 </tr>
@@ -107,8 +107,12 @@ export class FormPanel extends Component<IFormPanelProps> {
     render() {
         console.log("render FormPanel");
         return (
-            <table id={this.$id} style={{border: "none"}}>
+            <table id={this.$id} style={{border: "none", width:"100%"}}>
                 <tbody>
+                <tr>
+                    <th style={{width:"1%"}}></th>
+                    <th style={{width:"99%"}}></th>
+                </tr>
                 {this.renderItems()}
                 </tbody>
             </table>

@@ -86,14 +86,8 @@ input[type=text].jqx-input {
     margin-top: 4px;
 }
 
-.ui-resizable-e {
-    width: 9px;
-    right: -6px;
-    background-color: silver;
-}
-
-.ui-resizable-e:hover {
-    background-color: silver;
+.ui-icon-gripsmall-diagonal-se {
+    opacity: 0.25;
 }
 
 .buhta-resizer:hover {

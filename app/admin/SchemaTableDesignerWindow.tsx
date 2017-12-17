@@ -25,6 +25,7 @@ import {joiValidate} from "../validation/joiValidate";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
 import {XJSON_clone, XJSON_equals, XJSON_parse, XJSON_stringify} from "../utils/xjson";
 import {SchemaObject} from "../schema/SchemaObject";
+import {CodeEditor} from "../ui/inputs/CodeMirror";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
@@ -266,6 +267,9 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                                             <Input width={400} bindProp="note" placeHolder="note"
                                                    title={<span style={{color: "red"}}>SchemaObject:</span>}/>
+
+                                            <CodeEditor title="sql" bindProp="note" resizable resizeOnlyHeight height={100}/>
+
                                         </FormPanel>
                                     </FlexItem>
                                     <FlexItem dock="top">
