@@ -9,6 +9,8 @@ import {Button} from "../ui/Button";
 import {FlexVPanel} from "../ui/FlexVPanel";
 import {SchemaQuery} from "../schema/query/SchemaQuery";
 import {CodeEditor} from "../ui/inputs/CodeMirror";
+import {TabsPanelItem} from "../ui/TabsPanelItem";
+import {TabsPanel} from "../ui/TabsPanel";
 
 
 export interface ISchemaQueryDesignerSqlProps {
@@ -40,6 +42,9 @@ export class SchemaQueryDesignerSqlWindow extends React.Component<ISchemaQueryDe
     }
 
     sql: string;
+    mssql: string;
+    mysql: string;
+    postgress: string;
 
     render() {
         console.log("SchemaQueryDesignerSqlWindow");
@@ -72,9 +77,28 @@ export class SchemaQueryDesignerSqlWindow extends React.Component<ISchemaQueryDe
                     </FlexItem>
                     {/**************************** тестовый редактор *************/}
                     <FlexItem dock="fill" style={{padding: 5, paddingBottom: 2, border: "0px solid green"}}>
-                        <div style={{flex: 1}}>
-                            <CodeEditor title="" bindObj={this} bindProp="sql"/>
-                        </div>
+                        <TabsPanel>
+
+                            <TabsPanelItem title="SQL-шаблон">
+                                <CodeEditor title="" bindObj={this} bindProp="sql"/>
+                            </TabsPanelItem>
+
+                            <TabsPanelItem title="результат в MSSQL">
+                                <CodeEditor title="" bindObj={this} bindProp="mssql"/>
+                            </TabsPanelItem>
+
+                            <TabsPanelItem title="результат в MySQL">
+                                <CodeEditor title="" bindObj={this} bindProp="mysql"/>
+                            </TabsPanelItem>
+
+                            <TabsPanelItem title="результат в Postgres">
+                                <CodeEditor title="" bindObj={this} bindProp="postgress"/>
+                            </TabsPanelItem>
+
+                        </TabsPanel>
+                        {/*<div style={{flex: 1}}>*/}
+                            {/*<CodeEditor title="" bindObj={this} bindProp="sql"/>*/}
+                        {/*</div>*/}
                     </FlexItem>
                     {/**************************** нижние кнопки ***************************/}
                     <FlexItem dock="bottom" style={{padding: 5, paddingTop: 10 /*justifyContent: "flex-end"*/}}>

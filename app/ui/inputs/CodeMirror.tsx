@@ -54,7 +54,11 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
             }
             let h = widget.height();
             let w = widget.width();
-            if (h !== lastHeight || w !== lastWidth) {
+
+            // h!==100 || w!==100 этот размер, почему-то имеет невидимый wiget (на скрытых закладках TabPanel)
+            // чтобы не было излишей анимации при открытии TabPanel, исключаем resize
+            if ((h!==100 || w!==100) && (h !== lastHeight || w !== lastWidth)) {
+                console.log(this.$id,"-----------------------------",h,w);
                 lastWidth = w;
                 lastHeight = h;
                 this.editor.refresh();
