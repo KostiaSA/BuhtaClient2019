@@ -82,7 +82,7 @@ export class FormPanel extends Component<IFormPanelProps> {
                         display: (child as any).props.hidden ? "none" : undefined
                     }}
                 >
-                    <td style={{ verticalAlign: "top"}}>
+                    <td style={{ verticalAlign: "center"}}>
                         <div style={{
                             textAlign: "right",
                             paddingRight: 8,
@@ -101,7 +101,7 @@ export class FormPanel extends Component<IFormPanelProps> {
     }
 
     render() {
-        console.log("render FormPanel");
+        //console.log("render FormPanel");
         return (
             <table id={this.$id} style={{border: "none", width:"100%"}}>
                 <tbody>

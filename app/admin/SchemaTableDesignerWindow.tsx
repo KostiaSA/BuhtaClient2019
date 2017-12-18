@@ -231,7 +231,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
         let validator = new SchemaTable(this.table).getValidator();
 
-        console.log("render SchemaTableDesignerWindow");
+        //console.log("render SchemaTableDesignerWindow");
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
@@ -313,7 +313,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             <GridColumn headerText="PK" getText={this.pkColumnCompute} align="center"
                                                         width={40} pinned/>
                                             <GridColumn headerText="Колонка" datafield="name" pinned fontWeight="500"/>
-                                            <GridColumn headerText="Тип данных" getText={this.dataTypeColumnCompute} background="red"/>
+                                            <GridColumn headerText="Тип данных" getText={this.dataTypeColumnCompute} />
                                             <GridColumn headerText="Not null" width={70} align="center"
                                                         getText={(row: ISchemaTableColumnProps) => row.notNull ? "not null" : ""}/>
                                             <GridColumn headerText="Описание" datafield="description"/>

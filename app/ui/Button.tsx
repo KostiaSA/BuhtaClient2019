@@ -82,7 +82,7 @@ export class Button extends Component<IButtonProps> {
     }
 
     render() {
-        console.log("render Button");
+        //console.log("render Button");
         return (
             <input
                 id={this.$id}

@@ -433,7 +433,6 @@ export class TreeGrid extends Component<ITreeGridProps> {
             // };
         }
 
-        console.log("treeGridOptions==============================", treeGridOptions);
         try {
             this.widget.jqxTreeGrid(treeGridOptions);
         }
@@ -489,13 +488,12 @@ export class TreeGrid extends Component<ITreeGridProps> {
         this.widget.jqxTreeGrid("collapseAll ");
     }
 
-    // getRowData(rowIndex: number) {
-    //     this.props.source
-    //     this.widget.jqxTreeGrid("getrowdata", rowIndex);
-    // }
+    getSelection(): any[] {
+        return this.widget.jqxTreeGrid("getSelection");
+    }
 
     render() {
-        console.log("render TreeGrid");
+        //console.log("render TreeGrid");
 
         return (
             <div

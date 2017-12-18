@@ -120,7 +120,7 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
     }
 
     render() {
-        console.log("render CodeMirror");
+        //console.log("render CodeMirror");
         let renderedValidationResult = this.renderValidationResult();
 
         return (

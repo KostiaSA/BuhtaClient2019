@@ -60,7 +60,7 @@ export class Menu extends Component<IMenuProps> {
     }
 
     render() {
-        console.log("render Menu", this.props.children);
+//        console.log("render Menu", this.props.children);
 
         let style: CSSProperties = {};
 

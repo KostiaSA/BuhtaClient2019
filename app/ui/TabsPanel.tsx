@@ -16,7 +16,6 @@ export class TabsPanel extends Component<ITabsPanelProps> {
     }
 
     componentDidMount() {
-        console.log("didmount TabsPanel " + this.$id);
         this.widget = $("#" + this.$id);
         //ReactDOM.render(<Div ref={(e)=>{this.content=e}}>{this.state.children}.......</Div>, document.getElementById(this.$contentId));
         this.updateProps(this.props);
@@ -39,7 +38,7 @@ export class TabsPanel extends Component<ITabsPanelProps> {
     }
 
     render() {
-        console.log("render TabsPanel");
+        //console.log("render TabsPanel");
         return (
             <div id={this.$id}>
                 <ul>

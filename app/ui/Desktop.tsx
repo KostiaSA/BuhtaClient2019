@@ -41,7 +41,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
 
 
     render() {
-        console.log("render desktop");
+        //console.log("render desktop");
         return (
             <div id="desktop" style={{height: "100%", flex: "1 0 auto"}}>
                 <Menu mode="horizontal">
@@ -154,10 +154,10 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                     }
                 }
                 win.props.window.onClose = resolve;
-                this.windows.push(win);
+                this.windows.push(React.cloneElement(win, {key: getRandomString()}));
             }
             else {
-                this.windows.push(React.cloneElement(win, {onClose: resolve}))
+                this.windows.push(React.cloneElement(win, {onClose: resolve, key: getRandomString()}))
             }
             this.forceUpdate();
         });

@@ -21,7 +21,7 @@ export class FlexVPanel extends Component<IHorzVertPanelProps> {
     }
 
     render() {
-        console.log("render FlexVPanel");
+        //console.log("render FlexVPanel");
         return (
             <div style={{display: "flex", flexDirection: "row", width:this.props.width || "100%"}}>
                     {this.props.children}

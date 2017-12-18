@@ -310,7 +310,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
         let validator = new SchemaQuery(this.query).getValidator();
 
-        console.log("render SchemaQueryDesignerWindow");
+        //console.log("render SchemaQueryDesignerWindow");
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
@@ -377,7 +377,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             >
                                                 <TreeGridColumn headerText="Таблица/Колонка"
                                                                 getText={this.getRootColumnText}/>
-                                                <TreeGridColumn headerText="Заголовок" background="ivory"
+                                                <TreeGridColumn headerText="Заголовок"
                                                                 getText={this.getColumnCaptionText}/>
 
                                             </TreeGrid>
@@ -399,7 +399,8 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                 height={26}
                                                 style={{marginRight: 5}}
                                                 onClick={async () => {
-                                                    this.editColumnClickHandler(null)
+                                                    console.log("",this.treeGrid.getSelection());
+                                                    //this.editColumnClickHandler(null)
                                                 }}
                                         />
                                         <Button imgSrc={config.button.deleteRowIcon}

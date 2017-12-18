@@ -91,7 +91,7 @@ export class CheckBox extends BaseInput<ICheckBoxProps> {
     }
 
     render() {
-        console.log("render CheckBox");
+        //console.log("render CheckBox");
         let renderedValidationResult = this.renderValidationResult();
 
         let style: CSSProperties = {};

@@ -209,7 +209,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
     tree: Tree;
 
     render() {
-        console.log("SchemaExplorerWindow");
+        //console.log("SchemaExplorerWindow");
 
         if (this.error) {
             return getErrorWindow(this.error);

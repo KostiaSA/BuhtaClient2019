@@ -363,7 +363,7 @@ export class Grid extends Component<IGridProps> {
     // }
 
     render() {
-        console.log("render Grid");
+        //console.log("render Grid");
 
         return (
             <div id={this.$id}/>

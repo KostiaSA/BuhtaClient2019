@@ -51,7 +51,7 @@ export class Window extends Component<IWindowProps> {
     content: any;
 
     componentDidMount() {
-        console.log("didmount win " + this.$id);
+        //console.log("didmount win " + this.$id);
         this.widget = $("#" + this.$id);
         //ReactDOM.render(<Div ref={(e)=>{this.content=e}}>{this.state.children}.......</Div>, document.getElementById(this.$contentId));
         this.updateProps(this.props);
@@ -199,7 +199,7 @@ export class Window extends Component<IWindowProps> {
     }
 
     render() {
-        console.log("render win-:" + this.props.title);
+        //console.log("render win-:" + this.props.title);
         let disabledOverlay = this.disabled ? (
             <div id={this.$id + "-overlay"} style={{
                 background: "white",

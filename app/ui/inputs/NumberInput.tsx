@@ -116,7 +116,7 @@ export class NumberInput extends BaseInput<INumberInputProps> {
     }
 
     render() {
-        console.log("render Input");
+        //console.log("render Input");
         let renderedValidationResult = this.renderValidationResult();
 
         let style: CSSProperties = {};

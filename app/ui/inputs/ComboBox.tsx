@@ -122,7 +122,7 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
 
 
     render(): React.ReactNode {
-        console.log("render Combobox");
+        //console.log("render Combobox");
         let renderedValidationResult = this.renderValidationResult();
 
         let style: CSSProperties = {};

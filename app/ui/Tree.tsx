@@ -102,7 +102,6 @@ export class Tree extends Component<ITreeProps> {
 
                 let item = this.widget.jqxTree("getItem", $(event.target).parents("li")[0]);
                 if (!item.hasItems) { // не folder
-                    console.log("dblclick", item);
                     await this.props.onItemDblClick!(item);
                     return true;
                 }
@@ -140,7 +139,7 @@ export class Tree extends Component<ITreeProps> {
     }
 
     render() {
-        console.log("render Tree");
+        //console.log("render Tree");
         return (
             <div key="2" id={this.$id}/>
         )

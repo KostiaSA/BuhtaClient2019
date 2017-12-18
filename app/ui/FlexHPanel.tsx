@@ -21,7 +21,7 @@ export class FlexHPanel extends Component<IHorzFlexPanelProps> {
     }
 
     render() {
-        console.log("render FlexHPanel");
+        //console.log("render FlexHPanel");
         return (
             <div style={{display: "flex", flexDirection: "column", height:this.props.height || "100%"}}>
                     {this.props.children}

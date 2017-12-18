@@ -78,6 +78,7 @@ export class FlexItem extends React.Component<IFlexItemProps> {
         if (this.props.resizer === "top")
             return (
                 <div
+                    key="top"
                     ref={(e) => this.topResizer = e!}
                     className="buhta-resizer"
                     style={{
@@ -97,6 +98,7 @@ export class FlexItem extends React.Component<IFlexItemProps> {
         if (this.props.resizer === "bottom")
             return (
                 <div
+                    key="bottom"
                     ref={(e) => this.bottomResizer = e!}
                     className="buhta-resizer"
                     style={{
@@ -141,6 +143,7 @@ export class FlexItem extends React.Component<IFlexItemProps> {
         return ([
             this.renderTopResizer(),
             <div
+                key="content"
                 ref={(e) => this.flexItem = e!}
                 style={style}
             >
