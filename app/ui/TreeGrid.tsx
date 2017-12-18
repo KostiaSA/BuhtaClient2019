@@ -9,6 +9,8 @@ import {ITreeGridColumnProps, TreeGridColumn} from "./TreeGridColumn";
 import {isString} from "../utils/isString";
 import {isFunction} from "../utils/isFunction";
 
+// запрещенные имена в row: data,expanded,leaf,level,parent,records,uid,_visible
+
 export interface ITreeGridSourcHierarchy {
     root?: string; // 'children'
     keyDataField?: { name: string },          // id
@@ -28,7 +30,7 @@ export interface ITreeGridProps extends IComponentProps {
     width?: string | number;
     source: ITreeGridSource;
     sortable?: boolean;
-    onRowDoubleClick?: (rowIndex: number) => void;
+    onRowDoubleClick?: (row: any) => void;
     onRowKeyDown?: (rowIndex: number, keyCode: Keycode) => boolean;
     popup?: React.ReactNode | ((rowItem: any) => Promise<React.ReactNode>);
     icons?: boolean;
@@ -56,6 +58,39 @@ export class TreeGrid extends Component<ITreeGridProps> {
         ...Component.contextTypes,
         bindObj: PropTypes.object
     };
+
+    static reservedRowPropNames = ["data", "expanded", "leaf", "level", "parent", "records", "uid", "_visible"];
+
+    static findRowInDataSourceObject(obj: any, keyPropName: string, keyValue: any): any {
+        if (obj === null)
+            return null;
+        if (obj === undefined)
+            return null;
+
+        if (obj[keyPropName]===keyValue)
+            return obj;
+
+        if (Array.isArray(obj)) {
+            for (let item of obj) {
+                let result = TreeGrid.findRowInDataSourceObject(item, keyPropName, keyValue);
+                if (result)
+                    return result;
+            }
+        }
+        else if (typeof obj === "object") {
+            for (let prop in obj) {
+                if (prop === keyPropName && obj[prop] === keyValue)
+                    return obj;
+                else if (typeof obj[prop] === "object") {
+                    let result = TreeGrid.findRowInDataSourceObject(obj[prop], keyPropName, keyValue);
+                    if (result)
+                        return result;
+                }
+            }
+        }
+
+        return null;
+    }
 
     lastParentH: number;
     resizeIntervalId: any;
@@ -332,11 +367,11 @@ export class TreeGrid extends Component<ITreeGridProps> {
         this.widget = $("#" + this.$id);
 
         if (this.props.onRowDoubleClick)
-            this.widget.on("rowdoubleclick", (event: any) => {
-                this.props.onRowDoubleClick!(event.args.rowindex);
+            this.widget.on("rowDoubleClick", (event: any) => {
+                this.props.onRowDoubleClick!(event.args.row);
             });
         else
-            this.widget.off("rowdoubleclick");
+            this.widget.off("rowDoubleClick");
 
     }
 
@@ -344,21 +379,30 @@ export class TreeGrid extends Component<ITreeGridProps> {
         return this.widget.jqxTreeGrid("getCheckedRows");
     }
 
-    clearSelection() {
-        this.widget.jqxTreeGrid("clearSelection");
-    }
-
-
-    selectRow(rowId: string) {
-        this.widget.jqxTreeGrid("selectRow", rowId);
-    }
-
-    unselectRow(rowId: string) {
-        this.widget.jqxTreeGrid("unselectRow", rowId);
-    }
+    // clearSelection() {
+    //     this.widget.jqxTreeGrid("clearSelection");
+    // }
+    //
+    //
+    // selectRow(rowId: string) {
+    //     this.widget.jqxTreeGrid("selectRow", rowId);
+    // }
+    //
+    // unselectRow(rowId: string) {
+    //     this.widget.jqxTreeGrid("unselectRow", rowId);
+    // }
 
     focus() {
         this.widget.jqxTreeGrid("focus");
+    }
+
+    refresh() {
+        this.widget.jqxTreeGrid("refresh");
+        this.widget.jqxTreeGrid("render");
+    }
+
+    updateRow(rowId: string, row: any) {
+        this.widget.jqxTreeGrid("updateRow", rowId, row);
     }
 
     expandAll() {
@@ -381,5 +425,6 @@ export class TreeGrid extends Component<ITreeGridProps> {
             <div id={this.$id}/>
         )
     }
+
 
 }

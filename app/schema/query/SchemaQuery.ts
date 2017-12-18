@@ -175,8 +175,8 @@ export class SchemaQueryColumn {
 
     get joinTableAlias(): string {
         if (this.parent)
-            return this.parent.joinTableAlias + "." + this.joinTable.getShortSqlName();
+            return this.parent.joinTableAlias + "." + (this.props.tableAlias || this.joinTable.getShortSqlName());
         else
-            return this.joinTable.getShortSqlName();
+            return this.props.tableAlias || this.joinTable.getShortSqlName();
     }
 }

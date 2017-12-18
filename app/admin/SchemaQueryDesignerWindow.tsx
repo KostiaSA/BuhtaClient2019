@@ -15,7 +15,7 @@ import {getErrorWindow} from "../ui/modals/showError";
 import {ISchemaQueryColumnProps, ISchemaQueryProps, SchemaQuery} from "../schema/query/SchemaQuery";
 import {config} from "../config";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
-import {XJSON_parse} from "../utils/xjson";
+import {XJSON_clone, XJSON_parse} from "../utils/xjson";
 import {ITreeGridSource, TreeGrid} from "../ui/TreeGrid";
 import {Menu} from "../ui/Menu";
 import {getRandomString} from "../utils/getRandomString";
@@ -25,6 +25,10 @@ import {TreeGridColumn} from "../ui/TreeGridColumn";
 import {FlexVPanel} from "../ui/FlexVPanel";
 import {SchemaQueryDesignerSqlWindow} from "./SchemaQueryDesignerSqlWindow";
 import {appState} from "../AppState";
+import {SchemaQueryColumnEditorWindow} from "./SchemaQueryColumnEditorWindow";
+import {restoreObjectProps, saveObjectProps} from "../utils/saveRestoreObjectProps";
+import {reassignObject} from "../utils/reassignObject";
+import {assignObject} from "../utils/assignObject";
 
 
 export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
@@ -35,6 +39,14 @@ export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
 
 export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
+    window: Window;
+    treeGrid: TreeGrid;
+    treeGridSource: ITreeGridSource;
+    form: FormPanel;
+    error: any;
+    errorTitle: string;
+    query: ISchemaQueryProps;
+    queryColumnsArray: any;
     saveButton: Button;
     closeButton: Button;
 
@@ -65,26 +77,34 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         // this.columnsGrid.focus();
     };
 
-    editColumnClickHandler = async () => {
-        // let columnIndex = this.columnsGrid.getSelectedRowIndex();
+    editColumnClickHandler = async (row: any) => {
+        console.log(row);
+        // let columnIndex = this.treeGrid.getSelectedRowIndex();
         // if (columnIndex < 0) {
         //     await showError("колонка не выбрана");
         //     return;
         // }
         //
-        // let editedColumn = XJSON_clone(this.queryColumnsArray.get(columnIndex));
-        //
-        // let resultOk = await this.window.openParentWindow(
-        //     <SchemaQueryColumnEditorWindow
-        //         query={this.query}
-        //         column={editedColumn}
-        //         window={{height: 500, width: 700}}
-        //     />
-        // );
-        // if (resultOk) {
-        //     this.queryColumnsArray.set(columnIndex, editedColumn);
-        // }
-        // this.columnsGrid.focus();
+
+        let originalEditedRow = TreeGrid.findRowInDataSourceObject(this.query.root, "key", row.key);
+        if (!originalEditedRow)
+            throw "SchemaQueryDesignerWindow.editColumnClickHandler): internal error";
+
+        let editedRow=XJSON_clone(originalEditedRow);
+
+        let resultOk = await this.window.openParentWindow(
+            <SchemaQueryColumnEditorWindow
+                query={this.query}
+                column={editedRow}
+                window={{height: 500, width: 700}}
+            />
+        );
+        if (resultOk) {
+            assignObject(originalEditedRow,editedRow);
+            assignObject(row,editedRow);
+            this.treeGrid.updateRow(row.key, row);
+        }
+        this.treeGrid.focus();
     };
 
     deleteColumnClickHandler = async () => {
@@ -105,10 +125,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         // this.columnsGrid.focus();
     };
 
-    error: any;
-    errorTitle: string;
-    query: ISchemaQueryProps;
-    queryColumnsArray: any;
+    random $keys
 
     async componentDidMount() {
 
@@ -136,7 +153,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                 //this.preprocessDataSource(res, 0, "");
 
                 this.treeGridSource = {
-                    localData: [this.query.root],
+                    localData: [XJSON_parse(res.json!).root],
                     dataType: "json",
                     id: "key",
                     hierarchy: {
@@ -216,10 +233,6 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         this.window.close();
     };
 
-    window: Window;
-    treeGrid: TreeGrid;
-    treeGridSource: ITreeGridSource;
-    form: FormPanel;
 
     // dataTypeColumnCompute = (row: ISchemaQueryColumnProps): React.ReactNode => {
     //     let dt = appState.sqlDataTypes[row.dataType.id];
@@ -350,8 +363,8 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             <TreeGrid
                                                 ref={(e: any) => this.treeGrid = e!}
                                                 source={this.treeGridSource}
-                                                onRowDoubleClick={async (item) => {
-                                                    //this.handleOpenObjectDesigner(item.value);
+                                                onRowDoubleClick={async (row) => {
+                                                    this.editColumnClickHandler(row)
                                                 }}
                                                 popup={this.createPopupMenu}
                                                 enableHover={false}
@@ -381,7 +394,9 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                 tooltip="редактировать колонку (ENTER)"
                                                 height={26}
                                                 style={{marginRight: 5}}
-                                                onClick={this.editColumnClickHandler}
+                                                onClick={async () => {
+                                                    this.editColumnClickHandler(null)
+                                                }}
                                         />
                                         <Button imgSrc={config.button.deleteRowIcon}
                                                 text="Удалить"
