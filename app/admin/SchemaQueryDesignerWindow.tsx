@@ -15,7 +15,7 @@ import {getErrorWindow, showError} from "../ui/modals/showError";
 import {ISchemaQueryColumnProps, ISchemaQueryProps, SchemaQuery} from "../schema/query/SchemaQuery";
 import {config} from "../config";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
-import {XJSON_clone, XJSON_parse, XJSON_stringify} from "../utils/xjson";
+import {XJSON_clone, XJSON_equals, XJSON_parse, XJSON_stringify} from "../utils/xjson";
 import {ITreeGridSource, TreeGrid} from "../ui/TreeGrid";
 import {Menu} from "../ui/Menu";
 import {getRandomString} from "../utils/getRandomString";
@@ -31,6 +31,7 @@ import {joiValidate} from "../validation/joiValidate";
 import {SchemaObject} from "../schema/SchemaObject";
 import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
 import {SchemaQueryDesignerAddFieldsWindow} from "./SchemaQueryDesignerAddFieldsWindow";
+import {getConfirmation} from "../ui/modals/getConfirmation";
 
 
 export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
@@ -48,13 +49,17 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
     error: any;
     errorTitle: string;
     query: ISchemaQueryProps;
-    queryColumnsArray: any;
+    initialQuery: ISchemaQueryProps;
+    //queryColumnsArray: any;
     saveButton: Button;
     closeButton: Button;
 
     addColumnClickHandler = async (parentRow: any) => {
+        if (!parentRow.tableId)
+            parentRow = parentRow.parent;
+
         let originalParentRow = TreeGrid.findRowInDataSourceObject(this.query.root, "key", parentRow.key);
-        let tableId: string = parentRow.tableId || parentRow.parent.tableId;
+        let tableId: string = parentRow.tableId;// || parentRow.parent.tableId;
 
         let result = await this.window.openParentWindow(
             <SchemaQueryDesignerAddFieldsWindow
@@ -63,31 +68,16 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
             </SchemaQueryDesignerAddFieldsWindow>
         );
 
-
-        // let columnIndex = this.columnsGrid.getSelectedRowIndex();
-        //
-        // let editedColumn: ISchemaQueryColumnProps = {
-        //     name: "новая колонка",
-        //     dataType: {
-        //         id: StringSqlDataType.id
-        //     }
-        // };
-        // let dt = appState.sqlDataTypes[StringSqlDataType.id];
-        // dt.setDefaultProps(editedColumn.dataType);
-        //
-        // let resultOk = await this.window.openParentWindow(
-        //     <SchemaQueryColumnEditorWindow
-        //         query={this.query}
-        //         column={editedColumn}
-        //         window={{height: 500, width: 600}}
-        //     />
-        // );
-        // if (resultOk) {
-        //     this.queryColumnsArray.push(editedColumn);
-        //     this.columnsGrid.selectRow(this.queryColumnsArray.length - 1);
-        //
-        // }
-        // this.columnsGrid.focus();
+        console.log("qqq", result);
+        for (let tableColumn of result) {
+            let newQueryColumn = {
+                key: getRandomString(),
+                fieldSource: tableColumn.name,
+            };
+            originalParentRow.children.push(newQueryColumn);
+            this.treeGrid.addRow(newQueryColumn.key, XJSON_clone(newQueryColumn), "last", parentRow.key);
+        }
+        this.treeGrid.updateRow(parentRow.key, originalParentRow);
     };
 
     editColumnClickHandler = async (row: any) => {
@@ -128,8 +118,6 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         // this.columnsGrid.focus();
     };
 
-    //  random $keys
-
     async componentDidMount() {
 
 
@@ -142,7 +130,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                     this.query = XJSON_parse(res.json);
                     TreeGrid.setRandomKeysInDataSourceObject(this.query.root, "key");
                     this.query.objectId = this.props.objectId;
-                    //this.queryColumnsArray = new ($ as any).jqx.observableArray(this.query.columns);
+                    this.initialQuery = XJSON_clone(this.query);
                 }
                 else {
                     this.error = "не найден запрос: " + this.props.objectId;
@@ -154,8 +142,6 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                     throw result;
                 }
 
-                //this.preprocessDataSource(res, 0, "");
-
                 this.treeGridSource = {
                     localData: [XJSON_clone(this.query).root],
                     dataType: "json",
@@ -163,6 +149,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                     hierarchy: {
                         root: "children"
                     },
+                    // todo заполнение dataFields как в Grid
                     // dataFields: [
                     //     {name: "name", type: "string"},
                     // ]
@@ -229,28 +216,13 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
     };
 
     handleClickCloseButton = async () => {
-        // let needConfirmation = this.form!.needSaveChanges;
-        // needConfirmation = needConfirmation || !XJSON_equals(this.query.columns, this.queryColumnsArray.toArray());
-        // this.query.columns = this.queryColumnsArray.toArray();
-        //
-        // if (!needConfirmation || await getConfirmation("Выйти без сохранения?"))
-        //     this.window.close();
+        let needConfirmation = this.form!.needSaveChanges;
+        needConfirmation = needConfirmation || !XJSON_equals(this.query, this.initialQuery);
 
-        this.window.close();
+        if (!needConfirmation || await getConfirmation("Выйти без сохранения?"))
+            this.window.close();
+
     };
-
-
-    // dataTypeColumnCompute = (row: ISchemaQueryColumnProps): React.ReactNode => {
-    //     let dt = appState.sqlDataTypes[row.dataType.id];
-    //     return <span style={{color: dt.getDesignerColor()}}>{dt.getName(row.dataType)}</span>;
-    // };
-    //
-    // pkColumnCompute = (row: ISchemaQueryColumnProps): React.ReactNode => {
-    //     if (row.primaryKey)
-    //         return <img src="vendor/fugue/key.png"/>;
-    //     else
-    //         return null;
-    // };
 
     createPopupMenu = async (rowItem: any) => {
 
@@ -322,7 +294,6 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                 ref={(e) => {
                     this.window = e!
                 }}>
-                {/*Дизайнер таблицы {this.props.queryId}*/}
 
                 <FlexHPanel>
                     <FlexItem dock="fill">

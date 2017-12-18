@@ -18,11 +18,18 @@
                 "fieldSource": "Фамилия",
                 "fieldCaption": "Дир-Фамилия",
                 "isHidden": true
+            }, {
+                "fieldSource": "Отчество"
+            }, {
+                "fieldSource": "ИНН"
+            }, {
+                "fieldSource": "ДатаРождения",
+                "fieldCaption": "Рожд"
             }]
         }]
     },
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-18 14:25:42.240",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-18 22:25:41.221"
+    "changedDate": "<DateTime>2017-12-19 00:47:51.163"
 }

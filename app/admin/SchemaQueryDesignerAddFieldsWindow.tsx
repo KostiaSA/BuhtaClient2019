@@ -8,18 +8,14 @@ import {FlexItem} from "../ui/FlexItem";
 import {Grid} from "../ui/Grid";
 import {GridColumn} from "../ui/GridColumn";
 import {Button} from "../ui/Button";
-import {SchemaTableColumnEditorWindow} from "./SchemaTableColumnEditorWindow";
 import {Keycode} from "../utils/Keycode";
 import {loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
-import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
 import {getErrorWindow, showError} from "../ui/modals/showError";
 import {ISchemaTableColumnProps, ISchemaTableProps, SchemaTable} from "../schema/table/SchemaTable";
 import {appState} from "../AppState";
 import {config} from "../config";
-import {joiValidate} from "../validation/joiValidate";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
-import {XJSON_clone, XJSON_parse, XJSON_stringify} from "../utils/xjson";
-import {SchemaObject} from "../schema/SchemaObject";
+import {XJSON_parse} from "../utils/xjson";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
@@ -87,6 +83,12 @@ export class SchemaQueryDesignerAddFieldsWindow extends SchemaObjectBaseDesigner
     }
 
     handleClickSaveButton = async () => {
+        let selectedRows = this.columnsGrid.getSelectedRows();
+        if (selectedRows.length === 0) {
+            await showError("ничего не выбрано");
+            return;
+        }
+        this.window.close(selectedRows);
 
         // this.table.columns = this.tableColumnsArray.toArray();
         //

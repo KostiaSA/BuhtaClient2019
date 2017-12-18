@@ -389,8 +389,19 @@ export class Grid extends Component<IGridProps> {
         return this.widget.jqxGrid("getselectedrowindex");
     }
 
+    getSelectedRow(): any {
+        return this.props.source.get(this.getSelectedRowIndex());
+    }
+
     getSelectedRowIndexes(): number[] {
         return this.widget.jqxGrid("getselectedrowindexes");
+    }
+
+    getSelectedRows(): any[] {
+//        let propsSource = this.props.source.toArray();
+//        return this.getSelectedRowIndexes().map((item) => propsSource[item]);
+        let propsSource = this.props.source;
+        return this.getSelectedRowIndexes().map((itemIndex) => propsSource.get(itemIndex));
     }
 
     selectAllRows() {

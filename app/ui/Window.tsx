@@ -147,7 +147,7 @@ export class Window extends Component<IWindowProps> {
     }
 
 
-    async openParentWindow(win: React.ReactElement<IWindowProps>): Promise<boolean> {
+    async openParentWindow(win: React.ReactElement<IWindowProps>): Promise<any> {
 
         this.disable();
         let result = await appState.desktop.openWindow(win);

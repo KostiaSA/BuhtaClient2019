@@ -51,7 +51,6 @@ export class Button extends Component<IButtonProps> {
 
         if (this.props.onClick)
             this.widget.on("click", async () => {
-                console.log("getWindow", this.getWindow());
                 if (!this.disabled()) {
                     let win = this.getWindow();
                     if (win) {

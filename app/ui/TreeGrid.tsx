@@ -476,6 +476,11 @@ export class TreeGrid extends Component<ITreeGridProps> {
         this.widget.jqxTreeGrid("render");
     }
 
+    //('addRow', null, { "name": "Go jqWidgets!" }, 'first', rowKey);
+    addRow(rowKey: string, row: any, position: ("first" | "last"), parentKey: string) {
+        this.widget.jqxTreeGrid("addRow", rowKey, row, position, parentKey);
+    }
+
     updateRow(rowId: string, row: any) {
         this.widget.jqxTreeGrid("updateRow", rowId, row);
     }

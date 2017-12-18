@@ -7469,7 +7469,9 @@ License: https://jqwidgets.com/license/
                     }
                 }
                 if (j.find(".jqx-checkbox").length == 0) {
-                    e.innerHTML = '<div style="position: absolute; top: 50%; left: 50%; margin-top: -7px; margin-left: -10px;"></div>';
+                    // buhta
+                    //e.innerHTML = '<div style="position: absolute; top: 50%; left: 50%; margin-top: -7px; margin-left: -10px;"></div>';
+                    e.innerHTML = '<div style="position: absolute; top: 50%; left: 50%; margin-top: -8px; margin-left: -10px;"></div>';
                     b(e.firstChild).jqxCheckBox({
                         disabled: g.disabled,
                         _canFocus: false,
