@@ -15,12 +15,10 @@ import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaOb
 import {getErrorWindow, showError} from "../ui/modals/showError";
 import {ISchemaTableColumnProps, ISchemaTableProps, SchemaTable} from "../schema/table/SchemaTable";
 import {appState} from "../AppState";
-import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
-import {getConfirmation} from "../ui/modals/getConfirmation";
 import {config} from "../config";
 import {joiValidate} from "../validation/joiValidate";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
-import {XJSON_clone, XJSON_equals, XJSON_parse, XJSON_stringify} from "../utils/xjson";
+import {XJSON_clone, XJSON_parse, XJSON_stringify} from "../utils/xjson";
 import {SchemaObject} from "../schema/SchemaObject";
 
 
@@ -72,6 +70,16 @@ export class SchemaQueryDesignerAddFieldsWindow extends SchemaObjectBaseDesigner
                 if (res.json) {
                     this.table = XJSON_parse(res.json);
                     this.table.objectId = this.props.objectId;
+
+                    this.table.columns.push({
+                        name: "SQL:Строка",
+                        dataType: {
+                            id: "String",
+                            maxLen: 0
+                        } as any,
+                        description: "вычисляемое поле"
+                    });
+
                     this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
                 }
                 else {
@@ -147,12 +155,7 @@ export class SchemaQueryDesignerAddFieldsWindow extends SchemaObjectBaseDesigner
     };
 
     handleClickCloseButton = async () => {
-        let needConfirmation = this.form!.needSaveChanges;
-        needConfirmation = needConfirmation || !XJSON_equals(this.table.columns, this.tableColumnsArray.toArray());
-        this.table.columns = this.tableColumnsArray.toArray();
-
-        if (!needConfirmation || await getConfirmation("Выйти без сохранения?"))
-            this.window.close();
+        this.window.close();
     };
 
     window: Window;
@@ -196,47 +199,44 @@ export class SchemaQueryDesignerAddFieldsWindow extends SchemaObjectBaseDesigner
                 {/*Дизайнер таблицы {this.props.tableId}*/}
 
                 <FlexHPanel>
-                    <FlexItem dock="fill">
-                        <FlexHPanel>
-                            <FlexItem dock="top">
-                                фильтр по названию
-                            </FlexItem>
-                            <FlexItem dock="fill">
-                                <Grid
-                                    ref={(e) => {
-                                        this.columnsGrid = e!
-                                    }}
-                                    source={this.tableColumnsArray}
-                                    onRowDoubleClick={this.editColumnClickHandler}
-                                    onRowKeyDown={(rowIndex, keyCode) => {
-                                        if (keyCode === Keycode.Insert) {
-                                            //this.addColumnClickHandler();
-                                            return true;
-                                        }
-                                        else if (keyCode === Keycode.Enter) {
-                                            //this.editColumnClickHandler();
-                                            return true;
-                                        }
-                                        else if (keyCode === Keycode.Delete) {
-                                            //this.deleteColumnClickHandler();
-                                            return true;
-                                        }
-                                        else
-                                            return false;
-                                    }}
-                                >
-                                    <GridColumn headerText="PK" getText={this.pkColumnCompute} align="center"
-                                                width={40} pinned/>
-                                    <GridColumn headerText="Колонка" datafield="name" pinned fontWeight="500"/>
-                                    <GridColumn headerText="Тип данных" getText={this.dataTypeColumnCompute}/>
-                                    <GridColumn headerText="Описание" datafield="description"/>
-                                </Grid>
-                            </FlexItem>
-                        </FlexHPanel>
+                    <FlexItem dock="top">
+                        фильтр по названию
+                    </FlexItem>
+                    <FlexItem dock="fill" style={{padding: 5}}>
+                        <Grid
+                            ref={(e) => {
+                                this.columnsGrid = e!
+                            }}
+                            checkboxes
+                            source={this.tableColumnsArray}
+                            onRowDoubleClick={this.editColumnClickHandler}
+                            onRowKeyDown={(rowIndex, keyCode) => {
+                                if (keyCode === Keycode.Insert) {
+                                    //this.addColumnClickHandler();
+                                    return true;
+                                }
+                                else if (keyCode === Keycode.Enter) {
+                                    //this.editColumnClickHandler();
+                                    return true;
+                                }
+                                else if (keyCode === Keycode.Delete) {
+                                    //this.deleteColumnClickHandler();
+                                    return true;
+                                }
+                                else
+                                    return false;
+                            }}
+                        >
+                            <GridColumn headerText="PK" getText={this.pkColumnCompute} align="center"
+                                        width={40}/>
+                            <GridColumn headerText="Колонка" datafield="name" fontWeight="500"/>
+                            <GridColumn headerText="Тип данных" getText={this.dataTypeColumnCompute}/>
+                            <GridColumn headerText="Описание" datafield="description"/>
+                        </Grid>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
-                        <Button imgSrc={config.button.saveIcon}
-                                text="Выбрать"
+                        <Button imgSrc={config.button.okIcon}
+                                text="Добавить в запрос"
                                 style={{marginRight: 5}}
                                 ref={(e) => this.saveButton = e!}
                                 onClick={this.handleClickSaveButton}/>

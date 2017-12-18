@@ -17,7 +17,7 @@
             "id": "String",
             "maxLen": 20
         },
-        "description": ""
+        "description": "это номер"
     }, {
         "name": "Название",
         "dataType": {

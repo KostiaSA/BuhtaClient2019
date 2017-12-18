@@ -21,6 +21,7 @@ export interface IGridProps extends IComponentProps {
     onRowKeyDown?: (rowIndex: number, keyCode: Keycode) => boolean;
     columnsResize?: boolean;
     columnsReorder?: boolean;
+    checkboxes?: boolean;
 
 }
 
@@ -37,34 +38,56 @@ export class Grid extends Component<IGridProps> {
     };
 
     lastParentH: number;
+    lastParentW: number;
     resizeIntervalId: any;
 
     componentDidMount() {
         this.widget = $("#" + this.$id);
         this.updateProps(this.props, true);
 
-        if (!this.props.height || this.props.height === "100%") {
-            this.resizeIntervalId = setInterval(() => {
-                let newH = this.widget.parent().height();
 
-                // отановка таймера resize, если grid удалена
-                if ($("#" + this.$id).length !== 1) {
-                    clearInterval(this.resizeIntervalId);
-                }
+        this.resizeIntervalId = setInterval(() => {
+            let newH = this.widget.parent().height();
+            let newW = this.widget.parent().width();
 
-                if (newH > 10 && this.lastParentH !== newH) {
-                    //console.log("resize",this.$id,this.lastParentH,newH);
-                    this.lastParentH = newH;
-                    this.widget.jqxGrid({height: newH});
-                }
-            }, 300);
-        }
+            // отановка таймера resize, если TreeGrid удалена
+            if ($("#" + this.$id).length !== 1) {
+                clearInterval(this.resizeIntervalId);
+            }
+
+            if (newH > 0 && (this.lastParentH !== newH || this.lastParentW !== newW)) {
+                this.lastParentH = newH;
+                this.lastParentW = newW;
+                this.widget.jqxGrid({height: newH, width: newW});
+            }
+        }, 200);
+
+        // if (!this.props.height || this.props.height === "100%") {
+        //     this.resizeIntervalId = setInterval(() => {
+        //         let newH = this.widget.parent().height();
+        //
+        //         // отановка таймера resize, если grid удалена
+        //         if ($("#" + this.$id).length !== 1) {
+        //             clearInterval(this.resizeIntervalId);
+        //         }
+        //
+        //         if (newH > 10 && this.lastParentH !== newH) {
+        //             //console.log("resize",this.$id,this.lastParentH,newH);
+        //             this.lastParentH = newH;
+        //             this.widget.jqxGrid({height: newH});
+        //         }
+        //     }, 300);
+        // }
     }
 
     updateProps(props: IGridProps, create: boolean) {
-        let gridOptions: any = omit(props, ["children", "source", "onRowDoubleClick", "onRowKeyDown", "popup"]);
-        gridOptions.height = gridOptions.height || 350;
-        gridOptions.width = gridOptions.width || "100%";
+        let gridOptions: any = omit(props, ["children", "source", "onRowDoubleClick", "onRowKeyDown", "popup", "checkboxes"]);
+
+        this.widget.css("position", "absolute");
+
+        gridOptions.height = "100%";
+        gridOptions.width = "100%";
+
         gridOptions.rowsheight = gridOptions.rowsheight || config.grid.rowsHeight;
         gridOptions.columnsheight = gridOptions.columnsheight || config.grid.rowsHeight;
 
@@ -74,15 +97,44 @@ export class Grid extends Component<IGridProps> {
         if (gridOptions.columnsResize !== false)
             gridOptions.columnsResize = true;
 
+
+        // заполняем datafields
+        let count = 0;
+        let fakeObj: any = {};
+        let sourceAsArray: any[];
+        if (Array.isArray(props.source))
+            sourceAsArray = props.source;
+        else if (props.source.toArray)
+            sourceAsArray = props.source.toArray();
+        else
+            throw "Grid(): неверный формат 'source'";
+
+        for (let item of sourceAsArray) {
+            if (count++ > 10000)
+                break;
+            for (let prop in item) {
+                fakeObj[prop] = true;
+            }
+        }
+
         gridOptions.source = {
             localdata: props.source,
             datatype: "array",
+            datafields: Object.keys(fakeObj).map((propName: string) => {
+                return {name: propName}
+            }),
         };
+
+        if (this.props.checkboxes) {
+            gridOptions.selectionmode = "checkbox";
+        }
 
         gridOptions.columns = [];
         for (let col of React.Children.toArray(this.props.children)) {
             if ((col as any).type === GridColumn) {
                 let colProps = (col as any).props as IGridColumnProps;
+
+                // gridOptions.source.datafields.push({name:colProps.});
 
                 let columnOptions = omit(colProps, [
                     "children",
@@ -366,7 +418,15 @@ export class Grid extends Component<IGridProps> {
         //console.log("render Grid");
 
         return (
-            <div id={this.$id}/>
+            <div
+                style={{
+                    position: "relative",
+                    width: this.props.width || "100%",
+                    height: this.props.height || "initial",
+                    border: "0px solid red",
+                }}>
+                <div id={this.$id}/>
+            </div>
         )
     }
 

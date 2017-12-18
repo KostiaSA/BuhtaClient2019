@@ -8,6 +8,7 @@
         "dataType": {
             "id": "Guid"
         },
+        "description": "==============",
         "notNull": true
     }, {
         "name": "Номер",
@@ -15,14 +16,16 @@
             "id": "String",
             "maxLen": 20
         },
-        "description": ""
+        "description": "==============",
+        "description2": "=========2=====",
+        "notNull": true
     }, {
-        "name": "Фамилия",
+        "name": "Фамилия1",
         "dataType": {
             "id": "String",
             "maxLen": 30
         },
-        "description": ""
+        "description": "111111111111"
     }, {
         "name": "Имя",
         "dataType": {
@@ -50,10 +53,17 @@
             "id": "Date"
         },
         "description": ""
+    }, {
+        "name": "SQL:Строка",
+        "dataType": {
+            "id": "String",
+            "maxLen": 0
+        },
+        "description": "вычисляемое поле"
     }],
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-15 11:03:45.046",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-17 23:18:55.132",
+    "changedDate": "<DateTime>2017-12-18 19:52:34.107",
     "sqlName": "СотрXXX"
 }
