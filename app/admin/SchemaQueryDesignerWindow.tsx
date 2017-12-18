@@ -377,7 +377,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             >
                                                 <TreeGridColumn headerText="Таблица/Колонка"
                                                                 getText={this.getRootColumnText}/>
-                                                <TreeGridColumn headerText="Заголовок"
+                                                <TreeGridColumn headerText="Заголовок" background="yellow"
                                                                 getText={this.getColumnCaptionText}/>
 
                                             </TreeGrid>
