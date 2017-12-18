@@ -30,6 +30,7 @@ import {assignObject} from "../utils/assignObject";
 import {joiValidate} from "../validation/joiValidate";
 import {SchemaObject} from "../schema/SchemaObject";
 import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
+import {SchemaQueryDesignerAddFieldsWindow} from "./SchemaQueryDesignerAddFieldsWindow";
 
 
 export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
@@ -51,7 +52,18 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
     saveButton: Button;
     closeButton: Button;
 
-    addColumnClickHandler = async () => {
+    addColumnClickHandler = async (parentRow: any) => {
+        let originalParentRow = TreeGrid.findRowInDataSourceObject(this.query.root, "key", parentRow.key);
+        let tableId: string = parentRow.tableId || parentRow.parent.tableId;
+
+        let result = await this.window.openParentWindow(
+            <SchemaQueryDesignerAddFieldsWindow
+                window={{height: 500, width: 400}}
+                objectId={tableId}>
+            </SchemaQueryDesignerAddFieldsWindow>
+        );
+
+
         // let columnIndex = this.columnsGrid.getSelectedRowIndex();
         //
         // let editedColumn: ISchemaQueryColumnProps = {
@@ -79,19 +91,10 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
     };
 
     editColumnClickHandler = async (row: any) => {
-        console.log(row);
-        // let columnIndex = this.treeGrid.getSelectedRowIndex();
-        // if (columnIndex < 0) {
-        //     await showError("колонка не выбрана");
-        //     return;
-        // }
-        //
 
         let originalEditedRow = TreeGrid.findRowInDataSourceObject(this.query.root, "key", row.key);
         if (!originalEditedRow)
             throw "SchemaQueryDesignerWindow.editColumnClickHandler): internal error";
-
-        //let editedRow=XJSON_clone(originalEditedRow);
 
         let resultOk = await this.window.openParentWindow(
             <SchemaQueryColumnEditorWindow
@@ -101,7 +104,6 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
             />
         );
         if (resultOk) {
-            //assignObject(originalEditedRow,editedRow);
             assignObject(row, originalEditedRow);
             this.treeGrid.updateRow(row.key, row);
         }
@@ -391,7 +393,14 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                 tooltip="добавить новую колонку (ESC)"
                                                 height={26}
                                                 style={{marginRight: 5}}
-                                                onClick={this.addColumnClickHandler}
+                                                onClick={async () => {
+                                                    let row = this.treeGrid.getSelection()[0];
+                                                    if (!row) {
+                                                        await showError("колонка не выбрана");
+                                                        return;
+                                                    }
+                                                    this.addColumnClickHandler(row)
+                                                }}
                                         />
                                         <Button imgSrc={config.button.changeRowIcon}
                                                 text="Изменить"
@@ -399,8 +408,12 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                 height={26}
                                                 style={{marginRight: 5}}
                                                 onClick={async () => {
-                                                    console.log("",this.treeGrid.getSelection());
-                                                    //this.editColumnClickHandler(null)
+                                                    let row = this.treeGrid.getSelection()[0];
+                                                    if (!row) {
+                                                        await showError("колонка не выбрана");
+                                                        return;
+                                                    }
+                                                    this.editColumnClickHandler(row)
                                                 }}
                                         />
                                         <Button imgSrc={config.button.deleteRowIcon}
