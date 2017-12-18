@@ -13,7 +13,7 @@
             "tableId": "buhta/core-tests/schema/Сотрудник.table",
             "children": [{
                 "fieldSource": "Номер",
-                "fieldCaption": "ДирНомер1"
+                "fieldCaption": "ДирНомер178"
             }, {
                 "fieldSource": "Фамилия",
                 "fieldCaption": "Дир-Фамилия",
@@ -24,5 +24,5 @@
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-18 14:25:42.240",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-18 14:44:52.639"
+    "changedDate": "<DateTime>2017-12-18 22:25:41.221"
 }

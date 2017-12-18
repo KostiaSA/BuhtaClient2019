@@ -31,33 +31,13 @@ export class SchemaQueryDesignerAddFieldsWindow extends SchemaObjectBaseDesigner
 
     saveButton: Button;
     closeButton: Button;
-
-    editColumnClickHandler = async () => {
-        let columnIndex = this.columnsGrid.getSelectedRowIndex();
-        if (columnIndex < 0) {
-            await showError("колонка не выбрана");
-            return;
-        }
-
-        let editedColumn = XJSON_clone(this.tableColumnsArray.get(columnIndex));
-
-        let resultOk = await this.window.openParentWindow(
-            <SchemaTableColumnEditorWindow
-                table={this.table}
-                column={editedColumn}
-                window={{height: 500, width: 700}}
-            />
-        );
-        if (resultOk) {
-            this.tableColumnsArray.set(columnIndex, editedColumn);
-        }
-        this.columnsGrid.focus();
-    };
-
     error: any;
     errorTitle: string;
     table: ISchemaTableProps;
     tableColumnsArray: any;
+    window: Window;
+    columnsGrid: Grid;
+    form: FormPanel;
 
     async componentDidMount() {
 
@@ -100,57 +80,41 @@ export class SchemaQueryDesignerAddFieldsWindow extends SchemaObjectBaseDesigner
                 this.forceUpdate();
             }
         }
-        else { // создание новой таблицы
-
-            this.table = {
-                objectType: SchemaTable.objectType,
-                name: "новая таблица",
-                columns: [
-                    {
-                        "name": "Ключ",
-                        "dataType": {
-                            "id": "Integer",
-                            "size": "16"
-                        }
-                    } as any
-                ],
-            };
-            this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
-            let result = new SchemaTable(this.table).validate();
-            this.forceUpdate();
+        else {
+            this.error = "objectId не заполнен";
         }
 
     }
 
     handleClickSaveButton = async () => {
 
-        this.table.columns = this.tableColumnsArray.toArray();
-
-        let validator = new SchemaTable(this.table).getValidator();
-
-        let validationError = joiValidate(this.table, validator);
-
-        if (validationError) {
-            await showError(validationError);
-            return
-        }
-
-        new SchemaObject(this.table).setChangedUserAndDate();
-        let fielPath = this.props.objectId || this.props.newObjectPath + "/" + this.table.name + "." + SchemaTable.objectType;
-        delete this.table.objectId;
-
-        let req: ISavedSchemaObjectFiles = {
-            filePath: fielPath,
-            json: XJSON_stringify(this.table)
-        };
-
-        try {
-            await saveSchemaObjectFiles(req);
-            this.window.close(req.filePath);
-        }
-        catch (err) {
-            showError(err.toString());
-        }
+        // this.table.columns = this.tableColumnsArray.toArray();
+        //
+        // let validator = new SchemaTable(this.table).getValidator();
+        //
+        // let validationError = joiValidate(this.table, validator);
+        //
+        // if (validationError) {
+        //     await showError(validationError);
+        //     return
+        // }
+        //
+        // new SchemaObject(this.table).setChangedUserAndDate();
+        // let fielPath = this.props.objectId || this.props.newObjectPath + "/" + this.table.name + "." + SchemaTable.objectType;
+        // delete this.table.objectId;
+        //
+        // let req: ISavedSchemaObjectFiles = {
+        //     filePath: fielPath,
+        //     json: XJSON_stringify(this.table)
+        // };
+        //
+        // try {
+        //     await saveSchemaObjectFiles(req);
+        //     this.window.close(req.filePath);
+        // }
+        // catch (err) {
+        //     showError(err.toString());
+        // }
 
     };
 
@@ -158,9 +122,6 @@ export class SchemaQueryDesignerAddFieldsWindow extends SchemaObjectBaseDesigner
         this.window.close();
     };
 
-    window: Window;
-    columnsGrid: Grid;
-    form: FormPanel;
 
     dataTypeColumnCompute = (row: ISchemaTableColumnProps): React.ReactNode => {
         let dt = appState.sqlDataTypes[row.dataType.id];
@@ -196,7 +157,6 @@ export class SchemaQueryDesignerAddFieldsWindow extends SchemaObjectBaseDesigner
                 ref={(e) => {
                     this.window = e!
                 }}>
-                {/*Дизайнер таблицы {this.props.tableId}*/}
 
                 <FlexHPanel>
                     <FlexItem dock="top">
@@ -209,7 +169,6 @@ export class SchemaQueryDesignerAddFieldsWindow extends SchemaObjectBaseDesigner
                             }}
                             checkboxes
                             source={this.tableColumnsArray}
-                            onRowDoubleClick={this.editColumnClickHandler}
                             onRowKeyDown={(rowIndex, keyCode) => {
                                 if (keyCode === Keycode.Insert) {
                                     //this.addColumnClickHandler();

@@ -1,6 +1,7 @@
 class Test extends buhta.test.BaseTest {
 
     async create() {
+        throw "временно отключен";
         let text = [];
         text.push("/* этот файл сгенерирован автоматически, не меняйте его*/");
         for (let color of buhta.config.CSS_COLOR_NAMES) {

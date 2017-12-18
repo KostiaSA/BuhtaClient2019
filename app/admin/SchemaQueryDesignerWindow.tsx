@@ -399,7 +399,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                         await showError("колонка не выбрана");
                                                         return;
                                                     }
-                                                    this.addColumnClickHandler(row)
+                                                    await this.addColumnClickHandler(row)
                                                 }}
                                         />
                                         <Button imgSrc={config.button.changeRowIcon}
@@ -413,7 +413,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                         await showError("колонка не выбрана");
                                                         return;
                                                     }
-                                                    this.editColumnClickHandler(row)
+                                                    await this.editColumnClickHandler(row)
                                                 }}
                                         />
                                         <Button imgSrc={config.button.deleteRowIcon}

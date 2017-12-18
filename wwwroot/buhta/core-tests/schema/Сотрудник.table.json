@@ -53,17 +53,10 @@
             "id": "Date"
         },
         "description": ""
-    }, {
-        "name": "SQL:Строка",
-        "dataType": {
-            "id": "String",
-            "maxLen": 0
-        },
-        "description": "вычисляемое поле"
     }],
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-15 11:03:45.046",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-18 19:52:34.107",
+    "changedDate": "<DateTime>2017-12-18 22:12:58.162",
     "sqlName": "СотрXXX"
 }
