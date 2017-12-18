@@ -1,36 +1,28 @@
 ﻿{
-  "description": "Справочник организаций",
-  "name": "СписокОрганизаций",
-  "objectType": "query",
-  "root": {
-    "key": "key1",
-    "tableId":"buhta/core-tests/schema/Организация.table",
-    "children":[
-      {
-        "key": "key2",
-        "fieldSource":"Номер"
-      },
-      {
-        "key": "key3",
-        "fieldSource":"Название"
-      },
-      {
-        "key": "key4",
-        "fieldSource":"Директор",
-        "tableId":"buhta/core-tests/schema/Сотрудник.table",
-        "children":[
-          {
-            "key": "key5",
-            "fieldSource":"Номер",
-            "fieldCaption":"ДирНомер"
-          },
-          {
-            "key": "key6",
-            "fieldSource":"Фамилия",
-            "fieldCaption":"ДирФамилия"
-          }
-        ]
-      }
-    ]
-  }
+    "description": "Справочник организаций2",
+    "name": "СписокОрганизаций",
+    "objectType": "query",
+    "root": {
+        "tableId": "buhta/core-tests/schema/Организация.table",
+        "children": [{
+            "fieldSource": "Номер"
+        }, {
+            "fieldSource": "Название"
+        }, {
+            "fieldSource": "Директор",
+            "tableId": "buhta/core-tests/schema/Сотрудник.table",
+            "children": [{
+                "fieldSource": "Номер",
+                "fieldCaption": "ДирНомер1"
+            }, {
+                "fieldSource": "Фамилия",
+                "fieldCaption": "Дир-Фамилия",
+                "isHidden": true
+            }]
+        }]
+    },
+    "createdBy": "Иванов17-20",
+    "createdDate": "<DateTime>2017-12-18 14:25:42.240",
+    "changedBy": "Иванов17-20",
+    "changedDate": "<DateTime>2017-12-18 14:44:52.639"
 }

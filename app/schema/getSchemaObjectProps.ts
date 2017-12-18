@@ -14,7 +14,7 @@ export async function getSchemaObjectProps<P extends ISchemaObjectProps=ISchemaO
     if (!props) {
         let res = await loadSchemaObjectFiles(objectId);
         props = XJSON_parse(res.json!);
-        props.objectId=objectId;
+        props.objectId = props.objectId || objectId;
         schemaObjectJsonCache[objectId] = props;
     }
 

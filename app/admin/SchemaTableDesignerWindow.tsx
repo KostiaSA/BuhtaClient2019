@@ -120,7 +120,6 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                 if (res.json) {
                     this.table = XJSON_parse(res.json);
                     this.table.objectId = this.props.objectId;
-
                     this.tableColumnsArray = new ($ as any).jqx.observableArray(this.table.columns);
                 }
                 else {
@@ -177,9 +176,11 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
         }
 
         new SchemaObject(this.table).setChangedUserAndDate();
+        let fielPath = this.props.objectId || this.props.newObjectPath + "/" + this.table.name + "." + SchemaTable.objectType;
+        delete this.table.objectId;
 
         let req: ISavedSchemaObjectFiles = {
-            filePath: this.props.objectId || this.props.newObjectPath + "/" + this.table.name + "." + SchemaTable.objectType,
+            filePath: fielPath,
             json: XJSON_stringify(this.table)
         };
 

@@ -8,6 +8,7 @@ import {Keycode} from "../utils/Keycode";
 import {ITreeGridColumnProps, TreeGridColumn} from "./TreeGridColumn";
 import {isString} from "../utils/isString";
 import {isFunction} from "../utils/isFunction";
+import {getRandomString} from "../utils/getRandomString";
 
 // запрещенные имена в row: data,expanded,leaf,level,parent,records,uid,_visible
 
@@ -61,13 +62,65 @@ export class TreeGrid extends Component<ITreeGridProps> {
 
     static reservedRowPropNames = ["data", "expanded", "leaf", "level", "parent", "records", "uid", "_visible"];
 
+    static setRandomKeysInDataSourceObject(obj: any, keyPropName: string) {
+        if (obj === null)
+            return;
+        if (obj === undefined)
+            return;
+
+        if (!obj[keyPropName]) {
+            obj[keyPropName] = getRandomString();
+        }
+
+        if (Array.isArray(obj)) {
+            for (let item of obj) {
+                TreeGrid.setRandomKeysInDataSourceObject(item, keyPropName);
+            }
+        }
+        else if (typeof obj === "object") {
+            for (let prop in obj) {
+                if (typeof obj[prop] === "object") {
+                    TreeGrid.setRandomKeysInDataSourceObject(obj[prop], keyPropName);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    static removeRandomKeysInDataSourceObject(obj: any, keyPropName: string) {
+        if (obj === null)
+            return;
+        if (obj === undefined)
+            return;
+
+        if (obj[keyPropName]) {
+            delete obj[keyPropName];
+        }
+
+        if (Array.isArray(obj)) {
+            for (let item of obj) {
+                TreeGrid.removeRandomKeysInDataSourceObject(item, keyPropName);
+            }
+        }
+        else if (typeof obj === "object") {
+            for (let prop in obj) {
+                if (typeof obj[prop] === "object") {
+                    TreeGrid.removeRandomKeysInDataSourceObject(obj[prop], keyPropName);
+                }
+            }
+        }
+
+        return null;
+    }
+
     static findRowInDataSourceObject(obj: any, keyPropName: string, keyValue: any): any {
         if (obj === null)
             return null;
         if (obj === undefined)
             return null;
 
-        if (obj[keyPropName]===keyValue)
+        if (obj[keyPropName] === keyValue)
             return obj;
 
         if (Array.isArray(obj)) {

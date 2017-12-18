@@ -143,7 +143,7 @@ export class SchemaQueryColumnEditorWindow extends React.Component<ISchemaQueryC
                             imgSrc={config.button.cancelIcon}
                             text="Отмена"
                             onClick={async () => {
-                                //this.form1!.cancelChanges();
+                                this.form!.cancelChanges();
                                 if (!this.form!.needSaveChanges || await getConfirmation("Выйти без сохранения?"))
                                     this.window.close(false);
                             }}

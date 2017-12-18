@@ -11,11 +11,11 @@ import {FlexHPanel} from "../ui/FlexHPanel";
 import {FlexItem} from "../ui/FlexItem";
 import {Button} from "../ui/Button";
 import {loadSchemaObjectFiles} from "./api/loadSchemaObjectFiles";
-import {getErrorWindow} from "../ui/modals/showError";
+import {getErrorWindow, showError} from "../ui/modals/showError";
 import {ISchemaQueryColumnProps, ISchemaQueryProps, SchemaQuery} from "../schema/query/SchemaQuery";
 import {config} from "../config";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
-import {XJSON_clone, XJSON_parse} from "../utils/xjson";
+import {XJSON_clone, XJSON_parse, XJSON_stringify} from "../utils/xjson";
 import {ITreeGridSource, TreeGrid} from "../ui/TreeGrid";
 import {Menu} from "../ui/Menu";
 import {getRandomString} from "../utils/getRandomString";
@@ -26,9 +26,10 @@ import {FlexVPanel} from "../ui/FlexVPanel";
 import {SchemaQueryDesignerSqlWindow} from "./SchemaQueryDesignerSqlWindow";
 import {appState} from "../AppState";
 import {SchemaQueryColumnEditorWindow} from "./SchemaQueryColumnEditorWindow";
-import {restoreObjectProps, saveObjectProps} from "../utils/saveRestoreObjectProps";
-import {reassignObject} from "../utils/reassignObject";
 import {assignObject} from "../utils/assignObject";
+import {joiValidate} from "../validation/joiValidate";
+import {SchemaObject} from "../schema/SchemaObject";
+import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
 
 
 export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
@@ -90,18 +91,18 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         if (!originalEditedRow)
             throw "SchemaQueryDesignerWindow.editColumnClickHandler): internal error";
 
-        let editedRow=XJSON_clone(originalEditedRow);
+        //let editedRow=XJSON_clone(originalEditedRow);
 
         let resultOk = await this.window.openParentWindow(
             <SchemaQueryColumnEditorWindow
                 query={this.query}
-                column={editedRow}
+                column={originalEditedRow}
                 window={{height: 500, width: 700}}
             />
         );
         if (resultOk) {
-            assignObject(originalEditedRow,editedRow);
-            assignObject(row,editedRow);
+            //assignObject(originalEditedRow,editedRow);
+            assignObject(row, originalEditedRow);
             this.treeGrid.updateRow(row.key, row);
         }
         this.treeGrid.focus();
@@ -125,7 +126,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         // this.columnsGrid.focus();
     };
 
-    random $keys
+    //  random $keys
 
     async componentDidMount() {
 
@@ -137,6 +138,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                 if (res.json) {
                     this.query = XJSON_parse(res.json);
+                    TreeGrid.setRandomKeysInDataSourceObject(this.query.root, "key");
                     this.query.objectId = this.props.objectId;
                     //this.queryColumnsArray = new ($ as any).jqx.observableArray(this.query.columns);
                 }
@@ -153,7 +155,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                 //this.preprocessDataSource(res, 0, "");
 
                 this.treeGridSource = {
-                    localData: [XJSON_parse(res.json!).root],
+                    localData: [XJSON_clone(this.query).root],
                     dataType: "json",
                     id: "key",
                     hierarchy: {
@@ -194,31 +196,33 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
     handleClickSaveButton = async () => {
 
-        // this.query.columns = this.queryColumnsArray.toArray();
-        //
-        // let validator = new SchemaQuery(this.query).getValidator();
-        //
-        // let validationError = joiValidate(this.query, validator);
-        //
-        // if (validationError) {
-        //     await showError(validationError);
-        //     return
-        // }
-        //
-        // new SchemaObject(this.query).setChangedUserAndDate();
-        //
-        // let req: ISavedSchemaObjectFiles = {
-        //     filePath: this.props.objectId || this.props.newObjectPath + "/" + this.query.name + "." + SchemaQuery.objectType,
-        //     json: XJSON_stringify(this.query)
-        // };
-        //
-        // try {
-        //     await saveSchemaObjectFiles(req);
-        //     this.window.close(req.filePath);
-        // }
-        // catch (err) {
-        //     showError(err.toString());
-        // }
+        let validator = new SchemaQuery(this.query).getValidator();
+
+        let validationError = joiValidate(this.query, validator);
+
+        if (validationError) {
+            await showError(validationError);
+            return
+        }
+
+        TreeGrid.removeRandomKeysInDataSourceObject(this.query.root, "key");
+        new SchemaObject(this.query).setChangedUserAndDate();
+
+        let fielPath = this.props.objectId || this.props.newObjectPath + "/" + this.query.name + "." + SchemaQuery.objectType;
+        delete this.query.objectId;
+
+        let req: ISavedSchemaObjectFiles = {
+            filePath: fielPath,
+            json: XJSON_stringify(this.query)
+        };
+
+        try {
+            await saveSchemaObjectFiles(req);
+            this.window.close(req.filePath);
+        }
+        catch (err) {
+            showError(err.toString());
+        }
 
     };
 
