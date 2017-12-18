@@ -30,6 +30,7 @@ import {
 } from "./utils/guid";
 import {hexStringToUint8Array} from "./utils/hexStringToUint8Array";
 import {arrayToHexString} from "./utils/arrayToHexString";
+import {downloadStringAsFile} from "./utils/downloadStringAsFile";
 
 declare const chai: any;
 declare const window: any;
@@ -83,7 +84,7 @@ export function registerHost() {
             isGuidsEqual: isGuidsEqual,
             guidFromHex: guidFromHex,
             guidToHex: guidToHex,
-
+            downloadStringAsFile:downloadStringAsFile,
         }
     };
 
