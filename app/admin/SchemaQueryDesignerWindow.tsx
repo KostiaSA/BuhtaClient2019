@@ -363,7 +363,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                     <FlexItem dock="fill">
 
                                         {/**************************** структура запроса в виде дерева *************/}
-                                        <FlexItem dock="fill" style={{padding: 5, paddingBottom: 2}}>
+                                        <FlexItem dock="fill">
                                             <TreeGrid
                                                 ref={(e: any) => this.treeGrid = e!}
                                                 source={this.treeGridSource}

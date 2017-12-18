@@ -146,37 +146,39 @@ export class TreeGrid extends Component<ITreeGridProps> {
     }
 
     lastParentH: number;
+    lastParentW: number;
     resizeIntervalId: any;
 
     componentDidMount() {
         this.widget = $("#" + this.$id);
         this.updateProps(this.props, true);
 
-        if (!this.props.height || this.props.height === "100%") {
-            this.resizeIntervalId = setInterval(() => {
-                let newH = this.widget.parent().height();
+        this.resizeIntervalId = setInterval(() => {
+            let newH = this.widget.parent().height();
+            let newW = this.widget.parent().width();
 
-                // отановка таймера resize, если TreeGrid удалена
-                if ($("#" + this.$id).length !== 1) {
-                    clearInterval(this.resizeIntervalId);
-                }
+            // отановка таймера resize, если TreeGrid удалена
+            if ($("#" + this.$id).length !== 1) {
+                clearInterval(this.resizeIntervalId);
+            }
 
-                if (newH > 10 && this.lastParentH !== newH) {
-                    //console.log("resize",this.$id,this.lastParentH,newH);
-                    this.lastParentH = newH;
-                    this.widget.jqxTreeGrid({height: newH});
-                }
-            }, 300);
-        }
+            if (newH > 0 && (this.lastParentH !== newH || this.lastParentW !== newW)) {
+                this.lastParentH = newH;
+                this.lastParentW = newW;
+                this.widget.jqxTreeGrid({height: newH, width: newW});
+            }
+        }, 200);
 
         if (this.props.expandAll)
             this.expandAll();
     }
 
     updateProps(props: ITreeGridProps, create: boolean) {
+        this.widget.css("position", "absolute");
+
         let treeGridOptions: any = omit(props, ["children", "source", "onRowDoubleClick", "onRowKeyDown", "popup", "expandAll"]);
-        treeGridOptions.height = treeGridOptions.height || 350;
-        treeGridOptions.width = treeGridOptions.width || "100%";
+        treeGridOptions.height = "100%";
+        treeGridOptions.width = "100%";
 
         if (treeGridOptions.sortable !== false)
             treeGridOptions.sortable = true;
@@ -184,11 +186,6 @@ export class TreeGrid extends Component<ITreeGridProps> {
         if (treeGridOptions.columnsResize !== false)
             treeGridOptions.columnsResize = true;
 
-
-        // treeGridOptions.source = {
-        //     localdata: props.source,
-        //     datatype: "array",
-        // };
 
         treeGridOptions.source = new (($ as any).jqx.dataAdapter)(props.source);
 
@@ -475,7 +472,15 @@ export class TreeGrid extends Component<ITreeGridProps> {
         console.log("render TreeGrid");
 
         return (
-            <div id={this.$id}/>
+            <div
+                style={{
+                    position: "relative",
+                    width: this.props.width || "100%",
+                    height: this.props.height || "initial",
+                    border: "0px solid red",
+                }}>
+                <div id={this.$id}/>
+            </div>
         )
     }
 
