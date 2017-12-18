@@ -110,6 +110,34 @@ export class Grid extends Component<IGridProps> {
                 if (!columnOptions.text)
                     columnOptions.text = columnOptions.datafield || "?datafield";
 
+                columnOptions.cellClassName = (rowId: string, datafieldName: any, datafieldValue: any, row: string): string => {
+
+                    let className = "";
+
+                    if (colProps.background) {
+                        if (isString(colProps.background))
+                            className += " background-" + colProps.background + "-important";
+                        else
+                            console.error("TreeGrid(): background должен быть строкой", colProps.background);
+                    }
+                    else if (colProps.getBackground && isFunction(colProps.getBackground!)) {
+
+                        try {
+                            let value = colProps.getBackground(row);
+                            if (isString(value))
+                                className += " background-" + value + "-important";
+                            else
+                                console.error("TreeGrid(): getBackground должен возвращать строку", value);
+                        }
+                        catch (e) {
+                            console.error("TreeGrid(): exception в cellClassName", e);
+                        }
+                    }
+
+                    return className;
+                };
+
+
                 columnOptions.cellsrenderer = (rowIndex: number, columnfield: any, value: any, defaulthtml: string): string => {
 
                     if (!colProps.getText &&
@@ -157,26 +185,26 @@ export class Grid extends Component<IGridProps> {
                         }
                     }
 
-                    // --------------------------- background --------------------------
-                    if (colProps.background) {
-                        if (!isString(colProps.background))
-                            return createError("'background' должен быть строкой");
-                        defaultSpan.style.background = colProps.background;
-                    }
-                    if (colProps.getBackground) {
-                        if (!isFunction(colProps.getBackground!))
-                            return createError("'getBackground' должен быть функцией");
-
-                        try {
-                            let value = colProps.getBackground(row);
-                            if (!isString(value))
-                                return createError("'getBackground' должен возвращать строку");
-                            defaultSpan.style.background = value;
-                        }
-                        catch (e) {
-                            return createError(" в 'getBackground': " + e.toString());
-                        }
-                    }
+                    // // --------------------------- background --------------------------
+                    // if (colProps.background) {
+                    //     if (!isString(colProps.background))
+                    //         return createError("'background' должен быть строкой");
+                    //     defaultSpan.style.background = colProps.background;
+                    // }
+                    // if (colProps.getBackground) {
+                    //     if (!isFunction(colProps.getBackground!))
+                    //         return createError("'getBackground' должен быть функцией");
+                    //
+                    //     try {
+                    //         let value = colProps.getBackground(row);
+                    //         if (!isString(value))
+                    //             return createError("'getBackground' должен возвращать строку");
+                    //         defaultSpan.style.background = value;
+                    //     }
+                    //     catch (e) {
+                    //         return createError(" в 'getBackground': " + e.toString());
+                    //     }
+                    // }
 
                     // --------------------------- fontStyle --------------------------
                     if (colProps.fontStyle) {

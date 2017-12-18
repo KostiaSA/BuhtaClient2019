@@ -313,7 +313,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             <GridColumn headerText="PK" getText={this.pkColumnCompute} align="center"
                                                         width={40} pinned/>
                                             <GridColumn headerText="Колонка" datafield="name" pinned fontWeight="500"/>
-                                            <GridColumn headerText="Тип данных" getText={this.dataTypeColumnCompute}/>
+                                            <GridColumn headerText="Тип данных" getText={this.dataTypeColumnCompute} background="red"/>
                                             <GridColumn headerText="Not null" width={70} align="center"
                                                         getText={(row: ISchemaTableColumnProps) => row.notNull ? "not null" : ""}/>
                                             <GridColumn headerText="Описание" datafield="description"/>

@@ -1,5 +1,4 @@
 import * as  React from "react";
-import {CSSProperties} from "react";
 import * as ReactDOMServer from 'react-dom/server';
 import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "./Component";
@@ -221,6 +220,33 @@ export class TreeGrid extends Component<ITreeGridProps> {
                 if (!columnOptions.text)
                     columnOptions.text = columnOptions.datafield || "?datafield";
 
+                columnOptions.cellClassName = (rowId: string, datafieldName: any, datafieldValue: any, row: string): string => {
+
+                    let className = "";
+
+                    if (colProps.background) {
+                        if (isString(colProps.background))
+                            className += " background-" + colProps.background + "-important";
+                        else
+                            console.error("TreeGrid(): background должен быть строкой", colProps.background);
+                    }
+                    else if (colProps.getBackground && isFunction(colProps.getBackground!)) {
+
+                        try {
+                            let value = colProps.getBackground(row);
+                            if (isString(value))
+                                className += " background-" + value + "-important";
+                            else
+                                console.error("TreeGrid(): getBackground должен возвращать строку", value);
+                        }
+                        catch (e) {
+                            console.error("TreeGrid(): exception в cellClassName", e);
+                        }
+                    }
+
+                    return className;
+                };
+
                 // "key1", datafield, row,  row[datafield]
                 columnOptions.cellsrenderer = (rowId: string, datafieldName: any, datafieldValue: any, row: string, defaultText: string): string => {
                     //console.log("========================>>>>>>>>>>>>>>", rowId, row, value, p4, defaultText);
@@ -274,25 +300,25 @@ export class TreeGrid extends Component<ITreeGridProps> {
                     }
 
                     // --------------------------- background --------------------------
-                    if (colProps.background) {
-                        if (!isString(colProps.background))
-                            return createError("'background' должен быть строкой");
-                        style.background = colProps.background;
-                    }
-                    if (colProps.getBackground) {
-                        if (!isFunction(colProps.getBackground!))
-                            return createError("'getBackground' должен быть функцией");
-
-                        try {
-                            let value = colProps.getBackground(row);
-                            if (!isString(value))
-                                return createError("'getBackground' должен возвращать строку");
-                            style.background = value;
-                        }
-                        catch (e) {
-                            return createError(" в 'getBackground': " + e.toString());
-                        }
-                    }
+                    // if (colProps.background) {
+                    //     if (!isString(colProps.background))
+                    //         return createError("'background' должен быть строкой");
+                    //     style.background = colProps.background;
+                    // }
+                    // if (colProps.getBackground) {
+                    //     if (!isFunction(colProps.getBackground!))
+                    //         return createError("'getBackground' должен быть функцией");
+                    //
+                    //     try {
+                    //         let value = colProps.getBackground(row);
+                    //         if (!isString(value))
+                    //             return createError("'getBackground' должен возвращать строку");
+                    //         style.background = value;
+                    //     }
+                    //     catch (e) {
+                    //         return createError(" в 'getBackground': " + e.toString());
+                    //     }
+                    // }
 
                     // --------------------------- fontStyle --------------------------
                     if (colProps.fontStyle) {

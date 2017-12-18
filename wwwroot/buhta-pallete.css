@@ -1,1176 +1,2352 @@
 /* этот файл сгенерирован автоматически, не меняйте его*/
 .color-aliceblue {
-    color:aliceblue
+    color:aliceblue;
+}
+
+.color-aliceblue-important {
+    color:aliceblue !important;
 }
 
 .background-aliceblue {
-    background:aliceblue
+    background-color:aliceblue;
+}
+
+.background-aliceblue-important {
+    background-color:aliceblue !important;
 }
 
 .color-antiquewhite {
-    color:antiquewhite
+    color:antiquewhite;
+}
+
+.color-antiquewhite-important {
+    color:antiquewhite !important;
 }
 
 .background-antiquewhite {
-    background:antiquewhite
+    background-color:antiquewhite;
+}
+
+.background-antiquewhite-important {
+    background-color:antiquewhite !important;
 }
 
 .color-aqua {
-    color:aqua
+    color:aqua;
+}
+
+.color-aqua-important {
+    color:aqua !important;
 }
 
 .background-aqua {
-    background:aqua
+    background-color:aqua;
+}
+
+.background-aqua-important {
+    background-color:aqua !important;
 }
 
 .color-aquamarine {
-    color:aquamarine
+    color:aquamarine;
+}
+
+.color-aquamarine-important {
+    color:aquamarine !important;
 }
 
 .background-aquamarine {
-    background:aquamarine
+    background-color:aquamarine;
+}
+
+.background-aquamarine-important {
+    background-color:aquamarine !important;
 }
 
 .color-azure {
-    color:azure
+    color:azure;
+}
+
+.color-azure-important {
+    color:azure !important;
 }
 
 .background-azure {
-    background:azure
+    background-color:azure;
+}
+
+.background-azure-important {
+    background-color:azure !important;
 }
 
 .color-beige {
-    color:beige
+    color:beige;
+}
+
+.color-beige-important {
+    color:beige !important;
 }
 
 .background-beige {
-    background:beige
+    background-color:beige;
+}
+
+.background-beige-important {
+    background-color:beige !important;
 }
 
 .color-bisque {
-    color:bisque
+    color:bisque;
+}
+
+.color-bisque-important {
+    color:bisque !important;
 }
 
 .background-bisque {
-    background:bisque
+    background-color:bisque;
+}
+
+.background-bisque-important {
+    background-color:bisque !important;
 }
 
 .color-black {
-    color:black
+    color:black;
+}
+
+.color-black-important {
+    color:black !important;
 }
 
 .background-black {
-    background:black
+    background-color:black;
+}
+
+.background-black-important {
+    background-color:black !important;
 }
 
 .color-blanchedalmond {
-    color:blanchedalmond
+    color:blanchedalmond;
+}
+
+.color-blanchedalmond-important {
+    color:blanchedalmond !important;
 }
 
 .background-blanchedalmond {
-    background:blanchedalmond
+    background-color:blanchedalmond;
+}
+
+.background-blanchedalmond-important {
+    background-color:blanchedalmond !important;
 }
 
 .color-blue {
-    color:blue
+    color:blue;
+}
+
+.color-blue-important {
+    color:blue !important;
 }
 
 .background-blue {
-    background:blue
+    background-color:blue;
+}
+
+.background-blue-important {
+    background-color:blue !important;
 }
 
 .color-blueviolet {
-    color:blueviolet
+    color:blueviolet;
+}
+
+.color-blueviolet-important {
+    color:blueviolet !important;
 }
 
 .background-blueviolet {
-    background:blueviolet
+    background-color:blueviolet;
+}
+
+.background-blueviolet-important {
+    background-color:blueviolet !important;
 }
 
 .color-brown {
-    color:brown
+    color:brown;
+}
+
+.color-brown-important {
+    color:brown !important;
 }
 
 .background-brown {
-    background:brown
+    background-color:brown;
+}
+
+.background-brown-important {
+    background-color:brown !important;
 }
 
 .color-burlywood {
-    color:burlywood
+    color:burlywood;
+}
+
+.color-burlywood-important {
+    color:burlywood !important;
 }
 
 .background-burlywood {
-    background:burlywood
+    background-color:burlywood;
+}
+
+.background-burlywood-important {
+    background-color:burlywood !important;
 }
 
 .color-cadetblue {
-    color:cadetblue
+    color:cadetblue;
+}
+
+.color-cadetblue-important {
+    color:cadetblue !important;
 }
 
 .background-cadetblue {
-    background:cadetblue
+    background-color:cadetblue;
+}
+
+.background-cadetblue-important {
+    background-color:cadetblue !important;
 }
 
 .color-chartreuse {
-    color:chartreuse
+    color:chartreuse;
+}
+
+.color-chartreuse-important {
+    color:chartreuse !important;
 }
 
 .background-chartreuse {
-    background:chartreuse
+    background-color:chartreuse;
+}
+
+.background-chartreuse-important {
+    background-color:chartreuse !important;
 }
 
 .color-chocolate {
-    color:chocolate
+    color:chocolate;
+}
+
+.color-chocolate-important {
+    color:chocolate !important;
 }
 
 .background-chocolate {
-    background:chocolate
+    background-color:chocolate;
+}
+
+.background-chocolate-important {
+    background-color:chocolate !important;
 }
 
 .color-coral {
-    color:coral
+    color:coral;
+}
+
+.color-coral-important {
+    color:coral !important;
 }
 
 .background-coral {
-    background:coral
+    background-color:coral;
+}
+
+.background-coral-important {
+    background-color:coral !important;
 }
 
 .color-cornflowerblue {
-    color:cornflowerblue
+    color:cornflowerblue;
+}
+
+.color-cornflowerblue-important {
+    color:cornflowerblue !important;
 }
 
 .background-cornflowerblue {
-    background:cornflowerblue
+    background-color:cornflowerblue;
+}
+
+.background-cornflowerblue-important {
+    background-color:cornflowerblue !important;
 }
 
 .color-cornsilk {
-    color:cornsilk
+    color:cornsilk;
+}
+
+.color-cornsilk-important {
+    color:cornsilk !important;
 }
 
 .background-cornsilk {
-    background:cornsilk
+    background-color:cornsilk;
+}
+
+.background-cornsilk-important {
+    background-color:cornsilk !important;
 }
 
 .color-crimson {
-    color:crimson
+    color:crimson;
+}
+
+.color-crimson-important {
+    color:crimson !important;
 }
 
 .background-crimson {
-    background:crimson
+    background-color:crimson;
+}
+
+.background-crimson-important {
+    background-color:crimson !important;
 }
 
 .color-cyan {
-    color:cyan
+    color:cyan;
+}
+
+.color-cyan-important {
+    color:cyan !important;
 }
 
 .background-cyan {
-    background:cyan
+    background-color:cyan;
+}
+
+.background-cyan-important {
+    background-color:cyan !important;
 }
 
 .color-darkblue {
-    color:darkblue
+    color:darkblue;
+}
+
+.color-darkblue-important {
+    color:darkblue !important;
 }
 
 .background-darkblue {
-    background:darkblue
+    background-color:darkblue;
+}
+
+.background-darkblue-important {
+    background-color:darkblue !important;
 }
 
 .color-darkcyan {
-    color:darkcyan
+    color:darkcyan;
+}
+
+.color-darkcyan-important {
+    color:darkcyan !important;
 }
 
 .background-darkcyan {
-    background:darkcyan
+    background-color:darkcyan;
+}
+
+.background-darkcyan-important {
+    background-color:darkcyan !important;
 }
 
 .color-darkgoldenrod {
-    color:darkgoldenrod
+    color:darkgoldenrod;
+}
+
+.color-darkgoldenrod-important {
+    color:darkgoldenrod !important;
 }
 
 .background-darkgoldenrod {
-    background:darkgoldenrod
+    background-color:darkgoldenrod;
+}
+
+.background-darkgoldenrod-important {
+    background-color:darkgoldenrod !important;
 }
 
 .color-darkgray {
-    color:darkgray
+    color:darkgray;
+}
+
+.color-darkgray-important {
+    color:darkgray !important;
 }
 
 .background-darkgray {
-    background:darkgray
+    background-color:darkgray;
+}
+
+.background-darkgray-important {
+    background-color:darkgray !important;
 }
 
 .color-darkgrey {
-    color:darkgrey
+    color:darkgrey;
+}
+
+.color-darkgrey-important {
+    color:darkgrey !important;
 }
 
 .background-darkgrey {
-    background:darkgrey
+    background-color:darkgrey;
+}
+
+.background-darkgrey-important {
+    background-color:darkgrey !important;
 }
 
 .color-darkgreen {
-    color:darkgreen
+    color:darkgreen;
+}
+
+.color-darkgreen-important {
+    color:darkgreen !important;
 }
 
 .background-darkgreen {
-    background:darkgreen
+    background-color:darkgreen;
+}
+
+.background-darkgreen-important {
+    background-color:darkgreen !important;
 }
 
 .color-darkkhaki {
-    color:darkkhaki
+    color:darkkhaki;
+}
+
+.color-darkkhaki-important {
+    color:darkkhaki !important;
 }
 
 .background-darkkhaki {
-    background:darkkhaki
+    background-color:darkkhaki;
+}
+
+.background-darkkhaki-important {
+    background-color:darkkhaki !important;
 }
 
 .color-darkmagenta {
-    color:darkmagenta
+    color:darkmagenta;
+}
+
+.color-darkmagenta-important {
+    color:darkmagenta !important;
 }
 
 .background-darkmagenta {
-    background:darkmagenta
+    background-color:darkmagenta;
+}
+
+.background-darkmagenta-important {
+    background-color:darkmagenta !important;
 }
 
 .color-darkolivegreen {
-    color:darkolivegreen
+    color:darkolivegreen;
+}
+
+.color-darkolivegreen-important {
+    color:darkolivegreen !important;
 }
 
 .background-darkolivegreen {
-    background:darkolivegreen
+    background-color:darkolivegreen;
+}
+
+.background-darkolivegreen-important {
+    background-color:darkolivegreen !important;
 }
 
 .color-darkorange {
-    color:darkorange
+    color:darkorange;
+}
+
+.color-darkorange-important {
+    color:darkorange !important;
 }
 
 .background-darkorange {
-    background:darkorange
+    background-color:darkorange;
+}
+
+.background-darkorange-important {
+    background-color:darkorange !important;
 }
 
 .color-darkorchid {
-    color:darkorchid
+    color:darkorchid;
+}
+
+.color-darkorchid-important {
+    color:darkorchid !important;
 }
 
 .background-darkorchid {
-    background:darkorchid
+    background-color:darkorchid;
+}
+
+.background-darkorchid-important {
+    background-color:darkorchid !important;
 }
 
 .color-darkred {
-    color:darkred
+    color:darkred;
+}
+
+.color-darkred-important {
+    color:darkred !important;
 }
 
 .background-darkred {
-    background:darkred
+    background-color:darkred;
+}
+
+.background-darkred-important {
+    background-color:darkred !important;
 }
 
 .color-darksalmon {
-    color:darksalmon
+    color:darksalmon;
+}
+
+.color-darksalmon-important {
+    color:darksalmon !important;
 }
 
 .background-darksalmon {
-    background:darksalmon
+    background-color:darksalmon;
+}
+
+.background-darksalmon-important {
+    background-color:darksalmon !important;
 }
 
 .color-darkseagreen {
-    color:darkseagreen
+    color:darkseagreen;
+}
+
+.color-darkseagreen-important {
+    color:darkseagreen !important;
 }
 
 .background-darkseagreen {
-    background:darkseagreen
+    background-color:darkseagreen;
+}
+
+.background-darkseagreen-important {
+    background-color:darkseagreen !important;
 }
 
 .color-darkslateblue {
-    color:darkslateblue
+    color:darkslateblue;
+}
+
+.color-darkslateblue-important {
+    color:darkslateblue !important;
 }
 
 .background-darkslateblue {
-    background:darkslateblue
+    background-color:darkslateblue;
+}
+
+.background-darkslateblue-important {
+    background-color:darkslateblue !important;
 }
 
 .color-darkslategray {
-    color:darkslategray
+    color:darkslategray;
+}
+
+.color-darkslategray-important {
+    color:darkslategray !important;
 }
 
 .background-darkslategray {
-    background:darkslategray
+    background-color:darkslategray;
+}
+
+.background-darkslategray-important {
+    background-color:darkslategray !important;
 }
 
 .color-darkslategrey {
-    color:darkslategrey
+    color:darkslategrey;
+}
+
+.color-darkslategrey-important {
+    color:darkslategrey !important;
 }
 
 .background-darkslategrey {
-    background:darkslategrey
+    background-color:darkslategrey;
+}
+
+.background-darkslategrey-important {
+    background-color:darkslategrey !important;
 }
 
 .color-darkturquoise {
-    color:darkturquoise
+    color:darkturquoise;
+}
+
+.color-darkturquoise-important {
+    color:darkturquoise !important;
 }
 
 .background-darkturquoise {
-    background:darkturquoise
+    background-color:darkturquoise;
+}
+
+.background-darkturquoise-important {
+    background-color:darkturquoise !important;
 }
 
 .color-darkviolet {
-    color:darkviolet
+    color:darkviolet;
+}
+
+.color-darkviolet-important {
+    color:darkviolet !important;
 }
 
 .background-darkviolet {
-    background:darkviolet
+    background-color:darkviolet;
+}
+
+.background-darkviolet-important {
+    background-color:darkviolet !important;
 }
 
 .color-deeppink {
-    color:deeppink
+    color:deeppink;
+}
+
+.color-deeppink-important {
+    color:deeppink !important;
 }
 
 .background-deeppink {
-    background:deeppink
+    background-color:deeppink;
+}
+
+.background-deeppink-important {
+    background-color:deeppink !important;
 }
 
 .color-deepskyblue {
-    color:deepskyblue
+    color:deepskyblue;
+}
+
+.color-deepskyblue-important {
+    color:deepskyblue !important;
 }
 
 .background-deepskyblue {
-    background:deepskyblue
+    background-color:deepskyblue;
+}
+
+.background-deepskyblue-important {
+    background-color:deepskyblue !important;
 }
 
 .color-dimgray {
-    color:dimgray
+    color:dimgray;
+}
+
+.color-dimgray-important {
+    color:dimgray !important;
 }
 
 .background-dimgray {
-    background:dimgray
+    background-color:dimgray;
+}
+
+.background-dimgray-important {
+    background-color:dimgray !important;
 }
 
 .color-dimgrey {
-    color:dimgrey
+    color:dimgrey;
+}
+
+.color-dimgrey-important {
+    color:dimgrey !important;
 }
 
 .background-dimgrey {
-    background:dimgrey
+    background-color:dimgrey;
+}
+
+.background-dimgrey-important {
+    background-color:dimgrey !important;
 }
 
 .color-dodgerblue {
-    color:dodgerblue
+    color:dodgerblue;
+}
+
+.color-dodgerblue-important {
+    color:dodgerblue !important;
 }
 
 .background-dodgerblue {
-    background:dodgerblue
+    background-color:dodgerblue;
+}
+
+.background-dodgerblue-important {
+    background-color:dodgerblue !important;
 }
 
 .color-firebrick {
-    color:firebrick
+    color:firebrick;
+}
+
+.color-firebrick-important {
+    color:firebrick !important;
 }
 
 .background-firebrick {
-    background:firebrick
+    background-color:firebrick;
+}
+
+.background-firebrick-important {
+    background-color:firebrick !important;
 }
 
 .color-floralwhite {
-    color:floralwhite
+    color:floralwhite;
+}
+
+.color-floralwhite-important {
+    color:floralwhite !important;
 }
 
 .background-floralwhite {
-    background:floralwhite
+    background-color:floralwhite;
+}
+
+.background-floralwhite-important {
+    background-color:floralwhite !important;
 }
 
 .color-forestgreen {
-    color:forestgreen
+    color:forestgreen;
+}
+
+.color-forestgreen-important {
+    color:forestgreen !important;
 }
 
 .background-forestgreen {
-    background:forestgreen
+    background-color:forestgreen;
+}
+
+.background-forestgreen-important {
+    background-color:forestgreen !important;
 }
 
 .color-fuchsia {
-    color:fuchsia
+    color:fuchsia;
+}
+
+.color-fuchsia-important {
+    color:fuchsia !important;
 }
 
 .background-fuchsia {
-    background:fuchsia
+    background-color:fuchsia;
+}
+
+.background-fuchsia-important {
+    background-color:fuchsia !important;
 }
 
 .color-gainsboro {
-    color:gainsboro
+    color:gainsboro;
+}
+
+.color-gainsboro-important {
+    color:gainsboro !important;
 }
 
 .background-gainsboro {
-    background:gainsboro
+    background-color:gainsboro;
+}
+
+.background-gainsboro-important {
+    background-color:gainsboro !important;
 }
 
 .color-ghostwhite {
-    color:ghostwhite
+    color:ghostwhite;
+}
+
+.color-ghostwhite-important {
+    color:ghostwhite !important;
 }
 
 .background-ghostwhite {
-    background:ghostwhite
+    background-color:ghostwhite;
+}
+
+.background-ghostwhite-important {
+    background-color:ghostwhite !important;
 }
 
 .color-gold {
-    color:gold
+    color:gold;
+}
+
+.color-gold-important {
+    color:gold !important;
 }
 
 .background-gold {
-    background:gold
+    background-color:gold;
+}
+
+.background-gold-important {
+    background-color:gold !important;
 }
 
 .color-goldenrod {
-    color:goldenrod
+    color:goldenrod;
+}
+
+.color-goldenrod-important {
+    color:goldenrod !important;
 }
 
 .background-goldenrod {
-    background:goldenrod
+    background-color:goldenrod;
+}
+
+.background-goldenrod-important {
+    background-color:goldenrod !important;
 }
 
 .color-gray {
-    color:gray
+    color:gray;
+}
+
+.color-gray-important {
+    color:gray !important;
 }
 
 .background-gray {
-    background:gray
+    background-color:gray;
+}
+
+.background-gray-important {
+    background-color:gray !important;
 }
 
 .color-grey {
-    color:grey
+    color:grey;
+}
+
+.color-grey-important {
+    color:grey !important;
 }
 
 .background-grey {
-    background:grey
+    background-color:grey;
+}
+
+.background-grey-important {
+    background-color:grey !important;
 }
 
 .color-green {
-    color:green
+    color:green;
+}
+
+.color-green-important {
+    color:green !important;
 }
 
 .background-green {
-    background:green
+    background-color:green;
+}
+
+.background-green-important {
+    background-color:green !important;
 }
 
 .color-greenyellow {
-    color:greenyellow
+    color:greenyellow;
+}
+
+.color-greenyellow-important {
+    color:greenyellow !important;
 }
 
 .background-greenyellow {
-    background:greenyellow
+    background-color:greenyellow;
+}
+
+.background-greenyellow-important {
+    background-color:greenyellow !important;
 }
 
 .color-honeydew {
-    color:honeydew
+    color:honeydew;
+}
+
+.color-honeydew-important {
+    color:honeydew !important;
 }
 
 .background-honeydew {
-    background:honeydew
+    background-color:honeydew;
+}
+
+.background-honeydew-important {
+    background-color:honeydew !important;
 }
 
 .color-hotpink {
-    color:hotpink
+    color:hotpink;
+}
+
+.color-hotpink-important {
+    color:hotpink !important;
 }
 
 .background-hotpink {
-    background:hotpink
+    background-color:hotpink;
+}
+
+.background-hotpink-important {
+    background-color:hotpink !important;
 }
 
 .color-indianred {
-    color:indianred
+    color:indianred;
+}
+
+.color-indianred-important {
+    color:indianred !important;
 }
 
 .background-indianred {
-    background:indianred
+    background-color:indianred;
+}
+
+.background-indianred-important {
+    background-color:indianred !important;
 }
 
 .color-indigo {
-    color:indigo
+    color:indigo;
+}
+
+.color-indigo-important {
+    color:indigo !important;
 }
 
 .background-indigo {
-    background:indigo
+    background-color:indigo;
+}
+
+.background-indigo-important {
+    background-color:indigo !important;
 }
 
 .color-ivory {
-    color:ivory
+    color:ivory;
+}
+
+.color-ivory-important {
+    color:ivory !important;
 }
 
 .background-ivory {
-    background:ivory
+    background-color:ivory;
+}
+
+.background-ivory-important {
+    background-color:ivory !important;
 }
 
 .color-khaki {
-    color:khaki
+    color:khaki;
+}
+
+.color-khaki-important {
+    color:khaki !important;
 }
 
 .background-khaki {
-    background:khaki
+    background-color:khaki;
+}
+
+.background-khaki-important {
+    background-color:khaki !important;
 }
 
 .color-lavender {
-    color:lavender
+    color:lavender;
+}
+
+.color-lavender-important {
+    color:lavender !important;
 }
 
 .background-lavender {
-    background:lavender
+    background-color:lavender;
+}
+
+.background-lavender-important {
+    background-color:lavender !important;
 }
 
 .color-lavenderblush {
-    color:lavenderblush
+    color:lavenderblush;
+}
+
+.color-lavenderblush-important {
+    color:lavenderblush !important;
 }
 
 .background-lavenderblush {
-    background:lavenderblush
+    background-color:lavenderblush;
+}
+
+.background-lavenderblush-important {
+    background-color:lavenderblush !important;
 }
 
 .color-lawngreen {
-    color:lawngreen
+    color:lawngreen;
+}
+
+.color-lawngreen-important {
+    color:lawngreen !important;
 }
 
 .background-lawngreen {
-    background:lawngreen
+    background-color:lawngreen;
+}
+
+.background-lawngreen-important {
+    background-color:lawngreen !important;
 }
 
 .color-lemonchiffon {
-    color:lemonchiffon
+    color:lemonchiffon;
+}
+
+.color-lemonchiffon-important {
+    color:lemonchiffon !important;
 }
 
 .background-lemonchiffon {
-    background:lemonchiffon
+    background-color:lemonchiffon;
+}
+
+.background-lemonchiffon-important {
+    background-color:lemonchiffon !important;
 }
 
 .color-lightblue {
-    color:lightblue
+    color:lightblue;
+}
+
+.color-lightblue-important {
+    color:lightblue !important;
 }
 
 .background-lightblue {
-    background:lightblue
+    background-color:lightblue;
+}
+
+.background-lightblue-important {
+    background-color:lightblue !important;
 }
 
 .color-lightcoral {
-    color:lightcoral
+    color:lightcoral;
+}
+
+.color-lightcoral-important {
+    color:lightcoral !important;
 }
 
 .background-lightcoral {
-    background:lightcoral
+    background-color:lightcoral;
+}
+
+.background-lightcoral-important {
+    background-color:lightcoral !important;
 }
 
 .color-lightcyan {
-    color:lightcyan
+    color:lightcyan;
+}
+
+.color-lightcyan-important {
+    color:lightcyan !important;
 }
 
 .background-lightcyan {
-    background:lightcyan
+    background-color:lightcyan;
+}
+
+.background-lightcyan-important {
+    background-color:lightcyan !important;
 }
 
 .color-lightgoldenrodyellow {
-    color:lightgoldenrodyellow
+    color:lightgoldenrodyellow;
+}
+
+.color-lightgoldenrodyellow-important {
+    color:lightgoldenrodyellow !important;
 }
 
 .background-lightgoldenrodyellow {
-    background:lightgoldenrodyellow
+    background-color:lightgoldenrodyellow;
+}
+
+.background-lightgoldenrodyellow-important {
+    background-color:lightgoldenrodyellow !important;
 }
 
 .color-lightgray {
-    color:lightgray
+    color:lightgray;
+}
+
+.color-lightgray-important {
+    color:lightgray !important;
 }
 
 .background-lightgray {
-    background:lightgray
+    background-color:lightgray;
+}
+
+.background-lightgray-important {
+    background-color:lightgray !important;
 }
 
 .color-lightgrey {
-    color:lightgrey
+    color:lightgrey;
+}
+
+.color-lightgrey-important {
+    color:lightgrey !important;
 }
 
 .background-lightgrey {
-    background:lightgrey
+    background-color:lightgrey;
+}
+
+.background-lightgrey-important {
+    background-color:lightgrey !important;
 }
 
 .color-lightgreen {
-    color:lightgreen
+    color:lightgreen;
+}
+
+.color-lightgreen-important {
+    color:lightgreen !important;
 }
 
 .background-lightgreen {
-    background:lightgreen
+    background-color:lightgreen;
+}
+
+.background-lightgreen-important {
+    background-color:lightgreen !important;
 }
 
 .color-lightpink {
-    color:lightpink
+    color:lightpink;
+}
+
+.color-lightpink-important {
+    color:lightpink !important;
 }
 
 .background-lightpink {
-    background:lightpink
+    background-color:lightpink;
+}
+
+.background-lightpink-important {
+    background-color:lightpink !important;
 }
 
 .color-lightsalmon {
-    color:lightsalmon
+    color:lightsalmon;
+}
+
+.color-lightsalmon-important {
+    color:lightsalmon !important;
 }
 
 .background-lightsalmon {
-    background:lightsalmon
+    background-color:lightsalmon;
+}
+
+.background-lightsalmon-important {
+    background-color:lightsalmon !important;
 }
 
 .color-lightseagreen {
-    color:lightseagreen
+    color:lightseagreen;
+}
+
+.color-lightseagreen-important {
+    color:lightseagreen !important;
 }
 
 .background-lightseagreen {
-    background:lightseagreen
+    background-color:lightseagreen;
+}
+
+.background-lightseagreen-important {
+    background-color:lightseagreen !important;
 }
 
 .color-lightskyblue {
-    color:lightskyblue
+    color:lightskyblue;
+}
+
+.color-lightskyblue-important {
+    color:lightskyblue !important;
 }
 
 .background-lightskyblue {
-    background:lightskyblue
+    background-color:lightskyblue;
+}
+
+.background-lightskyblue-important {
+    background-color:lightskyblue !important;
 }
 
 .color-lightslategray {
-    color:lightslategray
+    color:lightslategray;
+}
+
+.color-lightslategray-important {
+    color:lightslategray !important;
 }
 
 .background-lightslategray {
-    background:lightslategray
+    background-color:lightslategray;
+}
+
+.background-lightslategray-important {
+    background-color:lightslategray !important;
 }
 
 .color-lightslategrey {
-    color:lightslategrey
+    color:lightslategrey;
+}
+
+.color-lightslategrey-important {
+    color:lightslategrey !important;
 }
 
 .background-lightslategrey {
-    background:lightslategrey
+    background-color:lightslategrey;
+}
+
+.background-lightslategrey-important {
+    background-color:lightslategrey !important;
 }
 
 .color-lightsteelblue {
-    color:lightsteelblue
+    color:lightsteelblue;
+}
+
+.color-lightsteelblue-important {
+    color:lightsteelblue !important;
 }
 
 .background-lightsteelblue {
-    background:lightsteelblue
+    background-color:lightsteelblue;
+}
+
+.background-lightsteelblue-important {
+    background-color:lightsteelblue !important;
 }
 
 .color-lightyellow {
-    color:lightyellow
+    color:lightyellow;
+}
+
+.color-lightyellow-important {
+    color:lightyellow !important;
 }
 
 .background-lightyellow {
-    background:lightyellow
+    background-color:lightyellow;
+}
+
+.background-lightyellow-important {
+    background-color:lightyellow !important;
 }
 
 .color-lime {
-    color:lime
+    color:lime;
+}
+
+.color-lime-important {
+    color:lime !important;
 }
 
 .background-lime {
-    background:lime
+    background-color:lime;
+}
+
+.background-lime-important {
+    background-color:lime !important;
 }
 
 .color-limegreen {
-    color:limegreen
+    color:limegreen;
+}
+
+.color-limegreen-important {
+    color:limegreen !important;
 }
 
 .background-limegreen {
-    background:limegreen
+    background-color:limegreen;
+}
+
+.background-limegreen-important {
+    background-color:limegreen !important;
 }
 
 .color-linen {
-    color:linen
+    color:linen;
+}
+
+.color-linen-important {
+    color:linen !important;
 }
 
 .background-linen {
-    background:linen
+    background-color:linen;
+}
+
+.background-linen-important {
+    background-color:linen !important;
 }
 
 .color-magenta {
-    color:magenta
+    color:magenta;
+}
+
+.color-magenta-important {
+    color:magenta !important;
 }
 
 .background-magenta {
-    background:magenta
+    background-color:magenta;
+}
+
+.background-magenta-important {
+    background-color:magenta !important;
 }
 
 .color-maroon {
-    color:maroon
+    color:maroon;
+}
+
+.color-maroon-important {
+    color:maroon !important;
 }
 
 .background-maroon {
-    background:maroon
+    background-color:maroon;
+}
+
+.background-maroon-important {
+    background-color:maroon !important;
 }
 
 .color-mediumaquamarine {
-    color:mediumaquamarine
+    color:mediumaquamarine;
+}
+
+.color-mediumaquamarine-important {
+    color:mediumaquamarine !important;
 }
 
 .background-mediumaquamarine {
-    background:mediumaquamarine
+    background-color:mediumaquamarine;
+}
+
+.background-mediumaquamarine-important {
+    background-color:mediumaquamarine !important;
 }
 
 .color-mediumblue {
-    color:mediumblue
+    color:mediumblue;
+}
+
+.color-mediumblue-important {
+    color:mediumblue !important;
 }
 
 .background-mediumblue {
-    background:mediumblue
+    background-color:mediumblue;
+}
+
+.background-mediumblue-important {
+    background-color:mediumblue !important;
 }
 
 .color-mediumorchid {
-    color:mediumorchid
+    color:mediumorchid;
+}
+
+.color-mediumorchid-important {
+    color:mediumorchid !important;
 }
 
 .background-mediumorchid {
-    background:mediumorchid
+    background-color:mediumorchid;
+}
+
+.background-mediumorchid-important {
+    background-color:mediumorchid !important;
 }
 
 .color-mediumpurple {
-    color:mediumpurple
+    color:mediumpurple;
+}
+
+.color-mediumpurple-important {
+    color:mediumpurple !important;
 }
 
 .background-mediumpurple {
-    background:mediumpurple
+    background-color:mediumpurple;
+}
+
+.background-mediumpurple-important {
+    background-color:mediumpurple !important;
 }
 
 .color-mediumseagreen {
-    color:mediumseagreen
+    color:mediumseagreen;
+}
+
+.color-mediumseagreen-important {
+    color:mediumseagreen !important;
 }
 
 .background-mediumseagreen {
-    background:mediumseagreen
+    background-color:mediumseagreen;
+}
+
+.background-mediumseagreen-important {
+    background-color:mediumseagreen !important;
 }
 
 .color-mediumslateblue {
-    color:mediumslateblue
+    color:mediumslateblue;
+}
+
+.color-mediumslateblue-important {
+    color:mediumslateblue !important;
 }
 
 .background-mediumslateblue {
-    background:mediumslateblue
+    background-color:mediumslateblue;
+}
+
+.background-mediumslateblue-important {
+    background-color:mediumslateblue !important;
 }
 
 .color-mediumspringgreen {
-    color:mediumspringgreen
+    color:mediumspringgreen;
+}
+
+.color-mediumspringgreen-important {
+    color:mediumspringgreen !important;
 }
 
 .background-mediumspringgreen {
-    background:mediumspringgreen
+    background-color:mediumspringgreen;
+}
+
+.background-mediumspringgreen-important {
+    background-color:mediumspringgreen !important;
 }
 
 .color-mediumturquoise {
-    color:mediumturquoise
+    color:mediumturquoise;
+}
+
+.color-mediumturquoise-important {
+    color:mediumturquoise !important;
 }
 
 .background-mediumturquoise {
-    background:mediumturquoise
+    background-color:mediumturquoise;
+}
+
+.background-mediumturquoise-important {
+    background-color:mediumturquoise !important;
 }
 
 .color-mediumvioletred {
-    color:mediumvioletred
+    color:mediumvioletred;
+}
+
+.color-mediumvioletred-important {
+    color:mediumvioletred !important;
 }
 
 .background-mediumvioletred {
-    background:mediumvioletred
+    background-color:mediumvioletred;
+}
+
+.background-mediumvioletred-important {
+    background-color:mediumvioletred !important;
 }
 
 .color-midnightblue {
-    color:midnightblue
+    color:midnightblue;
+}
+
+.color-midnightblue-important {
+    color:midnightblue !important;
 }
 
 .background-midnightblue {
-    background:midnightblue
+    background-color:midnightblue;
+}
+
+.background-midnightblue-important {
+    background-color:midnightblue !important;
 }
 
 .color-mintcream {
-    color:mintcream
+    color:mintcream;
+}
+
+.color-mintcream-important {
+    color:mintcream !important;
 }
 
 .background-mintcream {
-    background:mintcream
+    background-color:mintcream;
+}
+
+.background-mintcream-important {
+    background-color:mintcream !important;
 }
 
 .color-mistyrose {
-    color:mistyrose
+    color:mistyrose;
+}
+
+.color-mistyrose-important {
+    color:mistyrose !important;
 }
 
 .background-mistyrose {
-    background:mistyrose
+    background-color:mistyrose;
+}
+
+.background-mistyrose-important {
+    background-color:mistyrose !important;
 }
 
 .color-moccasin {
-    color:moccasin
+    color:moccasin;
+}
+
+.color-moccasin-important {
+    color:moccasin !important;
 }
 
 .background-moccasin {
-    background:moccasin
+    background-color:moccasin;
+}
+
+.background-moccasin-important {
+    background-color:moccasin !important;
 }
 
 .color-navajowhite {
-    color:navajowhite
+    color:navajowhite;
+}
+
+.color-navajowhite-important {
+    color:navajowhite !important;
 }
 
 .background-navajowhite {
-    background:navajowhite
+    background-color:navajowhite;
+}
+
+.background-navajowhite-important {
+    background-color:navajowhite !important;
 }
 
 .color-navy {
-    color:navy
+    color:navy;
+}
+
+.color-navy-important {
+    color:navy !important;
 }
 
 .background-navy {
-    background:navy
+    background-color:navy;
+}
+
+.background-navy-important {
+    background-color:navy !important;
 }
 
 .color-oldlace {
-    color:oldlace
+    color:oldlace;
+}
+
+.color-oldlace-important {
+    color:oldlace !important;
 }
 
 .background-oldlace {
-    background:oldlace
+    background-color:oldlace;
+}
+
+.background-oldlace-important {
+    background-color:oldlace !important;
 }
 
 .color-olive {
-    color:olive
+    color:olive;
+}
+
+.color-olive-important {
+    color:olive !important;
 }
 
 .background-olive {
-    background:olive
+    background-color:olive;
+}
+
+.background-olive-important {
+    background-color:olive !important;
 }
 
 .color-olivedrab {
-    color:olivedrab
+    color:olivedrab;
+}
+
+.color-olivedrab-important {
+    color:olivedrab !important;
 }
 
 .background-olivedrab {
-    background:olivedrab
+    background-color:olivedrab;
+}
+
+.background-olivedrab-important {
+    background-color:olivedrab !important;
 }
 
 .color-orange {
-    color:orange
+    color:orange;
+}
+
+.color-orange-important {
+    color:orange !important;
 }
 
 .background-orange {
-    background:orange
+    background-color:orange;
+}
+
+.background-orange-important {
+    background-color:orange !important;
 }
 
 .color-orangered {
-    color:orangered
+    color:orangered;
+}
+
+.color-orangered-important {
+    color:orangered !important;
 }
 
 .background-orangered {
-    background:orangered
+    background-color:orangered;
+}
+
+.background-orangered-important {
+    background-color:orangered !important;
 }
 
 .color-orchid {
-    color:orchid
+    color:orchid;
+}
+
+.color-orchid-important {
+    color:orchid !important;
 }
 
 .background-orchid {
-    background:orchid
+    background-color:orchid;
+}
+
+.background-orchid-important {
+    background-color:orchid !important;
 }
 
 .color-palegoldenrod {
-    color:palegoldenrod
+    color:palegoldenrod;
+}
+
+.color-palegoldenrod-important {
+    color:palegoldenrod !important;
 }
 
 .background-palegoldenrod {
-    background:palegoldenrod
+    background-color:palegoldenrod;
+}
+
+.background-palegoldenrod-important {
+    background-color:palegoldenrod !important;
 }
 
 .color-palegreen {
-    color:palegreen
+    color:palegreen;
+}
+
+.color-palegreen-important {
+    color:palegreen !important;
 }
 
 .background-palegreen {
-    background:palegreen
+    background-color:palegreen;
+}
+
+.background-palegreen-important {
+    background-color:palegreen !important;
 }
 
 .color-paleturquoise {
-    color:paleturquoise
+    color:paleturquoise;
+}
+
+.color-paleturquoise-important {
+    color:paleturquoise !important;
 }
 
 .background-paleturquoise {
-    background:paleturquoise
+    background-color:paleturquoise;
+}
+
+.background-paleturquoise-important {
+    background-color:paleturquoise !important;
 }
 
 .color-palevioletred {
-    color:palevioletred
+    color:palevioletred;
+}
+
+.color-palevioletred-important {
+    color:palevioletred !important;
 }
 
 .background-palevioletred {
-    background:palevioletred
+    background-color:palevioletred;
+}
+
+.background-palevioletred-important {
+    background-color:palevioletred !important;
 }
 
 .color-papayawhip {
-    color:papayawhip
+    color:papayawhip;
+}
+
+.color-papayawhip-important {
+    color:papayawhip !important;
 }
 
 .background-papayawhip {
-    background:papayawhip
+    background-color:papayawhip;
+}
+
+.background-papayawhip-important {
+    background-color:papayawhip !important;
 }
 
 .color-peachpuff {
-    color:peachpuff
+    color:peachpuff;
+}
+
+.color-peachpuff-important {
+    color:peachpuff !important;
 }
 
 .background-peachpuff {
-    background:peachpuff
+    background-color:peachpuff;
+}
+
+.background-peachpuff-important {
+    background-color:peachpuff !important;
 }
 
 .color-peru {
-    color:peru
+    color:peru;
+}
+
+.color-peru-important {
+    color:peru !important;
 }
 
 .background-peru {
-    background:peru
+    background-color:peru;
+}
+
+.background-peru-important {
+    background-color:peru !important;
 }
 
 .color-pink {
-    color:pink
+    color:pink;
+}
+
+.color-pink-important {
+    color:pink !important;
 }
 
 .background-pink {
-    background:pink
+    background-color:pink;
+}
+
+.background-pink-important {
+    background-color:pink !important;
 }
 
 .color-plum {
-    color:plum
+    color:plum;
+}
+
+.color-plum-important {
+    color:plum !important;
 }
 
 .background-plum {
-    background:plum
+    background-color:plum;
+}
+
+.background-plum-important {
+    background-color:plum !important;
 }
 
 .color-powderblue {
-    color:powderblue
+    color:powderblue;
+}
+
+.color-powderblue-important {
+    color:powderblue !important;
 }
 
 .background-powderblue {
-    background:powderblue
+    background-color:powderblue;
+}
+
+.background-powderblue-important {
+    background-color:powderblue !important;
 }
 
 .color-purple {
-    color:purple
+    color:purple;
+}
+
+.color-purple-important {
+    color:purple !important;
 }
 
 .background-purple {
-    background:purple
+    background-color:purple;
+}
+
+.background-purple-important {
+    background-color:purple !important;
 }
 
 .color-red {
-    color:red
+    color:red;
+}
+
+.color-red-important {
+    color:red !important;
 }
 
 .background-red {
-    background:red
+    background-color:red;
+}
+
+.background-red-important {
+    background-color:red !important;
 }
 
 .color-rosybrown {
-    color:rosybrown
+    color:rosybrown;
+}
+
+.color-rosybrown-important {
+    color:rosybrown !important;
 }
 
 .background-rosybrown {
-    background:rosybrown
+    background-color:rosybrown;
+}
+
+.background-rosybrown-important {
+    background-color:rosybrown !important;
 }
 
 .color-royalblue {
-    color:royalblue
+    color:royalblue;
+}
+
+.color-royalblue-important {
+    color:royalblue !important;
 }
 
 .background-royalblue {
-    background:royalblue
+    background-color:royalblue;
+}
+
+.background-royalblue-important {
+    background-color:royalblue !important;
 }
 
 .color-saddlebrown {
-    color:saddlebrown
+    color:saddlebrown;
+}
+
+.color-saddlebrown-important {
+    color:saddlebrown !important;
 }
 
 .background-saddlebrown {
-    background:saddlebrown
+    background-color:saddlebrown;
+}
+
+.background-saddlebrown-important {
+    background-color:saddlebrown !important;
 }
 
 .color-salmon {
-    color:salmon
+    color:salmon;
+}
+
+.color-salmon-important {
+    color:salmon !important;
 }
 
 .background-salmon {
-    background:salmon
+    background-color:salmon;
+}
+
+.background-salmon-important {
+    background-color:salmon !important;
 }
 
 .color-sandybrown {
-    color:sandybrown
+    color:sandybrown;
+}
+
+.color-sandybrown-important {
+    color:sandybrown !important;
 }
 
 .background-sandybrown {
-    background:sandybrown
+    background-color:sandybrown;
+}
+
+.background-sandybrown-important {
+    background-color:sandybrown !important;
 }
 
 .color-seagreen {
-    color:seagreen
+    color:seagreen;
+}
+
+.color-seagreen-important {
+    color:seagreen !important;
 }
 
 .background-seagreen {
-    background:seagreen
+    background-color:seagreen;
+}
+
+.background-seagreen-important {
+    background-color:seagreen !important;
 }
 
 .color-seashell {
-    color:seashell
+    color:seashell;
+}
+
+.color-seashell-important {
+    color:seashell !important;
 }
 
 .background-seashell {
-    background:seashell
+    background-color:seashell;
+}
+
+.background-seashell-important {
+    background-color:seashell !important;
 }
 
 .color-sienna {
-    color:sienna
+    color:sienna;
+}
+
+.color-sienna-important {
+    color:sienna !important;
 }
 
 .background-sienna {
-    background:sienna
+    background-color:sienna;
+}
+
+.background-sienna-important {
+    background-color:sienna !important;
 }
 
 .color-silver {
-    color:silver
+    color:silver;
+}
+
+.color-silver-important {
+    color:silver !important;
 }
 
 .background-silver {
-    background:silver
+    background-color:silver;
+}
+
+.background-silver-important {
+    background-color:silver !important;
 }
 
 .color-skyblue {
-    color:skyblue
+    color:skyblue;
+}
+
+.color-skyblue-important {
+    color:skyblue !important;
 }
 
 .background-skyblue {
-    background:skyblue
+    background-color:skyblue;
+}
+
+.background-skyblue-important {
+    background-color:skyblue !important;
 }
 
 .color-slateblue {
-    color:slateblue
+    color:slateblue;
+}
+
+.color-slateblue-important {
+    color:slateblue !important;
 }
 
 .background-slateblue {
-    background:slateblue
+    background-color:slateblue;
+}
+
+.background-slateblue-important {
+    background-color:slateblue !important;
 }
 
 .color-slategray {
-    color:slategray
+    color:slategray;
+}
+
+.color-slategray-important {
+    color:slategray !important;
 }
 
 .background-slategray {
-    background:slategray
+    background-color:slategray;
+}
+
+.background-slategray-important {
+    background-color:slategray !important;
 }
 
 .color-slategrey {
-    color:slategrey
+    color:slategrey;
+}
+
+.color-slategrey-important {
+    color:slategrey !important;
 }
 
 .background-slategrey {
-    background:slategrey
+    background-color:slategrey;
+}
+
+.background-slategrey-important {
+    background-color:slategrey !important;
 }
 
 .color-snow {
-    color:snow
+    color:snow;
+}
+
+.color-snow-important {
+    color:snow !important;
 }
 
 .background-snow {
-    background:snow
+    background-color:snow;
+}
+
+.background-snow-important {
+    background-color:snow !important;
 }
 
 .color-springgreen {
-    color:springgreen
+    color:springgreen;
+}
+
+.color-springgreen-important {
+    color:springgreen !important;
 }
 
 .background-springgreen {
-    background:springgreen
+    background-color:springgreen;
+}
+
+.background-springgreen-important {
+    background-color:springgreen !important;
 }
 
 .color-steelblue {
-    color:steelblue
+    color:steelblue;
+}
+
+.color-steelblue-important {
+    color:steelblue !important;
 }
 
 .background-steelblue {
-    background:steelblue
+    background-color:steelblue;
+}
+
+.background-steelblue-important {
+    background-color:steelblue !important;
 }
 
 .color-tan {
-    color:tan
+    color:tan;
+}
+
+.color-tan-important {
+    color:tan !important;
 }
 
 .background-tan {
-    background:tan
+    background-color:tan;
+}
+
+.background-tan-important {
+    background-color:tan !important;
 }
 
 .color-teal {
-    color:teal
+    color:teal;
+}
+
+.color-teal-important {
+    color:teal !important;
 }
 
 .background-teal {
-    background:teal
+    background-color:teal;
+}
+
+.background-teal-important {
+    background-color:teal !important;
 }
 
 .color-thistle {
-    color:thistle
+    color:thistle;
+}
+
+.color-thistle-important {
+    color:thistle !important;
 }
 
 .background-thistle {
-    background:thistle
+    background-color:thistle;
+}
+
+.background-thistle-important {
+    background-color:thistle !important;
 }
 
 .color-tomato {
-    color:tomato
+    color:tomato;
+}
+
+.color-tomato-important {
+    color:tomato !important;
 }
 
 .background-tomato {
-    background:tomato
+    background-color:tomato;
+}
+
+.background-tomato-important {
+    background-color:tomato !important;
 }
 
 .color-turquoise {
-    color:turquoise
+    color:turquoise;
+}
+
+.color-turquoise-important {
+    color:turquoise !important;
 }
 
 .background-turquoise {
-    background:turquoise
+    background-color:turquoise;
+}
+
+.background-turquoise-important {
+    background-color:turquoise !important;
 }
 
 .color-violet {
-    color:violet
+    color:violet;
+}
+
+.color-violet-important {
+    color:violet !important;
 }
 
 .background-violet {
-    background:violet
+    background-color:violet;
+}
+
+.background-violet-important {
+    background-color:violet !important;
 }
 
 .color-wheat {
-    color:wheat
+    color:wheat;
+}
+
+.color-wheat-important {
+    color:wheat !important;
 }
 
 .background-wheat {
-    background:wheat
+    background-color:wheat;
+}
+
+.background-wheat-important {
+    background-color:wheat !important;
 }
 
 .color-white {
-    color:white
+    color:white;
+}
+
+.color-white-important {
+    color:white !important;
 }
 
 .background-white {
-    background:white
+    background-color:white;
+}
+
+.background-white-important {
+    background-color:white !important;
 }
 
 .color-whitesmoke {
-    color:whitesmoke
+    color:whitesmoke;
+}
+
+.color-whitesmoke-important {
+    color:whitesmoke !important;
 }
 
 .background-whitesmoke {
-    background:whitesmoke
+    background-color:whitesmoke;
+}
+
+.background-whitesmoke-important {
+    background-color:whitesmoke !important;
 }
 
 .color-yellow {
-    color:yellow
+    color:yellow;
+}
+
+.color-yellow-important {
+    color:yellow !important;
 }
 
 .background-yellow {
-    background:yellow
+    background-color:yellow;
+}
+
+.background-yellow-important {
+    background-color:yellow !important;
 }
 
 .color-yellowgreen {
-    color:yellowgreen
+    color:yellowgreen;
+}
+
+.color-yellowgreen-important {
+    color:yellowgreen !important;
 }
 
 .background-yellowgreen {
-    background:yellowgreen
+    background-color:yellowgreen;
+}
+
+.background-yellowgreen-important {
+    background-color:yellowgreen !important;
 }
