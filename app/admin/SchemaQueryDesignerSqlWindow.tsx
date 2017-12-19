@@ -8,7 +8,7 @@ import {config} from "../config";
 import {Button} from "../ui/Button";
 import {FlexVPanel} from "../ui/FlexVPanel";
 import {SchemaQuery} from "../schema/query/SchemaQuery";
-import {CodeEditor} from "../ui/inputs/CodeMirror";
+import {CodeEditor} from "../ui/inputs/CodeEditor";
 import {TabsPanelItem} from "../ui/TabsPanelItem";
 import {TabsPanel} from "../ui/TabsPanel";
 

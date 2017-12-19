@@ -31,6 +31,7 @@ import {
 import {hexStringToUint8Array} from "./utils/hexStringToUint8Array";
 import {arrayToHexString} from "./utils/arrayToHexString";
 import {downloadStringAsFile} from "./utils/downloadStringAsFile";
+import {addNewLineSymbol} from "./utils/addNewLineSymbol";
 
 declare const chai: any;
 declare const window: any;
@@ -85,6 +86,7 @@ export function registerHost() {
             guidFromHex: guidFromHex,
             guidToHex: guidToHex,
             downloadStringAsFile:downloadStringAsFile,
+            addNewLineSymbol:addNewLineSymbol,
         }
     };
 

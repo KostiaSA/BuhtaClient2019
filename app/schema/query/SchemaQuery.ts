@@ -7,10 +7,16 @@ import {ISchemaTableProps, SchemaTable} from "../table/SchemaTable";
 import {getRandomString} from "../../utils/getRandomString";
 import {getSchemaObjectProps} from "../getSchemaObjectProps";
 import {SqlSelectEmitter} from "../../sql/SqlSelectEmitter";
+import {addNewLineSymbol} from "../../utils/addNewLineSymbol";
 
 
 export interface ISchemaQueryProps extends ISchemaObjectProps {
     root: ISchemaQueryColumnProps;
+    sqlBefore?: string;
+    sqlSelect?: string;
+    sqlJoin?: string;
+    sqlWhere?: string;
+    sqlAfter?: string;
     //  editOptions?: ISchemaQueryEditOptions;
 }
 
@@ -64,7 +70,64 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
 
         await this.emitColumn(this.root, emitter, 0);
 
-        return emitter.toSql();
+        let sql: string[] = [];
+
+        sql.push("-- запрос: " + this.props.objectId);
+        sql.push("\n\n");
+
+        if (this.props.sqlBefore) {
+            sql.push("/************** SQL-before: начало **************/\n");
+            sql.push(addNewLineSymbol(this.props.sqlBefore));
+            sql.push("/************** SQL-before: конец  **************/\n\n");
+        }
+
+        sql.push(emitter.select.join("\n") + "\n");
+        sql.push(emitter.fields.join("\n"));
+
+        if (this.props.sqlSelect) {
+            sql.push(",\n");
+            sql.push("    /************** SQL-select: начало **************/\n");
+            sql.push(addNewLineSymbol(this.props.sqlSelect.split("\n").map((line) => "    " + line).join("\n")));
+            sql.push("    /************** SQL-select: конец  **************/\n");
+        }
+        else
+            sql.push("\n");
+
+        sql.push(emitter.from.join("\n") + "\n");
+
+        if (this.props.sqlJoin) {
+            sql.push("    /************** SQL-join: начало **************/\n");
+            sql.push(addNewLineSymbol(this.props.sqlJoin.split("\n").map((line) => "    " + line).join("\n")));
+            sql.push("    /************** SQL-join: конец  **************/\n");
+        }
+
+        if (emitter.where.length > 0 || this.props.sqlWhere)
+            sql.push("WHERE");
+
+        if (emitter.where.length > 0)
+            sql.push("\n    " + emitter.where.join(" AND \n"));
+
+        if (this.props.sqlWhere) {
+            if (emitter.where.length > 0)
+                sql.push(" AND\n");
+            else
+                sql.push("\n");
+            sql.push("    /************** SQL-where: начало *************/\n");
+            sql.push(addNewLineSymbol(this.props.sqlWhere.split("\n").map((line) => "    " + line).join("\n")));
+            sql.push("    /************** SQL-where: конец  *************/\n");
+        }
+        else
+            sql.push("\n");
+
+
+        if (this.props.sqlAfter) {
+            sql.push("\n/************** SQL-after: начало **************/\n");
+            sql.push(addNewLineSymbol(this.props.sqlAfter));
+            sql.push("/************** SQL-after: конец  **************/\n");
+        }
+
+        return sql.join("");
+
     }
 
     private async iterateNodeRecursive(node: ISchemaQueryColumnProps, parent?: ISchemaQueryColumnProps, parentColumn?: SchemaQueryColumn) {
@@ -123,8 +186,6 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
 
         if (!column.parent) {
 
-            emitter.select.push("-- запрос: " + this.props.objectId);
-            emitter.select.push("");
 
             emitter.select.push("SELECT");
             emitter.from.push(this.levelToStr(level) + "FROM");
@@ -140,13 +201,13 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
 
         }
         else if (column.joinTable) {
-            emitter.from.push(this.levelToStr(level) + "LEFT JOIN " + emitter.emit_NAME(column.joinTable.getFullSqlName()) + " AS " + emitter.emit_NAME(column.joinTableAlias));
+            emitter.from.push(this.levelToStr(level) + "    LEFT JOIN " + emitter.emit_NAME(column.joinTable.getFullSqlName()) + " AS " + emitter.emit_NAME(column.joinTableAlias));
             for (let childColumn of column.columns) {
                 await this.emitColumn(childColumn, emitter, level + 1);
             }
             emitter.from.push(
                 this.levelToStr(level) +
-                "ON " +
+                "    ON " +
                 emitter.emit_NAME(column.parent.joinTableAlias) + "." + emitter.emit_NAME(column.props.fieldSource!) +
                 "=" +
                 emitter.emit_NAME(column.joinTableAlias) + "." + emitter.emit_NAME(column.joinTable.getPrimaryKeyColumn()!.name));

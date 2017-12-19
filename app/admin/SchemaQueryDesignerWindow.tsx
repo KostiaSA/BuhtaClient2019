@@ -32,6 +32,7 @@ import {SchemaObject} from "../schema/SchemaObject";
 import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaObjectFiles";
 import {SchemaQueryDesignerAddFieldsWindow} from "./SchemaQueryDesignerAddFieldsWindow";
 import {getConfirmation} from "../ui/modals/getConfirmation";
+import {CodeEditor} from "../ui/inputs/CodeEditor";
 
 
 export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
@@ -284,7 +285,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
         let validator = new SchemaQuery(this.query).getValidator();
 
-        //console.log("render SchemaQueryDesignerWindow");
+        console.log("render SchemaQueryDesignerWindow");
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
@@ -310,7 +311,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                                             <Input
                                                 title="имя"
-                                                bindObj={this.query}
+
                                                 bindProp="name"
                                                 placeHolder="имя таблицы"
 
@@ -399,8 +400,24 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 </FlexHPanel>
                             </TabsPanelItem>
 
-                            <TabsPanelItem title="Индексы">
-                                индексы контент
+                            <TabsPanelItem title={(this.query.sqlBefore ? "+" : "") + "SQL-before"}>
+                                <CodeEditor title="" bindObj={this.query} bindProp="sqlBefore" onChange={async ()=>this.forceUpdate()}/>
+                            </TabsPanelItem>
+
+                            <TabsPanelItem title={(this.query.sqlSelect ? "+" : "") + "SQL-select"}>
+                                <CodeEditor title="" bindObj={this.query} bindProp="sqlSelect" onChange={async ()=>this.forceUpdate()}/>
+                            </TabsPanelItem>
+
+                            <TabsPanelItem title={(this.query.sqlJoin ? "+" : "") + "SQL-join"}>
+                                <CodeEditor title="" bindObj={this.query} bindProp="sqlJoin" onChange={async ()=>this.forceUpdate()}/>
+                            </TabsPanelItem>
+
+                            <TabsPanelItem title={(this.query.sqlWhere ? "+" : "") + "SQL-where"}>
+                                <CodeEditor title="" bindObj={this.query} bindProp="sqlWhere" onChange={async ()=>this.forceUpdate()}/>
+                            </TabsPanelItem>
+
+                            <TabsPanelItem title={(this.query.sqlAfter ? "+" : "") + "SQL-after"}>
+                                <CodeEditor title="" bindObj={this.query} bindProp="sqlAfter" onChange={async ()=>this.forceUpdate()}/>
                             </TabsPanelItem>
 
                         </TabsPanel>

@@ -1,5 +1,5 @@
 ﻿{
-    "description": "Справочник организаций2",
+    "description": "Справочник организаций23377",
     "name": "СписокОрганизаций",
     "objectType": "query",
     "root": {
@@ -31,5 +31,10 @@
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-18 14:25:42.240",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-19 00:47:51.163"
+    "changedDate": "<DateTime>2017-12-19 12:24:49.556",
+    "sqlBefore": "USE [MAG3666]\nGO\n\nSET ANSI_NULLS ON\nGO\n\n",
+    "sqlAfter": "ALTER  PROCEDURE [dbo].[Export_Add_Subconto]\n  @SubcontoNum VARCHAR(32), \n  @SubcontoName VARCHAR(50), \n  @SubcontoID INT OUTPUT , \n  @SubcontoType VARCHAR(5) OUTPUT\nAS\nBEGIN\nEND",
+    "sqlWhere": "234=456",
+    "sqlSelect": "123 as werty",
+    "sqlJoin": "JOIN xxx on 1123=897\n"
 }

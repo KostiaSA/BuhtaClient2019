@@ -67,7 +67,6 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
 
 
         this.editor.on("change", async (event: any) => {
-
             objectPathSet(this.bindObj, this.props.bindProp, this.editor.getValue());
             if (this.props.onChange) {
                 await this.props.onChange();
