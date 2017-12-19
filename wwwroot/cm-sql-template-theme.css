@@ -1,0 +1,40 @@
+
+.cm-s-sql-template.CodeMirror { color: darkslategray; background-color: white; }
+
+/*.cm-s-sql-template div.CodeMirror-selected { background: #cfc; }*/
+/*.cm-s-sql-template .CodeMirror-line::selection, .cm-s-sql-template .CodeMirror-line > span::selection, .cm-s-sql-template .CodeMirror-line > span > span::selection { background: #cfc; }*/
+/*.cm-s-sql-template .CodeMirror-line::-moz-selection, .cm-s-sql-template .CodeMirror-line > span::-moz-selection, .cm-s-sql-template .CodeMirror-line > span > span::-moz-selection { background: #cfc; }*/
+
+/*.cm-s-sql-template .CodeMirror-gutters { background: #f8f8f8; border-left: 6px solid rgba(0,83,159,0.65); color: #333; }*/
+/*.cm-s-sql-template .CodeMirror-linenumber { color: #aaa; padding-left: 8px; }*/
+/*.cm-s-sql-template .CodeMirror-cursor { border-left: 2px solid #222; }*/
+
+.cm-s-sql-template .cm-keyword { color: royalblue; }
+.cm-s-sql-template .cm-atom { color: red; }
+.cm-s-sql-template .cm-number { color:  green; }
+/*.cm-s-sql-template .cm-def { color: #8DA6CE; }*/
+/*.cm-s-sql-template span.cm-variable-2, .cm-s-sql-template span.cm-tag { color: #690; }*/
+/*.cm-s-sql-template span.cm-variable-3, .cm-s-sql-template span.cm-def, .cm-s-sql-template span.cm-type { color: #07a; }*/
+
+.cm-s-sql-template .cm-variable { color: darkcyan; }
+.cm-s-sql-template .cm-variable-2 { color: darkcyan; }
+/*.cm-s-sql-template .cm-identifier { color: orange; }*/
+/*.cm-s-sql-template .cm-property { color: #905; }*/
+/*.cm-s-sql-template .cm-qualifier { color: #690; }*/
+
+/*.cm-s-sql-template .cm-operator { color: #cda869; }*/
+.cm-s-sql-template .cm-comment { color:green; }
+.cm-s-sql-template .cm-string { color:tomato;}
+.cm-s-sql-template .cm-string-2 { color:red; }
+/*.cm-s-sql-template .cm-meta { color: #000; } !*?*!*/
+.cm-s-sql-template .cm-builtin { color: fuchsia; }
+/*.cm-s-sql-template .cm-tag { color: #997643; }*/
+/*.cm-s-sql-template .cm-attribute { color: #d6bb6d; } !*?*!*/
+/*.cm-s-sql-template .cm-header { color: #FF6400; }*/
+/*.cm-s-sql-template .cm-hr { color: #AEAEAE; }*/
+/*.cm-s-sql-template .cm-link { color:#ad9361; font-style:italic; text-decoration:none; }*/
+/*.cm-s-sql-template .cm-error { border-bottom: 1px solid red; }*/
+
+/*div.cm-s-sql-template .CodeMirror-activeline-background { background: #efefff; }*/
+/*div.cm-s-sql-template span.CodeMirror-matchingbracket { outline:1px solid grey; color: inherit; }*/
+

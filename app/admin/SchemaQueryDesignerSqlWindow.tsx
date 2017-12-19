@@ -85,19 +85,19 @@ export class SchemaQueryDesignerSqlWindow extends React.Component<ISchemaQueryDe
                         <TabsPanel>
 
                             <TabsPanelItem title="SQL-шаблон">
-                                <CodeEditor title="" options={{mode: "text/x-mssql"}} bindObj={this} bindProp="sql"/>
+                                <CodeEditor title="" options={{mode: "text/x-mssql", theme:"sql-template"}} bindObj={this} bindProp="sql"/>
                             </TabsPanelItem>
 
                             <TabsPanelItem title="результат в MSSQL">
-                                <CodeEditor title="" options={{mode: "text/x-mssql"}} bindObj={this} bindProp="mssql"/>
+                                <CodeEditor title="" options={{mode: "text/x-mssql", theme:"sql"}} bindObj={this} bindProp="mssql"/>
                             </TabsPanelItem>
 
                             <TabsPanelItem title="результат в MySQL">
-                                <CodeEditor title="" options={{mode: "text/x-mysql"}} bindObj={this} bindProp="mysql"/>
+                                <CodeEditor title="" options={{mode: "text/x-mysql", theme:"sql"}} bindObj={this} bindProp="mysql"/>
                             </TabsPanelItem>
 
                             <TabsPanelItem title="результат в Postgres">
-                                <CodeEditor title="" options={{mode: "text/x-pgsql"}} bindObj={this}
+                                <CodeEditor title="" options={{mode: "text/x-pgsql", theme:"sql"}} bindObj={this}
                                             bindProp="postgres"/>
                             </TabsPanelItem>
 

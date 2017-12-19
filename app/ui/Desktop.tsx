@@ -98,40 +98,40 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                             }}></MenuItem>
                     </MenuItem>
                 </Menu>
-                <button
-                    onClick={async () => {
-                        let result = await loadSchemaTree();
-                        console.log(result);
-                    }}>
-                    loadSchemaTree
-                </button>
-                <button
-                    onClick={() => {
-                        this.openWindow(<SchemaExplorerWindow
-                            window={{height: 500, width: 400}}></SchemaExplorerWindow>);
-                    }}>
-                    инспектор объектов
-                </button>
-                <button
-                    onClick={() => {
-                        this.openWindow(<SchemaTableDesignerWindow window={{height: 444, width: 600}}
-                                                                   objectId="buhta/test1/Автомобиль"></SchemaTableDesignerWindow>);
-                        //  this.openWindow(<div key="111" title="111">новое окно</div>);
-                    }}>
-                    open SchemaTableDesignerWindow
-                </button>
-                <button
-                    onClick={() => {
-                        saveSchemaObjectFiles({filePath: "buhta/test1/Организация1233", json: "{ага4}"})
-                            .then((res) => {
-                                console.log("ok", res)
-                            })
-                            .catch((err) => {
-                                console.log("err:", err)
-                            })
-                    }}>
-                    test seveSchemaObjectFiles
-                </button>
+                {/*<button*/}
+                    {/*onClick={async () => {*/}
+                        {/*let result = await loadSchemaTree();*/}
+                        {/*console.log(result);*/}
+                    {/*}}>*/}
+                    {/*loadSchemaTree*/}
+                {/*</button>*/}
+                {/*<button*/}
+                    {/*onClick={() => {*/}
+                        {/*this.openWindow(<SchemaExplorerWindow*/}
+                            {/*window={{height: 500, width: 400}}></SchemaExplorerWindow>);*/}
+                    {/*}}>*/}
+                    {/*инспектор объектов*/}
+                {/*</button>*/}
+                {/*<button*/}
+                    {/*onClick={() => {*/}
+                        {/*this.openWindow(<SchemaTableDesignerWindow window={{height: 444, width: 600}}*/}
+                                                                   {/*objectId="buhta/test1/Автомобиль"></SchemaTableDesignerWindow>);*/}
+                        {/*//  this.openWindow(<div key="111" title="111">новое окно</div>);*/}
+                    {/*}}>*/}
+                    {/*open SchemaTableDesignerWindow*/}
+                {/*</button>*/}
+                {/*<button*/}
+                    {/*onClick={() => {*/}
+                        {/*saveSchemaObjectFiles({filePath: "buhta/test1/Организация1233", json: "{ага4}"})*/}
+                            {/*.then((res) => {*/}
+                                {/*console.log("ok", res)*/}
+                            {/*})*/}
+                            {/*.catch((err) => {*/}
+                                {/*console.log("err:", err)*/}
+                            {/*})*/}
+                    {/*}}>*/}
+                    {/*test seveSchemaObjectFiles*/}
+                {/*</button>*/}
                 {this.renderWindows()}
             </div>
         )

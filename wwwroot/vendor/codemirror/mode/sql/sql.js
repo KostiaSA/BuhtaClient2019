@@ -209,6 +209,7 @@
             var ch;
             while ((ch = stream.next()) != null) {
                 if (ch == "`" && !stream.eat("`")) return "variable-2";
+                if (ch == "]") return "identifier";
             }
             stream.backUp(stream.current().length - 1);
             return stream.eatWhile(/\w/) ? "variable-2" : null;
@@ -292,15 +293,15 @@
             name: "sql",
             client: set("charset clear connect edit ego exit go help nopager notee nowarning pager print prompt quit rehash source status system tee"),
             // buhta
-            keywords: set(sqlKeywords + "left right procedure end begin trigger proc view index for add constraint key primary foreign collate clustered nonclustered declare exec"),
-            builtin: set("bigint numeric bit smallint decimal smallmoney int tinyint money float real char varchar text nchar nvarchar ntext binary varbinary image cursor timestamp hierarchyid uniqueidentifier sql_variant xml table "),
-            atoms: set("false true null unknown"),
+            keywords: set(sqlKeywords + "exec try all case when then open fetch next while local static  default null is date datetimeoffset datetime2 smalldatetime datetime time tablock output with tran commit else if top left right procedure function end begin trigger proc view index for add constraint key primary foreign collate clustered nonclustered declare exec bigint numeric bit smallint decimal smallmoney int tinyint money float real char varchar text nchar nvarchar ntext binary varbinary image cursor timestamp hierarchyid uniqueidentifier sql_variant xml table"),
+            builtin: set("raiseerror convert cast sum max min round  isnull ident_current len substring charindex ltrim rtrim getdate replicate"),
+            atoms: set("false true unknown"),
             operatorChars: /^[*+\-%<>!=]/,
-            dateSQL: set("date datetimeoffset datetime2 smalldatetime datetime time"),
+            dateSQL: set(""),
             hooks: {
                 "@": hookVar,
-                "[": hookIdentifier,
-                "]": hookIdentifier,
+                //"[": hookIdentifier,
+                //"]": hookIdentifier,
             }
         });
 

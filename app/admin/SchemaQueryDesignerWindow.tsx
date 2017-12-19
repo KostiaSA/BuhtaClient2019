@@ -404,7 +404,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                             <TabsPanelItem title={(this.query.sqlBefore ? "+" : "") + "SQL-before"}>
                                 <CodeEditor
-                                    title="" options={{mode: "text/x-mssql"}}
+                                    title="" options={{mode: "text/x-mssql", theme:"sql-template"}}
                                     bindObj={this.query}
                                     bindProp="sqlBefore"
                                     onChange={async () => this.forceUpdate()}
@@ -413,7 +413,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                             <TabsPanelItem title={(this.query.sqlSelect ? "+" : "") + "SQL-select"}>
                                 <CodeEditor
-                                    title="" options={{mode: "text/x-mssql"}} bindObj={this.query}
+                                    title="" options={{mode: "text/x-mssql", theme:"sql-template"}} bindObj={this.query}
                                     bindProp="sqlSelect"
                                     onChange={async () => this.forceUpdate()}
                                 />
@@ -421,7 +421,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                             <TabsPanelItem title={(this.query.sqlJoin ? "+" : "") + "SQL-join"}>
                                 <CodeEditor
-                                    title="" options={{mode: "text/x-mssql"}} bindObj={this.query}
+                                    title="" options={{mode: "text/x-mssql", theme:"sql-template"}} bindObj={this.query}
                                     bindProp="sqlJoin"
                                     onChange={async () => this.forceUpdate()}
                                 />
@@ -429,7 +429,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                             <TabsPanelItem title={(this.query.sqlWhere ? "+" : "") + "SQL-where"}>
                                 <CodeEditor
-                                    title="" options={{mode: "text/x-mssql"}} bindObj={this.query}
+                                    title="" options={{mode: "text/x-mssql", theme:"sql-template"}} bindObj={this.query}
                                     bindProp="sqlWhere"
                                     onChange={async () => this.forceUpdate()}
                                 />
@@ -437,7 +437,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                             <TabsPanelItem title={(this.query.sqlAfter ? "+" : "") + "SQL-after"}>
                                 <CodeEditor
-                                    title="" options={{mode: "text/x-mssql"}} bindObj={this.query}
+                                    title="" options={{mode: "text/x-mssql", theme:"sql-template"}} bindObj={this.query}
                                     bindProp="sqlAfter"
                                     onChange={async () => this.forceUpdate()}
                                 />
