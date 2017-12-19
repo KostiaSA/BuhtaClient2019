@@ -265,7 +265,8 @@ console.log("++++++++++++SQL");
   }
 
   // these keywords are used by all SQL dialects (however, a mode can still overwrite it)
-  var sqlKeywords = "alter and as asc between by count create delete desc distinct drop from group having in insert into is join like not on or order select set table union update values where limit ";
+  // buhta
+  var sqlKeywords = "left right inner outer alter and as asc between by count create delete desc distinct drop from group having in insert into is join like not on or order select set table union update values where limit ";
 
   // turn a space-separated list into an array
   function set(str) {
@@ -288,7 +289,8 @@ console.log("++++++++++++SQL");
   CodeMirror.defineMIME("text/x-mssql", {
     name: "sql",
     client: set("charset clear connect edit ego exit go help nopager notee nowarning pager print prompt quit rehash source status system tee"),
-    keywords: set(sqlKeywords + "begin trigger proc view index for add constraint key primary foreign collate clustered nonclustered declare exec"),
+    // buhta
+    keywords: set(sqlKeywords + "left right procedure end begin trigger proc view index for add constraint key primary foreign collate clustered nonclustered declare exec"),
     builtin: set("bigint numeric bit smallint decimal smallmoney int tinyint money float real char varchar text nchar nvarchar ntext binary varbinary image cursor timestamp hierarchyid uniqueidentifier sql_variant xml table "),
     atoms: set("false true null unknown"),
     operatorChars: /^[*+\-%<>!=]/,
