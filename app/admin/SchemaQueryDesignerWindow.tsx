@@ -199,13 +199,15 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         new SchemaObject(this.query).setChangedUserAndDate();
 
         let fielPath = this.props.objectId || this.props.newObjectPath + "/" + this.query.name + "." + SchemaQuery.objectType;
+        let sql = await new SchemaQuery(this.query).emitSqlTemplate();
+
         delete this.query.objectId;
 
         let req: ISavedSchemaObjectFiles = {
             filePath: fielPath,
-            json: XJSON_stringify(this.query)
+            json: XJSON_stringify(this.query),
+            sql: sql
         };
-
         try {
             await saveSchemaObjectFiles(req);
             this.window.close(req.filePath);

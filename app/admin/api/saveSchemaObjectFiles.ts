@@ -5,6 +5,7 @@ export interface ISavedSchemaObjectFiles {
     filePath: string;
     json?: string;
     jsx?: string;
+    sql?:string;
 }
 
 declare var js_beautify: any;

@@ -11,6 +11,7 @@ import {SchemaQuery} from "../schema/query/SchemaQuery";
 import {CodeEditor} from "../ui/inputs/CodeEditor";
 import {TabsPanelItem} from "../ui/TabsPanelItem";
 import {TabsPanel} from "../ui/TabsPanel";
+import {generateSqlFromTemplate} from "./api/generateSqlFromTemplate";
 
 
 export interface ISchemaQueryDesignerSqlProps {
@@ -28,6 +29,9 @@ export class SchemaQueryDesignerSqlWindow extends React.Component<ISchemaQueryDe
 
         try {
             this.sql = this.props.sql;
+            this.mssql = await generateSqlFromTemplate("mssql", this.props.sql, {});
+            this.mysql = await generateSqlFromTemplate("mysql", this.props.sql, {});
+            this.postgres = await generateSqlFromTemplate("postgres", this.props.sql, {});
             this.forceUpdate();
         }
         catch (error) {
@@ -44,7 +48,7 @@ export class SchemaQueryDesignerSqlWindow extends React.Component<ISchemaQueryDe
     sql: string;
     mssql: string;
     mysql: string;
-    postgress: string;
+    postgres: string;
 
     render() {
         console.log("SchemaQueryDesignerSqlWindow");
@@ -56,6 +60,7 @@ export class SchemaQueryDesignerSqlWindow extends React.Component<ISchemaQueryDe
         if (!this.sql) {
             return null;
         }
+
 
         return (
             <Window
@@ -92,7 +97,8 @@ export class SchemaQueryDesignerSqlWindow extends React.Component<ISchemaQueryDe
                             </TabsPanelItem>
 
                             <TabsPanelItem title="результат в Postgres">
-                                <CodeEditor title="" options={{mode: "text/x-pgsql"}} bindObj={this} bindProp="postgress"/>
+                                <CodeEditor title="" options={{mode: "text/x-pgsql"}} bindObj={this}
+                                            bindProp="postgres"/>
                             </TabsPanelItem>
 
                         </TabsPanel>

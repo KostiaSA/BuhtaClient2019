@@ -82,7 +82,7 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
         }
 
         sql.push(emitter.select.join("\n") + "\n");
-        sql.push(emitter.fields.join("\n"));
+        sql.push(emitter.fields.join(",\n"));
 
         if (this.props.sqlSelect) {
             sql.push(",\n");

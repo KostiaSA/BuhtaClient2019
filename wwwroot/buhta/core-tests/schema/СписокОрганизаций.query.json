@@ -5,36 +5,46 @@
     "root": {
         "tableId": "buhta/core-tests/schema/Организация.table",
         "children": [{
-            "fieldSource": "Номер"
+            "fieldSource": "Номер",
+            "key": "65aawddxnqt6k92a80zg"
         }, {
-            "fieldSource": "Название"
+            "fieldSource": "Название",
+            "key": "uxy8qzdjmxabmuh7u34z"
         }, {
             "fieldSource": "Директор",
             "tableId": "buhta/core-tests/schema/Сотрудник.table",
             "children": [{
                 "fieldSource": "Номер",
-                "fieldCaption": "ДирНомер178"
+                "fieldCaption": "ДирНомер178",
+                "key": "074jd2smmfwrfji305bb"
             }, {
                 "fieldSource": "Фамилия",
                 "fieldCaption": "Дир-Фамилия",
-                "isHidden": true
+                "isHidden": true,
+                "key": "08hm34f50rx4rp1n8vrw"
             }, {
-                "fieldSource": "Отчество"
+                "fieldSource": "Отчество",
+                "key": "m295r9v1r5orfoxckxl3"
             }, {
-                "fieldSource": "ИНН"
+                "fieldSource": "ИНН",
+                "key": "d2b7wumd9bhcm9g5sldg"
             }, {
                 "fieldSource": "ДатаРождения",
-                "fieldCaption": "Рожд"
-            }]
-        }]
+                "fieldCaption": "Рожд",
+                "key": "1eb9s5v3zy8smol75lwg"
+            }],
+            "key": "ggwotujunwpe7tth3idh"
+        }],
+        "key": "w603j7vo06grciudibjx"
     },
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-18 14:25:42.240",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-19 12:24:49.556",
+    "changedDate": "<DateTime>2017-12-19 15:17:56.493",
     "sqlBefore": "USE [MAG3666]\nGO\n\nSET ANSI_NULLS ON\nGO\n\n",
     "sqlAfter": "ALTER  PROCEDURE [dbo].[Export_Add_Subconto]\n  @SubcontoNum VARCHAR(32), \n  @SubcontoName VARCHAR(50), \n  @SubcontoID INT OUTPUT , \n  @SubcontoType VARCHAR(5) OUTPUT\nAS\nBEGIN\nEND",
     "sqlWhere": "234=456",
-    "sqlSelect": "123 as werty",
-    "sqlJoin": "JOIN xxx on 1123=897\n"
+    "sqlSelect": "'222'+[Организация.Сотрудник].[Фамилия] AS [Дир-Фамилия],",
+    "sqlJoin": "JOIN xxx on 1123=897\n",
+    "note": "222"
 }
