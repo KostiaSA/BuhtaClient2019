@@ -13,7 +13,7 @@
 
 CodeMirror.defineMode("sql", function(config, parserConfig) {
   "use strict";
-
+console.log("++++++++++++SQL");
   var client         = parserConfig.client || {},
       atoms          = parserConfig.atoms || {"false": true, "true": true, "null": true},
       builtin        = parserConfig.builtin || {},

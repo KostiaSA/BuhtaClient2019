@@ -14,8 +14,8 @@ export interface ICodeMirrorProps extends IBaseInputProps {
     height?: string | number;
     width?: string | number;
     options?: EditorConfiguration;
-    resizeOnlyHeight?:boolean;
-    resizeOnlyWidth?:boolean;
+    resizeOnlyHeight?: boolean;
+    resizeOnlyWidth?: boolean;
 }
 
 export class CodeEditor extends BaseInput<ICodeMirrorProps> {
@@ -31,24 +31,26 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
     componentDidMount() {
         this.widget = $("#" + this.$id);
         this.editor = CodeMirror.fromTextArea(this.textArea, {autoRefresh: true, ...this.props.options});
+        //console.log("=====================================",{autoRefresh: true, ...this.props.options});
         let $e = $((this.editor as any).display.wrapper);
         this.editor.setSize("100%", "100%");
+        //this.editor.setOption("mode", "sql");
         $e.css("position", "absolute");
         $e.css("border", config.border);
 
         if (this.props.resizable && this.props.storageKey) {
             let storage = storageGet(this.props.storageKey, ["size", this.getWindow().props.storageKey!]);
-            if (storage && storage.width &&  !this.props.resizeOnlyHeight)
-                this.widget.css("width",storage.width);
+            if (storage && storage.width && !this.props.resizeOnlyHeight)
+                this.widget.css("width", storage.width);
             if (storage && storage.height && !this.props.resizeOnlyWidth)
-                this.widget.css("height",storage.height);
+                this.widget.css("height", storage.height);
         }
 
         let lastHeight: any;
         let lastWidth: any;
         let resizeIntervalId = setInterval(() => {
-            let widget=$("#" + this.$id);
-            if (widget.length!==1){
+            let widget = $("#" + this.$id);
+            if (widget.length !== 1) {
                 clearInterval(resizeIntervalId);
                 return;
             }
@@ -57,8 +59,8 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
 
             // h!==100 || w!==100 этот размер, почему-то имеет невидимый wiget (на скрытых закладках TabPanel)
             // чтобы не было излишей анимации при открытии TabPanel, исключаем resize
-            if ((h!==100 || w!==100) && (h !== lastHeight || w !== lastWidth)) {
-                console.log(this.$id,"-----------------------------",h,w);
+            if ((h !== 100 || w !== 100) && (h !== lastHeight || w !== lastWidth)) {
+                console.log(this.$id, "-----------------------------", h, w);
                 lastWidth = w;
                 lastHeight = h;
                 this.editor.refresh();
@@ -80,18 +82,21 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
         this.initialValue = objectPathGet(this.bindObj, this.props.bindProp);
         if (this.props.resizable) {
 
-            let handles="e, s, se";
+            let handles = "e, s, se";
             if (this.props.resizeOnlyHeight)
-                handles="s";
+                handles = "s";
             if (this.props.resizeOnlyWidth)
-                handles="e";
+                handles = "e";
             this.widget.resizable({
                 minHeight: 60,
                 minWidth: 100,
-                handles:handles,
+                handles: handles,
                 stop: () => {
                     if (this.props.storageKey) {
-                        storageSet(this.props.storageKey!, ["size", this.getWindow().props.storageKey!], {width: this.widget.width(),height: this.widget.height()});
+                        storageSet(this.props.storageKey!, ["size", this.getWindow().props.storageKey!], {
+                            width: this.widget.width(),
+                            height: this.widget.height()
+                        });
                     }
                 }
 
