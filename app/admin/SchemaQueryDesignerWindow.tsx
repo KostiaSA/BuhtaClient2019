@@ -52,7 +52,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
     error: any;
     errorTitle: string;
     query: ISchemaQueryProps;
-    initialQuery: ISchemaQueryProps;
+//    initialQuery: ISchemaQueryProps;
     //queryColumnsArray: any;
     applyButton: Button;
     saveButton: Button;
@@ -134,7 +134,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                     this.query = XJSON_parse(res.json);
                     TreeGrid.setRandomKeysInDataSourceObject(this.query.root, "key");
                     this.query.objectId = this.props.objectId;
-                    this.initialQuery = XJSON_clone(this.query);
+                    //this.initialQuery = XJSON_clone(this.query);
                 }
                 else {
                     this.error = "не найден запрос: " + this.props.objectId;
@@ -214,7 +214,8 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         };
         try {
             await saveSchemaObjectFiles(req);
-            this.initialQuery = XJSON_clone(this_query);
+            //this.initialQuery = XJSON_clone(this.query);
+            this.form!.resetNeedSaveChanges();
             notifySuccess("Запрос сохранен");
         }
         catch (err) {
@@ -258,7 +259,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
     handleClickCloseButton = async () => {
         let needConfirmation = this.form!.needSaveChanges;
-        needConfirmation = needConfirmation || !XJSON_equals(this.query, this.initialQuery);
+        //needConfirmation = needConfirmation || !XJSON_equals(this.query, this.initialQuery);
 
         if (!needConfirmation || await getConfirmation("Выйти без сохранения?"))
             this.window.close();

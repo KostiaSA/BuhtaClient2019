@@ -23,6 +23,8 @@ export class Input extends BaseInput<IInputProps> {
     }
 
     componentDidMount() {
+        this.formPanel.renderedInputs.push(this);
+
         this.widget = $("#" + this.$id);
 
 

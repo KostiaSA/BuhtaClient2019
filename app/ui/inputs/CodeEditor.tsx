@@ -29,6 +29,8 @@ export class CodeEditor extends BaseInput<ICodeMirrorProps> {
     textArea: HTMLElement;
 
     componentDidMount() {
+        if (this.formPanel)
+            this.formPanel.renderedInputs.push(this);
         this.widget = $("#" + this.$id);
         this.editor = CodeMirror.fromTextArea(this.textArea, {autoRefresh: true, ...this.props.options});
         //console.log("=====================================",{autoRefresh: true, ...this.props.options});

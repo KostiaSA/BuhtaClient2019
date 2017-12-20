@@ -7,6 +7,7 @@ import {reassignObject} from "../utils/reassignObject";
 import {config} from "../config";
 import {XJSON_clone, XJSON_equals} from "../utils/xjson";
 import {CheckBox} from "./inputs/CheckBox";
+import {BaseInput} from "./inputs/BaseInput";
 
 
 export interface IFormPanelProps extends IComponentProps {
@@ -23,20 +24,23 @@ export class FormPanel extends Component<IFormPanelProps> {
 
     static childContextTypes = {
         bindObj: PropTypes.object,
-        validator: PropTypes.object
+        validator: PropTypes.object,
+        formPanel: PropTypes.object,
     };
 
     static contextTypes = {
         ...Component.contextTypes,
         bindObj: PropTypes.object,
-        validator: PropTypes.object
+        validator: PropTypes.object,
+        formPanel: PropTypes.object,
     };
 
     getChildContext(): any {
         return {
 //            ...super.getChildContext(),
             bindObj: this.props.bindObj,
-            validator: this.props.validator
+            validator: this.props.validator,
+            formPanel: this,
         };
     }
 
@@ -50,6 +54,7 @@ export class FormPanel extends Component<IFormPanelProps> {
         return ret;
     }
 
+    renderedInputs: BaseInput[] = [];
     clonedBindObj: any;
 
     componentDidMount() {
@@ -60,6 +65,14 @@ export class FormPanel extends Component<IFormPanelProps> {
 
     get needSaveChanges(): boolean {
         return !this.clonedBindObj || !XJSON_equals(this.clonedBindObj, this.bindObj);
+    }
+
+    resetNeedSaveChanges() {
+        if (this.bindObj) {
+            this.clonedBindObj = XJSON_clone(this.bindObj);
+        }
+        this.renderedInputs.forEach((input: BaseInput) => input.resetIsChanged());
+        this.forceUpdate();
     }
 
     cancelChanges() {
@@ -82,7 +95,7 @@ export class FormPanel extends Component<IFormPanelProps> {
                         display: (child as any).props.hidden ? "none" : undefined
                     }}
                 >
-                    <td style={{ verticalAlign: "center"}}>
+                    <td style={{verticalAlign: "center"}}>
                         <div style={{
                             textAlign: "right",
                             paddingRight: 8,
@@ -104,11 +117,11 @@ export class FormPanel extends Component<IFormPanelProps> {
     render() {
         //console.log("render FormPanel");
         return (
-            <table id={this.$id} style={{border: "none", width:"100%"}}>
+            <table id={this.$id} style={{border: "none", width: "100%"}}>
                 <tbody>
                 <tr>
-                    <th style={{width:"1%"}}></th>
-                    <th style={{width:"99%"}}></th>
+                    <th style={{width: "1%"}}></th>
+                    <th style={{width: "99%"}}></th>
                 </tr>
                 {this.renderItems()}
                 </tbody>

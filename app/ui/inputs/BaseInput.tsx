@@ -8,6 +8,7 @@ import {objectPathGet} from "../../utils/objectPathGet";
 import {config} from "../../config";
 import {joiValidate} from "../../validation/joiValidate";
 import {XJSON_stringify} from "../../utils/xjson";
+import {FormPanel} from "../FormPanel";
 
 
 export interface IBaseInputProps extends IComponentProps {
@@ -22,7 +23,7 @@ export interface IBaseInputProps extends IComponentProps {
     readOnly?: boolean;
 }
 
-export class BaseInput<P extends IBaseInputProps> extends Component<P> {
+export class BaseInput<P extends IBaseInputProps=IBaseInputProps> extends Component<P> {
 
     constructor(props: any, context: any) {
         super(props, context);
@@ -33,10 +34,15 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
         ...Component.contextTypes,
         bindObj: PropTypes.object,
         validator: PropTypes.object,
+        formPanel: PropTypes.object,
     };
 
     get bindObj(): any {
         return this.props.bindObj || this.context.bindObj;
+    }
+
+    get formPanel(): FormPanel {
+        return this.context.formPanel;
     }
 
     get validator(): Joi.ObjectSchema {
@@ -48,6 +54,11 @@ export class BaseInput<P extends IBaseInputProps> extends Component<P> {
             return false;
         else
             return XJSON_stringify(this.initialValue) !== XJSON_stringify(objectPathGet(this.bindObj, this.props.bindProp));
+    }
+
+    resetIsChanged() {
+        if (this.bindObj && this.props.bindProp)
+            this.initialValue = objectPathGet(this.bindObj, this.props.bindProp);
     }
 
     initialValue: any;

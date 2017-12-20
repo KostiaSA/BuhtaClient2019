@@ -27,6 +27,8 @@ export class NumberInput extends BaseInput<INumberInputProps> {
     }
 
     componentDidMount() {
+        if (this.formPanel)
+            this.formPanel.renderedInputs.push(this);
         this.widget = $("#" + this.$id);
         this.updateProps(this.props, true);
         this.initialValue = objectPathGet(this.bindObj, this.props.bindProp);

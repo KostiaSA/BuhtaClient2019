@@ -31,6 +31,8 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
 
 
     componentDidMount() {
+        if (this.formPanel)
+            this.formPanel.renderedInputs.push(this);
         this.widget = $("#" + this.$id);
 
         this.updateProps(this.props, true);

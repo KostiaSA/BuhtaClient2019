@@ -6,51 +6,51 @@
         "tableId": "buhta/core-tests/schema/Организация.table",
         "children": [{
             "fieldSource": "Номер",
-            "key": "7fagcjzehgffjdvsrmg3"
+            "key": "0z93k2m6g7ldou4khmgp"
         }, {
             "fieldSource": "Название",
-            "key": "vngdal8vcjabcbu1dnwr"
+            "key": "gl78bs2fwnodhvdgqu3h"
         }, {
             "fieldSource": "Директор",
             "tableId": "buhta/core-tests/schema/Сотрудник.table",
             "children": [{
                 "fieldSource": "Номер",
                 "fieldCaption": "ДирНомер178",
-                "key": "qhpm3n7bnwsn3zhoff9w"
+                "key": "ad1rgc9pxf7uzgbx3cis"
             }, {
                 "fieldSource": "Фамилия",
                 "fieldCaption": "Дир-Фамилия",
                 "isHidden": true,
-                "key": "ciepqog304quktxxxaux"
+                "key": "68ynd577kuc7dic8v2eu"
             }, {
                 "fieldSource": "Отчество",
-                "key": "hpwx9btatci9utg4jkxn"
+                "key": "y9cyg8264seg9s5nqrxw"
             }, {
                 "fieldSource": "ИНН",
-                "key": "ien2cfqwcj4r2gh581v4"
+                "key": "r7ckpi4qf5l93yf7d7go"
             }, {
                 "fieldSource": "ДатаРождения",
                 "fieldCaption": "Рожд",
-                "key": "masvoii1h3dk4sr8u8mz"
+                "key": "dncmqz94933gz81hjlnb"
             }],
-            "key": "xwvaa256z69tq3j287ui"
+            "key": "92obfx3udmetptkekibu"
         }, {
             "fieldSource": "ИНН",
-            "key": "k9blxy6g6aslod0no8u4"
+            "key": "c59dff842hvfgc1zr4b1"
         }, {
             "fieldSource": "Ключ",
-            "key": "7qy4iuiwp1hx59xds5sn"
+            "key": "rligktsjl6tudwyj3b59"
         }],
-        "key": "iji45f5pkfeepc6cjszk"
+        "key": "lbcprz7h12braimhqv63"
     },
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-18 14:25:42.240",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-20 14:57:44.155",
+    "changedDate": "<DateTime>2017-12-20 15:31:06.109",
     "sqlBefore": "ALTER  PROCEDURE [dbo].[Export_Add_Subconto]\n  @SubcontoNum VARCHAR(32), \n  @SubcontoName VARCHAR(50), \n  @SubcontoID INT OUTPUT , \n  @SubcontoType VARCHAR(5) OUTPUT\nAS\nBEGIN\n  --Используется для экспорта документов в DBF-формате из \"Бизнес-софт\"\n  --Режим реализован ввиде карточки пользователя\n  DECLARE @s VARCHAR(32)={{\"нет\"}}\n  SET @SubcontoID=ISNULL((SELECT Top 1 SubcontoID FROM #CashTable WHERE Number=@SubcontoNum AND SubcontoType=@SubcontoType),0)\n  IF @SubcontoID=0\nEND  \n",
     "sqlAfter": "",
     "sqlWhere": "",
     "sqlSelect": "",
     "sqlJoin": "",
-    "note": "2222==www3"
+    "note": "2222==www3=0-266"
 }

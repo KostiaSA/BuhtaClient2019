@@ -22,6 +22,8 @@ export class CheckBox extends BaseInput<ICheckBoxProps> {
     }
 
     componentDidMount() {
+        if (this.formPanel)
+            this.formPanel.renderedInputs.push(this);
         this.widget = $("#" + this.$id);
 
 
