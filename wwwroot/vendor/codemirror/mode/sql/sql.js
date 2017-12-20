@@ -143,6 +143,7 @@
             }
         }
 
+
         function pushContext(stream, state, type) {
             state.context = {
                 prev: state.context,
@@ -253,7 +254,25 @@
                 return "variable-2";
             }
             return null;
-        };
+        }
+
+
+        function hookMustache(stream, state) {
+            var ch;
+            //debugger
+            if (stream.match("{")) {
+                while ((ch = stream.next()) != null)
+                    if (ch == "}" && stream.next() == "}") {
+                        stream.eat("}");
+                        return "mustache";
+                    }
+            }
+            while (stream.next() != null && !stream.match("{{", false)) {
+            }
+            return null;
+
+        }
+
 
         // short client keyword token
         function hookClient(stream) {
@@ -300,7 +319,7 @@
             dateSQL: set(""),
             hooks: {
                 "@": hookVar,
-                //"[": hookIdentifier,
+                "{": hookMustache,
                 //"]": hookIdentifier,
             }
         });

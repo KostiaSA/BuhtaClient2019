@@ -8,6 +8,8 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+{{034043034}}
+
 ALTER  PROCEDURE [dbo].[Export_Add_Subconto]
   @SubcontoNum VARCHAR(32), 
   @SubcontoName VARCHAR(50), 
@@ -24,7 +26,7 @@ BEGIN
       IF @SubcontoType='Орг'
       BEGIN
          SET @SubcontoID= ISNULL((SELECT Top 1 Ключ FROM [Организация] WITH (NOLOCK) WHERE Номер = @SubcontoNum),0)
-         IF @SubcontoID=0
+         IF @SubcontoID={{response.data.error}}
          BEGIN
            BEGIN TRAN
              INSERT [Организация] WITH(TABLOCK) (Номер, Название) VALUES(@SubcontoNum, @SubcontoName)
@@ -39,7 +41,7 @@ BEGIN
         IF @SubcontoID=0
         BEGIN
            BEGIN TRAN
-             INSERT [ОС] WITH(TABLOCK) (Номер, Название) VALUES(@SubcontoNum, @SubcontoName)
+             INSERT [ОС] WITH(TABLOCK) (Номер, Название) VALUES(@SubcontoNum, {{response.data.error}})
              SET @SubcontoID=IDENT_CURRENT('ОС')
            COMMIT
          END
@@ -57,7 +59,7 @@ BEGIN
         END
       END
       ELSE
-      IF @SubcontoType='Под'
+      IF @SubcontoType={{axios.post}}
       BEGIN
         SET @SubcontoID=0
         IF LEN(@SubcontoNum)<=3
@@ -136,7 +138,7 @@ BEGIN
     END
     ELSE
      SET @ThridName = @SubcontoName      
-
+            {{#уроды.8900}}
 
             INSERT [Сотрудник] WITH(TABLOCK)(Номер, Фамилия, Имя, Отчество) VALUES(@SubcontoNum, @ThridName,@FirstName,@SecondName)
           COMMIT

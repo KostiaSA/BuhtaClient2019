@@ -22,6 +22,8 @@
 /*.cm-s-sql-template .cm-property { color: #905; }*/
 /*.cm-s-sql-template .cm-qualifier { color: #690; }*/
 
+.cm-s-sql-template .cm-mustache { background-color: #ffd70082; }
+
 /*.cm-s-sql-template .cm-operator { color: #cda869; }*/
 .cm-s-sql-template .cm-comment { color:green; }
 .cm-s-sql-template .cm-string { color:tomato;}
