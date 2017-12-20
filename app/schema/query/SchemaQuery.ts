@@ -8,7 +8,7 @@ import {getRandomString} from "../../utils/getRandomString";
 import {getSchemaObjectProps} from "../getSchemaObjectProps";
 import {SqlSelectEmitter} from "../../sql/SqlSelectEmitter";
 import {addNewLineSymbol} from "../../utils/addNewLineSymbol";
-import {SqlDialect} from "../../sql/SqlEmitter";
+import {executeSql, ISqlDataset} from "../../sql/executeSql";
 
 
 export interface ISchemaQueryProps extends ISchemaObjectProps {
@@ -70,6 +70,11 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
         return this.root;
     }
 
+    async execute(paramsObj: any = {}, dbName?: string): Promise<ISqlDataset[]> {
+        if (!dbName)
+            dbName = (await this.getRootColumn()).joinTable.props.dbName;
+        return executeSql(this.props.objectId!, dbName);
+    }
 
     async emitSqlTemplate(): Promise<string> {
 

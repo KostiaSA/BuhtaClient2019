@@ -1,13 +1,8 @@
 import * as  React from "react";
-import * as ReactDOMServer from 'react-dom/server';
 import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "./Component";
-import {omit} from "../utils/omit";
-import {DbGridColumn, IDbGridColumnProps} from "./DbGridColumn";
 import {Keycode} from "../utils/Keycode";
-import {config} from "../config";
 import {isString} from "../utils/isString";
-import {isFunction} from "../utils/isFunction";
 import {ISchemaQueryProps, SchemaQuery} from "../schema/query/SchemaQuery";
 import {getSchemaObjectProps} from "../schema/getSchemaObjectProps";
 
@@ -16,6 +11,7 @@ export interface IDbGridProps extends IComponentProps {
     height?: string | number;
     width?: string | number;
     queryId?: any;
+    autoLoad?: boolean;
     databaseName?: string;
     rowsheight?: number;
     columnsheight?: number;
@@ -48,7 +44,11 @@ export class DbGrid extends Component<IDbGridProps> {
     lastParentW: number;
     resizeIntervalId: any;
 
-    async init() {
+
+    async loadRows(): Promise<void> {
+        let props = await getSchemaObjectProps<ISchemaQueryProps>(this.props.queryId);
+        this.query = new SchemaQuery(props);
+        this.rows = await this.query.execute();
     }
 
     async componentDidMount() {
@@ -57,12 +57,12 @@ export class DbGrid extends Component<IDbGridProps> {
             console.error(msg);
             throw msg;
         }
-
-        let props = await getSchemaObjectProps<ISchemaQueryProps>(this.props.queryId);
-        this.query = new SchemaQuery(props);
+        if (this.props.autoLoad)
+            await this.loadRows();
 
         //this.updateProps(this.props, true);
         this.forceUpdate();
+        console.log("loaded rows",this.rows)
     }
 
     // updateProps(props: IDbGridProps, create: boolean) {

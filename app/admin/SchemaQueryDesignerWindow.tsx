@@ -199,12 +199,12 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
             return
         }
 
-        TreeGrid.removeRandomKeysInDataSourceObject(this_query.root, "key");
         new SchemaObject(this_query).setChangedUserAndDate();
 
         let fielPath = this.props.objectId || this.props.newObjectPath + "/" + this_query.name + "." + SchemaQuery.objectType;
         let sql = await new SchemaQuery(this_query).emitSqlTemplate();
 
+        TreeGrid.removeRandomKeysInDataSourceObject(this_query.root, "key");
         delete this_query.objectId;
 
         let req: ISavedSchemaObjectFiles = {
@@ -234,12 +234,12 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
             return
         }
 
-        TreeGrid.removeRandomKeysInDataSourceObject(this.query.root, "key");
         new SchemaObject(this.query).setChangedUserAndDate();
 
         let fielPath = this.props.objectId || this.props.newObjectPath + "/" + this.query.name + "." + SchemaQuery.objectType;
         let sql = await new SchemaQuery(this.query).emitSqlTemplate();
 
+        TreeGrid.removeRandomKeysInDataSourceObject(this.query.root, "key");
         delete this.query.objectId;
 
         let req: ISavedSchemaObjectFiles = {
@@ -499,7 +499,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                     onClick={async () => {
                                         appState.desktop.openWindow(
                                             <SchemaQueryTestRunWindow
-                                                query={this.query}
+                                                queryId={this.query.objectId}
                                                 window={{height: 500, width: 700}}
                                             />
                                         );

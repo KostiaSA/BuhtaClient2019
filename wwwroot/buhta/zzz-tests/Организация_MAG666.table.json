@@ -1,0 +1,40 @@
+﻿{
+    "description": "Справочник организаций",
+    "name": "Организация_MAG666",
+    "objectType": "table",
+    "columns": [{
+        "name": "Ключ",
+        "primaryKey": true,
+        "dataType": {
+            "id": "Integer",
+            "size": "32"
+        },
+        "notNull": true
+    }, {
+        "name": "Номер",
+        "dataType": {
+            "id": "String",
+            "maxLen": 50
+        },
+        "description": "это номер"
+    }, {
+        "name": "Название",
+        "dataType": {
+            "id": "String",
+            "maxLen": 150
+        },
+        "description": " "
+    }, {
+        "name": "ИНН",
+        "dataType": {
+            "id": "String",
+            "maxLen": 12
+        },
+        "description": " "
+    }],
+    "sqlName": "Организация",
+    "createdBy": "Иванов17-20",
+    "createdDate": "<DateTime>2017-12-20 23:08:32.534",
+    "changedBy": "Иванов17-20",
+    "changedDate": "<DateTime>2017-12-20 23:08:54.042"
+}

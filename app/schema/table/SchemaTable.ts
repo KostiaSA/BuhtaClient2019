@@ -15,6 +15,7 @@ export interface ISchemaTableProps extends ISchemaObjectProps {
     sqlName?: string;
     columns: ISchemaTableColumnProps[];
     isTemp?: boolean;
+    dbName?: string;
     //  editOptions?: ISchemaTableEditOptions;
 }
 
@@ -83,9 +84,9 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
             return this.props.sqlName;
 
         let words = this.props.objectId!.split("/");
-        let lastIndex=words.length-1;
-        words[lastIndex]=words[lastIndex].replace(".table","");
-        return replaceAll(words.join("_"),"-","_");
+        let lastIndex = words.length - 1;
+        words[lastIndex] = words[lastIndex].replace(".table", "");
+        return replaceAll(words.join("_"), "-", "_");
     }
 
     getShortSqlName(): string {

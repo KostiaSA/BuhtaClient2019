@@ -3,17 +3,17 @@ import {IWindowProps, Window} from "../ui/Window";
 import {omit} from "../utils/omit";
 import {FlexHPanel} from "../ui/FlexHPanel";
 import {FlexItem} from "../ui/FlexItem";
-import {Tree} from "../ui/Tree";
 import {getErrorWindow} from "../ui/modals/showError";
 import {config} from "../config";
 import {Button} from "../ui/Button";
-import {ISchemaQueryProps, SchemaQuery} from "../schema/query/SchemaQuery";
+import {SchemaQuery} from "../schema/query/SchemaQuery";
 import {ComboBox} from "../ui/inputs/ComboBox";
 import {getDatabasesList, IDatabase} from "../sql/getDatabasesList";
+import {DbGrid} from "../ui/DbGrid";
 
 
 export interface ISchemaTableColumnEditorProps {
-    query?: ISchemaQueryProps;
+    queryId?: string;
     window?: IWindowProps;
 }
 
@@ -73,6 +73,7 @@ export class SchemaQueryTestRunWindow extends React.Component<ISchemaTableColumn
 
                     </FlexItem>
                     <FlexItem dock="fill" style={{padding: 5}}>
+                        <DbGrid queryId={this.props.queryId}></DbGrid>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
                         <Button imgSrc={config.button.cancelIcon}

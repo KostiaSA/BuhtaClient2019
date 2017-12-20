@@ -2,13 +2,14 @@ import axios from "axios";
 import {SqlBatch} from "../../sql/SqlEmitter";
 import {isArray, isString} from "util";
 import {postProcessSqlResult} from "../../sql/postProcessSqlResult";
+import {ISqlDataset} from "../../sql/executeSql";
 
 declare let SnappyJS: any;
 declare let TextDecoder: any;
 declare let TextEncoder: any;
 
 
-export async function adminExecuteSql(database: string, sql: SqlBatch): Promise<any> {
+export async function adminExecuteSql(database: string, sql: SqlBatch): Promise<ISqlDataset[]> {
     if (!isString(database))
         throw "adminExecuteSql(): database должен быть строкой";
 

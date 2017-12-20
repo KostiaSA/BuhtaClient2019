@@ -1,0 +1,18 @@
+﻿{
+    "description": "Справочник организаций",
+    "name": "СписокОрганизаций",
+    "objectType": "query",
+    "root": {
+        "tableId": "buhta/zzz-tests/Организация_MAG666.table",
+        "children": [{
+            "fieldSource": "Номер"
+        }, {
+            "fieldSource": "Название"
+        }]
+    },
+    "note": "122",
+    "createdBy": "Иванов17-20",
+    "createdDate": "<DateTime>2017-12-20 23:13:31.551",
+    "changedBy": "Иванов17-20",
+    "changedDate": "<DateTime>2017-12-20 23:18:39.778"
+}

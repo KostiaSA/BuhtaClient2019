@@ -5,7 +5,12 @@ import {XJSON_stringify} from "../utils/xjson";
 import {postProcessSqlResult} from "./postProcessSqlResult";
 
 
-export async function executeSql(sqlTemplatePath: string, paramsObj: any = {}, dbName: string = config.mainDatabaseName): Promise<string> {
+export interface ISqlDataset {
+    columns: { name: string, type: string }[];
+    rows: any[];
+}
+
+export async function executeSql(sqlTemplatePath: string, paramsObj: any = {}, dbName: string = config.mainDatabaseName): Promise<ISqlDataset[]> {
     if (!isString(sqlTemplatePath))
         throw "executeSql(): параметр 'sqlTemplatePath' должен быть строкой";
 
