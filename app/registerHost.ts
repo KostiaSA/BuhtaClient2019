@@ -37,6 +37,7 @@ import {isString} from "./utils/isString";
 import {isStringOrNull} from "./utils/isStringOrNull";
 import {notifySuccess} from "./utils/notifySuccess";
 import {getDatabaseDialect} from "./sql/getDatabaseDialect";
+import {executeSql} from "./sql/executeSql";
 
 declare const chai: any;
 declare const window: any;
@@ -72,6 +73,7 @@ export function registerHost() {
         },
         sql: {
             getDatabaseDialect: getDatabaseDialect,
+            executeSql: executeSql,
         },
         util: {
             hexStringToUint8Array: hexStringToUint8Array,
