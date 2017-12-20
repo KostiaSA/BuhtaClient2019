@@ -32,6 +32,10 @@ import {hexStringToUint8Array} from "./utils/hexStringToUint8Array";
 import {arrayToHexString} from "./utils/arrayToHexString";
 import {downloadStringAsFile} from "./utils/downloadStringAsFile";
 import {addNewLineSymbol} from "./utils/addNewLineSymbol";
+import {isStringOrNullOrEmpty} from "./utils/isStringOrNullOrEmpty";
+import {isString} from "./utils/isString";
+import {isStringOrNull} from "./utils/isStringOrNull";
+import {notifySuccess} from "./utils/notifySuccess";
 
 declare const chai: any;
 declare const window: any;
@@ -70,23 +74,32 @@ export function registerHost() {
             arrayToHexString: arrayToHexString,
             base64ToArrayBuffer: base64ToArrayBuffer,
             arrayBufferToBase64: arrayBufferToBase64,
+
             XJSON_stringify: XJSON_stringify,
             XJSON_parse: XJSON_parse,
             XJSON_parse_postprocess: XJSON_parse_postprocess,
+
             newGuid: newGuid,
             emptyGuid: emptyGuid,
             minGuid: minGuid,
             maxGuid: maxGuid,
             isGuid: isGuid,
             isGuidOrNull: isGuidOrNull,
+            isGuidsEqual: isGuidsEqual,
             checkGuid: checkGuid,
             guidFromBase64: guidFromBase64,
             guidToBase64: guidToBase64,
-            isGuidsEqual: isGuidsEqual,
             guidFromHex: guidFromHex,
             guidToHex: guidToHex,
+
             downloadStringAsFile:downloadStringAsFile,
             addNewLineSymbol:addNewLineSymbol,
+
+            isString:isString,
+            isStringOrNull:isStringOrNull,
+            isStringOrNullOrEmpty:isStringOrNullOrEmpty,
+
+            notifySuccess:notifySuccess,
         }
     };
 

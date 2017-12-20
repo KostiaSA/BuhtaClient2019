@@ -3,6 +3,7 @@ import {CSSProperties} from "react";
 import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
+import {isStringOrNullOrEmpty} from "../utils/isStringOrNullOrEmpty";
 
 
 export interface IButtonProps extends IComponentProps {
@@ -37,12 +38,19 @@ export class Button extends Component<IButtonProps> {
     }
 
     updateProps(props: IButtonProps) {
-        let opt: any = omit(this.props, ["children", "text", "style", "onClick", "tabIndex","autoFocus","tooltip"]);
+        let opt: any = omit(this.props, ["children", "text", "style", "onClick", "tabIndex", "autoFocus", "tooltip"]);
 
         opt.imgPosition = opt.imgPosition || "left";
         opt.textImageRelation = opt.textImageRelation || "imageBeforeText";
+        if (isStringOrNullOrEmpty(this.props.text) && this.props.imgSrc) {
+            opt.textImageRelation = "overlay";
+            opt.width = opt.width = 28;
+        }
 
-        opt.value = this.props.text || "Кнопка";
+        opt.value = this.props.text;
+        if (isStringOrNullOrEmpty(opt.value) && !this.props.imgSrc)
+            opt.value = "Кнопка";
+
 
         opt.height = this.props.height || (this.props.style ? this.props.style.height : null) || 28;
 

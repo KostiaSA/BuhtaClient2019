@@ -49,6 +49,7 @@ export class Window extends Component<IWindowProps> {
     }
 
     content: any;
+    notificationContent: any;
 
     componentDidMount() {
         //console.log("didmount win " + this.$id);
@@ -197,6 +198,8 @@ export class Window extends Component<IWindowProps> {
     focus() {
         this.widget.jqxWindow("focus");
     }
+
+
 
     render() {
         //console.log("render win-:" + this.props.title);

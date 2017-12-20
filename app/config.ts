@@ -30,6 +30,7 @@ export let config: any = {
         button: {
             okIcon: "vendor/fugue/tick.png",
             saveIcon: "vendor/fugue/disk.png",
+            applyIcon: "vendor/fugue/disks-black.png",
             cancelIcon: "vendor/fugue/cross-script.png",
             insertRowIcon: "vendor/fugue/plus.png",
             changeRowIcon: "vendor/fugue/card--pencil.png",

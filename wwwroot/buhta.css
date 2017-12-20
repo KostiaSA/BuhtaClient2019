@@ -110,3 +110,18 @@ input[type=text].jqx-input {
 .jqx-widget-buhta .jqx-grid-cell-pinned-buhta {
     background-color: #ffeb3b0a;
 }
+
+
+#jqxNotificationDefaultContainer-top-right, #jqxNotificationDefaultContainer-bottom-left {
+    z-index: 999;
+}
+
+.jqx-notification-icon-success {
+    background-image: initial;
+}
+
+.jqx-notification-icon-info, .jqx-notification-icon-warning, .jqx-notification-icon-success, .jqx-notification-icon-error, .jqx-notification-icon-mail, .jqx-notification-icon-time {
+     width: initial;
+     height: initial;
+}
+

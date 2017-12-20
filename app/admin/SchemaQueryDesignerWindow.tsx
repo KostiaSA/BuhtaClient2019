@@ -34,6 +34,7 @@ import {SchemaQueryDesignerAddFieldsWindow} from "./SchemaQueryDesignerAddFields
 import {getConfirmation} from "../ui/modals/getConfirmation";
 import {CodeEditor} from "../ui/inputs/CodeEditor";
 import {SchemaQueryTestRunWindow} from "./SchemaQueryTestRunWindow";
+import {notifySuccess} from "../utils/notifySuccess";
 
 
 export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
@@ -53,6 +54,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
     query: ISchemaQueryProps;
     initialQuery: ISchemaQueryProps;
     //queryColumnsArray: any;
+    applyButton: Button;
     saveButton: Button;
     closeButton: Button;
 
@@ -185,6 +187,41 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
     }
 
+    handleClickApplyButton = async () => {
+        let this_query=XJSON_clone(this.query);
+
+        let validator = new SchemaQuery(this_query).getValidator();
+
+        let validationError = joiValidate(this_query, validator);
+
+        if (validationError) {
+            await showError(validationError);
+            return
+        }
+
+        TreeGrid.removeRandomKeysInDataSourceObject(this_query.root, "key");
+        new SchemaObject(this_query).setChangedUserAndDate();
+
+        let fielPath = this.props.objectId || this.props.newObjectPath + "/" + this_query.name + "." + SchemaQuery.objectType;
+        let sql = await new SchemaQuery(this_query).emitSqlTemplate();
+
+        delete this_query.objectId;
+
+        let req: ISavedSchemaObjectFiles = {
+            filePath: fielPath,
+            json: XJSON_stringify(this_query),
+            sql: sql
+        };
+        try {
+            await saveSchemaObjectFiles(req);
+            this.initialQuery = XJSON_clone(this_query);
+            notifySuccess("Запрос сохранен");
+        }
+        catch (err) {
+            showError(err.toString());
+        }
+
+    };
     handleClickSaveButton = async () => {
 
         let validator = new SchemaQuery(this.query).getValidator();
@@ -457,6 +494,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 <Button
                                     text="Тест"
                                     imgSrc="vendor/fugue/table--arrow.png"
+                                    style={{marginRight: 5}}
                                     onClick={async () => {
                                         appState.desktop.openWindow(
                                             <SchemaQueryTestRunWindow
@@ -481,6 +519,11 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 />
                             </FlexItem>
                             <FlexItem dock="fill" style={{justifyContent: "flex-end"}}>
+                                <Button imgSrc={config.button.applyIcon}
+                                        tooltip="сохранить без закрытия формы"
+                                        style={{marginRight: 5, opacity:0.7}}
+                                        ref={(e) => this.applyButton = e!}
+                                        onClick={this.handleClickApplyButton}/>
                                 <Button imgSrc={config.button.saveIcon}
                                         text="Сохранить"
                                         style={{marginRight: 5}}
