@@ -1,11 +1,11 @@
 class Test extends buhta.test.BaseTest {
 
     _executeSql(sql) {
-        return buhta.admin.executeSql("testmysql", sql);
+        return buhta.admin.adminExecuteSql("testpostgres", sql);
     }
 
     _getDialect() {
-        return "mysql";
+        return "postgres";
     }
 
     _getSchemaTable() {
@@ -461,7 +461,7 @@ class Test extends buhta.test.BaseTest {
     }
 
     async check_dialect() {
-        assert.equal(await buhta.sql.getDatabaseDialect("testmysql"),this._getDialect());
+        assert.equal(await buhta.sql.getDatabaseDialect("testpostgres"),this._getDialect());
     }
 
     async create_table() {

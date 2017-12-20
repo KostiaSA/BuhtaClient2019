@@ -11,8 +11,18 @@ class Test extends buhta.test.BaseTest {
     //     //return "аqweeqwга!"
     // }
 
-    async test1() {
-        let res=await buhta.admin.executeSql("testmssql","select 100");
+    async mssql() {
+        let res=await buhta.admin.adminExecuteSql("testmssql","select 100");
+        return "ok"
+    }
+
+    async mysql() {
+        let res=await buhta.admin.adminExecuteSql("testmysql","select 100");
+        return "ok"
+    }
+
+    async postgres() {
+        let res=await buhta.admin.adminExecuteSql("testpostgres","select 100");
         return "ok"
     }
 

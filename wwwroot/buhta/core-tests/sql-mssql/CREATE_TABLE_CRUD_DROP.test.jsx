@@ -1,7 +1,7 @@
 class Test extends buhta.test.BaseTest {
 
     _executeSql(sql) {
-        return buhta.admin.executeSql("testmssql", sql);
+        return buhta.admin.adminExecuteSql("testmssql", sql);
     }
 
     _getDialect() {

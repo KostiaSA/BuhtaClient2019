@@ -50,7 +50,7 @@ export function registerHost() {
     window.buhta = {
         appState: appState,
         admin: {
-            executeSql: adminExecuteSql
+            adminExecuteSql: adminExecuteSql
         },
         test: {
             BaseTest: BaseTest
