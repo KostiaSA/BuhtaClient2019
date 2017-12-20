@@ -8,7 +8,7 @@ import {TabsPanel} from "./ui/TabsPanel";
 import {TabsPanelItem} from "./ui/TabsPanelItem";
 import {SchemaWindow} from "./schema/window/SchemaWindow";
 import {Window} from "./ui/Window";
-import {executeSql} from "./admin/api/executeSql";
+import {adminExecuteSql} from "./admin/api/adminExecuteSql";
 import {SchemaTable} from "./schema/table/SchemaTable";
 import {SchemaObject} from "./schema/SchemaObject";
 import {base64ToArrayBuffer} from "./utils/base64ToArrayBuffer";
@@ -50,7 +50,7 @@ export function registerHost() {
     window.buhta = {
         appState: appState,
         admin: {
-            executeSql: executeSql
+            executeSql: adminExecuteSql
         },
         test: {
             BaseTest: BaseTest

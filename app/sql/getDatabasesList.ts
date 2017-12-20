@@ -1,5 +1,5 @@
 import axios from "axios";
-import {SqlDialect} from "../sql/SqlEmitter";
+import {SqlDialect} from "./SqlEmitter";
 
 export interface IDatabase {
     name: string;

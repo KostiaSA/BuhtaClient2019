@@ -11,10 +11,10 @@ export interface ISchemaObjectFiles {
 
 export async function generateSqlFromTemplate(dialect: SqlDialect, sqlTemplate: string, paramsObj: any = {}): Promise<string> {
     if (!isString(sqlTemplate))
-        throw "executeSql(): параметр 'sqlTemplate' должен быть строкой";
+        throw "adminExecuteSql(): параметр 'sqlTemplate' должен быть строкой";
 
     if (!isString(dialect))
-        throw "executeSql(): параметр 'dialect' должен быть строкой";
+        throw "adminExecuteSql(): параметр 'dialect' должен быть строкой";
 
     let req = {
         dialect: dialect,

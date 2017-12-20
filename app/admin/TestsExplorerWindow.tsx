@@ -147,7 +147,7 @@ export class TestsExplorerWindow extends React.Component<any> {
     totalErrorCount: number | null = null;
 
     async runTests() {
-        console.log("this.treeGrid.getCheckedRows--------------------------->", this.treeGrid.getCheckedRows());
+        //console.log("this.treeGrid.getCheckedRows--------------------------->", this.treeGrid.getCheckedRows());
         this.totalErrorCount = null;
         this.testedItems = [];
         for (let item of this.treeGrid.getCheckedRows()) {
@@ -231,7 +231,7 @@ export class TestsExplorerWindow extends React.Component<any> {
     }
 
     render() {
-        console.log("TestsExplorerWindow");
+        //console.log("TestsExplorerWindow");
 
         if (this.error) {
             return getErrorWindow(this.error);

@@ -1,6 +1,6 @@
 import {SqlDialect} from "./SqlEmitter";
 import {config} from "../config";
-import {getDatabasesList, IDatabase} from "../api/getDatabasesList";
+import {getDatabasesList, IDatabase} from "./getDatabasesList";
 import {isString} from "../utils/isString";
 
 let databasesCache: IDatabase[];

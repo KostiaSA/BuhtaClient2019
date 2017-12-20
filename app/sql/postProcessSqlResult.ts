@@ -58,9 +58,9 @@ export function postProcessSqlResult(responseData: any): any {
 
 }
 
-// export async function executeSql(database: string, sql: SqlBatch): Promise<any> {
+// export async function adminExecuteSql(database: string, sql: SqlBatch): Promise<any> {
 //     if (!isString(database))
-//         throw "executeSql(): database должен быть строкой";
+//         throw "adminExecuteSql(): database должен быть строкой";
 //
 //     let req: any = {database};
 //     if (isString(sql))
@@ -68,9 +68,9 @@ export function postProcessSqlResult(responseData: any): any {
 //     else if (isArray(sql))
 //         req.sql = sql;
 //     else
-//         throw "executeSql(): sql должен быть строкой или массивом строк";
+//         throw "adminExecuteSql(): sql должен быть строкой или массивом строк";
 //
-//     let response: any = await axios.post('api/admin/executeSql', req);
+//     let response: any = await axios.post('api/admin/adminExecuteSql', req);
 //
 //     return postProcessSqlResult(response.data)
 //     // let res;
