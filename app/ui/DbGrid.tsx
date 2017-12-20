@@ -49,6 +49,9 @@ export class DbGrid extends Component<IDbGridProps> {
     resizeIntervalId: any;
 
     async init() {
+    }
+
+    async componentDidMount() {
         if (!isString(this.props.queryId)) {
             let msg = "DbGrid: 'props.queryId' должен быть строкой";
             console.error(msg);
@@ -59,11 +62,7 @@ export class DbGrid extends Component<IDbGridProps> {
         this.query = new SchemaQuery(props);
 
         //this.updateProps(this.props, true);
-    }
-
-    componentDidMount() {
-
-
+        this.forceUpdate();
     }
 
     // updateProps(props: IDbGridProps, create: boolean) {

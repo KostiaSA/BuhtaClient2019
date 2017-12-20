@@ -8,6 +8,7 @@ import {getRandomString} from "../../utils/getRandomString";
 import {getSchemaObjectProps} from "../getSchemaObjectProps";
 import {SqlSelectEmitter} from "../../sql/SqlSelectEmitter";
 import {addNewLineSymbol} from "../../utils/addNewLineSymbol";
+import {SqlDialect} from "../../sql/SqlEmitter";
 
 
 export interface ISchemaQueryProps extends ISchemaObjectProps {
@@ -43,7 +44,7 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
     static icon = "vendor/fugue/sql-join-left.png";
     static designerWindow = SchemaQueryDesignerWindow;
 
-    root: SchemaQueryColumn;
+    private root: SchemaQueryColumn;
     columnsByKey: { [key: string]: SchemaQueryColumn; } = {};
 
 
@@ -61,6 +62,14 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
             //root: Joi.array().items(this.getColumnValidator()).max(config.sql.maxColumnsInQuery).min(1).label("колонки")
         })
     };
+
+    async getRootColumn(): Promise<SchemaQueryColumn> {
+        if (!this.root) {
+            await this.createTree();
+        }
+        return this.root;
+    }
+
 
     async emitSqlTemplate(): Promise<string> {
 
