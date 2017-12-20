@@ -20,7 +20,7 @@ export async function executeSql(database: string, sql: SqlBatch): Promise<any> 
     else
         throw "executeSql(): sql должен быть строкой или массивом строк";
 
-    let response: any = await axios.post('api/admin/executeSql', req);
+    let response: any = await axios.post("api/admin/executeSql", req);
 
     return postProcessSqlResult(response.data)
 

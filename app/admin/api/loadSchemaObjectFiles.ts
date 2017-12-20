@@ -16,7 +16,7 @@ export async function loadSchemaObjectFiles(filePath: string): Promise<ISchemaOb
         filePath: filePath
     };
 
-    let response: any = await axios.post('api/admin/loadSchemaObjectFiles', req);
+    let response: any = await axios.post("api/admin/loadSchemaObjectFiles", req);
 
     if (response.data.error)
         throw response.data.error;

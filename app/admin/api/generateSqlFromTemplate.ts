@@ -22,7 +22,7 @@ export async function generateSqlFromTemplate(dialect: SqlDialect, sqlTemplate: 
         paramsObj: XJSON_stringify(paramsObj),
     };
 
-    let response: any = await axios.post('api/admin/generateSqlFromTemplate', req);
+    let response: any = await axios.post("api/admin/generateSqlFromTemplate", req);
 
     if (response.data.error)
         throw response.data.error;

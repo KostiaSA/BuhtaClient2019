@@ -12,7 +12,7 @@ export async function loadSchemaTree(path: string = "", objectTypes: string[] = 
         objectTypes: objectTypes
     };
 
-    let response: any = await axios.post('api/admin/loadSchemaTree', req);
+    let response: any = await axios.post("api/admin/loadSchemaTree", req);
 
     if (response.data.error)
         throw response.data.error;

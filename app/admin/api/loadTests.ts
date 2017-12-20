@@ -11,7 +11,7 @@ export async function loadTests(path: string = "", objectTypes: string[] = []): 
         path: path
     };
 
-    let response: any = await axios.post('api/admin/loadTests', req);
+    let response: any = await axios.post("api/admin/loadTests", req);
 
     if (response.data.error)
         throw response.data.error;

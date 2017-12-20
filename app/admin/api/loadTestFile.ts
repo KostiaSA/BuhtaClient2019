@@ -10,7 +10,7 @@ export async function loadTestFile(filePath: string): Promise<string> {
         filePath: filePath
     };
 
-    let response: any = await axios.post('api/admin/loadTestFile', req);
+    let response: any = await axios.post("api/admin/loadTestFile", req);
 
     if (response.data.error)
         throw response.data.error;

@@ -33,6 +33,7 @@ import {ISavedSchemaObjectFiles, saveSchemaObjectFiles} from "./api/saveSchemaOb
 import {SchemaQueryDesignerAddFieldsWindow} from "./SchemaQueryDesignerAddFieldsWindow";
 import {getConfirmation} from "../ui/modals/getConfirmation";
 import {CodeEditor} from "../ui/inputs/CodeEditor";
+import {SchemaQueryTestRunWindow} from "./SchemaQueryTestRunWindow";
 
 
 export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
@@ -404,7 +405,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                             <TabsPanelItem title={(this.query.sqlBefore ? "+" : "") + "SQL-before"}>
                                 <CodeEditor
-                                    title="" options={{mode: "text/x-mssql", theme:"sql-template"}}
+                                    title="" options={{mode: "text/x-mssql", theme: "sql-template"}}
                                     bindObj={this.query}
                                     bindProp="sqlBefore"
                                     onChange={async () => this.forceUpdate()}
@@ -413,7 +414,8 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                             <TabsPanelItem title={(this.query.sqlSelect ? "+" : "") + "SQL-select"}>
                                 <CodeEditor
-                                    title="" options={{mode: "text/x-mssql", theme:"sql-template"}} bindObj={this.query}
+                                    title="" options={{mode: "text/x-mssql", theme: "sql-template"}}
+                                    bindObj={this.query}
                                     bindProp="sqlSelect"
                                     onChange={async () => this.forceUpdate()}
                                 />
@@ -421,7 +423,8 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                             <TabsPanelItem title={(this.query.sqlJoin ? "+" : "") + "SQL-join"}>
                                 <CodeEditor
-                                    title="" options={{mode: "text/x-mssql", theme:"sql-template"}} bindObj={this.query}
+                                    title="" options={{mode: "text/x-mssql", theme: "sql-template"}}
+                                    bindObj={this.query}
                                     bindProp="sqlJoin"
                                     onChange={async () => this.forceUpdate()}
                                 />
@@ -429,7 +432,8 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                             <TabsPanelItem title={(this.query.sqlWhere ? "+" : "") + "SQL-where"}>
                                 <CodeEditor
-                                    title="" options={{mode: "text/x-mssql", theme:"sql-template"}} bindObj={this.query}
+                                    title="" options={{mode: "text/x-mssql", theme: "sql-template"}}
+                                    bindObj={this.query}
                                     bindProp="sqlWhere"
                                     onChange={async () => this.forceUpdate()}
                                 />
@@ -437,7 +441,8 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                             <TabsPanelItem title={(this.query.sqlAfter ? "+" : "") + "SQL-after"}>
                                 <CodeEditor
-                                    title="" options={{mode: "text/x-mssql", theme:"sql-template"}} bindObj={this.query}
+                                    title="" options={{mode: "text/x-mssql", theme: "sql-template"}}
+                                    bindObj={this.query}
                                     bindProp="sqlAfter"
                                     onChange={async () => this.forceUpdate()}
                                 />
@@ -448,6 +453,19 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                     <FlexItem dock="bottom" style={{padding: 5, paddingTop: 10 /*justifyContent: "flex-end"*/}}>
                         <FlexVPanel>
                             <FlexItem dock="left">
+                                {/**************************** Button "Тест" *************/}
+                                <Button
+                                    text="Тест"
+                                    imgSrc="vendor/fugue/table--arrow.png"
+                                    onClick={async () => {
+                                        appState.desktop.openWindow(
+                                            <SchemaQueryTestRunWindow
+                                                query={this.query}
+                                                window={{height: 500, width: 700}}
+                                            />
+                                        );
+                                    }}
+                                />
                                 {/**************************** Button "Показать SQL"а *************/}
                                 <Button
                                     text="Показать SQL"

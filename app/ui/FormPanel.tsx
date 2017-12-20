@@ -87,7 +87,8 @@ export class FormPanel extends Component<IFormPanelProps> {
                             textAlign: "right",
                             paddingRight: 8,
                             height: (child as any).props.height,
-                            color: config.formPanel.labelColor
+                            color: config.formPanel.labelColor,
+                            whiteSpace: "nowrap",
                         }}>
                             {title}
                         </div>
