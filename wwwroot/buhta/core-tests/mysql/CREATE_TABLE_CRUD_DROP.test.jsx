@@ -460,6 +460,10 @@ class Test extends buhta.test.BaseTest {
         }
     }
 
+    async check_dialect() {
+        assert.equal(await buhta.sql.getDatabaseDialect("testmysql"),this._getDialect());
+    }
+
     async create_table() {
         let sql = await  this._getSchemaTable().emitCreateTableSql(this._getDialect());
         await this._executeSql(sql);

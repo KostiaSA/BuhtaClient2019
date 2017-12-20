@@ -493,7 +493,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                             <FlexItem dock="left">
                                 {/**************************** Button "Тест" *************/}
                                 <Button
-                                    text="Тест"
+                                    text="Выполнить запрос"
                                     imgSrc="vendor/fugue/table--arrow.png"
                                     style={{marginRight: 5}}
                                     onClick={async () => {
@@ -507,7 +507,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 />
                                 {/**************************** Button "Показать SQL"а *************/}
                                 <Button
-                                    text="Показать SQL"
+                                    text="Показать текст SQL"
                                     onClick={async () => {
                                         let sql = await new SchemaQuery(this.query).emitSqlTemplate();
                                         appState.desktop.openWindow(

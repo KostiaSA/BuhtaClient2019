@@ -36,6 +36,7 @@ import {isStringOrNullOrEmpty} from "./utils/isStringOrNullOrEmpty";
 import {isString} from "./utils/isString";
 import {isStringOrNull} from "./utils/isStringOrNull";
 import {notifySuccess} from "./utils/notifySuccess";
+import {getDatabaseDialect} from "./sql/getDatabaseDialect";
 
 declare const chai: any;
 declare const window: any;
@@ -69,6 +70,9 @@ export function registerHost() {
             SchemaWindow: SchemaWindow,
 
         },
+        sql: {
+            getDatabaseDialect: getDatabaseDialect,
+        },
         util: {
             hexStringToUint8Array: hexStringToUint8Array,
             arrayToHexString: arrayToHexString,
@@ -92,14 +96,16 @@ export function registerHost() {
             guidFromHex: guidFromHex,
             guidToHex: guidToHex,
 
-            downloadStringAsFile:downloadStringAsFile,
-            addNewLineSymbol:addNewLineSymbol,
+            downloadStringAsFile: downloadStringAsFile,
+            addNewLineSymbol: addNewLineSymbol,
 
-            isString:isString,
-            isStringOrNull:isStringOrNull,
-            isStringOrNullOrEmpty:isStringOrNullOrEmpty,
+            isString: isString,
+            isStringOrNull: isStringOrNull,
+            isStringOrNullOrEmpty: isStringOrNullOrEmpty,
 
-            notifySuccess:notifySuccess,
+            notifySuccess: notifySuccess,
+
+
         }
     };
 

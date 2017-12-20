@@ -5,7 +5,7 @@ class Test extends buhta.test.BaseTest {
     }
 
     _getDialect() {
-        return "mssql";
+        return  "mssql";
     }
 
     _getSchemaTable() {
@@ -458,6 +458,10 @@ class Test extends buhta.test.BaseTest {
             fk4: "Ямай首頁>所有分類ка12389834fdc8",
 
         }
+    }
+
+    async check_dialect() {
+        assert.equal(await buhta.sql.getDatabaseDialect("testmssql"),this._getDialect());
     }
 
     async create_table() {

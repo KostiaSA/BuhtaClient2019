@@ -9,7 +9,7 @@ import {config} from "../config";
 import {Button} from "../ui/Button";
 import {ISchemaQueryProps, SchemaQuery} from "../schema/query/SchemaQuery";
 import {ComboBox} from "../ui/inputs/ComboBox";
-import {getDatabasesList, IDatabase} from "./api/getDatabasesList";
+import {getDatabasesList, IDatabase} from "../api/getDatabasesList";
 
 
 export interface ISchemaTableColumnEditorProps {
