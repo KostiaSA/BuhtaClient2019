@@ -6,6 +6,7 @@ import {config} from "../../../config";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isDateOrNull} from "../../../utils/isDateOrNull";
 import {Moment} from "moment";
+import {throwError} from "../../../utils/throwError";
 
 
 export interface IDateTimeSqlDataTypeProps extends IBaseSqlDataTypeProps {
@@ -37,21 +38,21 @@ export class DateTimeSqlDataType extends BaseSqlDataType<IDateTimeSqlDataTypePro
         }
         else {
             let msg = "DateTimeSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
-            console.error(msg);
-            throw msg;
+            throwError( msg);
+            throw "fake";
         }
 
     }
 
     async emitValue(dialect: SqlDialect, colDataType: IDateTimeSqlDataTypeProps, date: Moment): Promise<string> {
         if (!isDateOrNull(date))
-            throw  "значение ДатаВремя должно быть объектом типа Moment или null";
+            throwError(  "значение ДатаВремя должно быть объектом типа Moment или null");
 
         if (date === null)
             return new SqlEmitter(dialect).emit_NULL();
 
         if (date.isBefore(config.sql.minDateTime) || date.isAfter(config.sql.maxDateTime))
-            throw  "значение ДатаВремя должно быть в пределах '2 янв 0001 г, 00:00:00.001' и '31 дек 9999 г, 23:59:59.999'";
+            throwError(  "значение ДатаВремя должно быть в пределах '2 янв 0001 г, 00:00:00.001' и '31 дек 9999 г, 23:59:59.999'");
 
 
         return new SqlEmitter(dialect).emit_DATETIME(date);

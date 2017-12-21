@@ -6,6 +6,7 @@ import {config} from "../../../config";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isStringOrNull} from "../../../utils/isStringOrNull";
 import {isBooleanOrNull} from "../../../utils/isBooleanOrNull";
+import {throwError} from "../../../utils/throwError";
 
 
 
@@ -66,15 +67,15 @@ export class BooleanSqlDataType extends BaseSqlDataType<IBooleanSqlDataTypeProps
         }
         else {
             let msg = "BooleanSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
-            console.error(msg);
-            throw msg;
+            throwError( msg);
+            throw "fake";
         }
 
     }
 
     async emitValue(dialect: SqlDialect, colDataType: IBooleanSqlDataTypeProps, value: any): Promise<string> {
         if (!isBooleanOrNull(value))
-            throw  "значение должно быть true/false или null";
+            throwError(  "значение должно быть true/false или null");
 
         if (value === null)
             return new SqlEmitter(dialect).emit_NULL();

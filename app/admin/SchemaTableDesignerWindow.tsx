@@ -29,6 +29,7 @@ import {ComboBox} from "../ui/inputs/ComboBox";
 import {getDatabasesList} from "../sql/getDatabasesList";
 import {FormPanelHGroup} from "../ui/FormPanelHGroup";
 import {CheckBox} from "../ui/inputs/CheckBox";
+import {throwError} from "../utils/throwError";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
@@ -133,7 +134,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                 let result = new SchemaTable(this.table).validate();
                 if (result) {
                     this.errorTitle = "Ошибка загрузки файла";
-                    throw result;
+                    throwError( result);
                 }
 
                 this.forceUpdate();

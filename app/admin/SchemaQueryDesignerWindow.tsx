@@ -15,7 +15,7 @@ import {getErrorWindow, showError} from "../ui/modals/showError";
 import {ISchemaQueryColumnProps, ISchemaQueryProps, SchemaQuery} from "../schema/query/SchemaQuery";
 import {config} from "../config";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
-import {XJSON_clone, XJSON_equals, XJSON_parse, XJSON_stringify} from "../utils/xjson";
+import {XJSON_clone, XJSON_parse, XJSON_stringify} from "../utils/xjson";
 import {ITreeGridSource, TreeGrid} from "../ui/TreeGrid";
 import {Menu} from "../ui/Menu";
 import {getRandomString} from "../utils/getRandomString";
@@ -35,6 +35,7 @@ import {getConfirmation} from "../ui/modals/getConfirmation";
 import {CodeEditor} from "../ui/inputs/CodeEditor";
 import {SchemaQueryTestRunWindow} from "./SchemaQueryTestRunWindow";
 import {notifySuccess} from "../utils/notifySuccess";
+import {throwError} from "../utils/throwError";
 
 
 export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
@@ -88,7 +89,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
         let originalEditedRow = TreeGrid.findRowInDataSourceObject(this.query.root, "key", row.key);
         if (!originalEditedRow)
-            throw "SchemaQueryDesignerWindow.editColumnClickHandler): internal error";
+            throwError("SchemaQueryDesignerWindow.editColumnClickHandler): internal error");
 
         let resultOk = await this.window.openParentWindow(
             <SchemaQueryColumnEditorWindow
@@ -143,7 +144,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                 let result = new SchemaQuery(this.query).validate();
                 if (result) {
                     this.errorTitle = "Ошибка загрузки файла";
-                    throw result;
+                    throwError(result);
                 }
 
                 this.treeGridSource = {
@@ -188,7 +189,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
     }
 
     handleClickApplyButton = async () => {
-        let this_query=XJSON_clone(this.query);
+        let this_query = XJSON_clone(this.query);
 
         let validator = new SchemaQuery(this_query).getValidator();
 
@@ -522,7 +523,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                             <FlexItem dock="fill" style={{justifyContent: "flex-end"}}>
                                 <Button imgSrc={config.button.applyIcon}
                                         tooltip="сохранить без закрытия формы"
-                                        style={{marginRight: 5, opacity:0.7}}
+                                        style={{marginRight: 5, opacity: 0.7}}
                                         ref={(e) => this.applyButton = e!}
                                         onClick={this.handleClickApplyButton}/>
                                 <Button imgSrc={config.button.saveIcon}

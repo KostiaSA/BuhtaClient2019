@@ -9,6 +9,7 @@ import {getSchemaObjectProps} from "../getSchemaObjectProps";
 import {SqlSelectEmitter} from "../../sql/SqlSelectEmitter";
 import {addNewLineSymbol} from "../../utils/addNewLineSymbol";
 import {executeSql, ISqlDataset} from "../../sql/executeSql";
+import {throwError} from "../../utils/throwError";
 
 
 export interface ISchemaQueryProps extends ISchemaObjectProps {
@@ -184,12 +185,12 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
         let ret = this.columnsByKey[key];
         if (!this.columnsByKey[key]) {
             let msg = "не найдена колонка, key:" + key;
-            console.error(msg);
-            throw msg;
+            throwError(msg);
         }
         else
             return ret;
 
+        throw "fake";
     }
 
     private levelToStr(level: number) {

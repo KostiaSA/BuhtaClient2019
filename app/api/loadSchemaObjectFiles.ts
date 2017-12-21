@@ -1,4 +1,5 @@
 import axios from "axios";
+import {throwError} from "../utils/throwError";
 
 
 export interface ISchemaObjectFiles {
@@ -18,8 +19,10 @@ export async function loadSchemaObjectFiles(filePath: string): Promise<ISchemaOb
     let response: any = await axios.post('api/loadSchemaObjectFiles', req);
 
     if (response.data.error)
-        throw response.data.error;
+        throwError( response.data.error);
     else
         return response.data;
+
+    throw "fake";
 
 }

@@ -9,6 +9,7 @@ import {config} from "../../config";
 import {joiValidate} from "../../validation/joiValidate";
 import {XJSON_stringify} from "../../utils/xjson";
 import {FormPanel} from "../FormPanel";
+import {throwError} from "../../utils/throwError";
 
 
 export interface IBaseInputProps extends IComponentProps {
@@ -122,7 +123,8 @@ export class BaseInput<P extends IBaseInputProps=IBaseInputProps> extends Compon
 
 
     render(): React.ReactNode {
-        throw "BaseInput:abstract error";
+        throwError( "BaseInput:abstract error");
+        throw "fake";
     }
 
 }

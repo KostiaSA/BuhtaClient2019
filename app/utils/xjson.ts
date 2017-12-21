@@ -2,6 +2,7 @@ import {arrayBufferToBase64} from "./arrayBufferToBase64";
 import {base64ToArrayBuffer} from "./base64ToArrayBuffer";
 import * as moment from "moment";
 import {guidFromBase64, guidToBase64} from "./guid";
+import {throwError} from "./throwError";
 
 export function XJSON_stringify(obj: any): string {
     return JSON.stringify(stringify_prepare(obj));
@@ -17,9 +18,9 @@ function stringify_prepare(obj: any): any {
         case "number":
             return obj;
         case "symbol":
-            throw "XJSON_stringify(): тип 'Symbol' недопустим";
+            throwError( "XJSON_stringify(): тип 'Symbol' недопустим");
         case "function":
-            throw "XJSON_stringify(): тип 'Function ' недопустим";
+            throwError( "XJSON_stringify(): тип 'Function ' недопустим");
         case "string":
             if (obj.startsWith("<"))
                 return "<" + obj;
@@ -30,7 +31,7 @@ function stringify_prepare(obj: any): any {
                 return null;
             }
             else if (obj instanceof Date) {
-                throw "XJSON_stringify(): тип 'Date' недопустим, используйте 'Moment'";
+                throwError( "XJSON_stringify(): тип 'Date' недопустим, используйте 'Moment'");
             }
             else if (obj._isAMomentObject) {
                 if (obj.year() === 0 && obj.month() === 1 && obj.date() === 1)
@@ -64,7 +65,7 @@ function stringify_prepare(obj: any): any {
             }
         }
     }
-    throw "stringify_prepare():internal error";
+    throwError( "stringify_prepare():internal error");
 }
 
 export function XJSON_parse(json: string): any {

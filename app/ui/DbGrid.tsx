@@ -5,6 +5,7 @@ import {Keycode} from "../utils/Keycode";
 import {isString} from "../utils/isString";
 import {ISchemaQueryProps, SchemaQuery} from "../schema/query/SchemaQuery";
 import {getSchemaObjectProps} from "../schema/getSchemaObjectProps";
+import {throwError} from "../utils/throwError";
 
 
 export interface IDbGridProps extends IComponentProps {
@@ -55,8 +56,7 @@ export class DbGrid extends Component<IDbGridProps> {
     async componentDidMount() {
         if (!isString(this.props.queryId)) {
             let msg = "DbGrid: 'props.queryId' должен быть строкой";
-            console.error(msg);
-            throw msg;
+            throwError( msg);
         }
         if (this.props.autoLoad)
             await this.loadRows();

@@ -1,8 +1,9 @@
 import {isString} from "./isString";
+import {throwError} from "./throwError";
 
 export function addNewLineSymbol(str: string): string {
     if (!isString(str))
-        throw "addNewLineSymbol(str): параметр 'str' дожен быть строкой";
+        throwError( "addNewLineSymbol(str): параметр 'str' дожен быть строкой");
 
     if (str.endsWith("\n"))
         return str;

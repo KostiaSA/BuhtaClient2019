@@ -3,6 +3,7 @@ import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isMoneyOrNull} from "../../../utils/isMoneyOrNull";
 import {config} from "../../../config";
+import {throwError} from "../../../utils/throwError";
 
 declare let TextEncoder: any;
 
@@ -64,28 +65,27 @@ export class MoneySqlDataType extends BaseSqlDataType<IMoneySqlDataTypeProps> {
         }
         else {
             let msg = "MoneySqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
-            console.error(msg);
-            throw msg;
+            throwError( msg);
+            throw "fake";
         }
-
     }
 
     async emitValue(dialect: SqlDialect, colDataType: IMoneySqlDataTypeProps, value: any): Promise<string> {
         if (!isMoneyOrNull(value))
-            throw  "значение 'деньги' должно быть числом или null";
+            throwError(  "значение 'деньги' должно быть числом или null");
 
         if (value === null)
             return new SqlEmitter(dialect).emit_NULL();
 
         if (value > config.sql.maxMoneyValue)
-            throw  "значение 'деньги' (" + value + ") должно быть меньше " + config.sql.maxMoneyValue.toString();
+            throwError(  "значение 'деньги' (" + value + ") должно быть меньше " + config.sql.maxMoneyValue.toString());
 
         if (value < config.sql.minMoneyValue)
-            throw  "значение 'деньги' (" + value + ") должно быть больше " + config.sql.minMoneyValue.toString();
+            throwError(  "значение 'деньги' (" + value + ") должно быть больше " + config.sql.minMoneyValue.toString());
 
         let a = value.toString().split(".");
         if (a[1] && a[1].length > 2)
-            throw  "значение 'деньги' (" + value + ") должно иметь не более 2-х цифр после запятой";
+            throwError(  "значение 'деньги' (" + value + ") должно иметь не более 2-х цифр после запятой");
 
 
 

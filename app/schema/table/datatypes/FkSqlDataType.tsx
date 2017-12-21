@@ -9,6 +9,7 @@ import {SqlDialect} from "../../../sql/SqlEmitter";
 import {getSchemaObjectProps} from "../../getSchemaObjectProps";
 import {ISchemaTableProps, SchemaTable} from "../SchemaTable";
 import {appState} from "../../../AppState";
+import {throwError} from "../../../utils/throwError";
 
 export interface IFkSqlDataTypeProps extends IBaseSqlDataTypeProps {
     fkTableId?: string;
@@ -79,8 +80,10 @@ export class FkSqlDataType extends BaseSqlDataType<IFkSqlDataTypeProps> {
         let fkTable = new SchemaTable(fkTableProps);
         let fkCol = fkTable.getPrimaryKeyColumn();
 
-        if (!fkCol)
-            throw "у таблицы '" + fkTableProps.name + "' отсутствует первичный ключ, ссылка на таблицу невозможна";
+        if (!fkCol) {
+            throwError("у таблицы '" + fkTableProps.name + "' отсутствует первичный ключ, ссылка на таблицу невозможна");
+            throw "fake";
+        }
 
         let dataType = appState.sqlDataTypes[fkCol.dataType.id];
         let dataTypeStr = dataType.emitColumnDataType(dialect, fkCol.dataType);
@@ -118,8 +121,10 @@ export class FkSqlDataType extends BaseSqlDataType<IFkSqlDataTypeProps> {
         let fkTable = new SchemaTable(fkTableProps);
         let fkCol = fkTable.getPrimaryKeyColumn();
 
-        if (!fkCol)
-            throw "у таблицы '" + fkTableProps.name + "' отсутствует первичный ключ, ссылка на таблицу невозможна";
+        if (!fkCol) {
+            throwError("у таблицы '" + fkTableProps.name + "' отсутствует первичный ключ, ссылка на таблицу невозможна");
+            throw "fake";
+        }
 
         let dataType = appState.sqlDataTypes[fkCol.dataType.id];
 

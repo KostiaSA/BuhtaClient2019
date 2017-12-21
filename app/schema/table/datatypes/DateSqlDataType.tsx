@@ -7,6 +7,7 @@ import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isStringOrNull} from "../../../utils/isStringOrNull";
 import {isDateOrNull} from "../../../utils/isDateOrNull";
 import {Moment} from "moment";
+import {throwError} from "../../../utils/throwError";
 
 declare let TextEncoder: any;
 
@@ -39,21 +40,22 @@ export class DateSqlDataType extends BaseSqlDataType<IDateSqlDataTypeProps> {
         }
         else {
             let msg = "DateSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
-            console.error(msg);
-            throw msg;
+            throwError( msg);
+            throw "fake";
+
         }
 
     }
 
     async emitValue(dialect: SqlDialect, colDataType: IDateSqlDataTypeProps, date: Moment): Promise<string> {
         if (!isDateOrNull(date))
-            throw  "значение даты должно быть объектом типа Moment или null";
+            throwError(  "значение даты должно быть объектом типа Moment или null");
 
         if (date === null)
             return new SqlEmitter(dialect).emit_NULL();
 
         if (date.isBefore(config.sql.minDate) || date.isAfter(config.sql.maxDate))
-            throw  "значение даты должно быть в пределах '2 янв 0001 г' и '31 дек 9999 г'";
+            throwError(  "значение даты должно быть в пределах '2 янв 0001 г' и '31 дек 9999 г'");
 
 
         return new SqlEmitter(dialect).emit_DATE(date);

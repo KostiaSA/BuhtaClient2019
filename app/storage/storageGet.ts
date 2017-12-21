@@ -1,14 +1,15 @@
 
 import {appState} from "../AppState";
 import {XJSON_parse} from "../utils/xjson";
+import {throwError} from "../utils/throwError";
 
 let objectPath = require("object-path");
 
 export function storageGet(key: string, paths: string[], defaultValue: any = null): any {
     if (paths.length === 0)
-        throw "storageSet(): paths.length===0 для key='" + key + "'";
+        throwError( "storageSet(): paths.length===0 для key='" + key + "'");
     if (paths.length > 3)
-        throw "storageSet(): paths.length>3 для key='" + key + "'";
+        throwError( "storageSet(): paths.length>3 для key='" + key + "'");
 
 
     for (let i = 0; i < 2; i++) {

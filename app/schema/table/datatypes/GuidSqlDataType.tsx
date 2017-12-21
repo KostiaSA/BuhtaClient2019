@@ -1,11 +1,9 @@
 import * as React from "react";
-import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
-import {NumberInput} from "../../../ui/inputs/NumberInput";
 import {config} from "../../../config";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
-import {isStringOrNull} from "../../../utils/isStringOrNull";
 import {Guid, isGuidOrNull} from "../../../utils/guid";
+import {throwError} from "../../../utils/throwError";
 
 declare let TextEncoder: any;
 
@@ -58,7 +56,7 @@ export class GuidSqlDataType extends BaseSqlDataType<IGuidSqlDataTypeProps> {
 
     async emitColumnDataType(dialect: SqlDialect, col: IGuidSqlDataTypeProps): Promise<string> {
         if (dialect === "mssql") {
-           return ("UNIQUEIDENTIFIER");
+            return ("UNIQUEIDENTIFIER");
         }
         else if (dialect === "postgres") {
             return ("UUID");
@@ -68,15 +66,16 @@ export class GuidSqlDataType extends BaseSqlDataType<IGuidSqlDataTypeProps> {
         }
         else {
             let msg = "GuidSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
-            console.error(msg);
-            throw msg;
+            throwError(msg);
+            throw "fake";
+
         }
 
     }
 
     async emitValue(dialect: SqlDialect, colDataType: IGuidSqlDataTypeProps, value: Guid): Promise<string> {
         if (!isGuidOrNull(value))
-            throw  "значение должно быть Guid или null";
+            throwError("значение должно быть Guid или null");
 
         if (value === null)
             return new SqlEmitter(dialect).emit_NULL();

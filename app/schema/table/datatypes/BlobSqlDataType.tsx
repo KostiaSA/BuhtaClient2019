@@ -3,6 +3,7 @@ import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isBlobOrNull} from "../../../utils/isBlobOrNull";
 import {config} from "../../../config";
+import {throwError} from "../../../utils/throwError";
 
 declare let TextEncoder: any;
 
@@ -64,15 +65,16 @@ export class BlobSqlDataType extends BaseSqlDataType<IBlobSqlDataTypeProps> {
         }
         else {
             let msg = "BlobSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
-            console.error(msg);
-            throw msg;
+            throwError( msg);
+            throw "fake";
+
         }
 
     }
 
     async emitValue(dialect: SqlDialect, colDataType: IBlobSqlDataTypeProps, value: ArrayBuffer): Promise<string> {
         if (!isBlobOrNull(value))
-            throw  "значение должно быть ArrayBuffer или null";
+            throwError(  "значение должно быть ArrayBuffer или null");
 
         if (value === null)
             return new SqlEmitter(dialect).emit_NULL();

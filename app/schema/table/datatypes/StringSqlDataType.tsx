@@ -6,6 +6,7 @@ import {config} from "../../../config";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isStringOrNull} from "../../../utils/isStringOrNull";
 import {isString} from "../../../utils/isString";
+import {throwError} from "../../../utils/throwError";
 
 declare let TextEncoder: any;
 
@@ -102,22 +103,23 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
         }
         else {
             let msg = "StringSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
-            console.error(msg);
-            throw msg + ", " + __filename;
+            throwError( msg + ", " + __filename);
+            throw "fake";
+
         }
 
     }
 
     async emitValue(dialect: SqlDialect, colDataType: IStringSqlDataTypeProps, value: any): Promise<string> {
         if (!isStringOrNull(value))
-            throw  "значение должно быть строкой или null";
+            throwError(  "значение должно быть строкой или null");
 
         if (value === null)
             return new SqlEmitter(dialect).emit_NULL();
 
         if (colDataType.maxLen && colDataType.maxLen > 0) {
             if (value.length > colDataType.maxLen) {
-                throw "длина строки превышает " + colDataType.maxLen;
+                throwError( "длина строки превышает " + colDataType.maxLen);
             }
         }
 

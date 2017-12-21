@@ -5,6 +5,7 @@ import {ComboBox} from "../../../ui/inputs/ComboBox";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isDecimalOrNull} from "../../../utils/isDecimalOrNull";
 import {config} from "../../../config";
+import {throwError} from "../../../utils/throwError";
 
 let CONST = require("numeric-constants");
 
@@ -93,15 +94,16 @@ export class DecimalSqlDataType extends BaseSqlDataType<IDecimalSqlDataTypeProps
         }
         else {
             let msg = "DecimalSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
-            console.error(msg);
-            throw msg + ", " + __filename;
+            throwError( msg + ", " + __filename);
+            throw "fake";
+
         }
 
     }
 
     async emitValue(dialect: SqlDialect, colDataType: IDecimalSqlDataTypeProps, value: any): Promise<string> {
         if (!isDecimalOrNull(value))
-            throw  "дробное значение (" + value + ") должно быть целое число или null";
+            throwError(  "дробное значение (" + value + ") должно быть целое число или null");
 
         if (value === null)
             return new SqlEmitter(dialect).emit_NULL();
@@ -110,12 +112,12 @@ export class DecimalSqlDataType extends BaseSqlDataType<IDecimalSqlDataTypeProps
         let minValue = -maxValue;
 
         if (value < minValue || value > maxValue)
-            throw  "дробное значение (" + value + ") должно быть в интервале от " + minValue + " до " + maxValue;
+            throwError(  "дробное значение (" + value + ") должно быть в интервале от " + minValue + " до " + maxValue);
 
         let maxDigits = parseInt(colDataType.scale!.split(",")[1]);
         let a = value.toString().split(".");
         if (a[1] && a[1].length > maxDigits)
-            throw  "дробное значение (" + value + ") должно иметь не более " + maxDigits + "-х цифр после запятой";
+            throwError(  "дробное значение (" + value + ") должно иметь не более " + maxDigits + "-х цифр после запятой");
 
         return value.toString();
 

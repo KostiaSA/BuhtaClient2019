@@ -6,6 +6,7 @@ import {isMouseRightClickEvent} from "../utils/isMouseRightClickEvent";
 import {removeAllMenuPopups} from "../utils/removeAllMenuPopups";
 import {openMenuPopup} from "../utils/openMenuPopup";
 import {isString} from "util";
+import {throwError} from "../utils/throwError";
 
 export interface ITreeProps extends IComponentProps {
     height?: string | number;
@@ -132,8 +133,10 @@ export class Tree extends Component<ITreeProps> {
         else if (item.id) {
             id = item.id;
         }
-        else
-            throw "Tree.selectItem(): item должен быть объект со свойством 'id' или строка";
+        else {
+            throwError("Tree.selectItem(): item должен быть объект со свойством 'id' или строка");
+            throw "fake";
+        }
 
         this.widget.jqxTree('selectItem', $("#" + id)[0]);
     }

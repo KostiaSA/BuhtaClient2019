@@ -1,4 +1,5 @@
 import axios from "axios";
+import {throwError} from "../../utils/throwError";
 
 
 export async function loadTestFile(filePath: string): Promise<string> {
@@ -13,8 +14,9 @@ export async function loadTestFile(filePath: string): Promise<string> {
     let response: any = await axios.post("api/admin/loadTestFile", req);
 
     if (response.data.error)
-        throw response.data.error;
+        throwError( response.data.error);
     else
         return response.data.code;
 
+    throw "fake";
 }

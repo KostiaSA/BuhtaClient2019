@@ -1,11 +1,12 @@
 import axios from "axios";
+import {throwError} from "../../utils/throwError";
 
 
 export interface ISavedSchemaObjectFiles {
     filePath: string;
     json?: string;
     jsx?: string;
-    sql?:string;
+    sql?: string;
 }
 
 declare var js_beautify: any;
@@ -23,6 +24,6 @@ export async function saveSchemaObjectFiles(req: ISavedSchemaObjectFiles): Promi
     let response: any = await axios.post("api/admin/saveSchemaObjectFiles", req);
 
     if (response.data.error)
-        throw response.data.error;
+        throwError(response.data.error);
 
 }

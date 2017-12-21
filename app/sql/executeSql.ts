@@ -15,13 +15,13 @@ export async function executeSql(sqlTemplatePath: string, paramsObj: any = {}, d
     if (!isString(sqlTemplatePath)) {
         let msg = "executeSql(): параметр 'sqlTemplatePath' должен быть строкой";
         console.error(msg, sqlTemplatePath);
-        throw msg;
+        throwError( msg);
     }
 
     if (!isString(dbName)) {
         let msg = "executeSql(): параметр 'dbName' должен быть строкой";
         console.error(msg, dbName);
-        throw msg;
+        throwError( msg);
     }
 
     if (typeof paramsObj !== "object") {
@@ -40,9 +40,10 @@ export async function executeSql(sqlTemplatePath: string, paramsObj: any = {}, d
     let response: any = await axios.post("api/executeSql", req);
 
     if (response.data.error)
-        throw response.data.error;
+        throwError( response.data.error);
     else
         return postProcessSqlResult(response.data)
 
+    throw "fake";
 
 }

@@ -14,6 +14,7 @@ import {MenuItem} from "./MenuItem";
 import {config} from "../config";
 import {MenuSeparator} from "./MenuSeparator";
 import {TestsExplorerWindow} from "../admin/TestsExplorerWindow";
+import {throwError} from "../utils/throwError";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -193,7 +194,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
             script = await $.get(fileName);
         }
         catch (e) {
-            throw "не найден файл '" + fileName + "'";
+            throwError( "не найден файл '" + fileName + "'");
         }
 
         let compiledScript = Babel.transform(script, {presets: ['es2017', 'react']}).code;
@@ -207,7 +208,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         eval(compiledScript);
 
         if (!(window as any)[className])
-            throw "ошибка загрузки '" + fileName + "'";
+            throwError( "ошибка загрузки '" + fileName + "'");
 
     }
 }

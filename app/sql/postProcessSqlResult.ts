@@ -1,5 +1,6 @@
 import {snappyDecompressStr} from "../utils/snappyDecompressStr";
 import {XJSON_parse} from "../utils/xjson";
+import {throwError} from "../utils/throwError";
 
 //declare let SnappyJS: any;
 declare let TextDecoder: any;
@@ -8,7 +9,7 @@ declare let TextDecoder: any;
 
 export function postProcessSqlResult(responseData: any): any {
     if (responseData.error)
-        throw responseData.error;
+        throwError( responseData.error);
 
     let res: any;
 

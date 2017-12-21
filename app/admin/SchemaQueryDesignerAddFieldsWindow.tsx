@@ -16,6 +16,7 @@ import {appState} from "../AppState";
 import {config} from "../config";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
 import {XJSON_parse} from "../utils/xjson";
+import {throwError} from "../utils/throwError";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
@@ -65,7 +66,7 @@ export class SchemaQueryDesignerAddFieldsWindow extends SchemaObjectBaseDesigner
                 let result = new SchemaTable(this.table).validate();
                 if (result) {
                     this.errorTitle = "Ошибка загрузки файла";
-                    throw result;
+                    throwError( result);
                 }
 
                 this.forceUpdate();

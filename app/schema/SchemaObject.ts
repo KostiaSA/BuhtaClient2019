@@ -5,6 +5,7 @@ import {appState} from "../AppState";
 import {SchemaObjectBaseDesignerWindow} from "../admin/SchemaObjectBaseDesignerWindow";
 import {Moment} from "moment";
 import moment = require("moment");
+import {throwError} from "../utils/throwError";
 
 export interface ISchemaObjectProps {
     objectId?:string;
@@ -35,8 +36,7 @@ export class SchemaObject<T extends ISchemaObjectProps=ISchemaObjectProps> {
         let words = fileName.split(".");
         if (words.length < 3) {
             let msg = "неверное имя файла объекта: '" + fileName + "'";
-            console.error(msg);
-            throw msg;
+            throwError( msg);
         }
         words.pop();
         return words.pop()!;

@@ -18,6 +18,7 @@ import {FlexVPanel} from "../ui/FlexVPanel";
 import {loadTestFile} from "./api/loadTestFile";
 import {babelTransform} from "../utils/babelTransform";
 import {isFunction} from "util";
+import {loadScript} from "../utils/loadJsScript";
 
 declare var $$BuhtaTestClassForRun: any;
 
@@ -170,8 +171,8 @@ export class TestsExplorerWindow extends React.Component<any> {
 
                 //console.log(className, compiledScript);
                 code = "window.$$BuhtaTestClassForRun=" + code;
-                //loadScript(code);
-                eval(code);
+                loadScript(code);
+                //eval(code);
                 //console.log("$$BuhtaTestClassForRun-------------->", $$BuhtaTestClassForRun);
 
                 let $$testObject = new $$BuhtaTestClassForRun();

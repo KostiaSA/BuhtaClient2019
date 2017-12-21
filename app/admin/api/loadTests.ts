@@ -1,4 +1,5 @@
 import axios from "axios";
+import {throwError} from "../../utils/throwError";
 
 export interface ITests {
     name: string;
@@ -14,8 +15,10 @@ export async function loadTests(path: string = "", objectTypes: string[] = []): 
     let response: any = await axios.post("api/admin/loadTests", req);
 
     if (response.data.error)
-        throw response.data.error;
+        throwError( response.data.error);
     else
         return response.data;
+
+    throw "fake";
 
 }

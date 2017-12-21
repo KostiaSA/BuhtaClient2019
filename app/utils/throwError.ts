@@ -1,6 +1,6 @@
 import {config} from "../config";
 
-export function throwError(msg: any, ...p: any[]) {
+export function throwError(msg: any, ...p: any[]): never {
     if (!config.productionMode) {
         let errs: any[] = [msg];
         if (p) {

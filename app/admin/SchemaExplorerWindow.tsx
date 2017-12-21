@@ -19,6 +19,7 @@ import {MenuSeparator} from "../ui/MenuSeparator";
 import {getRandomString} from "../utils/getRandomString";
 import {SchemaTableDesignerWindow} from "./SchemaTableDesignerWindow";
 import {getSHA1hex} from "../utils/getSHA1hex";
+import {throwError} from "../utils/throwError";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -106,7 +107,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
     async handleOpenObjectDesigner(objectFileName: string) {
         let objectType = SchemaObject.getObjectTypeFromFileName(objectFileName);
         if (!appState.schemaObjectTypes[objectType])
-            throw "неверный тип объекта '" + objectType + "'";
+            throwError( "неверный тип объекта '" + objectType + "'");
         let DesignerWindow = appState.schemaObjectTypes[objectType].designerWindow;
 
         appState.desktop.openWindow(

@@ -1,6 +1,7 @@
 import {Moment} from "moment";
 import {Guid, guidToHex} from "../utils/guid";
 import {arrayToHexString} from "../utils/arrayToHexString";
+import {throwError} from "../utils/throwError";
 
 export type SqlDialect = "mssql" | "postgres" | "mysql";
 
@@ -56,7 +57,8 @@ export class SqlEmitter {
                 case "\\":
                     return "\\" + char;
                 default:
-                    throw "mysql_escape_string?";
+                    throwError( "mysql_escape_string?");
+                    throw "fake";
             }
         });
     }
@@ -82,8 +84,9 @@ export class SqlEmitter {
             return "NULL";
         else {
             let msg = "invalid sql dialect " + this.dialect;
-            console.error(msg);
-            throw msg + ", " + __filename;
+            throwError( msg + ", " + __filename);
+            throw "fake";
+
         }
 
     }
@@ -106,8 +109,9 @@ export class SqlEmitter {
             return "`" + name + "`";
         else {
             let msg = "invalid sql dialect " + this.dialect;
-            console.error(msg);
-            throw msg + ", " + __filename;
+            throwError( msg + ", " + __filename);
+            throw "fake";
+
         }
 
     }
@@ -124,8 +128,9 @@ export class SqlEmitter {
                 return "'" + this.mysql_escape_string(value) + "'";
             else {
                 let msg = "invalid sql dialect " + this.dialect;
-                console.error(msg);
-                throw msg + ", " + __filename;
+                throwError( msg + ", " + __filename);
+                throw "fake";
+
             }
         }
     }
@@ -151,8 +156,9 @@ export class SqlEmitter {
             return "convert(0x" + arrayToHexString(new Uint8Array(value.buffer)) + ",binary(16))";
         else {
             let msg = "invalid sql dialect " + this.dialect;
-            console.error(msg);
-            throw msg + ", " + __filename;
+            throwError( msg + ", " + __filename);
+            throw "fake";
+
         }
     }
 
@@ -166,8 +172,9 @@ export class SqlEmitter {
             return value === true ? "1" : "0";
         else {
             let msg = "invalid sql dialect " + this.dialect;
-            console.error(msg);
-            throw msg + ", " + __filename;
+            throwError( msg + ", " + __filename);
+            throw "fake";
+
         }
     }
 
@@ -181,8 +188,9 @@ export class SqlEmitter {
             return "convert(X'" + this.emit_HEX(Array.from(new Uint8Array(value))) + "',binary)";
         else {
             let msg = "invalid sql dialect " + this.dialect;
-            console.error(msg);
-            throw msg + ", " + __filename;
+            throwError( msg + ", " + __filename);
+            throw "fake";
+
         }
     }
 
@@ -196,8 +204,8 @@ export class SqlEmitter {
             return "STR_TO_DATE('" + value.format("YYYY-MM-DD HH:mm:ss.SSS") + "','%Y-%c-%d %k:%i:%s.%f')";
         else {
             let msg = "invalid sql dialect " + this.dialect;
-            console.error(msg);
-            throw msg + ", " + __filename;
+            throwError( msg + ", " + __filename);
+            throw "fake";
         }
 
     }
@@ -212,8 +220,8 @@ export class SqlEmitter {
             return "STR_TO_DATE('" + value.format("YYYY-MM-DD") + "','%Y-%c-%d')";
         else {
             let msg = "invalid sql dialect " + this.dialect;
-            console.error(msg);
-            throw msg + ", " + __filename;
+            throwError( msg + ", " + __filename);
+            throw "fake";
         }
 
     }

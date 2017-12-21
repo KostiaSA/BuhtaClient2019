@@ -4,6 +4,7 @@ import {joiRus} from "../../../i18n/joiRus";
 import {appState} from "../../../AppState";
 import {SqlDialect} from "../../../sql/SqlEmitter";
 import {ISchemaTableColumnProps} from "../SchemaTable";
+import {throwError} from "../../../utils/throwError";
 
 //export type SqlDialect = "mysql" | "postgres" | "mssql";
 
@@ -59,11 +60,13 @@ export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypePro
     }
 
     async emitColumnDataType(dialect: SqlDialect, col: IBaseSqlDataTypeProps): Promise<string> {
-        throw  "BaseSqlDataType.emitColumnDataType(): abstract error";
+        throwError("BaseSqlDataType.emitColumnDataType(): abstract error");
+        throw "fake";
     }
 
     async emitValue(dialect: SqlDialect, colDataType: IBaseSqlDataTypeProps, value: any): Promise<string> {
-        throw  "BaseSqlDataType.emitValue(): abstract error";
+        throwError(  "BaseSqlDataType.emitValue(): abstract error");
+        throw "fake";
     }
 }
 

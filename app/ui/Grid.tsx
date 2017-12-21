@@ -8,6 +8,7 @@ import {Keycode} from "../utils/Keycode";
 import {config} from "../config";
 import {isString} from "../utils/isString";
 import {isFunction} from "../utils/isFunction";
+import {throwError} from "../utils/throwError";
 
 
 export interface IGridProps extends IComponentProps {
@@ -106,8 +107,10 @@ export class Grid extends Component<IGridProps> {
             sourceAsArray = props.source;
         else if (props.source.toArray)
             sourceAsArray = props.source.toArray();
-        else
-            throw "Grid(): неверный формат 'source'";
+        else {
+            throwError("Grid(): неверный формат 'source'");
+            throw "fake";
+        }
 
         for (let item of sourceAsArray) {
             if (count++ > 10000)

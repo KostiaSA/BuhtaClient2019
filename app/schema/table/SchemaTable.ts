@@ -9,6 +9,7 @@ import {SchemaTableDesignerWindow} from "../../admin/SchemaTableDesignerWindow";
 import {SqlBatch, SqlDialect, SqlEmitter} from "../../sql/SqlEmitter";
 import {isArray} from "../../utils/isArray";
 import {replaceAll} from "../../utils/replaceAll";
+import {throwError} from "../../utils/throwError";
 
 
 export interface ISchemaTableProps extends ISchemaObjectProps {
@@ -218,8 +219,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
                 sql.push("CREATE TEMPORARY TABLE ");
             else {
                 let msg = "emitCreateTableSql(): invalid sql dialect '" + dialect + "'";
-                console.error(msg);
-                throw msg + ", " + __filename;
+                throwError(msg + ", " + __filename);
             }
 
         }
@@ -284,12 +284,12 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
                         colValues.push(await dataType.emitValue(dialect, col.dataType, row[col.name]));
                     }
                     catch (e) {
-                        throw "SchemaTable.emitInsertRowSql(): колонка '" + col.name + "' в таблице '" + this.props.name + "': " + e.toString();
+                        throwError("SchemaTable.emitInsertRowSql(): колонка '" + col.name + "' в таблице '" + this.props.name + "': " + e.toString());
                     }
                 }
                 else {
                     if (col.notNull) {
-                        throw "SchemaTable.emitInsertRowSql(): колонка '" + col.name + "' не может быть NULL в таблице '" + this.props.name + "'";
+                        throwError("SchemaTable.emitInsertRowSql(): колонка '" + col.name + "' не может быть NULL в таблице '" + this.props.name + "'");
                     }
                 }
             }
@@ -304,10 +304,10 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     async emitSelectRowSql(dialect: SqlDialect, rowId: any, columns?: string[], skipColumns?: string[]): Promise<SqlBatch> {
         if (columns && !isArray(columns))
-            throw "SchemaTable.emitSelectRowSql(): параметр 'columns' должен быть массивом строк";
+            throwError("SchemaTable.emitSelectRowSql(): параметр 'columns' должен быть массивом строк");
 
         if (skipColumns && !isArray(skipColumns))
-            throw "SchemaTable.emitSelectRowSql(): параметр 'skipColumns' должен быть массивом строк";
+            throwError("SchemaTable.emitSelectRowSql(): параметр 'skipColumns' должен быть массивом строк");
 
         let e = new SqlEmitter(dialect);
 
@@ -317,8 +317,10 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         sql.push("SELECT ");
 
         let primaryKeyColumn = this.getPrimaryKeyColumn();
-        if (!primaryKeyColumn)
-            throw "SchemaTable.emitSelectRowSql(): не определен первичный ключ в таблице '" + this.props.name + "'";
+        if (!primaryKeyColumn) {
+            throwError("SchemaTable.emitSelectRowSql(): не определен первичный ключ в таблице '" + this.props.name + "'");
+            throw "fake";
+        }
 
         for (let col of this.props.columns) {
             // if (col.primaryKey)
@@ -356,8 +358,10 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         sql.push("UPDATE " + e.emit_TABLE_NAME(this.props.sqlName || this.props.name) + " SET");
 
         let primaryKeyColumn = this.getPrimaryKeyColumn();
-        if (!primaryKeyColumn)
-            throw "SchemaTable.emitUpdateRowSql(): не определен первичный ключ в таблице '" + this.props.name + "'";
+        if (!primaryKeyColumn) {
+            throwError("SchemaTable.emitUpdateRowSql(): не определен первичный ключ в таблице '" + this.props.name + "'");
+            throw "fake";
+        }
 
         for (let col of this.props.columns) {
             if (col.primaryKey)
@@ -369,7 +373,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
                     colSets.push("  " + e.emit_NAME(col.name) + "=" + await dataType.emitValue(dialect, col.dataType, row[col.name]));
                 }
                 catch (e) {
-                    throw "SchemaTable.emitUpdateRowSql(): колонка '" + col.name + "' в таблице '" + this.props.name + "': " + e.toString();
+                    throwError("SchemaTable.emitUpdateRowSql(): колонка '" + col.name + "' в таблице '" + this.props.name + "': " + e.toString());
                 }
 
             }
@@ -394,8 +398,10 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         sql.push("DELETE FROM " + e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
 
         let primaryKeyColumn = this.getPrimaryKeyColumn();
-        if (!primaryKeyColumn)
-            throw "SchemaTable.emitUpdateRowSql(): не определен первичный ключ в таблице '" + this.props.name + "'";
+        if (!primaryKeyColumn) {
+            throwError("SchemaTable.emitUpdateRowSql(): не определен первичный ключ в таблице '" + this.props.name + "'");
+            throw "fake";
+        }
 
         let pkDataType = appState.sqlDataTypes[primaryKeyColumn.dataType.id];
         sql.push(" WHERE " + e.emit_NAME(primaryKeyColumn.name) + "=" + await pkDataType.emitValue(dialect, primaryKeyColumn.dataType, rowId));

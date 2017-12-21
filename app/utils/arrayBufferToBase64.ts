@@ -1,10 +1,11 @@
 
 import {isArrayBuffer} from "./isArrayBuffer";
+import {throwError} from "./throwError";
 
 export function arrayBufferToBase64(buffer: ArrayBuffer): string {
 
     if (!isArrayBuffer(buffer))
-        throw "arrayBufferToBase64(): buffer должен быть объектом 'ArrayBuffer'";
+        throwError( "arrayBufferToBase64(): buffer должен быть объектом 'ArrayBuffer'");
 
     let binary = "";
     let bytes = new Uint8Array(buffer);

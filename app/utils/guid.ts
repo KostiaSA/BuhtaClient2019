@@ -1,5 +1,6 @@
 import {isString} from "./isString";
 import {hexStringToUint8Array} from "./hexStringToUint8Array";
+import {throwError} from "./throwError";
 
 export type Guid = Uint32Array;
 
@@ -36,7 +37,7 @@ export function isGuidOrNull(value: any): boolean {
 
 export function checkGuid(value: any, message: string = "ошибка") {
     if (!isGuid(value))
-        throw message + ": неверный формат Guid";
+        throwError( message + ": неверный формат Guid");
 
 }
 
@@ -61,11 +62,11 @@ export function guidToBase64(value: Guid): string {
 
 export function guidFromBase64(base64: string): Guid {
     if (!isString(base64))
-        throw "guidFromBase64(): base64 должно быть строкой";
+        throwError( "guidFromBase64(): base64 должно быть строкой");
 
     let binary_string = window.atob(base64);
     if (binary_string.length !== 16)
-        throw "guidFromBase64(): неверный формат Guid '" + base64 + "'";
+        throwError( "guidFromBase64(): неверный формат Guid '" + base64 + "'");
 
     let guid = new Uint32Array(4);
     let bytes = new DataView(guid.buffer);
@@ -90,7 +91,7 @@ export function guidToHex(value: Guid): string {
 
 export function guidFromHex(hex: string): Guid {
     if (!isString(hex))
-        throw "guidFromHex(hex): 'hex' должен быть строкой в формате '8d950d6b-0929-4de1-b79c-eb06ab932caf'";
+        throwError( "guidFromHex(hex): 'hex' должен быть строкой в формате '8d950d6b-0929-4de1-b79c-eb06ab932caf'");
 
     return new Uint32Array(hexStringToUint8Array(hex).buffer);
 }

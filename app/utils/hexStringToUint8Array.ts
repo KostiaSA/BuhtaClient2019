@@ -1,9 +1,10 @@
 import {isString} from "./isString";
+import {throwError} from "./throwError";
 
 export function hexStringToUint8Array(hexStr: string):Uint8Array {
 
     if (!isString(hexStr))
-        throw "hexStringToUint8Array(hexStr): 'hexStr' должна быть строкой";
+        throwError( "hexStringToUint8Array(hexStr): 'hexStr' должна быть строкой");
 
     try {
         return new Uint8Array(hexStr.match(/[\da-f]{2}/gi)!.map(function (h) {
@@ -11,7 +12,8 @@ export function hexStringToUint8Array(hexStr: string):Uint8Array {
         }))
     }
     catch {
-        throw "hexStringToUint8Array(hexStr): неверный формат 'hexStr': '" + hexStr + "'";
+        throwError( "hexStringToUint8Array(hexStr): неверный формат 'hexStr': '" + hexStr + "'");
+        throw "fake";
     }
 
 }
