@@ -116,10 +116,10 @@ export class Input extends BaseInput<IInputProps> {
                                 className="resizer"
                                 style={{
                                     cursor: "e-resize",
-                                    borderLeft: "1px solid #c0c0c0e6",
+                                    borderLeft: "1px solid rgba(192, 192, 192, 0.6)",
                                     width: 10,
                                     height: this.props.height || config.baseInput.height,
-                                    display: this.props.resizable ? "block" : "none"
+                                    display: this.props.resizable ? "table-cell" : "none"
                                 }}
                             >
                             </div>

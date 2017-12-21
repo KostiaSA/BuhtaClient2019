@@ -25,6 +25,9 @@ import {joiValidate} from "../validation/joiValidate";
 import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./SchemaObjectBaseDesignerWindow";
 import {XJSON_clone, XJSON_equals, XJSON_parse, XJSON_stringify} from "../utils/xjson";
 import {SchemaObject} from "../schema/SchemaObject";
+import {ComboBox} from "../ui/inputs/ComboBox";
+import {getDatabasesList} from "../sql/getDatabasesList";
+import {FormPanelHGroup} from "../ui/FormPanelHGroup";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
@@ -261,17 +264,41 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                 bindObj={this.table}
                                                 bindProp="name"
                                                 placeHolder="имя таблицы"
-
                                             />
 
                                             <Input title="описание" bindProp="description"
-                                                   placeHolder="краткое описание"/>
+                                                   placeHolder="краткое описание"
+                                                   resizable storageKey="input:description"
+                                            />
 
                                             <Input title="sql имя" bindProp="sqlName"
-                                                   placeHolder="введите sql имя таблицы"/>
+                                                   placeHolder="введите sql имя таблицы"
+                                                   resizable storageKey="input:sqlName"
+                                            />
 
-                                            <Input width={400} bindProp="note" placeHolder="note" title="примечание"/>
+                                            <Input width={400} bindProp="note"
+                                                   placeHolder="note" title="примечание"
+                                            />
 
+                                            <ComboBox
+                                                title="база данных"
+                                                bindProp="dbName"
+                                                valueMember="name"
+                                                displayMember="name"
+                                                width={200}
+                                                source={getDatabasesList}
+                                                resizable storageKey="input:dbName"
+                                            />
+
+                                            <FormPanelHGroup>
+                                                <Input width={200} bindProp="note"
+                                                       placeHolder="note" title="примечание2"
+                                                />
+                                                <Input width={200} bindProp="note"
+                                                       placeHolder="note" title="примечание3"
+                                                />
+
+                                            </FormPanelHGroup>
 
                                         </FormPanel>
                                     </FlexItem>
@@ -313,7 +340,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             <GridColumn headerText="PK" getText={this.pkColumnCompute} align="center"
                                                         width={40} pinned/>
                                             <GridColumn headerText="Колонка" datafield="name" pinned fontWeight="500"/>
-                                            <GridColumn headerText="Тип данных" getText={this.dataTypeColumnCompute} />
+                                            <GridColumn headerText="Тип данных" getText={this.dataTypeColumnCompute}/>
                                             <GridColumn headerText="Not null" width={70} align="center"
                                                         getText={(row: ISchemaTableColumnProps) => row.notNull ? "not null" : ""}/>
                                             <GridColumn headerText="Описание" datafield="description"/>

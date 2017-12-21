@@ -14,7 +14,7 @@ export let config: any = {
             itemHeight: 20,
         },
         formPanel: {
-            inputVerticalSpace: 3,
+            inputVerticalSpace: 5,
 
             errorMessageColor: "tomato",
             errorMessageFontSize: 12,

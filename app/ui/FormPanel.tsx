@@ -8,6 +8,7 @@ import {config} from "../config";
 import {XJSON_clone, XJSON_equals} from "../utils/xjson";
 import {CheckBox} from "./inputs/CheckBox";
 import {BaseInput} from "./inputs/BaseInput";
+import {FormPanelHGroup} from "./FormPanelHGroup";
 
 
 export interface IFormPanelProps extends IComponentProps {
@@ -83,11 +84,23 @@ export class FormPanel extends Component<IFormPanelProps> {
 
 
     renderItems(): React.ReactNode {
-        return React.Children.toArray(this.props.children).map((child, index) => {
+        return React.Children.toArray(this.props.children).map((child: any, index) => {
 
-            let title = (child as any).props.title || (child as any).props.bindProp;
-            if ((child as any).type === CheckBox)
+            let title = child.props.title || (child as any).props.bindProp;
+            if (child.type === CheckBox)
                 title = "";
+            else if (child.type === FormPanelHGroup) {
+                if (child.props.title)
+                    title = child.props.title;
+                else {
+                    let firstPanelItem: any = React.Children.toArray(child.props.children)[0];
+                    if (firstPanelItem.type === CheckBox)
+                        title = "";
+                    else {
+                        title = firstPanelItem.props.title;
+                    }
+                }
+            }
 
             return (
                 <tr key={index}
@@ -95,18 +108,19 @@ export class FormPanel extends Component<IFormPanelProps> {
                         display: (child as any).props.hidden ? "none" : undefined
                     }}
                 >
-                    <td style={{verticalAlign: "center"}}>
+                    <td style={{verticalAlign: "middle"}}>
                         <div style={{
                             textAlign: "right",
-                            paddingRight: 8,
+                            paddingRight: 5,
                             height: (child as any).props.height,
                             color: config.formPanel.labelColor,
                             whiteSpace: "nowrap",
+                            marginTop: index > 0 ? config.formPanel.inputVerticalSpace : 0,
                         }}>
                             {title}
                         </div>
                     </td>
-                    <td style={{paddingTop: index > 0 ? config.formPanel.inputVerticalSpace : 0, verticalAlign: "top"}}>
+                    <td style={{paddingLeft:0, paddingTop: index > 0 ? config.formPanel.inputVerticalSpace : 0, verticalAlign: "top"}}>
                         {child}
                     </td>
                 </tr>
