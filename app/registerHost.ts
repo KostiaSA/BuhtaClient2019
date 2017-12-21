@@ -38,6 +38,8 @@ import {isStringOrNull} from "./utils/isStringOrNull";
 import {notifySuccess} from "./utils/notifySuccess";
 import {getDatabaseDialect} from "./sql/getDatabaseDialect";
 import {executeSql} from "./sql/executeSql";
+import {throwError} from "./utils/throwError";
+import {assert} from "./test/assert";
 
 declare const chai: any;
 declare const window: any;
@@ -46,7 +48,8 @@ export function registerHost() {
 
     window.CONST = require("numeric-constants");
 
-    window.assert = chai.assert;
+    window.assert = assert;
+    window.throwError = throwError;
 
     window.buhta = {
         appState: appState,

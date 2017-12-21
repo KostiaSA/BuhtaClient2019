@@ -10,7 +10,8 @@ export function throwError(msg: any, ...p: any[]): never {
                 errs.push("(" + typeof value + ")");
             });
         }
-        console.error(...errs);
+        console.error("<-- здесь смотри call stack по ошибке, которая ниже");
+        //console.error(...errs);
     }
     throw msg;
 }
