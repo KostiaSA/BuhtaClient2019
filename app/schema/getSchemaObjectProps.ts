@@ -11,6 +11,11 @@ export async function getSchemaObjectProps<P extends ISchemaObjectProps=ISchemaO
     if (!isString(objectId))
         throwError( "getSchemaObjectProps(): 'objectId' должен быть строкой");
 
+    if (objectId.endsWith(".json")) {
+        throwError("getSchemaObjectProps(): objectId не должен содержать '.json')");
+    }
+
+
     let props = schemaObjectJsonCache[objectId] as P;
     if (!props) {
         let res = await loadSchemaObjectFiles(objectId);

@@ -9,8 +9,10 @@ export interface ISchemaObjectFiles {
 
 export async function loadSchemaObjectFiles(filePath: string): Promise<ISchemaObjectFiles> {
 
-    if (filePath.endsWith(".json"))
-        filePath = filePath.slice(0, -5);
+    if (filePath.endsWith(".json")) {
+        throwError("loadSchemaObjectFiles(): filePath не должен содержать '.json')");
+        //filePath = filePath.slice(0, -5);
+    }
 
     let req = {
         filePath: filePath
@@ -19,7 +21,7 @@ export async function loadSchemaObjectFiles(filePath: string): Promise<ISchemaOb
     let response: any = await axios.post('api/loadSchemaObjectFiles', req);
 
     if (response.data.error)
-        throwError( response.data.error);
+        throwError(response.data.error);
     else
         return response.data;
 

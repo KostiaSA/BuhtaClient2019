@@ -47,6 +47,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
         item.id = "schema_object_" + getSHA1hex(item.fileName);
         item.value = item.fileName;
 
+
         let style: CSSProperties = {};
 
         if (item.isFolder) {
@@ -61,12 +62,16 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
         }
         else {
 
-            if (item.name.endsWith(".test.jsx")){
+            if (item.name.endsWith(".test.jsx")) {
                 item.icon = "vendor/fugue/fruit-lime.png";
                 itemStr = item.name;
             }
             else {
-                //item.objectType = itemStr.split(".").pop();
+                // убираем '.json'
+                if (!item.value.endsWith(".json"))
+                    throwError("SchemaExplorerWindow.preprocessDataSource(): internal error not item.value.endsWith('.json')");
+                item.value = item.value.slice(0, -5);
+
                 item.objectType = SchemaObject.getObjectTypeFromFileName(item.name);
 
                 if (item.objectType && appState.schemaObjectTypes[item.objectType])
@@ -107,7 +112,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
     async handleOpenObjectDesigner(objectFileName: string) {
         let objectType = SchemaObject.getObjectTypeFromFileName(objectFileName);
         if (!appState.schemaObjectTypes[objectType])
-            throwError( "неверный тип объекта '" + objectType + "'");
+            throwError("неверный тип объекта '" + objectType + "'");
         let DesignerWindow = appState.schemaObjectTypes[objectType].designerWindow;
 
         appState.desktop.openWindow(
