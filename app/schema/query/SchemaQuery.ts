@@ -47,7 +47,7 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
 
     private root: SchemaQueryColumn;
     columnsByKey: { [key: string]: SchemaQueryColumn; } = {};
-
+    columns: SchemaQueryColumn[] = [];
 
     getColumnValidator(): Joi.ObjectSchema {
         return Joi.object().options({language: joiRus}).keys({
@@ -74,7 +74,7 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
     async execute(paramsObj: any = {}, dbName?: string): Promise<ISqlDataset[]> {
         if (!dbName)
             dbName = (await this.getRootColumn()).joinTable.props.dbName;
-        return executeSql(this.props.objectId!,paramsObj, dbName);
+        return executeSql(this.props.objectId!, paramsObj, dbName);
     }
 
     async emitSqlTemplate(): Promise<string> {
@@ -173,9 +173,15 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
                 await this.iterateNodeRecursive(_node, node, column);
             }
         }
+        else
+            this.columns.push(column);
+
     }
 
     async createTree() {
+        this.columnsByKey = {};
+        this.columns = [];
+
         await this.iterateNodeRecursive(this.props.root);
         //console.log("-- root----", this.root);
 

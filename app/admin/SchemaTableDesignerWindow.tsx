@@ -30,6 +30,7 @@ import {getDatabasesList} from "../sql/getDatabasesList";
 import {FormPanelHGroup} from "../ui/FormPanelHGroup";
 import {CheckBox} from "../ui/inputs/CheckBox";
 import {throwError} from "../utils/throwError";
+import {schemaObjectJsonCache} from "../schema/getSchemaObjectProps";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
@@ -191,6 +192,8 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
         try {
             await saveSchemaObjectFiles(req);
+            delete schemaObjectJsonCache[this.props.objectId!];
+
             this.window.close(req.filePath);
         }
         catch (err) {

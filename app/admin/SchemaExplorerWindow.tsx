@@ -67,7 +67,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
                 itemStr = item.name;
             }
             else {
-                // убираем '.json'
+                // убираем '.json' в objectId
                 if (!item.value.endsWith(".json"))
                     throwError("SchemaExplorerWindow.preprocessDataSource(): internal error not item.value.endsWith('.json')");
                 item.value = item.value.slice(0, -5);
@@ -77,7 +77,7 @@ export class SchemaExplorerWindow extends React.Component<ISchemaTableColumnEdit
                 if (item.objectType && appState.schemaObjectTypes[item.objectType])
                     item.icon = appState.schemaObjectTypes[item.objectType].icon;
 
-                // убираем .json
+                // убираем .json в item.name
                 if (item.name.endsWith(".json"))
                     itemStr = item.name.slice(0, -5);
             }

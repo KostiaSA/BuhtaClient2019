@@ -1,5 +1,6 @@
 import axios from "axios";
 import {throwError} from "../../utils/throwError";
+import {schemaObjectJsonCache} from "../../schema/getSchemaObjectProps";
 
 
 export interface ISavedSchemaObjectFiles {
@@ -25,5 +26,6 @@ export async function saveSchemaObjectFiles(req: ISavedSchemaObjectFiles): Promi
 
     if (response.data.error)
         throwError(response.data.error);
+
 
 }

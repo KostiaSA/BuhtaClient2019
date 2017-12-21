@@ -36,6 +36,7 @@ import {CodeEditor} from "../ui/inputs/CodeEditor";
 import {SchemaQueryTestRunWindow} from "./SchemaQueryTestRunWindow";
 import {notifySuccess} from "../utils/notifySuccess";
 import {throwError} from "../utils/throwError";
+import {schemaObjectJsonCache} from "../schema/getSchemaObjectProps";
 
 
 export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
@@ -202,20 +203,22 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
         new SchemaObject(this_query).setChangedUserAndDate();
 
-        let fielPath = this.props.objectId || this.props.newObjectPath + "/" + this_query.name + "." + SchemaQuery.objectType;
+        let filePath = this.props.objectId || this.props.newObjectPath + "/" + this_query.name + "." + SchemaQuery.objectType;
         let sql = await new SchemaQuery(this_query).emitSqlTemplate();
 
         TreeGrid.removeRandomKeysInDataSourceObject(this_query.root, "key");
         delete this_query.objectId;
 
         let req: ISavedSchemaObjectFiles = {
-            filePath: fielPath,
+            filePath: filePath,
             json: XJSON_stringify(this_query),
             sql: sql
         };
         try {
             await saveSchemaObjectFiles(req);
             //this.initialQuery = XJSON_clone(this.query);
+            delete schemaObjectJsonCache[this.props.objectId!];
+
             this.form!.resetNeedSaveChanges();
             notifySuccess("Запрос сохранен");
         }
@@ -250,6 +253,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         };
         try {
             await saveSchemaObjectFiles(req);
+            delete schemaObjectJsonCache[this.props.objectId!];
             this.window.close(req.filePath);
         }
         catch (err) {
