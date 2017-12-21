@@ -292,6 +292,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                                             <FormPanelHGroup>
                                                 <Input width={200} bindProp="note"
+                                                       resizable storageKey="input:dbName2222222"
                                                        placeHolder="note" title="примечание2"
                                                 />
                                                 <Input width={200} bindProp="note"

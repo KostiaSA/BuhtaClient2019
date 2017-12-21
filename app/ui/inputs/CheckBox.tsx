@@ -112,19 +112,7 @@ export class CheckBox extends BaseInput<ICheckBoxProps> {
                         <td style={{padding: 0}}>
                             <div id={this.$id} style={style}>{this.props.title}</div>
                         </td>
-                        <td style={{padding: 0}}>
-                            <div
-                                className="resizer"
-                                style={{
-                                    cursor: "e-resize",
-                                    borderLeft: "1px solid rgba(192, 192, 192, 0.6)",
-                                    width: 10,
-                                    height: this.props.height || config.baseInput.height,
-                                    display: this.props.resizable ? "table-cell" : "none"
-                                }}
-                            >
-                            </div>
-                        </td>
+                        {this.renderRightResizerTd()}
                     </tr>
                     </tbody>
                 </table>,

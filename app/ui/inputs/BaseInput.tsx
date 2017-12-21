@@ -99,6 +99,28 @@ export class BaseInput<P extends IBaseInputProps=IBaseInputProps> extends Compon
         }
     }
 
+    renderRightResizerTd(): React.ReactNode {
+        if (!this.props.resizable)
+            return null;
+        else
+            return (
+                <td style={{padding: 0, verticalAlign: "middle", borderLeft: "1px solid rgba(192, 192, 192, 0.6)"}}>
+                    <div
+                        className="resizer"
+                        style={{
+                            cursor: "e-resize",
+                            width: 10,
+                            height: "100%",
+                            color: "transparent"
+                        }}
+                    >
+                        .
+                    </div>
+                </td>
+            )
+    }
+
+
     render(): React.ReactNode {
         throw "BaseInput:abstract error";
     }
