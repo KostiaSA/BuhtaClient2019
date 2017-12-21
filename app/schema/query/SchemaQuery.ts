@@ -73,7 +73,7 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
     async execute(paramsObj: any = {}, dbName?: string): Promise<ISqlDataset[]> {
         if (!dbName)
             dbName = (await this.getRootColumn()).joinTable.props.dbName;
-        return executeSql(this.props.objectId!, dbName);
+        return executeSql(this.props.objectId!,paramsObj, dbName);
     }
 
     async emitSqlTemplate(): Promise<string> {

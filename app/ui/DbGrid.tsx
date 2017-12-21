@@ -49,6 +49,7 @@ export class DbGrid extends Component<IDbGridProps> {
         let props = await getSchemaObjectProps<ISchemaQueryProps>(this.props.queryId);
         this.query = new SchemaQuery(props);
         this.rows = await this.query.execute();
+        console.log("loadRows",this.rows)
     }
 
     async componentDidMount() {
@@ -62,7 +63,7 @@ export class DbGrid extends Component<IDbGridProps> {
 
         //this.updateProps(this.props, true);
         this.forceUpdate();
-        console.log("loaded rows",this.rows)
+        console.log("componentDidMount loaded rows",this.rows)
     }
 
     // updateProps(props: IDbGridProps, create: boolean) {

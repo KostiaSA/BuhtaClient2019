@@ -28,6 +28,7 @@ import {SchemaObject} from "../schema/SchemaObject";
 import {ComboBox} from "../ui/inputs/ComboBox";
 import {getDatabasesList} from "../sql/getDatabasesList";
 import {FormPanelHGroup} from "../ui/FormPanelHGroup";
+import {CheckBox} from "../ui/inputs/CheckBox";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
@@ -291,10 +292,13 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             />
 
                                             <FormPanelHGroup>
+                                                <CheckBox title="первичный ключ" bindProp="primaryKey" width={150}/>
                                                 <Input width={200} bindProp="note"
                                                        resizable storageKey="input:dbName2222222"
                                                        placeHolder="note" title="примечание2"
                                                 />
+                                                <CheckBox title="NOT NULL" bindProp="notNull" width={100}/>
+
                                                 <Input width={200} bindProp="note"
                                                        placeHolder="note" title="примечание3"
                                                 />

@@ -10,6 +10,9 @@ import {SchemaQuery} from "../schema/query/SchemaQuery";
 import {ComboBox} from "../ui/inputs/ComboBox";
 import {getDatabasesList, IDatabase} from "../sql/getDatabasesList";
 import {DbGrid} from "../ui/DbGrid";
+import {FormPanel} from "../ui/FormPanel";
+import {FormPanelHGroup} from "../ui/FormPanelHGroup";
+import {FlexVPanel} from "../ui/FlexVPanel";
 
 
 export interface ISchemaTableColumnEditorProps {
@@ -22,6 +25,7 @@ export class SchemaQueryTestRunWindow extends React.Component<ISchemaTableColumn
     window: Window;
     error: any;
     testDatabase: IDatabase;
+    dbGrid:DbGrid;
 
     async componentDidMount() {
 
@@ -58,29 +62,46 @@ export class SchemaQueryTestRunWindow extends React.Component<ISchemaTableColumn
                 }}>
 
                 <FlexHPanel>
-                    <FlexItem dock="top">
-                        <ComboBox
-                            title="база данных"
-                            bindObj={this}
-                            bindProp="testDatabase"
-                            placeHolder="тип данных"
-                            valueMember="name"
-                            displayMember="name"
-                            width={200}
-                            source={getDatabasesList}
-                            resizable storageKey="input:testDatabase"
-                        />
+                    <FlexItem dock="top" style={{padding: 5}}>
+                        <FlexVPanel>
+                            <FlexItem dock="fill" style={{padding: 0}}>
+                                <FormPanel>
+                                    <FormPanelHGroup>
+                                        <ComboBox
+                                            title="база данных"
+                                            bindObj={this}
+                                            bindProp="testDatabase"
+                                            placeHolder="тип данных"
+                                            valueMember="name"
+                                            displayMember="name"
+                                            width={200}
+                                            source={getDatabasesList}
+                                            resizable storageKey="input:testDatabase"
+                                        />
+                                    </FormPanelHGroup>
+                                </FormPanel>
+                            </FlexItem>
+                            <FlexItem dock="right" style={{padding: 0}}>
+                                <Button imgSrc={config.button.refreshIcon}
+                                        text="Выполнить"
+                                        onClick={async () => {
+                                            await this.dbGrid.loadRows();
+                                        }}
+                                />
+                            </FlexItem>
+                        </FlexVPanel>
 
                     </FlexItem>
                     <FlexItem dock="fill" style={{padding: 5}}>
-                        <DbGrid queryId={this.props.queryId}></DbGrid>
+                        <DbGrid ref={(e)=>this.dbGrid=e!} queryId={this.props.queryId}></DbGrid>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
                         <Button imgSrc={config.button.cancelIcon}
                                 text="Закрыть"
                                 onClick={async () => {
                                     this.window.close()
-                                }}/>
+                                }}
+                        />
                     </FlexItem>
                 </FlexHPanel>
 

@@ -3,6 +3,7 @@ import {isString} from "util";
 import {config} from "../config";
 import {XJSON_stringify} from "../utils/xjson";
 import {postProcessSqlResult} from "./postProcessSqlResult";
+import {throwError} from "../utils/throwError";
 
 
 export interface ISqlDataset {
@@ -11,14 +12,24 @@ export interface ISqlDataset {
 }
 
 export async function executeSql(sqlTemplatePath: string, paramsObj: any = {}, dbName: string = config.mainDatabaseName): Promise<ISqlDataset[]> {
-    if (!isString(sqlTemplatePath))
-        throw "executeSql(): параметр 'sqlTemplatePath' должен быть строкой";
+    if (!isString(sqlTemplatePath)) {
+        let msg = "executeSql(): параметр 'sqlTemplatePath' должен быть строкой";
+        console.error(msg, sqlTemplatePath);
+        throw msg;
+    }
 
-    if (!isString(dbName))
-        throw "executeSql(): параметр 'dbName' должен быть строкой";
+    if (!isString(dbName)) {
+        let msg = "executeSql(): параметр 'dbName' должен быть строкой";
+        console.error(msg, dbName);
+        throw msg;
+    }
 
-    if (typeof paramsObj !== "object")
-        throw "executeSql(): параметр 'paramsObj' должен быть объектом";
+    if (typeof paramsObj !== "object") {
+        throwError("executeSql(): параметр 'paramsObj' должен быть объектом", paramsObj);
+        // let msg = "executeSql(): параметр 'paramsObj' должен быть объектом";
+        // console.error(msg, paramsObj);
+        // throw msg;
+    }
 
     let req = {
         sqlTemplatePath: sqlTemplatePath,

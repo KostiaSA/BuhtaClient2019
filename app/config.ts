@@ -1,6 +1,7 @@
 import * as moment from "moment";
 
 export let config: any = {
+        productionMode: false,
         theme: "buhta",
         border: "1px solid #d4d4d4",
         mainDatabaseName: "main",
@@ -37,6 +38,7 @@ export let config: any = {
             changeRowIcon: "vendor/fugue/card--pencil.png",
             deleteRowIcon: "vendor/fugue/cross.png",
             focusedBorder: "1px solid dodgerblue",
+            refreshIcon: "vendor/fugue/arrow-circle-double-green.png",
         },
         baseInput: {
             height: 24,
