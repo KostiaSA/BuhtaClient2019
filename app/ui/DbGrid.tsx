@@ -8,6 +8,7 @@ import {getSchemaObjectProps} from "../schema/getSchemaObjectProps";
 import {throwError} from "../utils/throwError";
 import {omit} from "../utils/omit";
 import {config} from "../config";
+import {showError} from "./modals/showError";
 
 
 export interface IDbGridProps extends IComponentProps {
@@ -46,22 +47,30 @@ export class DbGrid extends Component<IDbGridProps> {
     rows: any[];
     query: SchemaQuery;
 
-    lastParentH: number;
-    lastParentW: number;
-    resizeIntervalId: any;
+    // lastParentH: number;
+    // lastParentW: number;
+    // resizeIntervalId: any;
+    error: string | null = null;
 
 
     async loadRows(): Promise<void> {
-        if (!isString(this.props.queryId)) {
-            let msg = "DbGrid: 'props.queryId' должен быть строкой";
-            throwError(msg);
-        }
+        this.error = null;
+        try {
+            if (!isString(this.props.queryId)) {
+                let msg = "DbGrid: 'props.queryId' должен быть строкой";
+                throwError(msg);
+            }
 
-        let props = await getSchemaObjectProps<ISchemaQueryProps>(this.props.queryId);
-        this.query = new SchemaQuery(props);
-        this.rows = await this.query.execute();
-        this.isDataLoaded = true;
-        this.isDataSourceAssigned = false;
+            let props = await getSchemaObjectProps<ISchemaQueryProps>(this.props.queryId);
+            this.query = new SchemaQuery(props);
+            this.rows = await this.query.execute();
+            this.isDataLoaded = true;
+            this.isDataSourceAssigned = false;
+        }
+        catch (e) {
+            this.error = e.toString();
+            showError(e);
+        }
 
     }
 
@@ -73,8 +82,17 @@ export class DbGrid extends Component<IDbGridProps> {
 
             this.widget.css("position", "absolute");
 
+            gridOptions.enableanimations=false;
+            gridOptions.enablehover=false;
             gridOptions.height = "100%";
-            gridOptions.width = "100%";
+            gridOptions.width = "100%";  // не убирать, несмотря на resizeIntervalId, иначе неприятная анимация при рендеринге
+            gridOptions.showfiltercolumnbackground=false;
+            gridOptions.showsortcolumnbackground=false;
+            gridOptions.showpinnedcolumnbackground=false;
+
+            gridOptions.selectionmode = "singlecell";
+
+            //gridOptions.width = "100%";
 
             gridOptions.rowsheight = gridOptions.rowsheight || config.grid.rowsHeight;
             gridOptions.columnsheight = gridOptions.columnsheight || config.grid.rowsHeight;
@@ -83,7 +101,10 @@ export class DbGrid extends Component<IDbGridProps> {
                 gridOptions.sortable = true;
 
             if (gridOptions.columnsResize !== false)
-                gridOptions.columnsResize = true;
+                gridOptions.columnsresize = true;
+
+            if (gridOptions.columnsReorder !== false)
+                gridOptions.columnsreorder = true;
 
             if (this.props.checkboxes) {
                 gridOptions.selectionmode = "checkbox";
@@ -93,8 +114,41 @@ export class DbGrid extends Component<IDbGridProps> {
             this.widget = $("#" + this.$id);
 
             this.isJqxGridInitialized = true;
+
+            let lastParentW=0;
+            let resizeIntervalId = setInterval(() => {
+                let newW = this.widget.parent().width();
+
+                // отановка таймера resize, если TreeGrid удалена
+                if ($("#" + this.$id).length !== 1) {
+                    clearInterval(resizeIntervalId);
+                }
+
+                if (lastParentW !== newW) {
+                    lastParentW = newW;
+                    this.widget.jqxGrid({width: newW-2});
+                }
+            }, 200);
+
         }
     }
+
+    async createColumns() {
+        let columns: any[] = [];
+        for (let col of this.query.columns) {
+            let columnOptions: any = {};
+            //columnOptions.resizable = true;
+            //columnOptions.draggable = true;
+            columnOptions.width = 100;
+
+            columnOptions.text = col.props.fieldCaption || col.props.fieldSource;
+            columnOptions.datafield = col.props.fieldCaption || col.props.fieldSource;
+            columns.push(columnOptions);
+        }
+        this.widget.jqxGrid({columns: columns});
+
+    }
+
 
     async setDataSource() {
         //this.updateProps(this.props, true);
@@ -106,13 +160,14 @@ export class DbGrid extends Component<IDbGridProps> {
 
             let source = {
                 localdata: this.rows[0].rows,
-                datatype: "array",
+                datatype: "local",
                 // datafields: Object.keys(fakeObj).map((propName: string) => {
                 //     return {name: propName}
                 // }),
             };
 
             this.widget.jqxGrid({source: source});
+            this.autoResizeColumns();
             this.forceUpdate();
             this.isDataSourceAssigned = true;
         }
@@ -134,18 +189,6 @@ export class DbGrid extends Component<IDbGridProps> {
             this.forceUpdate();
             console.log("componentDidMount loaded rows", this.rows)
         }
-
-    }
-
-    async createColumns() {
-        let columns: any[] = [];
-        for (let col of this.query.columns) {
-            let columnOptions: any = {};
-            columnOptions.text = col.props.fieldCaption || col.props.fieldSource;
-            columnOptions.datafield = col.props.fieldCaption || col.props.fieldSource;
-            columns.push(columnOptions);
-        }
-        this.widget.jqxGrid({columns: columns});
 
     }
 
@@ -450,6 +493,10 @@ export class DbGrid extends Component<IDbGridProps> {
         this.widget.jqxGrid("selectallrows");
     }
 
+    autoResizeColumns() {
+        this.widget.jqxGrid("autoresizecolumns","cells");
+    }
+
     selectRow(rowIndex: number) {
         this.widget.jqxGrid("selectrow", rowIndex);
     }
@@ -477,9 +524,14 @@ export class DbGrid extends Component<IDbGridProps> {
                         position: "relative",
                         width: this.props.width || "100%",
                         height: this.props.height || "initial",
-                        border: "1px solid red",
+                        border: "1px solid silver",
+                        color: this.error ? "red" : "transparent",
+                        backgroundColor: this.error ? "#ffe6e1a6" : "initial",
+                        textAlign: "center",
+                        verticalAlign: "middle",
+                        lineHeight: 5
                     }}>
-                    загрузка идет...
+                    ошибка загрузки: {this.error}
                 </div>
             )
         }
@@ -490,7 +542,6 @@ export class DbGrid extends Component<IDbGridProps> {
                         position: "relative",
                         width: this.props.width || "100%",
                         height: this.props.height || "initial",
-                        border: "0px solid red",
                     }}>
                     <div id={this.$id}/>
                 </div>

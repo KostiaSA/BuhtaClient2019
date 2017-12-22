@@ -9,14 +9,12 @@ import {FlexHPanel} from "../ui/FlexHPanel";
 import {FlexItem} from "../ui/FlexItem";
 import {Button} from "../ui/Button";
 import {ISchemaQueryColumnProps, ISchemaQueryProps, SchemaQuery} from "../schema/query/SchemaQuery";
-import {ComboBox} from "../ui/inputs/ComboBox";
-import {appState} from "../AppState";
-import {StringSqlDataType} from "../schema/table/datatypes/StringSqlDataType";
 import {config} from "../config";
 import {showError} from "../ui/modals/showError";
 import {joiValidate} from "../validation/joiValidate";
 import {getConfirmation} from "../ui/modals/getConfirmation";
 import {CheckBox} from "../ui/inputs/CheckBox";
+import {CodeEditor} from "../ui/inputs/CodeEditor";
 
 
 export interface ISchemaQueryColumnEditorProps {
@@ -28,25 +26,16 @@ export interface ISchemaQueryColumnEditorProps {
 export class SchemaQueryColumnEditorWindow extends React.Component<ISchemaQueryColumnEditorProps, any> {
 
     window: Window;
-
     form: FormPanel | null;
+    inlineSqlMode: boolean;
 
-    // getDataTypesSource(): any[] {
-    //     let ret: any[] = [];
-    //     for (let dataTypeId in appState.sqlDataTypes) {
-    //         ret.push({id: dataTypeId, name: appState.sqlDataTypes[dataTypeId].getName()});
-    //     }
-    //     return ret;
-    // }
+    componentWillMount() {
+        this.inlineSqlMode = !!this.props.column!.inlineSql;
+    }
 
-    // renderDataTypeEditors(): React.ReactNode {
-    //     let ret: React.ReactNode[] = [];
-    //     for (let dataTypeId in appState.sqlDataTypes) {
-    //         let dt = appState.sqlDataTypes[dataTypeId];
-    //         ret.push(dt.renderPropsEditors(this.props.column!.dataType));
-    //     }
-    //     return ret;
-    // }
+    componentDidMount() {
+
+    }
 
     handleDataTypeChange = async () => {
         this.forceUpdate();
@@ -90,8 +79,16 @@ export class SchemaQueryColumnEditorWindow extends React.Component<ISchemaQueryC
                                     bindObj={this.props.column}
                                     validator={validator}
                                 >
-                                    <Input title="подпись/alias" bindProp="fieldCaption" placeHolder="имя колонки" width={300}
+                                    <Input title="подпись/alias" bindProp="fieldCaption" placeHolder="имя колонки"
+                                           width={300}
                                            resizable storageKey="input:SchemaQuery.fieldCaption"
+
+                                    />
+                                    <CodeEditor title="inline SQL" bindProp="inlineSql" height={150}
+                                                options={{mode: "text/x-mssql", theme:"sql-template"}}
+                                                resizable storageKey="input:SchemaQuery.inlineSql"
+                                                hidden={!this.inlineSqlMode}
+
 
                                     />
                                     <CheckBox title="скрытая" bindProp="isHidden" width={300}/>

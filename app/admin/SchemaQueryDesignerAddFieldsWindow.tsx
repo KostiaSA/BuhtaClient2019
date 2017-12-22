@@ -49,10 +49,20 @@ export class SchemaQueryDesignerAddFieldsWindow extends SchemaObjectBaseDesigner
                     this.table.objectId = this.props.objectId;
 
                     this.table.columns.push({
-                        name: "SQL:Строка",
+                        name: "inline SQL:Строка",
+                        inlineSql:"'inline sql строка'",
                         dataType: {
                             id: "String",
                             maxLen: 0
+                        } as any,
+                        description: "вычисляемое поле"
+                    });
+
+                    this.table.columns.push({
+                        name: "inline SQL:Деньги",
+                        inlineSql:"999",
+                        dataType: {
+                            id: "Money"
                         } as any,
                         description: "вычисляемое поле"
                     });

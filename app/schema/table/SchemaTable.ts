@@ -27,7 +27,7 @@ export interface ISchemaTableColumnProps {
     position?: number;
     notNull?: boolean,
     dataType: IBaseSqlDataTypeProps;
-
+    inlineSql?: string;
     //formInputOptions?: IFormInputOptions;
 }
 

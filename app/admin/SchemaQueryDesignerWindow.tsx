@@ -74,12 +74,23 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
             </SchemaQueryDesignerAddFieldsWindow>
         );
 
-        console.log("qqq", result);
         for (let tableColumn of result) {
-            let newQueryColumn = {
+            let newQueryColumn: ISchemaQueryColumnProps = {
                 key: getRandomString(),
-                fieldSource: tableColumn.name,
             };
+            if (tableColumn.inlineSql) {
+                newQueryColumn.inlineSql = tableColumn.inlineSql;
+                newQueryColumn.inlineDataType = tableColumn.dataType;
+                let dataType = appState.sqlDataTypes[tableColumn.dataType.id];
+                if (dataType)
+                    newQueryColumn.fieldCaption = dataType.getName() + Math.random().toString().substr(2, 4);
+                else
+                    newQueryColumn.fieldCaption = "inline" + Math.random().toString().substr(2, 4);
+
+            }
+            else {
+                newQueryColumn.fieldSource = tableColumn.name
+            }
             originalParentRow.children.push(newQueryColumn);
             this.treeGrid.addRow(newQueryColumn.key, XJSON_clone(newQueryColumn), "last", parentRow.key);
         }
@@ -227,6 +238,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         }
 
     };
+
     handleClickSaveButton = async () => {
 
         let validator = new SchemaQuery(this.query).getValidator();
@@ -302,6 +314,8 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
             return <span style={{fontWeight: "bold"}}>{row.tableId}</span>;
         else if (!row.tableId && !!row.fieldSource)
             return <span>{row.fieldSource}</span>;
+        else if (!row.tableId && row.inlineSql)
+            return <span style={{color: "DARKORANGE", fontFamily: "monospace"}}>= {row.inlineSql.substr(0, 59)}</span>;
         else
             return <span style={{fontWeight: "bold"}}>{row.fieldSource}<span
                 style={{fontWeight: 500, color: config.sql.fkDataTypeColor}}>->{row.tableId}</span></span>;
@@ -502,6 +516,9 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                     imgSrc="vendor/fugue/table--arrow.png"
                                     style={{marginRight: 5}}
                                     onClick={async () => {
+                                        if (this.form!.needSaveChanges) {
+                                            await this.handleClickApplyButton();
+                                        }
                                         appState.desktop.openWindow(
                                             <SchemaQueryTestRunWindow
                                                 queryId={this.query.objectId}

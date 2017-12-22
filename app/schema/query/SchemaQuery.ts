@@ -3,13 +3,14 @@ import {ISchemaObjectProps, SchemaObject} from "../SchemaObject";
 import {joiRus} from "../../i18n/joiRus";
 import {config} from "../../config";
 import {SchemaQueryDesignerWindow} from "../../admin/SchemaQueryDesignerWindow";
-import {ISchemaTableProps, SchemaTable} from "../table/SchemaTable";
+import {ISchemaTableColumnProps, ISchemaTableProps, SchemaTable} from "../table/SchemaTable";
 import {getRandomString} from "../../utils/getRandomString";
 import {getSchemaObjectProps} from "../getSchemaObjectProps";
 import {SqlSelectEmitter} from "../../sql/SqlSelectEmitter";
 import {addNewLineSymbol} from "../../utils/addNewLineSymbol";
 import {executeSql, ISqlDataset} from "../../sql/executeSql";
 import {throwError} from "../../utils/throwError";
+import {IBaseSqlDataTypeProps} from "../table/datatypes/BaseSqlDataType";
 
 
 export interface ISchemaQueryProps extends ISchemaObjectProps {
@@ -30,6 +31,8 @@ export interface ISchemaQueryColumnProps {
     isHidden?: boolean;
     tableId?: string;
     tableAlias?: string;
+    inlineSql?: string;
+    inlineDataType?: IBaseSqlDataTypeProps;
     children?: ISchemaQueryColumnProps[];
 }
 
@@ -232,6 +235,14 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
                 emitter.emit_NAME(column.parent.joinTableAlias) + "." + emitter.emit_NAME(column.props.fieldSource!) +
                 "=" +
                 emitter.emit_NAME(column.joinTableAlias) + "." + emitter.emit_NAME(column.joinTable.getPrimaryKeyColumn()!.name));
+        }
+        else if (column.props.inlineSql) {
+            if (!column.props.isDisabled) {
+                emitter.fields.push(
+                    "    " +column.props.inlineSql+
+                    " AS " +
+                    emitter.emit_NAME(column.props.fieldCaption || column.props.fieldSource!))+"  /* inline SQL */";
+            }
         }
         else {
             if (!column.props.isDisabled) {
