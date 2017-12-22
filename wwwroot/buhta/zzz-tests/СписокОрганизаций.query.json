@@ -29,17 +29,24 @@
             },
             "fieldCaption": "Строка3255"
         }, {
-            "inlineSql": "{{wer}}",
+            "inlineSql": "{{_ServerCurrentTime_}}",
             "inlineDataType": {
                 "id": "String",
                 "maxLen": 0
             },
             "fieldCaption": "Строка7674"
+        }, {
+            "inlineSql": "{{_UserId_}}",
+            "inlineDataType": {
+                "id": "String",
+                "maxLen": 0
+            },
+            "fieldCaption": "Строка1988"
         }]
     },
     "note": "122",
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-20 23:13:31.551",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-22 14:45:55.553"
+    "changedDate": "<DateTime>2017-12-22 17:50:03.206"
 }
