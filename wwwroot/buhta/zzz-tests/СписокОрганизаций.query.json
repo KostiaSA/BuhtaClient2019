@@ -22,7 +22,7 @@
             },
             "fieldCaption": "Деньги5525"
         }, {
-            "inlineSql": "CASE WHEN Ключ%2=0 THEN Номер+' '+Название + STR(Ключ) ELSE '' END",
+            "inlineSql": "CASE \n  WHEN Ключ%2=0 THEN Номер+' '+ Название + STR(Ключ) \n  ELSE '' \nEND",
             "inlineDataType": {
                 "id": "String",
                 "maxLen": 0
@@ -36,7 +36,7 @@
             },
             "fieldCaption": "Строка7674"
         }, {
-            "inlineSql": "{{_UserId_}}",
+            "inlineSql": "{{_UserIP_}}",
             "inlineDataType": {
                 "id": "String",
                 "maxLen": 0
@@ -44,9 +44,9 @@
             "fieldCaption": "Строка1988"
         }]
     },
-    "note": "122",
+    "note": "1226078",
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-20 23:13:31.551",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-22 17:50:03.206"
+    "changedDate": "<DateTime>2017-12-23 00:57:33.307"
 }
