@@ -12,7 +12,7 @@ import {config} from "../config";
 import {MenuSeparator} from "./MenuSeparator";
 import {TestsExplorerWindow} from "../admin/TestsExplorerWindow";
 import {throwError} from "../utils/throwError";
-import {addToolbarIconItem, IToolbarProps, Toolbar} from "./Toolbar";
+import {addToolbarIconItem, clearToolbarGroup, IToolbarProps, Toolbar} from "./Toolbar";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -45,15 +45,65 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         return this.windows.slice();
     }
 
+
+    __createT() {
+        clearToolbarGroup(this.toolbar, "gr1");
+        clearToolbarGroup(this.toolbar, "gr2");
+
+        addToolbarIconItem(this.toolbar, {
+            group: "gr1",
+            type: "icon",
+            tooltip: "поиск по колонке с начала списка (F2)",
+            id: "x1",
+            icon: config.dbGrid.toolbar.findIcon
+        });
+
+        addToolbarIconItem(this.toolbar, {
+            group: "gr1",
+            type: "icon",
+            tooltip: "поиск по колонке вперед (F3)",
+            id: "x2",
+            icon: config.dbGrid.toolbar.findNextIcon
+        });
+
+        addToolbarIconItem(this.toolbar, {
+            group: "gr1",
+            type: "icon",
+            tooltip: "поиск по колонке назад (Shift-F3)",
+            id: "x3",
+            icon: config.dbGrid.toolbar.findPrevIcon
+        });
+
+        addToolbarIconItem(this.toolbar, {
+            group: "gr2",
+            type: "icon",
+            tooltip: "поиск по колонке с начала списка (F2)",
+            id: "x12",
+            icon: config.dbGrid.toolbar.findIcon
+        });
+
+        addToolbarIconItem(this.toolbar, {
+            group: "gr2",
+            type: "icon",
+            tooltip: "поиск по колонке вперед (F3)",
+            id: "x22",
+            icon: config.dbGrid.toolbar.findNextIcon
+        });
+
+        addToolbarIconItem(this.toolbar, {
+            group: "gr2",
+            type: "icon",
+            tooltip: "поиск по колонке назад (Shift-F3)",
+            id: "x2",
+            icon: config.dbGrid.toolbar.findPrevIcon
+        });
+
+    }
+
     render() {
         console.log("render desktop");
 
-        addToolbarIconItem(this.toolbar,{
-            group:"gr1",
-            type:"icon",
-            id:getRandomString(),
-            icon:"vendor/fugue/tick.png"
-        });
+        this.__createT();
 
         return (
             <div id="desktop" style={{height: "100%", flex: "1 0 auto"}}>

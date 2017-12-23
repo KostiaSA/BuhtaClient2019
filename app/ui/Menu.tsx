@@ -42,6 +42,7 @@ export class Menu extends Component<IMenuProps> {
             animationShowDuration: 0,
             animationHideDuration: 0,
             animationShowDelay: 0,
+            autoOpen: false,
         };
 
         if (this.props.mode === "popup") {

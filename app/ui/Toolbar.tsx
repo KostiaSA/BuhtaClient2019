@@ -55,7 +55,7 @@ export function addToolbarIconItem(toolbar: IToolbarProps, item: IToolbarIconIte
     toolbar.items!.push(item);
 }
 
-export function removeToolbarItemsOfGroup(toolbar: IToolbarProps, group: string) {
+export function clearToolbarGroup(toolbar: IToolbarProps, group: string) {
     if (!toolbar || !isArray(toolbar.groups) || !isArray(toolbar.items))
         throwError("removeToolbarItemsOfGroup(): не указан или неверный параметр 'toolbar'");
 
@@ -78,20 +78,50 @@ export class Toolbar extends React.Component<IToolbarProps> {
                 groups.push(group);
         });
 
-
+        let groupCount = 0;
         for (let group of groups) {
-            for (let item of items.filter((_item: any) => _item.group === group || (_item.props && _item.props.group))) {
+            let itemCount = 0;
+            let groupItems = items.filter((_item: any) => _item.group === group || (_item.props && _item.props.group));
+            if (groupCount > 0 && groupItems.length) {
+                ret.push(
+                    <div key={group + "-divider"}
+                         style={{
+                             position: "relative",
+                             height: 16,
+                             width: 1,
+                             marginLeft: 4,
+                             marginRight: 5,
+                             display: "inline-block",
+                             textAlign: "center",
+                             borderRight: "1px solid silver",
+                         }}
+                    >
+                    </div>
+                )
+            }
+
+            for (let item of groupItems) {
                 let props: any = (item as any).props || item;
                 if (props.type === "icon") {
+
+
                     ret.push(
-                        <div key={props.id} className="buhta-toolbar-item"
-                             style={{height: 25, width: 25, display: "inline-block", textAlign: "center", borderRight: "1px solid silver"}}
+                        <div key={props.id} className="buhta-toolbar-item" title={props.tooltip}
+                             style={{
+                                 height: 22,
+                                 width: 21,
+                                 display: "inline-block",
+                                 textAlign: "center",
+                             }}
                         >
-                            <img src={props.icon} width={16} height={16} style={{marginTop: 4}}/>
+                            <img src={props.icon} width={16} height={16} style={{marginTop: 3}}/>
                         </div>
                     )
                 }
+                itemCount++;
             }
+            if (groupItems.length > 0)
+                groupCount++;
         }
 
         console.log("ret", ret)
@@ -101,7 +131,7 @@ export class Toolbar extends React.Component<IToolbarProps> {
     render() {
         console.log("render Toolbar", this.props.children);
         return (
-            <div style={{height: 25, borderBottom: "1px solid silver",}}>
+            <div style={{height: 23, borderBottom: "1px solid silver",}}>
                 {this.renderItems()}
             </div>
 
