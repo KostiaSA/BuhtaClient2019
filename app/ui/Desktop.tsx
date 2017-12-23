@@ -15,6 +15,8 @@ import {config} from "../config";
 import {MenuSeparator} from "./MenuSeparator";
 import {TestsExplorerWindow} from "../admin/TestsExplorerWindow";
 import {throwError} from "../utils/throwError";
+import {Div} from "./Div";
+import {IToolbarItemProps, IToolbarProps, Toolbar} from "./Toolbar";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -35,11 +37,21 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     t: string = "title999";
 
     windows: React.ReactNode[] = [];
+    toolbarGroups:string[]=[];
+    toolbarItems:IToolbarItemProps[]=[];
 
     renderWindows(): React.ReactNode {
         return this.windows.slice();
     }
 
+    renderToolbar(): React.ReactNode {
+        return (
+            [
+                <img src="vendor/fugue/key.png"/>,
+                <img src="vendor/fugue/tick.png"/>,
+            ]
+        );
+    }
 
     render() {
         //console.log("render desktop");
@@ -99,40 +111,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                             }}></MenuItem>
                     </MenuItem>
                 </Menu>
-                {/*<button*/}
-                    {/*onClick={async () => {*/}
-                        {/*let result = await loadSchemaTree();*/}
-                        {/*console.log(result);*/}
-                    {/*}}>*/}
-                    {/*loadSchemaTree*/}
-                {/*</button>*/}
-                {/*<button*/}
-                    {/*onClick={() => {*/}
-                        {/*this.openWindow(<SchemaExplorerWindow*/}
-                            {/*window={{height: 500, width: 400}}></SchemaExplorerWindow>);*/}
-                    {/*}}>*/}
-                    {/*инспектор объектов*/}
-                {/*</button>*/}
-                {/*<button*/}
-                    {/*onClick={() => {*/}
-                        {/*this.openWindow(<SchemaTableDesignerWindow window={{height: 444, width: 600}}*/}
-                                                                   {/*objectId="buhta/test1/Автомобиль"></SchemaTableDesignerWindow>);*/}
-                        {/*//  this.openWindow(<div key="111" title="111">новое окно</div>);*/}
-                    {/*}}>*/}
-                    {/*open SchemaTableDesignerWindow*/}
-                {/*</button>*/}
-                {/*<button*/}
-                    {/*onClick={() => {*/}
-                        {/*saveSchemaObjectFiles({filePath: "buhta/test1/Организация1233", json: "{ага4}"})*/}
-                            {/*.then((res) => {*/}
-                                {/*console.log("ok", res)*/}
-                            {/*})*/}
-                            {/*.catch((err) => {*/}
-                                {/*console.log("err:", err)*/}
-                            {/*})*/}
-                    {/*}}>*/}
-                    {/*test seveSchemaObjectFiles*/}
-                {/*</button>*/}
+                <Toolbar groups={this.toolbarGroups} items={this.toolbarItems}></Toolbar>
                 {this.renderWindows()}
             </div>
         )

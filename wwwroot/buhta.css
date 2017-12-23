@@ -15,8 +15,9 @@
 .jqx-button {
     padding: 4px;
 }
+
 /*.jqx-button:focus {*/
-    /*border-color: dodgerblue;*/
+/*border-color: dodgerblue;*/
 /*}*/
 
 .jqx-window.jqx-widget-content {
@@ -78,7 +79,7 @@ input[type=text].jqx-input {
 }
 
 .jqx-menu-item {
-     padding: 1px 8px 1px 8px;
+    padding: 1px 8px 1px 8px;
 }
 
 .jqx-menu-item-separator {
@@ -104,13 +105,12 @@ input[type=text].jqx-input {
 
 .jqx-widget-header-buhta, .jqx-grid-buhta .jqx-widget-header-buhta {
     background-color: #f7f7f7;
-    background-image:initial;
+    background-image: initial;
 }
 
 .jqx-widget-buhta .jqx-grid-cell-pinned-buhta {
     background-color: #ffeb3b0a;
 }
-
 
 #jqxNotificationDefaultContainer-top-right, #jqxNotificationDefaultContainer-bottom-left {
     z-index: 999;
@@ -121,10 +121,15 @@ input[type=text].jqx-input {
 }
 
 .jqx-notification-icon-info, .jqx-notification-icon-warning, .jqx-notification-icon-success, .jqx-notification-icon-error, .jqx-notification-icon-mail, .jqx-notification-icon-time {
-     width: initial;
-     height: initial;
+    width: initial;
+    height: initial;
 }
 
 .jqx-menu-vertical-buhta {
     background: #f3f3f3;
+}
+
+.buhta-toolbar-item:hover {
+    background-color: silver;
+    border: 1px solid gray;
 }
