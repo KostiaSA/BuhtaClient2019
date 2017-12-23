@@ -30,24 +30,24 @@ export function postProcessSqlResult(responseData: any): any {
             rowset.rows[rowIndex] = rowObject;
             for (let colIndex = 0; colIndex < rowset._rows_[rowIndex].length; colIndex++) {
                 let value = rowset._rows_[rowIndex][colIndex];
-                if (typeof value === "object") {
-                    if (value.t === "N") { // null
-                        value = null;
-                    }
-                    else if (value.t === "D") {  // date
-                        value = new Date(value.v);
-                    }
-                    else if (value.t === "T") { //time
-                        value = {
-                            h: value.h,
-                            m: value.m,
-                            s: value.s,
-                            ms: value.ms
-                        };
-                        console.log(rowset._rows_[rowIndex][colIndex]);
-                    }
-                    rowset._rows_[rowIndex][colIndex] = value;
-                }
+                // if (typeof value === "object") {
+                //     if (value.t === "N") { // null
+                //         value = null;
+                //     }
+                //     else if (value.t === "D") {  // date
+                //         value = new Date(value.v);
+                //     }
+                //     else if (value.t === "T") { //time
+                //         value = {
+                //             h: value.h,
+                //             m: value.m,
+                //             s: value.s,
+                //             ms: value.ms
+                //         };
+                //         console.log(rowset._rows_[rowIndex][colIndex]);
+                //     }
+                //     rowset._rows_[rowIndex][colIndex] = value;
+                // }
                 rowObject[rowset.columns[colIndex].name] = value;
                 //rowset.rows[rowIndex][rowset.columns[colIndex].name] = value;
 

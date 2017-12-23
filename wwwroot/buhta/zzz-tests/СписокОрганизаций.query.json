@@ -9,7 +9,7 @@
         }, {
             "fieldSource": "Название"
         }, {
-            "inlineSql": "Номер+' '+Название",
+            "inlineSql": "Номер+'--'",
             "inlineDataType": {
                 "id": "String",
                 "maxLen": 0
@@ -44,9 +44,10 @@
             "fieldCaption": "Строка1988"
         }]
     },
-    "note": "1226078",
+    "note": "122607899902",
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-20 23:13:31.551",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-23 00:57:33.307"
+    "changedDate": "<DateTime>2017-12-23 09:10:54.733",
+    "sqlBefore": "-- ================"
 }
