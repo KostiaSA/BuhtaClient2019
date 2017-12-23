@@ -53,6 +53,14 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         addToolbarIconItem(this.toolbar, {
             group: "gr1",
             type: "icon",
+            tooltip: "обновить список (F5)",
+            id: "x0",
+            icon: config.dbGrid.toolbar.reloadIcon
+        });
+
+        addToolbarIconItem(this.toolbar, {
+            group: "gr1",
+            type: "icon",
             tooltip: "поиск по колонке с начала списка (F2)",
             id: "x1",
             icon: config.dbGrid.toolbar.findIcon
@@ -72,6 +80,14 @@ export class Desktop extends React.Component<IDesktopProps, any> {
             tooltip: "поиск по колонке назад (Shift-F3)",
             id: "x3",
             icon: config.dbGrid.toolbar.findPrevIcon
+        });
+
+        addToolbarIconItem(this.toolbar, {
+            group: "gr2",
+            type: "icon",
+            tooltip: "обновить список (F5)",
+            id: "x0",
+            icon: config.dbGrid.toolbar.reloadIcon
         });
 
         addToolbarIconItem(this.toolbar, {

@@ -73,9 +73,9 @@ export class Toolbar extends React.Component<IToolbarProps> {
         let ret: React.ReactNode[] = [];
         let items = [...(this.props.items || []), ...React.Children.toArray(this.props.children)];
         let groups = this.props.groups || [];
-        items.forEach((group: string) => {
-            if (groups.indexOf(group) === -1)
-                groups.push(group);
+        items.forEach((item: IToolbarItemProps) => {
+            if (groups.indexOf(item.group || "") === -1)
+                groups.push(item.group || "");
         });
 
         let groupCount = 0;
@@ -106,7 +106,7 @@ export class Toolbar extends React.Component<IToolbarProps> {
 
 
                     ret.push(
-                        <div key={props.id} className="buhta-toolbar-item" title={props.tooltip}
+                        <div key={group + "-" + props.id} className="buhta-toolbar-item" title={props.tooltip}
                              style={{
                                  height: 22,
                                  width: 21,
@@ -124,7 +124,7 @@ export class Toolbar extends React.Component<IToolbarProps> {
                 groupCount++;
         }
 
-        console.log("ret", ret)
+        //console.log("ret", ret)
         return ret;
     }
 
