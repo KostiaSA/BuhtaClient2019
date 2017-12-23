@@ -6,6 +6,8 @@ import {isString} from "../utils/isString";
 import {isArray} from "../utils/isArray";
 
 
+const itemTypes = ["icon", "button", "divider"];
+
 export interface IToolbarItemProps {
     type?: "icon" | "button" | "divider";
     id?: string;
@@ -38,6 +40,9 @@ export function addToolbarIconItem(toolbar: IToolbarProps, item: IToolbarIconIte
     if (!item)
         throwError("addToolbarIconItem(): не указан параметр 'item'");
 
+    if (itemTypes.indexOf(item.type as any) === -1)
+        throwError("addToolbarIconItem(): не указан или неверный параметр 'item.type', может быть только '" + itemTypes.join("','") + "'");
+
     if (!isString(item.group))
         throwError("addToolbarIconItem(): не указан или неверный параметр 'item.group'");
 
@@ -66,7 +71,7 @@ export class Toolbar extends React.Component<IToolbarProps> {
 
     renderItems(): React.ReactNode {
         let ret: React.ReactNode[] = [];
-        let items = [...(this.props.items || []), ...React.Children.toArray(this.props)];
+        let items = [...(this.props.items || []), ...React.Children.toArray(this.props.children)];
         let groups = this.props.groups || [];
         items.forEach((group: string) => {
             if (groups.indexOf(group) === -1)
@@ -80,22 +85,23 @@ export class Toolbar extends React.Component<IToolbarProps> {
                 if (props.type === "icon") {
                     ret.push(
                         <div key={props.id} className="buhta-toolbar-item"
-                             style={{height: 25, width: 25}}
+                             style={{height: 25, width: 25, display: "inline-block", textAlign: "center", borderRight: "1px solid silver"}}
                         >
-                            <img src={props.image} width={16} height={16}/>,
+                            <img src={props.icon} width={16} height={16} style={{marginTop: 4}}/>
                         </div>
                     )
                 }
             }
         }
 
+        console.log("ret", ret)
         return ret;
     }
 
     render() {
-        //console.log("render Div",this.props.children);
+        console.log("render Toolbar", this.props.children);
         return (
-            <div style={{height: 25}}>
+            <div style={{height: 25, borderBottom: "1px solid silver",}}>
                 {this.renderItems()}
             </div>
 

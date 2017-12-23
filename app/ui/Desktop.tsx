@@ -3,10 +3,7 @@ import {appState} from "../AppState";
 import {Window} from "./Window";
 import {getRandomString} from "../utils/getRandomString";
 import {replaceAll} from "../utils/replaceAll";
-import {SchemaTableDesignerWindow} from "../admin/SchemaTableDesignerWindow";
 import {IComponentProps} from "./Component";
-import {saveSchemaObjectFiles} from "../admin/api/saveSchemaObjectFiles";
-import {loadSchemaTree} from "../admin/api/loadSchemaTree";
 import {SchemaExplorerWindow} from "../admin/SchemaExplorerWindow";
 import {getSHA1hex} from "../utils/getSHA1hex";
 import {Menu} from "./Menu";
@@ -15,8 +12,7 @@ import {config} from "../config";
 import {MenuSeparator} from "./MenuSeparator";
 import {TestsExplorerWindow} from "../admin/TestsExplorerWindow";
 import {throwError} from "../utils/throwError";
-import {Div} from "./Div";
-import {IToolbarItemProps, IToolbarProps, Toolbar} from "./Toolbar";
+import {addToolbarIconItem, IToolbarProps, Toolbar} from "./Toolbar";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -37,24 +33,28 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     t: string = "title999";
 
     windows: React.ReactNode[] = [];
-    toolbarGroups:string[]=[];
-    toolbarItems:IToolbarItemProps[]=[];
+
+    toolbar: IToolbarProps = {
+        groups: ["gr1", "gr2"],
+        items: []
+
+    };
+
 
     renderWindows(): React.ReactNode {
         return this.windows.slice();
     }
 
-    renderToolbar(): React.ReactNode {
-        return (
-            [
-                <img src="vendor/fugue/key.png"/>,
-                <img src="vendor/fugue/tick.png"/>,
-            ]
-        );
-    }
-
     render() {
-        //console.log("render desktop");
+        console.log("render desktop");
+
+        addToolbarIconItem(this.toolbar,{
+            group:"gr1",
+            type:"icon",
+            id:getRandomString(),
+            icon:"vendor/fugue/tick.png"
+        });
+
         return (
             <div id="desktop" style={{height: "100%", flex: "1 0 auto"}}>
                 <Menu mode="horizontal">
@@ -111,7 +111,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                             }}></MenuItem>
                     </MenuItem>
                 </Menu>
-                <Toolbar groups={this.toolbarGroups} items={this.toolbarItems}></Toolbar>
+                <Toolbar groups={this.toolbar.groups} items={this.toolbar.items}></Toolbar>
                 {this.renderWindows()}
             </div>
         )
@@ -173,7 +173,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
             script = await $.get(fileName);
         }
         catch (e) {
-            throwError( "не найден файл '" + fileName + "'");
+            throwError("не найден файл '" + fileName + "'");
         }
 
         let compiledScript = Babel.transform(script, {presets: ['es2017', 'react']}).code;
@@ -187,7 +187,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         eval(compiledScript);
 
         if (!(window as any)[className])
-            throwError( "ошибка загрузки '" + fileName + "'");
+            throwError("ошибка загрузки '" + fileName + "'");
 
     }
 }
