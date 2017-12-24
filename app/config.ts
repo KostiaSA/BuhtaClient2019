@@ -39,7 +39,8 @@ export let config: any = {
         changeRowIcon: "vendor/fugue/card--pencil.png",
         deleteRowIcon: "vendor/fugue/cross.png",
         focusedBorder: "1px solid dodgerblue",
-        refreshIcon: "vendor/fugue/arrow-circle-double-green.png",
+        refreshIcon: "vendor/buhta/images/refresh.png",
+        runIcon: "vendor/buhta/images/run.png",
     },
     baseInput: {
         height: 24,
@@ -104,11 +105,16 @@ export let config: any = {
     dbGrid: {
         //rowsHeight: 21
         toolbar: {
-            reloadIcon: "vendor/fugue/arrow-circle-double-green.png",
+            reloadIcon: "vendor/buhta/images/refresh.png",
 //            findIcon: "vendor/fugue/binocular.png",
             findIcon: "vendor/fugue/magnifier.png",
-            findNextIcon: "vendor/fugue/arrow-270-medium.png",
-            findPrevIcon: "vendor/fugue/arrow-090-medium.png",
+            findNextIcon: "vendor/buhta/images/magnifier--arrow-down.png",
+            findPrevIcon: "vendor/buhta/images/magnifier--arrow-up.png",
+            filterIcon: "vendor/fugue/funnel.png",
+            filterPlusIcon: "vendor/fugue/funnel--plus.png",
+            filterMinusIcon: "vendor/fugue/funnel--minus.png",
+            filterInputIcon: "vendor/buhta/images/funnel--input.png",
+            filterResetIcon: "vendor/buhta/images/funnel--reset.png",
         }
     },
     CSS_COLOR_NAMES: [

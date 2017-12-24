@@ -513,7 +513,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 {/**************************** Button "Тест" *************/}
                                 <Button
                                     text="Выполнить запрос"
-                                    imgSrc="vendor/fugue/table--arrow.png"
+                                    imgSrc="vendor/buhta/images/run.png"
                                     style={{marginRight: 5}}
                                     onClick={async () => {
                                         if (this.form!.needSaveChanges) {
@@ -530,6 +530,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 {/**************************** Button "Показать SQL"а *************/}
                                 <Button
                                     text="Показать текст SQL"
+                                    imgSrc="vendor/buhta/images/query-sql-form.png"
                                     onClick={async () => {
                                         let sql = await new SchemaQuery(this.query).emitSqlTemplate();
                                         appState.desktop.openWindow(
@@ -542,7 +543,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 />
                             </FlexItem>
                             <FlexItem dock="fill" style={{justifyContent: "flex-end"}}>
-                                <Button imgSrc={config.button.applyIcon}
+                                <Button imgSrc={config.button.applIcon}
                                         tooltip="сохранить без закрытия формы"
                                         style={{marginRight: 5, opacity: 0.7}}
                                         ref={(e) => this.applyButton = e!}

@@ -85,17 +85,9 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         addToolbarIconItem(this.toolbar, {
             group: "gr2",
             type: "icon",
-            tooltip: "обновить список (F5)",
-            id: "x0",
-            icon: config.dbGrid.toolbar.reloadIcon
-        });
-
-        addToolbarIconItem(this.toolbar, {
-            group: "gr2",
-            type: "icon",
             tooltip: "поиск по колонке с начала списка (F2)",
             id: "x12",
-            icon: config.dbGrid.toolbar.findIcon
+            icon: config.dbGrid.toolbar.filterIcon
         });
 
         addToolbarIconItem(this.toolbar, {
@@ -103,7 +95,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
             type: "icon",
             tooltip: "поиск по колонке вперед (F3)",
             id: "x22",
-            icon: config.dbGrid.toolbar.findNextIcon
+            icon: config.dbGrid.toolbar.filterInputIcon
         });
 
         addToolbarIconItem(this.toolbar, {
@@ -111,7 +103,21 @@ export class Desktop extends React.Component<IDesktopProps, any> {
             type: "icon",
             tooltip: "поиск по колонке назад (Shift-F3)",
             id: "x2",
-            icon: config.dbGrid.toolbar.findPrevIcon
+            icon: config.dbGrid.toolbar.filterPlusIcon
+        });
+        addToolbarIconItem(this.toolbar, {
+            group: "gr2",
+            type: "icon",
+            tooltip: "поиск по колонке назад (Shift-F3)",
+            id: "x2",
+            icon: config.dbGrid.toolbar.filterMinusIcon
+        });
+        addToolbarIconItem(this.toolbar, {
+            group: "gr2",
+            type: "icon",
+            tooltip: "поиск по колонке назад (Shift-F3)",
+            id: "x2",
+            icon: config.dbGrid.toolbar.filterResetIcon
         });
 
     }
