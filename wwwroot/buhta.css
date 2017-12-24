@@ -134,8 +134,9 @@ input[type=text].jqx-input {
 }
 
 .buhta-toolbar-item:hover {
-    background-color: #c0c0c06b;
+    /*background-color: #c0c0c06b;*/
     opacity: 1;
+    outline: 1px solid #969696;
 }
 .buhta-toolbar-item:active {
     background-color: silver;
