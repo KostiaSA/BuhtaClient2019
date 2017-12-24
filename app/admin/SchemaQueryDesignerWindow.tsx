@@ -513,7 +513,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 {/**************************** Button "Тест" *************/}
                                 <Button
                                     text="Выполнить запрос"
-                                    imgSrc="vendor/buhta/images/run.png"
+                                    imgSrc={config.button.runIcon}
                                     style={{marginRight: 5}}
                                     onClick={async () => {
                                         if (this.form!.needSaveChanges) {

@@ -39,8 +39,8 @@ export let config: any = {
         changeRowIcon: "vendor/fugue/card--pencil.png",
         deleteRowIcon: "vendor/fugue/cross.png",
         focusedBorder: "1px solid dodgerblue",
-        refreshIcon: "vendor/buhta/images/refresh.png",
-        runIcon: "vendor/buhta/images/run.png",
+        refreshIcon: "buhta/assets/icons/refresh.png",
+        runIcon: "buhta/assets/icons/run.png",
     },
     baseInput: {
         height: 24,
@@ -105,24 +105,24 @@ export let config: any = {
     dbGrid: {
         //rowsHeight: 21
         toolbar: {
-            reloadIcon: "vendor/buhta/images/refresh.png",
+            reloadIcon: "buhta/assets/icons/refresh.png",
 //            findIcon: "vendor/fugue/binocular.png",
             findIcon: "vendor/fugue/magnifier.png",
-            findNextIcon: "vendor/buhta/images/magnifier--arrow-down.png",
-            findPrevIcon: "vendor/buhta/images/magnifier--arrow-up.png",
+            findNextIcon: "buhta/assets/icons/magnifier--arrow-down.png",
+            findPrevIcon: "buhta/assets/icons/magnifier--arrow-up.png",
             filterIcon: "vendor/fugue/funnel.png",
             filterPlusIcon: "vendor/fugue/funnel--plus.png",
             filterMinusIcon: "vendor/fugue/funnel--minus.png",
-            filterInputIcon: "vendor/buhta/images/funnel--input.png",
-            filterResetIcon: "vendor/buhta/images/funnel--reset.png",
+            filterInputIcon: "buhta/assets/icons/funnel--input.png",
+            filterResetIcon: "buhta/assets/icons/funnel--reset.png",
 
-            checkboxesIcon: "vendor/buhta/images/grid-checkboxes.png",
-            checkboxesAllIcon: "vendor/buhta/images/grid-checkboxes-all.png",
-            checkboxesNoneIcon: "vendor/buhta/images/grid-checkboxes-none.png",
+            checkboxesIcon: "buhta/assets/icons/grid-checkboxes.png",
+            checkboxesAllIcon: "buhta/assets/icons/grid-checkboxes-all.png",
+            checkboxesNoneIcon: "buhta/assets/icons/grid-checkboxes-none.png",
 
-            sortAscIcon: "vendor/buhta/images/sort-asc.png",
-            sortDescIcon: "vendor/buhta/images/sort-desc.png",
-            sortResetIcon: "vendor/buhta/images/sort-reset.png",
+            sortAscIcon: "buhta/assets/icons/sort-asc.png",
+            sortDescIcon: "buhta/assets/icons/sort-desc.png",
+            sortResetIcon: "buhta/assets/icons/sort-reset.png",
         }
     },
     CSS_COLOR_NAMES: [
