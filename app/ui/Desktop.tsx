@@ -12,7 +12,7 @@ import {config} from "../config";
 import {MenuSeparator} from "./MenuSeparator";
 import {TestsExplorerWindow} from "../admin/TestsExplorerWindow";
 import {throwError} from "../utils/throwError";
-import {addToolbarIconItem, clearToolbar, clearToolbarGroup, IToolbarProps, Toolbar} from "./Toolbar";
+import {addToolbarIconItem, clearToolbar, IToolbarProps, Toolbar} from "./Toolbar";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -35,7 +35,10 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     windows: React.ReactNode[] = [];
 
     toolbar: IToolbarProps = {
-        groups: ["grid","grid-selection","grid-find", "grid-filter", "grid-sort"],
+        groups: [
+            "focused-input",
+            "focused-grid", "focused-grid-selection", "focused-grid-find", "focused-grid-filter", "focused-grid-sort"
+        ],
         items: []
 
     };

@@ -66,6 +66,14 @@ export function clearToolbarGroup(toolbar: IToolbarProps, group: string) {
 
 }
 
+export function clearToolbarFocusedGroups(toolbar: IToolbarProps) {
+    if (!toolbar || !isArray(toolbar.groups) || !isArray(toolbar.items))
+        throwError("removeToolbarItemsOfGroup(): не указан или неверный параметр 'toolbar'");
+
+    toolbar.items = toolbar.items!.filter((_item) => _item.group!.indexOf("focused-")>-1);
+
+}
+
 export function clearToolbar(toolbar: IToolbarProps) {
     if (!toolbar || !isArray(toolbar.groups) || !isArray(toolbar.items))
         throwError("removeToolbarItemsOfGroup(): не указан или неверный параметр 'toolbar'");
@@ -76,6 +84,7 @@ export function clearToolbar(toolbar: IToolbarProps) {
 
 export class Toolbar extends React.Component<IToolbarProps> {
 
+    c:any=0;
 
     renderItems(): React.ReactNode {
         let ret: React.ReactNode[] = [];
@@ -137,9 +146,11 @@ export class Toolbar extends React.Component<IToolbarProps> {
     }
 
     render() {
+        this.c++;
         console.log("render Toolbar", this.props.children);
         return (
-            <div style={{height: 23, backgroundColor: "#fffbf1", borderBottom: "1px solid #d4d4d4",}}>
+            <div style={{paddingLeft:5, backgroundColor: "#fffbf1", borderBottom: "1px solid #d4d4d4",}}>
+                {this.c}
                 {this.renderItems()}
             </div>
 
