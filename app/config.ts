@@ -115,6 +115,14 @@ export let config: any = {
             filterMinusIcon: "vendor/fugue/funnel--minus.png",
             filterInputIcon: "vendor/buhta/images/funnel--input.png",
             filterResetIcon: "vendor/buhta/images/funnel--reset.png",
+
+            checkboxesIcon: "vendor/buhta/images/grid-checkboxes.png",
+            checkboxesAllIcon: "vendor/buhta/images/grid-checkboxes-all.png",
+            checkboxesNoneIcon: "vendor/buhta/images/grid-checkboxes-none.png",
+
+            sortAscIcon: "vendor/buhta/images/sort-asc.png",
+            sortDescIcon: "vendor/buhta/images/sort-desc.png",
+            sortResetIcon: "vendor/buhta/images/sort-reset.png",
         }
     },
     CSS_COLOR_NAMES: [

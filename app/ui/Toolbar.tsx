@@ -66,6 +66,14 @@ export function clearToolbarGroup(toolbar: IToolbarProps, group: string) {
 
 }
 
+export function clearToolbar(toolbar: IToolbarProps) {
+    if (!toolbar || !isArray(toolbar.groups) || !isArray(toolbar.items))
+        throwError("removeToolbarItemsOfGroup(): не указан или неверный параметр 'toolbar'");
+
+    toolbar.items = [];
+
+}
+
 export class Toolbar extends React.Component<IToolbarProps> {
 
 
@@ -89,8 +97,8 @@ export class Toolbar extends React.Component<IToolbarProps> {
                              position: "relative",
                              height: 16,
                              width: 1,
-                             marginLeft: 4,
-                             marginRight: 5,
+                             marginLeft: 5,
+                             marginRight: 6,
                              display: "inline-block",
                              textAlign: "center",
                              borderRight: "1px solid silver",
@@ -131,7 +139,7 @@ export class Toolbar extends React.Component<IToolbarProps> {
     render() {
         console.log("render Toolbar", this.props.children);
         return (
-            <div style={{height: 23, borderBottom: "1px solid silver",}}>
+            <div style={{height: 23, backgroundColor: "#fffbf1", borderBottom: "1px solid #d4d4d4",}}>
                 {this.renderItems()}
             </div>
 

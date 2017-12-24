@@ -12,7 +12,7 @@ import {config} from "../config";
 import {MenuSeparator} from "./MenuSeparator";
 import {TestsExplorerWindow} from "../admin/TestsExplorerWindow";
 import {throwError} from "../utils/throwError";
-import {addToolbarIconItem, clearToolbarGroup, IToolbarProps, Toolbar} from "./Toolbar";
+import {addToolbarIconItem, clearToolbar, clearToolbarGroup, IToolbarProps, Toolbar} from "./Toolbar";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -35,7 +35,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     windows: React.ReactNode[] = [];
 
     toolbar: IToolbarProps = {
-        groups: ["gr1", "gr2"],
+        groups: ["grid","grid-selection","grid-find", "grid-filter", "grid-sort"],
         items: []
 
     };
@@ -47,11 +47,10 @@ export class Desktop extends React.Component<IDesktopProps, any> {
 
 
     __createT() {
-        clearToolbarGroup(this.toolbar, "gr1");
-        clearToolbarGroup(this.toolbar, "gr2");
+        clearToolbar(this.toolbar);
 
         addToolbarIconItem(this.toolbar, {
-            group: "gr1",
+            group: "grid",
             type: "icon",
             tooltip: "обновить список (F5)",
             id: "x0",
@@ -59,7 +58,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         });
 
         addToolbarIconItem(this.toolbar, {
-            group: "gr1",
+            group: "grid-find",
             type: "icon",
             tooltip: "поиск по колонке с начала списка (F2)",
             id: "x1",
@@ -67,7 +66,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         });
 
         addToolbarIconItem(this.toolbar, {
-            group: "gr1",
+            group: "grid-find",
             type: "icon",
             tooltip: "поиск по колонке вперед (F3)",
             id: "x2",
@@ -75,7 +74,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         });
 
         addToolbarIconItem(this.toolbar, {
-            group: "gr1",
+            group: "grid-find",
             type: "icon",
             tooltip: "поиск по колонке назад (Shift-F3)",
             id: "x3",
@@ -83,7 +82,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         });
 
         addToolbarIconItem(this.toolbar, {
-            group: "gr2",
+            group: "grid-filter",
             type: "icon",
             tooltip: "поиск по колонке с начала списка (F2)",
             id: "x12",
@@ -91,7 +90,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         });
 
         addToolbarIconItem(this.toolbar, {
-            group: "gr2",
+            group: "grid-filter",
             type: "icon",
             tooltip: "поиск по колонке вперед (F3)",
             id: "x22",
@@ -99,27 +98,73 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         });
 
         addToolbarIconItem(this.toolbar, {
-            group: "gr2",
+            group: "grid-filter",
             type: "icon",
             tooltip: "поиск по колонке назад (Shift-F3)",
             id: "x2",
             icon: config.dbGrid.toolbar.filterPlusIcon
         });
         addToolbarIconItem(this.toolbar, {
-            group: "gr2",
+            group: "grid-filter",
             type: "icon",
             tooltip: "поиск по колонке назад (Shift-F3)",
             id: "x2",
             icon: config.dbGrid.toolbar.filterMinusIcon
         });
         addToolbarIconItem(this.toolbar, {
-            group: "gr2",
+            group: "grid-filter",
             type: "icon",
             tooltip: "поиск по колонке назад (Shift-F3)",
             id: "x2",
             icon: config.dbGrid.toolbar.filterResetIcon
         });
 
+        addToolbarIconItem(this.toolbar, {
+            group: "grid-selection",
+            type: "icon",
+            tooltip: "поиск по колонке назад (Shift-F3)",
+            id: "checkboxes",
+            icon: config.dbGrid.toolbar.checkboxesIcon
+        });
+        addToolbarIconItem(this.toolbar, {
+            group: "grid-selection",
+            type: "icon",
+            tooltip: "поиск по колонке назад (Shift-F3)",
+            id: "checkboxes-all",
+            icon: config.dbGrid.toolbar.checkboxesAllIcon
+        });
+        addToolbarIconItem(this.toolbar, {
+            group: "grid-selection",
+            type: "icon",
+            tooltip: "поиск по колонке назад (Shift-F3)",
+            id: "checkboxes-none",
+            icon: config.dbGrid.toolbar.checkboxesNoneIcon
+        });
+
+
+        addToolbarIconItem(this.toolbar, {
+            group: "grid-sort",
+            type: "icon",
+            tooltip: "сортировка по возрастанию",
+            id: "sort-asc",
+            icon: config.dbGrid.toolbar.sortAscIcon
+        });
+
+        addToolbarIconItem(this.toolbar, {
+            group: "grid-sort",
+            type: "icon",
+            tooltip: "сортировка по убыванию",
+            id: "sort-desc",
+            icon: config.dbGrid.toolbar.sortDescIcon
+        });
+
+        addToolbarIconItem(this.toolbar, {
+            group: "grid-sort",
+            type: "icon",
+            tooltip: "отмена сортировки",
+            id: "sort-reset",
+            icon: config.dbGrid.toolbar.sortResetIcon
+        });
     }
 
     render() {
