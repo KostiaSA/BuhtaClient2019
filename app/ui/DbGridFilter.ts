@@ -17,5 +17,17 @@ export class DbGridEqualFilter {
     }
 }
 
+export class DbGridNotEqualFilter {
+    constructor(public dataType: BaseSqlDataType, public value: any, public columnName: string) {
+
+    }
+
+    filter(row: any): boolean {
+        return !this.dataType.isEquals(this.value, row[this.columnName]);
+    }
+}
+
+
+
 
 

@@ -11,7 +11,7 @@ import {config} from "../config";
 import {showError} from "./modals/showError";
 import {addToolbarIconItem} from "./Toolbar";
 import {appState} from "../AppState";
-import {DbGridBaseFilter, DbGridEqualFilter} from "./DbGridFilter";
+import {DbGridBaseFilter, DbGridEqualFilter, DbGridNotEqualFilter} from "./DbGridFilter";
 
 
 export interface IDbGridProps extends IComponentProps {
@@ -245,27 +245,31 @@ export class DbGrid extends Component<IDbGridProps> {
                 onClick: async () => {
                     let queryColumn = this.query.getColumnByCaption(this.focusedCellDataField);
                     let cellValue = this.focusedCellRow[this.focusedCellDataField];
-                    let dataType=queryColumn.getDataType();
+                    let dataType = queryColumn.getDataType();
                     let filter = new DbGridEqualFilter(dataType, cellValue, this.focusedCellDataField);
-
-                    // let func = eval(`
-                    //     (function (row) {
-                    //        return row["Название"].toLocaleLowerCase().indexOf("плат") > -1;
-                    //     })
-                    // `);
-
                     this.activeFilters.push(filter);
                     this.setFilteredDataSource();
                 }
 
             });
+
             addToolbarIconItem(appState.desktop.toolbar, {
                 group: "focused-grid-filter",
                 type: "icon",
                 tooltip: "фильтр - все кроме выделенного значения",
                 id: "filter-minus",
-                icon: config.dbGrid.toolbar.filterMinusIcon
+                icon: config.dbGrid.toolbar.filterMinusIcon,
+                onClick: async () => {
+                    let queryColumn = this.query.getColumnByCaption(this.focusedCellDataField);
+                    let cellValue = this.focusedCellRow[this.focusedCellDataField];
+                    let dataType = queryColumn.getDataType();
+                    let filter = new DbGridNotEqualFilter(dataType, cellValue, this.focusedCellDataField);
+                    this.activeFilters.push(filter);
+                    this.setFilteredDataSource();
+                }
+
             });
+
             addToolbarIconItem(appState.desktop.toolbar, {
                 group: "focused-grid-filter",
                 type: "icon",
@@ -285,6 +289,7 @@ export class DbGrid extends Component<IDbGridProps> {
                 id: "checkboxes",
                 icon: config.dbGrid.toolbar.checkboxesIcon
             });
+
             addToolbarIconItem(appState.desktop.toolbar, {
                 group: "focused-grid-selection",
                 type: "icon",
@@ -292,6 +297,7 @@ export class DbGrid extends Component<IDbGridProps> {
                 id: "checkboxes-all",
                 icon: config.dbGrid.toolbar.checkboxesAllIcon
             });
+
             addToolbarIconItem(appState.desktop.toolbar, {
                 group: "focused-grid-selection",
                 type: "icon",
@@ -306,7 +312,11 @@ export class DbGrid extends Component<IDbGridProps> {
                 type: "icon",
                 tooltip: "сортировка по возрастанию",
                 id: "sort-asc",
-                icon: config.dbGrid.toolbar.sortAscIcon
+                icon: config.dbGrid.toolbar.sortAscIcon,
+                onClick: async () => {
+                    this.sortByColumn(this.focusedCellDataField, "asc");
+                }
+
             });
 
             addToolbarIconItem(appState.desktop.toolbar, {
@@ -314,7 +324,10 @@ export class DbGrid extends Component<IDbGridProps> {
                 type: "icon",
                 tooltip: "сортировка по убыванию",
                 id: "sort-desc",
-                icon: config.dbGrid.toolbar.sortDescIcon
+                icon: config.dbGrid.toolbar.sortDescIcon,
+                onClick: async () => {
+                    this.sortByColumn(this.focusedCellDataField, "desc");
+                }
             });
 
             addToolbarIconItem(appState.desktop.toolbar, {
@@ -322,7 +335,10 @@ export class DbGrid extends Component<IDbGridProps> {
                 type: "icon",
                 tooltip: "отмена сортировки",
                 id: "sort-reset",
-                icon: config.dbGrid.toolbar.sortResetIcon
+                icon: config.dbGrid.toolbar.sortResetIcon,
+                onClick: async () => {
+                    this.removeSort();
+                }
             });
             appState.desktop.forceUpdate();
             appState.desktop.forceUpdate();
@@ -723,6 +739,14 @@ export class DbGrid extends Component<IDbGridProps> {
 
     focus() {
         this.widget.jqxGrid("focus");
+    }
+
+    sortByColumn(columnCaption: string, ascDesc: "asc" | "desc" = "asc"): any {
+        return this.widget.jqxGrid("sortby", columnCaption, ascDesc);
+    }
+
+    removeSort() {
+        this.widget.jqxGrid("removesort");
     }
 
     // getRowData(rowIndex: number) {
