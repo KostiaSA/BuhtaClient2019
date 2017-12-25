@@ -340,7 +340,7 @@ export class DbGrid extends Component<IDbGridProps> {
                     this.removeSort();
                 }
             });
-            appState.desktop.forceUpdate();
+
             appState.desktop.forceUpdate();
         }
 

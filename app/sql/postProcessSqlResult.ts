@@ -6,7 +6,7 @@ declare let TextDecoder: any;
 
 export function postProcessSqlResult(responseData: any): any {
     if (responseData.error)
-        throwError( responseData.error);
+        throwError(responseData.error);
 
     let res: any;
 
@@ -27,6 +27,11 @@ export function postProcessSqlResult(responseData: any): any {
             rowset.rows[rowIndex] = rowObject;
             for (let colIndex = 0; colIndex < rowset._rows_[rowIndex].length; colIndex++) {
                 let value = rowset._rows_[rowIndex][colIndex];
+                if (typeof value === "object") {
+                    if (value.t === "N") { // null
+                        value = null;
+                    }
+                }
                 rowObject[rowset.columns[colIndex].name] = value;
             }
         }
