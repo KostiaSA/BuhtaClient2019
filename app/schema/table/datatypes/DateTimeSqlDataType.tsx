@@ -7,6 +7,7 @@ import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isDateOrNull} from "../../../utils/isDateOrNull";
 import {Moment} from "moment";
 import {throwError} from "../../../utils/throwError";
+import {isDate} from "../../../utils/isDate";
 
 
 export interface IDateTimeSqlDataTypeProps extends IBaseSqlDataTypeProps {
@@ -56,6 +57,22 @@ export class DateTimeSqlDataType extends BaseSqlDataType<IDateTimeSqlDataTypePro
 
 
         return new SqlEmitter(dialect).emit_DATETIME(date);
+
+    }
+
+    isEquals(value1: any, value2: any): boolean {
+
+        if (value1 === value2)
+            return true;
+
+        if ((value1 === undefined || value1 === null ) && (value2 === undefined || value2 === null))
+            return true;
+
+        if (isDate(value1) && isDate(value2)) {
+            return (value1 as Moment).isSame(value2);
+        }
+
+        return false;
 
     }
 

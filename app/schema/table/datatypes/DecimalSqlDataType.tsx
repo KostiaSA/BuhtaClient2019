@@ -123,4 +123,16 @@ export class DecimalSqlDataType extends BaseSqlDataType<IDecimalSqlDataTypeProps
 
     }
 
+    isEquals(value1: any, value2: any): boolean {
+
+        if (value1 === value2)
+            return true;
+
+        if ((value1 === undefined || value1 === null) && (value2 === undefined || value2 === null))
+            return true;
+
+        return false;
+
+    }
+
 }

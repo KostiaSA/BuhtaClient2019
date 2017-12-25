@@ -1,13 +1,11 @@
 import * as React from "react";
-import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
-import {NumberInput} from "../../../ui/inputs/NumberInput";
 import {config} from "../../../config";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
-import {isStringOrNull} from "../../../utils/isStringOrNull";
 import {isDateOrNull} from "../../../utils/isDateOrNull";
 import {Moment} from "moment";
 import {throwError} from "../../../utils/throwError";
+import {isDate} from "../../../utils/isDate";
 
 declare let TextEncoder: any;
 
@@ -30,7 +28,7 @@ export class DateSqlDataType extends BaseSqlDataType<IDateSqlDataTypeProps> {
 
     async emitColumnDataType(dialect: SqlDialect, col: IDateSqlDataTypeProps): Promise<string> {
         if (dialect === "mssql") {
-           return ("DATE");
+            return ("DATE");
         }
         else if (dialect === "postgres") {
             return ("DATE");
@@ -40,7 +38,7 @@ export class DateSqlDataType extends BaseSqlDataType<IDateSqlDataTypeProps> {
         }
         else {
             let msg = "DateSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
-            throwError( msg);
+            throwError(msg);
             throw "fake";
 
         }
@@ -49,16 +47,32 @@ export class DateSqlDataType extends BaseSqlDataType<IDateSqlDataTypeProps> {
 
     async emitValue(dialect: SqlDialect, colDataType: IDateSqlDataTypeProps, date: Moment): Promise<string> {
         if (!isDateOrNull(date))
-            throwError(  "значение даты должно быть объектом типа Moment или null");
+            throwError("значение даты должно быть объектом типа Moment или null");
 
         if (date === null)
             return new SqlEmitter(dialect).emit_NULL();
 
         if (date.isBefore(config.sql.minDate) || date.isAfter(config.sql.maxDate))
-            throwError(  "значение даты должно быть в пределах '2 янв 0001 г' и '31 дек 9999 г'");
+            throwError("значение даты должно быть в пределах '2 янв 0001 г' и '31 дек 9999 г'");
 
 
         return new SqlEmitter(dialect).emit_DATE(date);
+
+    }
+
+    isEquals(value1: any, value2: any): boolean {
+
+        if (value1 === value2)
+            return true;
+
+        if ((value1 === undefined || value1 === null ) && (value2 === undefined || value2 === null))
+            return true;
+
+        if (isDate(value1) && isDate(value2)) {
+            return (value1 as Moment).isSame(value2);
+        }
+
+        return false;
 
     }
 

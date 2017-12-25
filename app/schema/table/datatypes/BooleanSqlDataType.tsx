@@ -1,13 +1,9 @@
 import * as React from "react";
-import * as Joi from "joi";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
-import {NumberInput} from "../../../ui/inputs/NumberInput";
 import {config} from "../../../config";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
-import {isStringOrNull} from "../../../utils/isStringOrNull";
 import {isBooleanOrNull} from "../../../utils/isBooleanOrNull";
 import {throwError} from "../../../utils/throwError";
-
 
 
 export interface IBooleanSqlDataTypeProps extends IBaseSqlDataTypeProps {
@@ -57,7 +53,7 @@ export class BooleanSqlDataType extends BaseSqlDataType<IBooleanSqlDataTypeProps
 
     async emitColumnDataType(dialect: SqlDialect, col: IBooleanSqlDataTypeProps): Promise<string> {
         if (dialect === "mssql") {
-           return ("BIT");
+            return ("BIT");
         }
         else if (dialect === "postgres") {
             return ("boolean");
@@ -67,7 +63,7 @@ export class BooleanSqlDataType extends BaseSqlDataType<IBooleanSqlDataTypeProps
         }
         else {
             let msg = "BooleanSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
-            throwError( msg);
+            throwError(msg);
             throw "fake";
         }
 
@@ -75,12 +71,24 @@ export class BooleanSqlDataType extends BaseSqlDataType<IBooleanSqlDataTypeProps
 
     async emitValue(dialect: SqlDialect, colDataType: IBooleanSqlDataTypeProps, value: any): Promise<string> {
         if (!isBooleanOrNull(value))
-            throwError(  "значение должно быть true/false или null");
+            throwError("значение должно быть true/false или null");
 
         if (value === null)
             return new SqlEmitter(dialect).emit_NULL();
 
         return new SqlEmitter(dialect).emit_BOOLEAN(value);
+
+    }
+
+    isEquals(value1: any, value2: any): boolean {
+
+        if (value1 === value2)
+            return true;
+
+        if ((value1 === undefined || value1 === null || value1 === false ) && (value2 === undefined || value2 === null || value2 === false))
+            return true;
+
+        return false;
 
     }
 

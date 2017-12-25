@@ -4,6 +4,8 @@ import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
 import {isBlobOrNull} from "../../../utils/isBlobOrNull";
 import {config} from "../../../config";
 import {throwError} from "../../../utils/throwError";
+import {isBlob} from "../../../utils/isBlob";
+import {isBlobsEqual} from "../../../utils/isBlobsEquals";
 
 declare let TextEncoder: any;
 
@@ -81,6 +83,22 @@ export class BlobSqlDataType extends BaseSqlDataType<IBlobSqlDataTypeProps> {
 
         return new SqlEmitter(dialect).emit_BLOB(value);
         //return "0x" + new SqlEmitter(dialect).emit_HEX(Array.from(new Uint8Array(value)));
+    }
+
+    isEquals(value1: any, value2: any): boolean {
+
+        if (value1 === value2)
+            return true;
+
+        if ((value1 === undefined || value1 === null ) && (value2 === undefined || value2 === null))
+            return true;
+
+        if (isBlob(value1) && isBlob(value2)) {
+            return isBlobsEqual(value1,value2);
+        }
+
+        return false;
+
     }
 
 }

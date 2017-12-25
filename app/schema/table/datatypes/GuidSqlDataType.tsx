@@ -2,7 +2,7 @@ import * as React from "react";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "./BaseSqlDataType";
 import {config} from "../../../config";
 import {SqlDialect, SqlEmitter} from "../../../sql/SqlEmitter";
-import {Guid, isGuidOrNull} from "../../../utils/guid";
+import {Guid, isGuid, isGuidOrNull, isGuidsEqual} from "../../../utils/guid";
 import {throwError} from "../../../utils/throwError";
 
 declare let TextEncoder: any;
@@ -81,6 +81,22 @@ export class GuidSqlDataType extends BaseSqlDataType<IGuidSqlDataTypeProps> {
             return new SqlEmitter(dialect).emit_NULL();
 
         return new SqlEmitter(dialect).emit_GUID(value);
+
+    }
+
+    isEquals(value1: any, value2: any): boolean {
+
+        if (value1 === value2)
+            return true;
+
+        if ((value1 === undefined || value1 === null ) && (value2 === undefined || value2 === null))
+            return true;
+
+        if (isGuid(value1) && isGuid(value2)) {
+            return isGuidsEqual(value1,value2);
+        }
+
+        return false;
 
     }
 
