@@ -8,6 +8,8 @@ import {BaseInput, IBaseInputProps} from "./BaseInput";
 import {config} from "../../config";
 import {storageGet} from "../../storage/storageGet";
 import {storageSet} from "../../storage/storageSet";
+import {appState} from "../../AppState";
+import {addToolbarIconItem} from "../Toolbar";
 
 export interface IInputProps extends IBaseInputProps {
     height?: string | number;
@@ -93,6 +95,33 @@ export class Input extends BaseInput<IInputProps> {
 
     }
 
+    resetToolbarOnGotFocus = () => {
+        if (appState.desktop.toolbar.activeElement !== this) {
+            appState.desktop.clearToolbarFocusedGroups();
+            appState.desktop.toolbar.activeElement = this;
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-input",
+                type: "icon",
+                tooltip: "undo (Ctrl-Z)",
+                id: "undo",
+                icon: config.button.undoIcon
+            });
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-input",
+                type: "icon",
+                tooltip: "redo",
+                id: "redo",
+                icon: config.button.redoIcon
+            });
+
+            appState.desktop.forceUpdate();
+        }
+
+        console.log("resetToolbarOnGotFocus");
+    };
+
     render() {
         //console.log("render Input");
         let renderedValidationResult = this.renderValidationResult();
@@ -108,8 +137,8 @@ export class Input extends BaseInput<IInputProps> {
                 <table key={1} style={{borderCollapse: "collapse", borderSpacing: 0}}>
                     <tbody>
                     <tr>
-                        <td style={{padding: 0}}>
-                            <input key={1} id={this.$id} style={style} type="text"/>
+                        <td key={1} style={{padding: 0}}>
+                            <input id={this.$id} style={style} type="text" onFocus={this.resetToolbarOnGotFocus}/>
                         </td>
                         {this.renderRightResizerTd()}
                     </tr>

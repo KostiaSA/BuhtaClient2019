@@ -31,6 +31,7 @@ export interface IToolbarButtonItemProps extends IToolbarItemProps {
 export interface IToolbarProps extends IComponentProps {
     groups?: string[];
     items?: IToolbarItemProps[];
+    activeElement?:any;
 }
 
 export function addToolbarIconItem(toolbar: IToolbarProps, item: IToolbarIconItemProps) {
@@ -70,8 +71,8 @@ export function clearToolbarFocusedGroups(toolbar: IToolbarProps) {
     if (!toolbar || !isArray(toolbar.groups) || !isArray(toolbar.items))
         throwError("removeToolbarItemsOfGroup(): не указан или неверный параметр 'toolbar'");
 
-    toolbar.items = toolbar.items!.filter((_item) => _item.group!.indexOf("focused-")>-1);
-
+    toolbar.items = toolbar.items!.filter((_item) => _item.group!.indexOf("focused-")===-1);
+    console.log("clearToolbarFocusedGroups===toolbar.items",toolbar.items);
 }
 
 export function clearToolbar(toolbar: IToolbarProps) {
@@ -87,6 +88,7 @@ export class Toolbar extends React.Component<IToolbarProps> {
     c:any=0;
 
     renderItems(): React.ReactNode {
+        console.log("renderItems------------------",this.props.items);
         let ret: React.ReactNode[] = [];
         let items = [...(this.props.items || []), ...React.Children.toArray(this.props.children)];
         let groups = this.props.groups || [];
@@ -125,13 +127,13 @@ export class Toolbar extends React.Component<IToolbarProps> {
                     ret.push(
                         <div key={group + "-" + props.id} className="buhta-toolbar-item" title={props.tooltip}
                              style={{
-                                 height: 22,
-                                 width: 21,
+                                 height: 26,
+                                 width: 24,
                                  display: "inline-block",
                                  textAlign: "center",
                              }}
                         >
-                            <img src={props.icon} width={16} height={16} style={{marginTop: 3}}/>
+                            <img src={props.icon} width={16} height={16} style={{marginTop: 5}}/>
                         </div>
                     )
                 }

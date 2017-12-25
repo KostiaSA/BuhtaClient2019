@@ -9,6 +9,8 @@ import {throwError} from "../utils/throwError";
 import {omit} from "../utils/omit";
 import {config} from "../config";
 import {showError} from "./modals/showError";
+import {addToolbarIconItem, clearToolbarFocusedGroups} from "./Toolbar";
+import {appState} from "../AppState";
 
 
 export interface IDbGridProps extends IComponentProps {
@@ -82,13 +84,13 @@ export class DbGrid extends Component<IDbGridProps> {
 
             this.widget.css("position", "absolute");
 
-            gridOptions.enableanimations=false;
-            gridOptions.enablehover=false;
+            gridOptions.enableanimations = false;
+            gridOptions.enablehover = false;
             gridOptions.height = "100%";
             gridOptions.width = "100%";  // не убирать, несмотря на resizeIntervalId, иначе неприятная анимация при рендеринге
-            gridOptions.showfiltercolumnbackground=false;
-            gridOptions.showsortcolumnbackground=false;
-            gridOptions.showpinnedcolumnbackground=false;
+            gridOptions.showfiltercolumnbackground = false;
+            gridOptions.showsortcolumnbackground = false;
+            gridOptions.showpinnedcolumnbackground = false;
 
             gridOptions.selectionmode = "singlecell";
 
@@ -115,7 +117,7 @@ export class DbGrid extends Component<IDbGridProps> {
 
             this.isJqxGridInitialized = true;
 
-            let lastParentW=0;
+            let lastParentW = 0;
             let resizeIntervalId = setInterval(() => {
                 let newW = this.widget.parent().width();
 
@@ -126,11 +128,155 @@ export class DbGrid extends Component<IDbGridProps> {
 
                 if (lastParentW !== newW) {
                     lastParentW = newW;
-                    this.widget.jqxGrid({width: newW-2});
+                    this.widget.jqxGrid({width: newW - 2});
                 }
             }, 200);
 
+            this.widget.on("cellselect", (event: any) => {
+                console.log("cellselect----------->", event.args);
+                this.resetToolbar();
+                // // event arguments.
+                // var args = event.args;
+                // // get the column's text.
+                // var column = $("#jqxGrid").jqxGrid('getcolumn', event.args.datafield).text;
+                // // column data field.
+                // var dataField = event.args.datafield;
+                // // row's bound index.
+                // var rowBoundIndex = event.args.rowindex;
+                // // cell value
+                // var value = args.value;
+            });
+
+
         }
+    }
+
+    resetToolbar() {
+
+        if (appState.desktop.toolbar.activeElement !== this) {
+            appState.desktop.clearToolbarFocusedGroups();
+            appState.desktop.toolbar.activeElement = this;
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid",
+                type: "icon",
+                tooltip: "обновить список (F5)",
+                id: "refresh",
+                icon: config.dbGrid.toolbar.reloadIcon
+            });
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-find",
+                type: "icon",
+                tooltip: "поиск по колонке с начала списка (F2)",
+                id: "find",
+                icon: config.dbGrid.toolbar.findIcon
+            });
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-find",
+                type: "icon",
+                tooltip: "поиск по колонке вперед (F3)",
+                id: "find-next",
+                icon: config.dbGrid.toolbar.findNextIcon
+            });
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-find",
+                type: "icon",
+                tooltip: "поиск по колонке назад (Shift-F3)",
+                id: "find-prev",
+                icon: config.dbGrid.toolbar.findPrevIcon
+            });
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-filter",
+                type: "icon",
+                tooltip: "включить фильтр",
+                id: "filter",
+                icon: config.dbGrid.toolbar.filterIcon
+            });
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-filter",
+                type: "icon",
+                tooltip: "фильтр по строке/подстроке",
+                id: "filter-input",
+                icon: config.dbGrid.toolbar.filterInputIcon
+            });
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-filter",
+                type: "icon",
+                tooltip: "фильтр по выделенному значению",
+                id: "filter-plus",
+                icon: config.dbGrid.toolbar.filterPlusIcon
+            });
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-filter",
+                type: "icon",
+                tooltip: "фильтр - все кроме выделенного значения",
+                id: "filter-minus",
+                icon: config.dbGrid.toolbar.filterMinusIcon
+            });
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-filter",
+                type: "icon",
+                tooltip: "сброс всех фильтров",
+                id: "filter-reset",
+                icon: config.dbGrid.toolbar.filterResetIcon
+            });
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-selection",
+                type: "icon",
+                tooltip: "показать колонку для выбора записей",
+                id: "checkboxes",
+                icon: config.dbGrid.toolbar.checkboxesIcon
+            });
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-selection",
+                type: "icon",
+                tooltip: "выбрать все записи",
+                id: "checkboxes-all",
+                icon: config.dbGrid.toolbar.checkboxesAllIcon
+            });
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-selection",
+                type: "icon",
+                tooltip: "снять выбор",
+                id: "checkboxes-none",
+                icon: config.dbGrid.toolbar.checkboxesNoneIcon
+            });
+
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-sort",
+                type: "icon",
+                tooltip: "сортировка по возрастанию",
+                id: "sort-asc",
+                icon: config.dbGrid.toolbar.sortAscIcon
+            });
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-sort",
+                type: "icon",
+                tooltip: "сортировка по убыванию",
+                id: "sort-desc",
+                icon: config.dbGrid.toolbar.sortDescIcon
+            });
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-grid-sort",
+                type: "icon",
+                tooltip: "отмена сортировки",
+                id: "sort-reset",
+                icon: config.dbGrid.toolbar.sortResetIcon
+            });
+            appState.desktop.forceUpdate();
+            appState.desktop.forceUpdate();
+        }
+
     }
 
     async createColumns() {
@@ -494,7 +640,7 @@ export class DbGrid extends Component<IDbGridProps> {
     }
 
     autoResizeColumns() {
-        this.widget.jqxGrid("autoresizecolumns","cells");
+        this.widget.jqxGrid("autoresizecolumns", "cells");
     }
 
     selectRow(rowIndex: number) {

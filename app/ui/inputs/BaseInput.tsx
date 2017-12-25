@@ -10,6 +10,7 @@ import {joiValidate} from "../../validation/joiValidate";
 import {XJSON_stringify} from "../../utils/xjson";
 import {FormPanel} from "../FormPanel";
 import {throwError} from "../../utils/throwError";
+import {appState} from "../../AppState";
 
 
 export interface IBaseInputProps extends IComponentProps {
@@ -100,12 +101,23 @@ export class BaseInput<P extends IBaseInputProps=IBaseInputProps> extends Compon
         }
     }
 
+    resetToolbarOnGotFocus = () => {
+        if (appState.desktop.toolbar.activeElement!==this) {
+            appState.desktop.clearToolbarFocusedGroups();
+            appState.desktop.toolbar.activeElement=this;
+            appState.desktop.forceUpdate();
+        }
+
+        console.log("resetToolbarOnGotFocus");
+    };
+
     renderRightResizerTd(): React.ReactNode {
         if (!this.props.resizable)
             return null;
         else
             return (
-                <td style={{padding: 0, verticalAlign: "middle", borderLeft: "1px solid rgba(192, 192, 192, 0.6)"}}>
+                <td key="resizer"
+                    style={{padding: 0, verticalAlign: "middle", borderLeft: "1px solid rgba(192, 192, 192, 0.6)"}}>
                     <div
                         className="resizer"
                         style={{
@@ -123,7 +135,7 @@ export class BaseInput<P extends IBaseInputProps=IBaseInputProps> extends Compon
 
 
     render(): React.ReactNode {
-        throwError( "BaseInput:abstract error");
+        throwError("BaseInput:abstract error");
         throw "fake";
     }
 

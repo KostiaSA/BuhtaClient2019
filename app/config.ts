@@ -41,6 +41,8 @@ export let config: any = {
         focusedBorder: "1px solid dodgerblue",
         refreshIcon: "buhta/assets/icons/refresh.png",
         runIcon: "buhta/assets/icons/run.png",
+        undoIcon: "vendor/fugue/arrow-curve-180.png",
+        redoIcon: "vendor/fugue/arrow-curve.png",
     },
     baseInput: {
         height: 24,

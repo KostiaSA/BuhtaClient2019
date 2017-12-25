@@ -12,7 +12,7 @@ import {config} from "../config";
 import {MenuSeparator} from "./MenuSeparator";
 import {TestsExplorerWindow} from "../admin/TestsExplorerWindow";
 import {throwError} from "../utils/throwError";
-import {addToolbarIconItem, clearToolbar, IToolbarProps, Toolbar} from "./Toolbar";
+import {addToolbarIconItem, clearToolbar, clearToolbarFocusedGroups, IToolbarProps, Toolbar} from "./Toolbar";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -26,6 +26,8 @@ export class Desktop extends React.Component<IDesktopProps, any> {
 
     componentDidMount() {
         appState.desktop = this;
+        //this.__createT();
+        this.forceUpdate();
     }
 
     w: Window;
@@ -39,9 +41,12 @@ export class Desktop extends React.Component<IDesktopProps, any> {
             "focused-input",
             "focused-grid", "focused-grid-selection", "focused-grid-find", "focused-grid-filter", "focused-grid-sort"
         ],
-        items: []
-
+        items: [],
     };
+
+    clearToolbarFocusedGroups() {
+        clearToolbarFocusedGroups(this.toolbar);
+    }
 
 
     renderWindows(): React.ReactNode {
@@ -49,131 +54,146 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     }
 
 
-    __createT() {
-        clearToolbar(this.toolbar);
-
-        addToolbarIconItem(this.toolbar, {
-            group: "grid",
-            type: "icon",
-            tooltip: "обновить список (F5)",
-            id: "x0",
-            icon: config.dbGrid.toolbar.reloadIcon
-        });
-
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-find",
-            type: "icon",
-            tooltip: "поиск по колонке с начала списка (F2)",
-            id: "x1",
-            icon: config.dbGrid.toolbar.findIcon
-        });
-
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-find",
-            type: "icon",
-            tooltip: "поиск по колонке вперед (F3)",
-            id: "x2",
-            icon: config.dbGrid.toolbar.findNextIcon
-        });
-
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-find",
-            type: "icon",
-            tooltip: "поиск по колонке назад (Shift-F3)",
-            id: "x3",
-            icon: config.dbGrid.toolbar.findPrevIcon
-        });
-
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-filter",
-            type: "icon",
-            tooltip: "поиск по колонке с начала списка (F2)",
-            id: "x12",
-            icon: config.dbGrid.toolbar.filterIcon
-        });
-
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-filter",
-            type: "icon",
-            tooltip: "поиск по колонке вперед (F3)",
-            id: "x22",
-            icon: config.dbGrid.toolbar.filterInputIcon
-        });
-
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-filter",
-            type: "icon",
-            tooltip: "поиск по колонке назад (Shift-F3)",
-            id: "x2",
-            icon: config.dbGrid.toolbar.filterPlusIcon
-        });
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-filter",
-            type: "icon",
-            tooltip: "поиск по колонке назад (Shift-F3)",
-            id: "x2",
-            icon: config.dbGrid.toolbar.filterMinusIcon
-        });
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-filter",
-            type: "icon",
-            tooltip: "поиск по колонке назад (Shift-F3)",
-            id: "x2",
-            icon: config.dbGrid.toolbar.filterResetIcon
-        });
-
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-selection",
-            type: "icon",
-            tooltip: "поиск по колонке назад (Shift-F3)",
-            id: "checkboxes",
-            icon: config.dbGrid.toolbar.checkboxesIcon
-        });
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-selection",
-            type: "icon",
-            tooltip: "поиск по колонке назад (Shift-F3)",
-            id: "checkboxes-all",
-            icon: config.dbGrid.toolbar.checkboxesAllIcon
-        });
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-selection",
-            type: "icon",
-            tooltip: "поиск по колонке назад (Shift-F3)",
-            id: "checkboxes-none",
-            icon: config.dbGrid.toolbar.checkboxesNoneIcon
-        });
-
-
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-sort",
-            type: "icon",
-            tooltip: "сортировка по возрастанию",
-            id: "sort-asc",
-            icon: config.dbGrid.toolbar.sortAscIcon
-        });
-
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-sort",
-            type: "icon",
-            tooltip: "сортировка по убыванию",
-            id: "sort-desc",
-            icon: config.dbGrid.toolbar.sortDescIcon
-        });
-
-        addToolbarIconItem(this.toolbar, {
-            group: "grid-sort",
-            type: "icon",
-            tooltip: "отмена сортировки",
-            id: "sort-reset",
-            icon: config.dbGrid.toolbar.sortResetIcon
-        });
-    }
+    // __createT() {
+    //     clearToolbar(this.toolbar);
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid",
+    //         type: "icon",
+    //         tooltip: "обновить список (F5)",
+    //         id: "x0",
+    //         icon: config.dbGrid.toolbar.reloadIcon
+    //     });
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-find",
+    //         type: "icon",
+    //         tooltip: "поиск по колонке с начала списка (F2)",
+    //         id: "x1",
+    //         icon: config.dbGrid.toolbar.findIcon
+    //     });
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-find",
+    //         type: "icon",
+    //         tooltip: "поиск по колонке вперед (F3)",
+    //         id: "x2",
+    //         icon: config.dbGrid.toolbar.findNextIcon
+    //     });
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-find",
+    //         type: "icon",
+    //         tooltip: "поиск по колонке назад (Shift-F3)",
+    //         id: "x3",
+    //         icon: config.dbGrid.toolbar.findPrevIcon
+    //     });
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-filter",
+    //         type: "icon",
+    //         tooltip: "поиск по колонке с начала списка (F2)",
+    //         id: "x12",
+    //         icon: config.dbGrid.toolbar.filterIcon
+    //     });
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-filter",
+    //         type: "icon",
+    //         tooltip: "поиск по колонке вперед (F3)",
+    //         id: "x22",
+    //         icon: config.dbGrid.toolbar.filterInputIcon
+    //     });
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-filter",
+    //         type: "icon",
+    //         tooltip: "поиск по колонке назад (Shift-F3)",
+    //         id: "x2",
+    //         icon: config.dbGrid.toolbar.filterPlusIcon
+    //     });
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-filter",
+    //         type: "icon",
+    //         tooltip: "поиск по колонке назад (Shift-F3)",
+    //         id: "x2",
+    //         icon: config.dbGrid.toolbar.filterMinusIcon
+    //     });
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-filter",
+    //         type: "icon",
+    //         tooltip: "поиск по колонке назад (Shift-F3)",
+    //         id: "x2",
+    //         icon: config.dbGrid.toolbar.filterResetIcon
+    //     });
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-selection",
+    //         type: "icon",
+    //         tooltip: "поиск по колонке назад (Shift-F3)",
+    //         id: "checkboxes",
+    //         icon: config.dbGrid.toolbar.checkboxesIcon
+    //     });
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-selection",
+    //         type: "icon",
+    //         tooltip: "поиск по колонке назад (Shift-F3)",
+    //         id: "checkboxes-all",
+    //         icon: config.dbGrid.toolbar.checkboxesAllIcon
+    //     });
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-selection",
+    //         type: "icon",
+    //         tooltip: "поиск по колонке назад (Shift-F3)",
+    //         id: "checkboxes-none",
+    //         icon: config.dbGrid.toolbar.checkboxesNoneIcon
+    //     });
+    //
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-sort",
+    //         type: "icon",
+    //         tooltip: "сортировка по возрастанию",
+    //         id: "sort-asc",
+    //         icon: config.dbGrid.toolbar.sortAscIcon
+    //     });
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-sort",
+    //         type: "icon",
+    //         tooltip: "сортировка по убыванию",
+    //         id: "sort-desc",
+    //         icon: config.dbGrid.toolbar.sortDescIcon
+    //     });
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-grid-sort",
+    //         type: "icon",
+    //         tooltip: "отмена сортировки",
+    //         id: "sort-reset",
+    //         icon: config.dbGrid.toolbar.sortResetIcon
+    //     });
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-input-sort",
+    //         type: "icon",
+    //         tooltip: "сортировка по убыванию",
+    //         id: "sort-desc",
+    //         icon: config.dbGrid.toolbar.sortDescIcon
+    //     });
+    //
+    //     addToolbarIconItem(this.toolbar, {
+    //         group: "focused-input-sort",
+    //         type: "icon",
+    //         tooltip: "отмена сортировки",
+    //         id: "sort-reset",
+    //         icon: config.dbGrid.toolbar.sortResetIcon
+    //     });
+    // }
 
     render() {
         console.log("render desktop");
 
-        this.__createT();
 
         return (
             <div id="desktop" style={{height: "100%", flex: "1 0 auto"}}>
