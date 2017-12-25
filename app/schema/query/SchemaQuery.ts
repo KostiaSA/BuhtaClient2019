@@ -10,7 +10,8 @@ import {SqlSelectEmitter} from "../../sql/SqlSelectEmitter";
 import {addNewLineSymbol} from "../../utils/addNewLineSymbol";
 import {executeSql, ISqlDataset} from "../../sql/executeSql";
 import {throwError} from "../../utils/throwError";
-import {IBaseSqlDataTypeProps} from "../table/datatypes/BaseSqlDataType";
+import {BaseSqlDataType, IBaseSqlDataTypeProps} from "../table/datatypes/BaseSqlDataType";
+import {appState} from "../../AppState";
 
 
 export interface ISchemaQueryProps extends ISchemaObjectProps {
@@ -157,6 +158,7 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
         if (!node.key)
             node.key = getRandomString();
 
+
         this.columnsByKey[node.key] = column;
 
         if (column.props.tableId) {
@@ -165,6 +167,12 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
 
         if (parentColumn) {
             column.parent = parentColumn;
+
+            if (node.fieldSource) {
+                let parentJoinTable = new SchemaTable(await getSchemaObjectProps<ISchemaTableProps>(parentColumn.props.tableId!));
+                column.sourceColumnProps = parentJoinTable.props.columns.find((tableColumn) => tableColumn.name === node.fieldSource);
+            }
+
             parentColumn.columns.push(column)
         }
         else {
@@ -200,6 +208,17 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
             return ret;
 
         throw "fake";
+    }
+
+    getColumnByCaption(caption: string): SchemaQueryColumn {
+        let ret = this.columns.find((col) => caption === (col.props.fieldCaption || col.props.fieldSource));
+        if (!ret) {
+            let msg = "не найдена колонка: " + caption;
+            throwError(msg);
+            throw "fake";
+        }
+        else
+            return ret;
     }
 
     private levelToStr(level: number) {
@@ -239,9 +258,9 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
         else if (column.props.inlineSql) {
             if (!column.props.isDisabled) {
                 emitter.fields.push(
-                    "    " +column.props.inlineSql+
+                    "    " + column.props.inlineSql +
                     " AS " +
-                    emitter.emit_NAME(column.props.fieldCaption || column.props.fieldSource!))+"  /* inline SQL */";
+                    emitter.emit_NAME(column.props.fieldCaption || column.props.fieldSource!)) + "  /* inline SQL */";
             }
         }
         else {
@@ -265,11 +284,31 @@ export class SchemaQueryColumn {
     parent: SchemaQueryColumn;
     columns: SchemaQueryColumn[] = [];
     joinTable: SchemaTable;
+    sourceColumnProps?: ISchemaTableColumnProps;
 
     get joinTableAlias(): string {
         if (this.parent)
             return this.parent.joinTableAlias + "." + (this.props.tableAlias || this.joinTable.getShortSqlName());
         else
             return this.props.tableAlias || this.joinTable.getShortSqlName();
+    }
+
+    getDataType(): BaseSqlDataType {
+        let dataTypeId: string;
+        if (this.props.inlineDataType)
+            dataTypeId = this.props.inlineDataType.id;
+        else {
+            dataTypeId = this.sourceColumnProps!.dataType.id;
+        }
+        let ret = appState.sqlDataTypes[dataTypeId];
+
+        if (!ret) {
+            let msg = "SchemaQueryColumn.getDataType(): неверный тип sql-данных: " + dataTypeId;
+            throwError(msg);
+            throw "fake";
+        }
+        else
+            return ret;
+
     }
 }

@@ -103,7 +103,7 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
         }
         else {
             let msg = "StringSqlDataType.emitColumnDataType(): invalid sql dialect '" + dialect + "'";
-            throwError( msg + ", " + __filename);
+            throwError(msg + ", " + __filename);
             throw "fake";
 
         }
@@ -112,18 +112,31 @@ export class StringSqlDataType extends BaseSqlDataType<IStringSqlDataTypeProps> 
 
     async emitValue(dialect: SqlDialect, colDataType: IStringSqlDataTypeProps, value: any): Promise<string> {
         if (!isStringOrNull(value))
-            throwError(  "значение должно быть строкой или null");
+            throwError("значение должно быть строкой или null");
 
         if (value === null)
             return new SqlEmitter(dialect).emit_NULL();
 
         if (colDataType.maxLen && colDataType.maxLen > 0) {
             if (value.length > colDataType.maxLen) {
-                throwError( "длина строки превышает " + colDataType.maxLen);
+                throwError("длина строки превышает " + colDataType.maxLen);
             }
         }
 
         return new SqlEmitter(dialect).emit_STRING(value);
+
+    }
+
+    isEquals(value1: any, value2: any): boolean {
+
+        if ((value1 === undefined || value1 === null || value1 === "") && (value2 === undefined || value2 === null || value2 === ""))
+            return true;
+
+        if (isString(value1) && isString(value2)) {
+            return value1.toLocaleLowerCase() === value2.toLocaleLowerCase();
+        }
+
+        return false;
 
     }
 

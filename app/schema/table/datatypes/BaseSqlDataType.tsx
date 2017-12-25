@@ -3,7 +3,6 @@ import * as Joi from "joi";
 import {joiRus} from "../../../i18n/joiRus";
 import {appState} from "../../../AppState";
 import {SqlDialect} from "../../../sql/SqlEmitter";
-import {ISchemaTableColumnProps} from "../SchemaTable";
 import {throwError} from "../../../utils/throwError";
 
 //export type SqlDialect = "mysql" | "postgres" | "mssql";
@@ -65,8 +64,14 @@ export class BaseSqlDataType<P extends IBaseSqlDataTypeProps=IBaseSqlDataTypePro
     }
 
     async emitValue(dialect: SqlDialect, colDataType: IBaseSqlDataTypeProps, value: any): Promise<string> {
-        throwError(  "BaseSqlDataType.emitValue(): abstract error");
+        throwError("BaseSqlDataType.emitValue(): abstract error");
         throw "fake";
+    }
+
+    isEquals(value1: any, value2: any): boolean {
+        throwError("BaseSqlDataType.isEquals(): abstract error");
+        throw "fake";
+
     }
 }
 

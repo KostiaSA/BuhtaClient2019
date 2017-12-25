@@ -9,8 +9,9 @@ import {throwError} from "../utils/throwError";
 import {omit} from "../utils/omit";
 import {config} from "../config";
 import {showError} from "./modals/showError";
-import {addToolbarIconItem, clearToolbarFocusedGroups} from "./Toolbar";
+import {addToolbarIconItem} from "./Toolbar";
 import {appState} from "../AppState";
+import {DbGridBaseFilter, DbGridEqualFilter} from "./DbGridFilter";
 
 
 export interface IDbGridProps extends IComponentProps {
@@ -54,6 +55,12 @@ export class DbGrid extends Component<IDbGridProps> {
     // resizeIntervalId: any;
     error: string | null = null;
 
+    filterGroup: any;
+
+    focusedCellDataField: string;
+    focusedCellRow: any;
+    activeFilters: DbGridBaseFilter[] = [];
+
 
     async loadRows(): Promise<void> {
         this.error = null;
@@ -95,6 +102,8 @@ export class DbGrid extends Component<IDbGridProps> {
             gridOptions.selectionmode = "singlecell";
 
             //gridOptions.width = "100%";
+            //gridOptions.filter = this.filterFunction;
+            gridOptions.filterable = false;
 
             gridOptions.rowsheight = gridOptions.rowsheight || config.grid.rowsHeight;
             gridOptions.columnsheight = gridOptions.columnsheight || config.grid.rowsHeight;
@@ -115,6 +124,17 @@ export class DbGrid extends Component<IDbGridProps> {
             this.widget.jqxGrid(gridOptions);
             this.widget = $("#" + this.$id);
 
+            // this.filterGroup = new ($ as any).jqx.filter();
+            // var filter_or_operator = 0;
+            // var filtervalue = 'петербург';
+            // var filtercondition = 'contains';
+            // var filter1 = this.filterGroup.createfilter('stringfilter', filtervalue, filtercondition);
+            // this.filterGroup.addfilter(filter_or_operator, filter1);
+            // this.widget.jqxGrid('addfilter', 'Название', this.filterGroup);
+            // // apply the filters.
+            // this.widget.jqxGrid('applyfilters');
+
+
             this.isJqxGridInitialized = true;
 
             let lastParentW = 0;
@@ -133,8 +153,10 @@ export class DbGrid extends Component<IDbGridProps> {
             }, 200);
 
             this.widget.on("cellselect", (event: any) => {
-                console.log("cellselect----------->", event.args);
+                this.focusedCellRow = this.getRowByIndex(event.args.rowindex);
+                this.focusedCellDataField = event.args.datafield;
                 this.resetToolbar();
+                console.log("cellselect----------->", this.focusedCellDataField, this.focusedCellRow);
                 // // event arguments.
                 // var args = event.args;
                 // // get the column's text.
@@ -150,6 +172,15 @@ export class DbGrid extends Component<IDbGridProps> {
 
         }
     }
+
+    // filterFunction = (cellValue: any, rowData: any, dataField: string, filterGroup: any, defaultFilterResult: any): boolean => {
+    //     // implements a custom filter for the "name" field.
+    //     if (dataField === "Название") {
+    //         return rowData["Название"].indexOf("Услуги") > -1;
+    //     }
+    //     else
+    //         return true;
+    // };
 
     resetToolbar() {
 
@@ -210,7 +241,23 @@ export class DbGrid extends Component<IDbGridProps> {
                 type: "icon",
                 tooltip: "фильтр по выделенному значению",
                 id: "filter-plus",
-                icon: config.dbGrid.toolbar.filterPlusIcon
+                icon: config.dbGrid.toolbar.filterPlusIcon,
+                onClick: async () => {
+                    let queryColumn = this.query.getColumnByCaption(this.focusedCellDataField);
+                    let cellValue = this.focusedCellRow[this.focusedCellDataField];
+                    let dataType=queryColumn.getDataType();
+                    let filter = new DbGridEqualFilter(dataType, cellValue, this.focusedCellDataField);
+
+                    // let func = eval(`
+                    //     (function (row) {
+                    //        return row["Название"].toLocaleLowerCase().indexOf("плат") > -1;
+                    //     })
+                    // `);
+
+                    this.activeFilters.push(filter);
+                    this.setFilteredDataSource();
+                }
+
             });
             addToolbarIconItem(appState.desktop.toolbar, {
                 group: "focused-grid-filter",
@@ -224,7 +271,11 @@ export class DbGrid extends Component<IDbGridProps> {
                 type: "icon",
                 tooltip: "сброс всех фильтров",
                 id: "filter-reset",
-                icon: config.dbGrid.toolbar.filterResetIcon
+                icon: config.dbGrid.toolbar.filterResetIcon,
+                onClick: async () => {
+                    this.activeFilters.length = 0;
+                    this.setFilteredDataSource();
+                }
             });
 
             addToolbarIconItem(appState.desktop.toolbar, {
@@ -286,7 +337,7 @@ export class DbGrid extends Component<IDbGridProps> {
             //columnOptions.resizable = true;
             //columnOptions.draggable = true;
             columnOptions.width = 100;
-
+            columnOptions.filtertype = "input";
             columnOptions.text = col.props.fieldCaption || col.props.fieldSource;
             columnOptions.datafield = col.props.fieldCaption || col.props.fieldSource;
             columns.push(columnOptions);
@@ -296,6 +347,29 @@ export class DbGrid extends Component<IDbGridProps> {
     }
 
 
+    setFilteredDataSource() {
+
+        let filteredRows = this.rows[0].rows.filter((row: any) => {
+            for (let filter of this.activeFilters) {
+                if (!filter.filter(row))
+                    return false;
+            }
+            return true;
+        });
+
+        let source = {
+            localdata: filteredRows,
+            datatype: "local",
+            // datafields: Object.keys(fakeObj).map((propName: string) => {
+            //     return {name: propName}
+            // }),
+        };
+
+        this.widget.jqxGrid({source: source});
+        this.autoResizeColumns();
+
+    }
+
     async setDataSource() {
         //this.updateProps(this.props, true);
         console.log("setDataSource");
@@ -303,17 +377,9 @@ export class DbGrid extends Component<IDbGridProps> {
             await this.query.createTree();
             await this.createColumns();
 
-
-            let source = {
-                localdata: this.rows[0].rows,
-                datatype: "local",
-                // datafields: Object.keys(fakeObj).map((propName: string) => {
-                //     return {name: propName}
-                // }),
-            };
-
-            this.widget.jqxGrid({source: source});
+            this.setFilteredDataSource();
             this.autoResizeColumns();
+
             this.forceUpdate();
             this.isDataSourceAssigned = true;
         }
@@ -620,6 +686,10 @@ export class DbGrid extends Component<IDbGridProps> {
 
     getSelectedRowIndex(): number {
         return this.widget.jqxGrid("getselectedrowindex");
+    }
+
+    getRowByIndex(index: number): any {
+        return this.widget.jqxGrid('getrowdata', index);
     }
 
     // getSelectedRow(): any {

@@ -31,7 +31,7 @@ export interface IToolbarButtonItemProps extends IToolbarItemProps {
 export interface IToolbarProps extends IComponentProps {
     groups?: string[];
     items?: IToolbarItemProps[];
-    activeElement?:any;
+    activeElement?: any;
 }
 
 export function addToolbarIconItem(toolbar: IToolbarProps, item: IToolbarIconItemProps) {
@@ -71,8 +71,8 @@ export function clearToolbarFocusedGroups(toolbar: IToolbarProps) {
     if (!toolbar || !isArray(toolbar.groups) || !isArray(toolbar.items))
         throwError("removeToolbarItemsOfGroup(): не указан или неверный параметр 'toolbar'");
 
-    toolbar.items = toolbar.items!.filter((_item) => _item.group!.indexOf("focused-")===-1);
-    console.log("clearToolbarFocusedGroups===toolbar.items",toolbar.items);
+    toolbar.items = toolbar.items!.filter((_item) => _item.group!.indexOf("focused-") === -1);
+    console.log("clearToolbarFocusedGroups===toolbar.items", toolbar.items);
 }
 
 export function clearToolbar(toolbar: IToolbarProps) {
@@ -85,10 +85,10 @@ export function clearToolbar(toolbar: IToolbarProps) {
 
 export class Toolbar extends React.Component<IToolbarProps> {
 
-    c:any=0;
+    c: any = 0;
 
     renderItems(): React.ReactNode {
-        console.log("renderItems------------------",this.props.items);
+        console.log("renderItems------------------", this.props.items);
         let ret: React.ReactNode[] = [];
         let items = [...(this.props.items || []), ...React.Children.toArray(this.props.children)];
         let groups = this.props.groups || [];
@@ -126,6 +126,11 @@ export class Toolbar extends React.Component<IToolbarProps> {
 
                     ret.push(
                         <div key={group + "-" + props.id} className="buhta-toolbar-item" title={props.tooltip}
+                             onClick={async () => {
+                                 if (props.onClick){
+                                     await props.onClick();
+                                 }
+                             }}
                              style={{
                                  height: 26,
                                  width: 24,
@@ -151,7 +156,7 @@ export class Toolbar extends React.Component<IToolbarProps> {
         this.c++;
         console.log("render Toolbar", this.props.children);
         return (
-            <div style={{paddingLeft:5, backgroundColor: "#fffbf1", borderBottom: "1px solid #d4d4d4",}}>
+            <div style={{paddingLeft: 5, backgroundColor: "#fffbf1", borderBottom: "1px solid #d4d4d4",}}>
                 {this.c}
                 {this.renderItems()}
             </div>

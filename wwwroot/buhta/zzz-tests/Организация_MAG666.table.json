@@ -32,11 +32,11 @@
         },
         "description": " "
     }],
-    "sqlName": "Вид ТМЦ",
+    "sqlName": "ТМЦ10000",
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-20 23:08:32.534",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-23 19:03:34.962",
+    "changedDate": "<DateTime>2017-12-25 15:34:15.355",
     "dbName": "mag3666",
     "note": "933"
 }
