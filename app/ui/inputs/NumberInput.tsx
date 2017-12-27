@@ -7,6 +7,8 @@ import {BaseInput, IBaseInputProps} from "./BaseInput";
 import {config} from "../../config";
 import {storageGet} from "../../storage/storageGet";
 import {storageSet} from "../../storage/storageSet";
+import {addToolbarIconItem} from "../Toolbar";
+import {appState} from "../../AppState";
 
 export interface INumberInputProps extends IBaseInputProps {
     height?: string | number;
@@ -52,6 +54,8 @@ export class NumberInput extends BaseInput<INumberInputProps> {
                 this.validate();
                 this.forceUpdate();
             });
+
+        this.widget.find("input").on("focus",this.resetToolbarOnGotFocus);
 
         this.widget.find("input").css("color", this.widget.css("color"));
         this.widget.find("input").css("background", this.widget.css("background"));
@@ -116,6 +120,31 @@ export class NumberInput extends BaseInput<INumberInputProps> {
         this.widget = $("#" + this.$id);
 
     }
+
+    resetToolbarOnGotFocus = () => {
+        if (appState.desktop.toolbar.activeElement !== this) {
+            appState.desktop.clearToolbarFocusedGroups();
+            appState.desktop.toolbar.activeElement = this;
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-input",
+                type: "icon",
+                tooltip: "undo (Ctrl-Z)",
+                id: "undo",
+                icon: config.button.undoIcon
+            });
+
+            addToolbarIconItem(appState.desktop.toolbar, {
+                group: "focused-input",
+                type: "icon",
+                tooltip: "redo",
+                id: "redo",
+                icon: config.button.redoIcon
+            });
+
+            appState.desktop.forceUpdate();
+        }
+    };
 
     render() {
         //console.log("render Input");

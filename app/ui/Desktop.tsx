@@ -12,7 +12,7 @@ import {config} from "../config";
 import {MenuSeparator} from "./MenuSeparator";
 import {TestsExplorerWindow} from "../admin/TestsExplorerWindow";
 import {throwError} from "../utils/throwError";
-import {addToolbarIconItem, clearToolbar, clearToolbarFocusedGroups, IToolbarProps, Toolbar} from "./Toolbar";
+import {clearToolbarFocusedGroups, IToolbarProps, Toolbar} from "./Toolbar";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -191,69 +191,116 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     //     });
     // }
 
+
+    renderTaskBarItems(): React.ReactNode {
+
+        let items: any[] = [];
+        for (let i = 0; i < 4; i++) {
+            items.push(
+                <div
+                    key={i}
+                    className="buhta-taskbar-item"
+                    style={{
+                        maxWidth: 150,
+                        minWidth: 75,
+                        marginRight: 3,
+                        marginBottom: 3,
+                        display: "inline-block",
+                        overflow: "hidden",
+                    }}>
+                    <table style={{height: 22}}>
+                        <tbody>
+                        <tr>
+                            <td style={{verticalAlign: "middle", paddingLeft: 3, paddingTop: 2}}>
+                                <img src="vendor/fugue/card--pencil.png" width={16} height={16}/>
+                            </td>
+                            <td style={{verticalAlign: "middle", paddingLeft: 3}}>
+                                <span style={{whiteSpace: "nowrap", cursor: "default"}}>Объекты конфигурации 2</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+        return items;
+    }
+
     render() {
         console.log("render desktop");
 
 
-        return (
-            <div id="desktop" style={{height: "100%", flex: "1 0 auto"}}>
-                <Menu mode="horizontal">
-                    <MenuItem title="Файл">
-                        <MenuItem title="Новый Новый" icon={config.button.cancelIcon}></MenuItem>
-                        <MenuItem title="Старый 2" onClick={async () => {
-                            alert("fuf")
-                        }}></MenuItem>
-                        <MenuItem title="Старый 333" onClick={async () => {
-                            alert("fuf")
-                        }}></MenuItem>
-                        <MenuSeparator/>
-                        <MenuItem title="Старый 33333" onClick={async () => {
-                            alert("fuf")
-                        }}></MenuItem>
-                        <MenuItem title="Старый +++" onClick={async () => {
-                            alert("fuf")
-                        }}></MenuItem>
-                        <MenuItem title="Старый 33333" onClick={async () => {
-                            alert("fuf")
-                        }}></MenuItem>
-                        <MenuItem title="Старый +++" onClick={async () => {
-                            alert("fuf")
-                        }}></MenuItem>
-
-                        <MenuItem title="Старый 33333" startGroup onClick={async () => {
-                            alert("fuf")
-                        }}></MenuItem>
-                        <MenuItem title="Старый +++" onClick={async () => {
-                            alert("fuf")
-                        }}></MenuItem>
-                    </MenuItem>
-                    <MenuItem title="Изменить"></MenuItem>
-                    <MenuSeparator/>
-                    <MenuItem title="Админ">
-                        <MenuItem
-                            title="Инспектор объектов"
-                            onClick={async () => {
-                                this.openWindow(<SchemaExplorerWindow
-                                    window={{height: 500, width: 400}}>
-
-                                </SchemaExplorerWindow>);
-                            }}>
-                        </MenuItem>
-                        <MenuSeparator/>
-                        <MenuItem
-                            title="Список тестов"
-                            onClick={async () => {
-                                this.openWindow(
-                                    <TestsExplorerWindow
-                                        window={{height: 600, width: 800}}>
-                                    </TestsExplorerWindow>
-                                );
+        return ([
+                <div id="desktop" style={{height: "100%", flex: "1 0 auto"}}>
+                    <Menu mode="horizontal">
+                        <MenuItem title="Файл">
+                            <MenuItem title="Новый Новый" icon={config.button.cancelIcon}></MenuItem>
+                            <MenuItem title="Старый 2" onClick={async () => {
+                                alert("fuf")
                             }}></MenuItem>
-                    </MenuItem>
-                </Menu>
-                <Toolbar groups={this.toolbar.groups} items={this.toolbar.items}></Toolbar>
-                {this.renderWindows()}
-            </div>
+                            <MenuItem title="Старый 333" onClick={async () => {
+                                alert("fuf")
+                            }}></MenuItem>
+                            <MenuSeparator/>
+                            <MenuItem title="Старый 33333" onClick={async () => {
+                                alert("fuf")
+                            }}></MenuItem>
+                            <MenuItem title="Старый +++" onClick={async () => {
+                                alert("fuf")
+                            }}></MenuItem>
+                            <MenuItem title="Старый 33333" onClick={async () => {
+                                alert("fuf")
+                            }}></MenuItem>
+                            <MenuItem title="Старый +++" onClick={async () => {
+                                alert("fuf")
+                            }}></MenuItem>
+
+                            <MenuItem title="Старый 33333" startGroup onClick={async () => {
+                                alert("fuf")
+                            }}></MenuItem>
+                            <MenuItem title="Старый +++" onClick={async () => {
+                                alert("fuf")
+                            }}></MenuItem>
+                        </MenuItem>
+                        <MenuItem title="Изменить"></MenuItem>
+                        <MenuSeparator/>
+                        <MenuItem title="Админ">
+                            <MenuItem
+                                title="Инспектор объектов"
+                                onClick={async () => {
+                                    this.openWindow(<SchemaExplorerWindow
+                                        window={{height: 500, width: 400}}>
+
+                                    </SchemaExplorerWindow>);
+                                }}>
+                            </MenuItem>
+                            <MenuSeparator/>
+                            <MenuItem
+                                title="Список тестов"
+                                onClick={async () => {
+                                    this.openWindow(
+                                        <TestsExplorerWindow
+                                            window={{height: 600, width: 800}}>
+                                        </TestsExplorerWindow>
+                                    );
+                                }}></MenuItem>
+                        </MenuItem>
+                    </Menu>
+                    <Toolbar groups={this.toolbar.groups} items={this.toolbar.items}></Toolbar>
+                    {this.renderWindows()}
+                </div>,
+                <div style={{
+                    position: "absolute",
+                    zIndex: 8001,
+                    bottom: 0,
+                    paddingLeft: 3,
+                    paddingRight: 3,
+                    fontSize: 11,
+                    fontFamily: config.font.family
+                }}>
+                    {this.renderTaskBarItems()}
+                </div>
+            ]
         )
     }
 

@@ -156,7 +156,7 @@ export class DbGrid extends Component<IDbGridProps> {
                 this.focusedCellRow = this.getRowByIndex(event.args.rowindex);
                 this.focusedCellDataField = event.args.datafield;
                 this.resetToolbar();
-                console.log("cellselect----------->", this.focusedCellDataField, this.focusedCellRow);
+                //console.log("cellselect----------->", this.focusedCellDataField, this.focusedCellRow);
                 // // event arguments.
                 // var args = event.args;
                 // // get the column's text.

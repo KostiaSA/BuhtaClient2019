@@ -42,6 +42,11 @@ export class CheckBox extends BaseInput<ICheckBoxProps> {
                 this.forceUpdate();
             });
 
+        this.widget.on("focus",
+            async (event: any) => {
+                console.log("checkbox----------focus-----");
+            });
+
         this.widget.on("keyup",
             async (event: any) => {
                 objectPathSet(this.bindObj, this.props.bindProp, this.widget.val());
@@ -110,7 +115,7 @@ export class CheckBox extends BaseInput<ICheckBoxProps> {
                     <tbody>
                     <tr>
                         <td style={{padding: 0}}>
-                            <div id={this.$id} style={style}>{this.props.title}</div>
+                            <div id={this.$id} style={style}><span>{this.props.title}</span></div>
                         </td>
                         {this.renderRightResizerTd()}
                     </tr>
