@@ -72,7 +72,7 @@ export function clearToolbarFocusedGroups(toolbar: IToolbarProps) {
         throwError("removeToolbarItemsOfGroup(): не указан или неверный параметр 'toolbar'");
 
     toolbar.items = toolbar.items!.filter((_item) => _item.group!.indexOf("focused-") === -1);
-    console.log("clearToolbarFocusedGroups===toolbar.items", toolbar.items);
+    //console.log("clearToolbarFocusedGroups===toolbar.items", toolbar.items);
 }
 
 export function clearToolbar(toolbar: IToolbarProps) {

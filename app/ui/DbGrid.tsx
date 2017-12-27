@@ -155,10 +155,11 @@ export class DbGrid extends Component<IDbGridProps> {
             }, 200);
 
             this.widget.on("cellselect", (event: any) => {
+                //console.log("cellselect----------->", this.focusedCellDataField, this.focusedCellRow);
                 this.focusedCellRow = this.getRowByIndex(event.args.rowindex);
                 this.focusedCellDataField = event.args.datafield;
-                this.resetToolbar();
-                //console.log("cellselect----------->", this.focusedCellDataField, this.focusedCellRow);
+                setTimeout(this.resetToolbar.bind(this),1);
+                //this.resetToolbar();
                 // // event arguments.
                 // var args = event.args;
                 // // get the column's text.
@@ -186,9 +187,9 @@ export class DbGrid extends Component<IDbGridProps> {
 
     resetToolbar() {
 
-        if (appState.desktop.toolbar.activeElement !== this) {
+        //if (appState.desktop.toolbar.activeElement !== this) {
             appState.desktop.clearToolbarFocusedGroups();
-            appState.desktop.toolbar.activeElement = this;
+          //  appState.desktop.toolbar.activeElement = this;
 
             addToolbarIconItem(appState.desktop.toolbar, {
                 group: "focused-grid",
@@ -344,7 +345,7 @@ export class DbGrid extends Component<IDbGridProps> {
             });
 
             appState.desktop.forceUpdate();
-        }
+        //}
 
     }
 

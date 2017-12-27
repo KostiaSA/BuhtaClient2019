@@ -32,28 +32,25 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
     }
 
     resetToolbarOnGotFocus = () => {
-        if (appState.desktop.toolbar.activeElement !== this) {
-            appState.desktop.clearToolbarFocusedGroups();
-            appState.desktop.toolbar.activeElement = this;
+        appState.desktop.clearToolbarFocusedGroups();
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-input",
-                type: "icon",
-                tooltip: "undo (Ctrl-Z)",
-                id: "undo",
-                icon: config.button.undoIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-input",
+            type: "icon",
+            tooltip: "undo (Ctrl-Z)",
+            id: "undo",
+            icon: config.button.undoIcon
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-input",
-                type: "icon",
-                tooltip: "redo",
-                id: "redo",
-                icon: config.button.redoIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-input",
+            type: "icon",
+            tooltip: "redo",
+            id: "redo",
+            icon: config.button.redoIcon
+        });
 
-            appState.desktop.forceUpdate();
-        }
+        appState.desktop.forceUpdate();
     };
 
 
@@ -79,7 +76,7 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
                 console.log("combobox change");
             });
 
-        this.widget.find("input").on("focus",this.resetToolbarOnGotFocus);
+        this.widget.find("input").on("focus", this.resetToolbarOnGotFocus);
 
         this.widget.find("input").css("color", this.widget.css("color"));
         this.widget.find("input").css("background", this.widget.css("background"));

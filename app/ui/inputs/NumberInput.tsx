@@ -55,7 +55,7 @@ export class NumberInput extends BaseInput<INumberInputProps> {
                 this.forceUpdate();
             });
 
-        this.widget.find("input").on("focus",this.resetToolbarOnGotFocus);
+        this.widget.find("input").on("focus", this.resetToolbarOnGotFocus);
 
         this.widget.find("input").css("color", this.widget.css("color"));
         this.widget.find("input").css("background", this.widget.css("background"));
@@ -92,7 +92,7 @@ export class NumberInput extends BaseInput<INumberInputProps> {
     }
 
     updateProps(props: INumberInputProps, create: boolean) {
-        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator","storageKey","resizable"]);
+        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator", "storageKey", "resizable"]);
 
         opt.height = opt.height || config.baseInput.height;
         opt.width = opt.width || config.numberInput.width;
@@ -122,28 +122,25 @@ export class NumberInput extends BaseInput<INumberInputProps> {
     }
 
     resetToolbarOnGotFocus = () => {
-        if (appState.desktop.toolbar.activeElement !== this) {
-            appState.desktop.clearToolbarFocusedGroups();
-            appState.desktop.toolbar.activeElement = this;
+        appState.desktop.clearToolbarFocusedGroups();
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-input",
-                type: "icon",
-                tooltip: "undo (Ctrl-Z)",
-                id: "undo",
-                icon: config.button.undoIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-input",
+            type: "icon",
+            tooltip: "undo (Ctrl-Z)",
+            id: "undo",
+            icon: config.button.undoIcon
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-input",
-                type: "icon",
-                tooltip: "redo",
-                id: "redo",
-                icon: config.button.redoIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-input",
+            type: "icon",
+            tooltip: "redo",
+            id: "redo",
+            icon: config.button.redoIcon
+        });
 
-            appState.desktop.forceUpdate();
-        }
+        appState.desktop.forceUpdate();
     };
 
     render() {

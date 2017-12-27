@@ -6,7 +6,6 @@ import {FlexItem} from "../ui/FlexItem";
 import {getErrorWindow} from "../ui/modals/showError";
 import {config} from "../config";
 import {Button} from "../ui/Button";
-import {SchemaQuery} from "../schema/query/SchemaQuery";
 import {ComboBox} from "../ui/inputs/ComboBox";
 import {getDatabasesList, IDatabase} from "../sql/getDatabasesList";
 import {DbGrid} from "../ui/DbGrid";
@@ -25,7 +24,7 @@ export class SchemaQueryTestRunWindow extends React.Component<ISchemaTableColumn
     window: Window;
     error: any;
     testDatabase: IDatabase;
-    dbGrid:DbGrid;
+    dbGrid: DbGrid;
 
     async componentDidMount() {
 
@@ -54,7 +53,7 @@ export class SchemaQueryTestRunWindow extends React.Component<ISchemaTableColumn
                 {...omit(this.props.window, ["children"])}
                 storageKey="SchemaQueryTestRunWindow"
                 height={600}
-                title={"Тестирование запроса"}
+                title={"Тестирование запроса: " + this.props.queryId}
                 icon="buhta/assets/icons/query-run.png"
 
                 ref={(e) => {
@@ -93,7 +92,7 @@ export class SchemaQueryTestRunWindow extends React.Component<ISchemaTableColumn
 
                     </FlexItem>
                     <FlexItem dock="fill" style={{padding: 5}}>
-                        <DbGrid ref={(e)=>this.dbGrid=e!} queryId={this.props.queryId}></DbGrid>
+                        <DbGrid ref={(e) => this.dbGrid = e!} queryId={this.props.queryId}></DbGrid>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
                         <Button imgSrc={config.button.cancelIcon}

@@ -1676,7 +1676,9 @@ License: https://jqwidgets.com/license/
 
             // buhta
             if (buhta) {
-                buhta.appState.desktop.forceUpdate();
+                console.log("bringToFront----------------->")
+                buhta.appState.desktop.clearToolbarFocusedGroups();
+                setTimeout(buhta.appState.desktop.forceUpdate.bind(buhta.appState.desktop),25);
             }
 
         }, hide: function (i, h, e) {
