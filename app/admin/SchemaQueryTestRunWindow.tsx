@@ -42,7 +42,7 @@ export class SchemaQueryTestRunWindow extends React.Component<ISchemaTableColumn
 
 
     render() {
-        //console.log("SchemaExplorerWindow");
+        console.log("SchemaExplorerWindow");
 
         if (this.error) {
             return getErrorWindow(this.error);

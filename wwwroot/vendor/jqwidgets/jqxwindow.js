@@ -1678,7 +1678,6 @@ License: https://jqwidgets.com/license/
             if (buhta) {
                 buhta.appState.desktop.forceUpdate();
             }
-            // buhta
 
         }, hide: function (i, h, e) {
             var g = this;

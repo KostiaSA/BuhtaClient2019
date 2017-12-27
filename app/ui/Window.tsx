@@ -177,7 +177,7 @@ export class Window extends Component<IWindowProps> {
     enable() {
         this.widget.jqxWindow("enable");
         this.disabled = false;
-//        this.forceUpdate();
+        this.forceUpdate();
         appState.desktop.forceUpdate();
 
     }

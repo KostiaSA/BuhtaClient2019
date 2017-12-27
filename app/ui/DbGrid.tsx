@@ -69,12 +69,12 @@ export class DbGrid extends Component<IDbGridProps> {
                 let msg = "DbGrid: 'props.queryId' должен быть строкой";
                 throwError(msg);
             }
-
             let props = await getSchemaObjectProps<ISchemaQueryProps>(this.props.queryId);
             this.query = new SchemaQuery(props);
             this.rows = await this.query.execute();
             this.isDataLoaded = true;
             this.isDataSourceAssigned = false;
+            this.forceUpdate();
         }
         catch (e) {
             this.error = e.toString();

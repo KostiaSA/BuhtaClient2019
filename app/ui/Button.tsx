@@ -62,9 +62,11 @@ export class Button extends Component<IButtonProps> {
                 if (!this.disabled()) {
                     let win = this.getWindow();
                     if (win) {
+                        console.log("disable",win);
                         win.disable({cursor: "wait"});
                         await this.props.onClick!();
                         win.enable();
+                        console.log("enable",win);
                     }
                     else
                         this.props.onClick!();
