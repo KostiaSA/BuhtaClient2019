@@ -195,27 +195,63 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     renderTaskBarItems(): React.ReactNode {
 
         let items: any[] = [];
-        for (let i = 0; i < 4; i++) {
+        let winIdList: string[] = $(".jqx-window").toArray().map((win: any) => $(win).attr("id")!);
+
+        // активно окно с наибольшим z-index
+        let maxZIndex = -1;
+        for (let win of $(".jqx-window").toArray()) {
+            let zIndex = parseInt($(win).css("z-index"));
+            maxZIndex = Math.max(maxZIndex, zIndex);
+        }
+
+        for (let winId of winIdList) {
+
+            // модальные окна пропускаем
+            let zIndex = parseInt($("#" + winId).css("z-index"));
+            if (zIndex >= 1800)
+                continue;
+
+            let winTitle = $("#" + winId + "_win_title").text();
+            let winIcon = $("#" + winId + "_win_icon").attr("src");
+
+            let className = "buhta-taskbar-item";
+            if (zIndex === maxZIndex)
+                className += " active";
+
             items.push(
                 <div
-                    key={i}
-                    className="buhta-taskbar-item"
+                    key={winId}
+                    className={className}
+                    title={winTitle}
                     style={{
-                        maxWidth: 150,
-                        minWidth: 75,
-                        marginRight: 3,
-                        marginBottom: 3,
+                        marginRight: 2,
+                        marginBottom: 2,
                         display: "inline-block",
-                        overflow: "hidden",
-                    }}>
+                    }}
+                    onClick={() => {
+                        ($("#" + winId) as any).jqxWindow("bringToFront");
+                        this.forceUpdate();
+                    }}
+                >
                     <table style={{height: 22}}>
                         <tbody>
                         <tr>
                             <td style={{verticalAlign: "middle", paddingLeft: 3, paddingTop: 2}}>
-                                <img src="vendor/fugue/card--pencil.png" width={16} height={16}/>
+                                <img src={winIcon} width={16} height={16}/>
                             </td>
                             <td style={{verticalAlign: "middle", paddingLeft: 3}}>
-                                <span style={{whiteSpace: "nowrap", cursor: "default"}}>Объекты конфигурации 2</span>
+                                <div
+                                    style={{
+                                        cursor: "default",
+                                        textOverflow: "ellipsis",
+                                        overflow:"hidden",
+                                        maxWidth: 200,
+                                        minWidth: 50,
+                                        paddingRight:3
+                                    }}
+                                >
+                                    {winTitle}
+                                </div>
                             </td>
                         </tr>
                         </tbody>
@@ -227,8 +263,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     }
 
     render() {
-        console.log("render desktop");
-
+//        console.log("render desktop");
 
         return ([
                 <div id="desktop" style={{height: "100%", flex: "1 0 auto"}}>
@@ -295,7 +330,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                     bottom: 0,
                     paddingLeft: 3,
                     paddingRight: 3,
-                    fontSize: 11,
+                    fontSize: 10,
                     fontFamily: config.font.family
                 }}>
                     {this.renderTaskBarItems()}
@@ -329,6 +364,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
             this.forceUpdate();
         });
     }
+
 
     closeWindow(win: Window) {
         let winFromList = this.windows.find((w: any) => w.id === win.props.id);

@@ -152,6 +152,9 @@ input[type=text].jqx-input {
     background: ivory;
     border: 1px solid #b5b5b5;
 }
+.buhta-taskbar-item.active,.buhta-taskbar-item.active:hover{
+    background-color: #ffffbe;
+}
 
 .buhta-taskbar-item:hover{
     /*border: 1px solid #8a8a8a;*/

@@ -1657,6 +1657,8 @@ License: https://jqwidgets.com/license/
                 }
             })
         }, bringToFront: function () {
+
+
             var f = a.data(document.body, "jqxwindows-list");
             if (this.isModal) {
                 f = a.data(document.body, "jqxwindows-modallist");
@@ -1670,7 +1672,14 @@ License: https://jqwidgets.com/license/
                 f[e][0].style.zIndex = h
             }
             this.element.style.zIndex = j;
-            this._sortByStyle("z-index", f)
+            this._sortByStyle("z-index", f);
+
+            // buhta
+            if (buhta) {
+                buhta.appState.desktop.forceUpdate();
+            }
+            // buhta
+
         }, hide: function (i, h, e) {
             var g = this;
             if (this.closing) {

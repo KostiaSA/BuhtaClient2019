@@ -88,7 +88,6 @@ export class Toolbar extends React.Component<IToolbarProps> {
     c: any = 0;
 
     renderItems(): React.ReactNode {
-        console.log("renderItems------------------", this.props.items);
         let ret: React.ReactNode[] = [];
         let items = [...(this.props.items || []), ...React.Children.toArray(this.props.children)];
         let groups = this.props.groups || [];
@@ -154,7 +153,7 @@ export class Toolbar extends React.Component<IToolbarProps> {
 
     render() {
         this.c++;
-        console.log("render Toolbar", this.props.children);
+        //console.log("render Toolbar", this.props.children);
         return (
             <div style={{paddingLeft: 5, backgroundColor: "#fffbf1", borderBottom: "1px solid #d4d4d4",}}>
                 {this.c}

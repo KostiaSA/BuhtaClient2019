@@ -81,6 +81,9 @@ export class Window extends Component<IWindowProps> {
     };
 
     updateProps(props: IWindowProps) {
+
+        console.log("wWindow.updateProps()");
+
         let opt: any = {
             ...omit(this.props, ["id", "children", "left", "top", "icon", "onClose", "title", "onKeyDown", "storageKey"]),
             animationType: "none",
@@ -127,6 +130,8 @@ export class Window extends Component<IWindowProps> {
             }
         }
         this.widget.jqxWindow(opt);
+        appState.desktop.forceUpdate();
+
         this.widget = $("#" + this.$id);
         this.widget.on("close", () => {
             this.close();
@@ -172,7 +177,9 @@ export class Window extends Component<IWindowProps> {
     enable() {
         this.widget.jqxWindow("enable");
         this.disabled = false;
-        this.forceUpdate();
+//        this.forceUpdate();
+        appState.desktop.forceUpdate();
+
     }
 
     close(result: any = false) {
@@ -180,6 +187,7 @@ export class Window extends Component<IWindowProps> {
         if (this.props.onClose)
             this.props.onClose(result);
         appState.desktop.closeWindow(this);
+
         //this.widget.jqxWindow("close");
         //this.widget.jqxWindow("destroy");
     }
@@ -187,16 +195,21 @@ export class Window extends Component<IWindowProps> {
     destroy() {
         // страный глюк, когда остаеся "ждущий" курсор от убитого оверлея, приходится убирать курсор вручную
         $("#" + this.$id + "-overlay").css("cursor", "auto");
-
         this.widget.jqxWindow("destroy");
+        appState.desktop.forceUpdate();
+
     }
 
     bringToFront() {
         this.widget.jqxWindow("bringToFront");
+        appState.desktop.forceUpdate();
+
     }
 
     focus() {
         this.widget.jqxWindow("focus");
+        appState.desktop.forceUpdate();
+
     }
 
 
@@ -219,8 +232,8 @@ export class Window extends Component<IWindowProps> {
             <div id={this.$id}>
                 <div>
                      <span>
-                         <img src={this.props.icon} style={{verticalAlign: "middle", marginRight: 5, marginTop: -3}}/>
-                         <span style={{fontWeight: "bold", color: "#5a5a5afc"}}>{this.props.title}</span>
+                         <img id={this.$id+"_win_icon"} src={this.props.icon} style={{verticalAlign: "middle", marginRight: 5, marginTop: -3}}/>
+                         <span id={this.$id+"_win_title"} style={{fontWeight: "bold", color: "#5a5a5afc"}}>{this.props.title}</span>
                      </span>
                 </div>
                 <div style={{padding: 0, position: "relative"}}>
