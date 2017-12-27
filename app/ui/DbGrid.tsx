@@ -63,6 +63,7 @@ export class DbGrid extends Component<IDbGridProps> {
 
 
     async loadRows(): Promise<void> {
+        console.log("loadRows");
         this.error = null;
         try {
             if (!isString(this.props.queryId)) {
@@ -85,6 +86,8 @@ export class DbGrid extends Component<IDbGridProps> {
 
     async initializeJqxGrid() {
         if (!this.isJqxGridInitialized) {
+            console.log("initializeJqxGrid");
+            this.isJqxGridInitialized = true;
             this.widget = $("#" + this.$id);
 
             let gridOptions: any = omit(this.props, ["children", "source", "onRowDoubleClick", "onRowKeyDown", "popup", "checkboxes", "queryId", "autoLoad", "databaseName"]);
@@ -135,7 +138,6 @@ export class DbGrid extends Component<IDbGridProps> {
             // this.widget.jqxGrid('applyfilters');
 
 
-            this.isJqxGridInitialized = true;
 
             let lastParentW = 0;
             let resizeIntervalId = setInterval(() => {
@@ -364,6 +366,7 @@ export class DbGrid extends Component<IDbGridProps> {
 
 
     setFilteredDataSource() {
+        console.log("setFilteredDataSource");
 
         let filteredRows = this.rows[0].rows.filter((row: any) => {
             for (let filter of this.activeFilters) {
@@ -389,7 +392,9 @@ export class DbGrid extends Component<IDbGridProps> {
     async setDataSource() {
         //this.updateProps(this.props, true);
         console.log("setDataSource");
+        //debugger
         if (!this.isDataSourceAssigned) {
+            this.isDataSourceAssigned = true;
             await this.query.createTree();
             await this.createColumns();
 
@@ -397,7 +402,6 @@ export class DbGrid extends Component<IDbGridProps> {
             this.autoResizeColumns();
 
             this.forceUpdate();
-            this.isDataSourceAssigned = true;
         }
 
     }
@@ -405,6 +409,7 @@ export class DbGrid extends Component<IDbGridProps> {
     async componentDidUpdate() {
         console.log("componentDidUpdate", this.rows)
         if (this.isDataLoaded) {
+            this.isDataLoaded = true;
             await this.initializeJqxGrid();
             await this.setDataSource();
         }

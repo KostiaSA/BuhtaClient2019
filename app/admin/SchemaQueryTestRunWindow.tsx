@@ -55,7 +55,7 @@ export class SchemaQueryTestRunWindow extends React.Component<ISchemaTableColumn
                 storageKey="SchemaQueryTestRunWindow"
                 height={600}
                 title={"Тестирование запроса"}
-                icon={SchemaQuery.icon}
+                icon="buhta/assets/icons/query-run.png"
 
                 ref={(e) => {
                     this.window = e!
