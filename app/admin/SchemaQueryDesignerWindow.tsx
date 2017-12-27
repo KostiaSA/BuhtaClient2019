@@ -530,7 +530,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 {/**************************** Button "Показать SQL"а *************/}
                                 <Button
                                     text="Показать текст SQL"
-                                    imgSrc="vendor/buhta/images/query-sql-form.png"
+                                    imgSrc="buhta/assets/icons/query-sql-form.png"
                                     onClick={async () => {
                                         let sql = await new SchemaQuery(this.query).emitSqlTemplate();
                                         appState.desktop.openWindow(

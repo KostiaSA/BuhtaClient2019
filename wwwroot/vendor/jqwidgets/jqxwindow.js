@@ -1676,7 +1676,7 @@ License: https://jqwidgets.com/license/
 
             // buhta
             if (buhta) {
-                console.log("bringToFront----------------->")
+                //console.log("bringToFront----------------->")
                 buhta.appState.desktop.clearToolbarFocusedGroups();
                 setTimeout(buhta.appState.desktop.forceUpdate.bind(buhta.appState.desktop),25);
             }

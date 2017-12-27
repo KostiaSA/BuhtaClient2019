@@ -4,6 +4,7 @@ import * as PropTypes from "prop-types";
 import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
 import {isStringOrNullOrEmpty} from "../utils/isStringOrNullOrEmpty";
+import {throwWarning} from "../utils/throwWarning";
 
 
 export interface IButtonProps extends IComponentProps {
@@ -48,8 +49,10 @@ export class Button extends Component<IButtonProps> {
         }
 
         opt.value = this.props.text;
-        if (isStringOrNullOrEmpty(opt.value) && !this.props.imgSrc)
+        if (isStringOrNullOrEmpty(opt.value) && !this.props.imgSrc) {
             opt.value = "Кнопка";
+            throwWarning("Кнопка без текста и иконки.")
+        }
 
 
         opt.height = this.props.height || (this.props.style ? this.props.style.height : null) || 28;

@@ -116,7 +116,7 @@ export class Input extends BaseInput<IInputProps> {
 
         appState.desktop.forceUpdate();
 
-        console.log("input-resetToolbarOnGotFocus");
+        //console.log("input-resetToolbarOnGotFocus");
     };
 
     render() {
