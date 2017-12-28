@@ -12,6 +12,7 @@ import {executeSql, ISqlDataset} from "../../sql/executeSql";
 import {throwError} from "../../utils/throwError";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "../table/datatypes/BaseSqlDataType";
 import {appState} from "../../AppState";
+import {isString} from "../../utils/isString";
 
 
 export interface ISchemaQueryProps extends ISchemaObjectProps {
@@ -35,7 +36,7 @@ export interface ISchemaQueryColumnProps {
     tableAlias?: string;
     inlineSql?: string;
     inlineDataType?: IBaseSqlDataTypeProps;
-    orderBy?:string;
+    orderBy?: string;
     children?: ISchemaQueryColumnProps[];
 }
 
@@ -81,6 +82,27 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
         if (!dbName)
             dbName = (await this.getRootColumn()).joinTable.props.dbName;
         return executeSql(this.props.objectId!, paramsObj, dbName);
+    }
+
+
+    private getOrderByStr(): string {
+        let cols = this.columns.map((col: SchemaQueryColumn) => {
+            return {caption: col.props.fieldCaption || col.props.fieldSource, orderBy: col.props.orderBy}
+        }).filter((_col) => _col.orderBy);
+
+        cols.sort((a: { caption: string, orderBy: string }, b: { caption: string, orderBy: string }) => {
+            let numA = parseInt(a.orderBy.replace(/\D+/g, ''));
+            let numB = parseInt(b.orderBy.replace(/\D+/g, ''));
+            return numA - numB;
+        });
+
+        return cols.map((c: { caption: string, orderBy: string }) => {
+            if (c.orderBy.startsWith("desc"))
+                return "[" + c.caption + "] DESC";
+            else
+                return "[" + c.caption + "]";
+
+        }).join(", ");
     }
 
     async emitSqlTemplate(): Promise<string> {
@@ -137,9 +159,23 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
             sql.push(addNewLineSymbol(this.props.sqlWhere.split("\n").map((line) => "    " + line).join("\n")));
             sql.push("    /************** SQL-where: конец  *************/\n");
         }
-        else
-            sql.push("\n");
+        // else
+        //     sql.push("\n");
 
+
+        let orderByArray: string[] = [];
+        let sqlOrderBy = this.props.sqlOrderBy;
+        if (isString(sqlOrderBy) && sqlOrderBy!.trim() !== "") {
+            orderByArray.push("/* SQL-orderby: начало */ " + sqlOrderBy + " /* SQL-orderby: конец */");
+        }
+
+        let orderBy = this.getOrderByStr();
+        if (orderBy !== "") {
+            orderByArray.push(orderBy);
+        }
+
+        if (orderByArray.length > 0)
+            sql.push("ORDER BY " + orderByArray.join(", "));
 
         if (this.props.sqlAfter) {
             sql.push("\n/************** SQL-after: начало **************/\n");
@@ -229,6 +265,11 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
 
     async emitColumn(column: SchemaQueryColumn, emitter: SqlSelectEmitter, level: number) {
 
+        let levelShift4 = (str: string): string => {
+            return str.split("\n").map((line: string) => "    " + line).join("\n");
+        };
+
+
         if (!column.parent) {
 
 
@@ -260,7 +301,7 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
         else if (column.props.inlineSql) {
             if (!column.props.isDisabled) {
                 emitter.fields.push(
-                    "    " + column.props.inlineSql +
+                    levelShift4(column.props.inlineSql) +
                     " AS " +
                     emitter.emit_NAME(column.props.fieldCaption || column.props.fieldSource!)) + "  /* inline SQL */";
             }

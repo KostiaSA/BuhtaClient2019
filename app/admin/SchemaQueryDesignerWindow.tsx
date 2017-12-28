@@ -328,9 +328,9 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         if (row.tableId)
             return null;
         else if (row.fieldCaption)
-            return <span>{row.fieldCaption}</span>;
+            return <span><span style={{color: "silver"}}>AS </span>{row.fieldCaption}</span>;
         else
-            return <span style={{color: "silver"}}>{row.fieldSource}</span>;
+            return <span style={{color: "silver"}}>AS {row.fieldSource}</span>;
 
     };
 
@@ -343,7 +343,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
         if (row.orderBy.startsWith("asc"))
             return <span style={{color: "seagreen"}}>{row.orderBy}</span>;
         else
-            return <span style={{color: "tomato"}}>{row.orderBy}</span>;
+            return <span style={{color: "#ca1f00"}}>{row.orderBy}</span>;
 
     };
 
@@ -423,10 +423,10 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
                                             >
                                                 <TreeGridColumn headerText="Таблица/Колонка"
-                                                                getText={this.getRootColumnText}/>
+                                                                getText={this.getRootColumnText} width={400}/>
                                                 <TreeGridColumn headerText="Заголовок"
-                                                                getText={this.getColumnCaptionText}/>
-                                                <TreeGridColumn headerText="Сортировка" width={100}
+                                                                getText={this.getColumnCaptionText} width={120}/>
+                                                <TreeGridColumn headerText="Сортировка" width={56}
                                                                 getText={this.getColumnSortText}/>
 
                                             </TreeGrid>

@@ -10,12 +10,12 @@ SELECT
     Номер+'--' AS [Строка5279],
     999 AS [Деньги5525],
     CASE 
-  WHEN Ключ%2=0 THEN Номер+' '+ Название + STR(Ключ) 
-  ELSE '' 
-END AS [Строка3255],
+      WHEN Ключ%2=0 THEN Номер+' '+ Название + STR(Ключ) 
+      ELSE '' 
+    END AS [Строка3255],
     {{_ServerCurrentTime_}} AS [Строка7674],
     {{_UserIP_}} AS [Строка1988],
     [Организация_MAG666].[Ключ] AS [__recordId__]
 FROM
     [ТМЦ500] AS [Организация_MAG666]
-
+ORDER BY /* SQL-orderby: начало */ Ключ /* SQL-orderby: конец */, [Название] DESC, [Номер]

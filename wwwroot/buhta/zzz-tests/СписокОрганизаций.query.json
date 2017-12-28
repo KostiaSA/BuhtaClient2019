@@ -6,7 +6,7 @@
         "tableId": "buhta/zzz-tests/Организация_MAG666.table",
         "children": [{
             "fieldSource": "Номер",
-            "orderBy": "asc1"
+            "orderBy": "asc2"
         }, {
             "fieldSource": "Название",
             "orderBy": "desc1"
@@ -50,7 +50,7 @@
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-20 23:13:31.551",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-28 11:50:57.329",
+    "changedDate": "<DateTime>2017-12-28 14:07:39.406",
     "sqlBefore": "-- ================",
-    "sqlOrderBy": "w"
+    "sqlOrderBy": "Ключ"
 }
