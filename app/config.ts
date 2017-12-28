@@ -146,6 +146,145 @@ export let config: any = {
         "Peru", "Pink", "Plum", "PowderBlue", "Purple", "Red", "RosyBrown", "RoyalBlue", "SaddleBrown", "Salmon",
         "SandyBrown", "SeaGreen", "SeaShell", "Sienna", "Silver", "SkyBlue", "SlateBlue", "SlateGray", "SlateGrey",
         "Snow", "SpringGreen", "SteelBlue", "Tan", "Teal", "Thistle", "Tomato", "Turquoise", "Violet", "Wheat",
-        "White", "WhiteSmoke", "Yellow", "YellowGreen"]
+        "White", "WhiteSmoke", "Yellow", "YellowGreen"],
 
+    htmlColorGroups: [
+        {
+            groupName: "RED HTML COLORS",
+            colors: [
+                "indianred",
+                "lightcoral",
+                "salmon",
+                "darksalmon",
+                "lightsalmon",
+                "crimson",
+                "red",
+                "firebrick",
+                "darkred",
+            ]
+        },
+        {
+            groupName: "PINK HTML COLORS",
+            colors: [
+                "pink",
+                "lightpink",
+                "hotpink",
+                "deeppink",
+                "mediumvioletred",
+                "palevioletred",
+            ]
+        },
+        {
+            groupName: "ORANGE HTML COLORS",
+            colors: [
+                "lightsalmon",
+                "coral",
+                "tomato",
+                "orangered",
+                "darkorange",
+                "orange",
+            ]
+
+        },
+        {
+            groupName: "YELLOW HTML COLORS",
+            colors: [
+                "gold",
+                "yellow",
+                "lightyellow",
+                "lemonchiffon",
+                "lightgoldenrodyellow",
+                "papayawhip",
+                "moccasin",
+                "peachpuff",
+                "palegoldenrod",
+                "khaki",
+                "darkkhaki",
+            ]
+
+        },
+        {
+            groupName: "PURPLE HTML COLORS",
+            colors: [
+                "lavender",
+                "thistle",
+                "plum",
+                "violet",
+                "orchid",
+                "fuchsia",
+                "magenta",
+                "mediumorchid",
+                "mediumpurple",
+                "rebeccapurple",
+                "blueviolet",
+                "darkviolet",
+                "darkorchid",
+                "darkmagenta",
+                "purple",
+                "indigo",
+                "slateblue",
+                "darkslateblue",
+                "mediumslateblue",
+            ]
+
+        },
+        {
+            groupName: "GREEN HTML COLORS",
+            colors: [
+                "greenyellow",
+                "chartreuse",
+                "lawngreen",
+                "lime",
+                "limegreen",
+                "palegreen",
+                "lightgreen",
+                "mediumspringgreen",
+                "springgreen",
+                "mediumseagreen",
+                "seagreen",
+                "forestgreen",
+                "green",
+                "darkgreen",
+                "yellowgreen",
+                "olivedrab",
+                "olive",
+                "darkolivegreen",
+                "mediumaquamarine",
+                "darkseagreen",
+                "lightseagreen",
+                "darkcyan",
+                "teal",
+            ]
+        },
+        {
+            groupName: "BLUE HTML COLORS",
+            colors: [
+                "aqua",
+                "cyan",
+                "lightcyan",
+                "paleturquoise",
+                "aquamarine",
+                "turquoise",
+                "mediumturquoise",
+                "darkturquoise",
+                "cadetblue",
+                "steelblue",
+                "lightsteelblue",
+                "powderblue",
+                "lightblue",
+                "skyblue",
+                "lightskyblue",
+                "deepskyblue",
+                "dodgerblue",
+                "cornflowerblue",
+                "mediumslateblue",
+                "royalblue",
+                "blue",
+                "mediumblue",
+                "darkblue",
+                "navy",
+                "midnightblue",
+            ]
+        },
+    ]
 };

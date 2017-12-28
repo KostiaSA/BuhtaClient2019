@@ -40,7 +40,7 @@ export class SelectColorWindow extends SchemaObjectBaseDesignerWindow {
 
     }
 
-    handleClickSaveButton = async () => {
+    handleClickSelectButton = async () => {
         // let selectedRows = this.columnsGrid.getSelectedRows();
         // if (selectedRows.length === 0) {
         //     await showError("ничего не выбрано");
@@ -55,21 +55,30 @@ export class SelectColorWindow extends SchemaObjectBaseDesignerWindow {
 
     renderColors(group: string): React.ReactNode {
 
+
         return this.colors
             .filter((c: any) => c.group === group)
             .map((c: any) => {
+                let onClick = () => {
+                    this.window.close(c.value);
+                };
                 return (
                     <tr key={c.name}>
-                        <td style={{color: c.value, paddingBottom: 6}}>{c.name}</td>
-                        <td style={{color: c.value, paddingBottom: 6, fontWeight: "bold"}}>{c.name}</td>
-                        <td style={{color: c.value, paddingBottom: 6, fontStyle: "italic"}}>{c.name}</td>
+                        <td style={{color: c.value, paddingBottom: 6, cursor: "pointer"}} onClick={onClick}>{c.name}</td>
+                        <td style={{color: c.value, paddingBottom: 6, fontWeight: "bold",cursor: "pointer"}}
+                            onClick={onClick}>{c.name}</td>
+                        <td style={{color: c.value, paddingBottom: 6, fontStyle: "italic",cursor: "pointer"}}
+                            onClick={onClick}>{c.name}</td>
                         <td style={{
                             color: c.value,
                             paddingBottom: 6,
                             fontStyle: "italic",
-                            fontWeight: "bold"
-                        }}>{c.name}</td>
-                        <td style={{color: "gray", cursor: "pointer", paddingBottom: 6}}>выбрать '{c.name}'</td>
+                            fontWeight: "bold",
+                            cursor: "pointer"
+                        }}
+                            onClick={onClick}
+                        >{c.name}</td>
+                        <td style={{color: "gray", cursor: "pointer", paddingBottom: 6}} onClick={onClick}>выбрать '{c.name}'</td>
                     </tr>
                 )
             });
@@ -85,7 +94,7 @@ export class SelectColorWindow extends SchemaObjectBaseDesignerWindow {
             return (
                 <div key={group}
                 >
-                    <div style={{fontSize:15, fontWeight:"bold"}}>{group}</div>
+                    <div style={{fontSize: 15, fontWeight: "bold"}}>{group}</div>
                     <table>
                         <tbody>
                         {this.renderColors(group)}
@@ -123,11 +132,6 @@ export class SelectColorWindow extends SchemaObjectBaseDesignerWindow {
                         {this.renderGroups()}
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
-                        <Button imgSrc={config.button.okIcon}
-                                text="Выбрать"
-                                style={{marginRight: 5}}
-                                ref={(e) => this.saveButton = e!}
-                                onClick={this.handleClickSaveButton}/>
                         <Button imgSrc={config.button.cancelIcon}
                                 text="Отмена"
                                 ref={(e) => this.closeButton = e!}
