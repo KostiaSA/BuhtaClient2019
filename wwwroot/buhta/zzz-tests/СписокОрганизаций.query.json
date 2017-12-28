@@ -5,9 +5,11 @@
     "root": {
         "tableId": "buhta/zzz-tests/Организация_MAG666.table",
         "children": [{
-            "fieldSource": "Номер"
+            "fieldSource": "Номер",
+            "orderBy": "asc1"
         }, {
-            "fieldSource": "Название"
+            "fieldSource": "Название",
+            "orderBy": "desc1"
         }, {
             "inlineSql": "Номер+'--'",
             "inlineDataType": {
@@ -44,10 +46,11 @@
             "fieldCaption": "Строка1988"
         }]
     },
-    "note": "12260789990022e",
+    "note": "12260789990022",
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-20 23:13:31.551",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-27 16:58:19.382",
-    "sqlBefore": "-- ================"
+    "changedDate": "<DateTime>2017-12-28 11:50:57.329",
+    "sqlBefore": "-- ================",
+    "sqlOrderBy": "w"
 }

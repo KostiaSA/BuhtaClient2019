@@ -20,6 +20,7 @@ export interface ISchemaQueryProps extends ISchemaObjectProps {
     sqlSelect?: string;
     sqlJoin?: string;
     sqlWhere?: string;
+    sqlOrderBy?: string;
     sqlAfter?: string;
     //  editOptions?: ISchemaQueryEditOptions;
 }
@@ -34,6 +35,7 @@ export interface ISchemaQueryColumnProps {
     tableAlias?: string;
     inlineSql?: string;
     inlineDataType?: IBaseSqlDataTypeProps;
+    orderBy?:string;
     children?: ISchemaQueryColumnProps[];
 }
 

@@ -15,6 +15,7 @@ import {joiValidate} from "../validation/joiValidate";
 import {getConfirmation} from "../ui/modals/getConfirmation";
 import {CheckBox} from "../ui/inputs/CheckBox";
 import {CodeEditor} from "../ui/inputs/CodeEditor";
+import {ComboBox} from "../ui/inputs/ComboBox";
 
 
 export interface ISchemaQueryColumnEditorProps {
@@ -40,6 +41,22 @@ export class SchemaQueryColumnEditorWindow extends React.Component<ISchemaQueryC
     handleDataTypeChange = async () => {
         this.forceUpdate();
     };
+
+    getSortComboBoxlist(): any {
+        return [
+            {id: undefined, name: "<нет>"},
+            {id: "asc1", name: "asc1"},
+            {id: "asc2", name: "asc2"},
+            {id: "asc3", name: "asc3"},
+            {id: "asc4", name: "asc4"},
+            {id: "asc5", name: "asc5"},
+            {id: "desc1", name: "desc1"},
+            {id: "desc2", name: "desc2"},
+            {id: "desc3", name: "desc3"},
+            {id: "desc4", name: "desc4"},
+            {id: "desc5", name: "desc5"},
+        ]
+    }
 
     render() {
         console.log("SchemaQueryColumnEditorWindow");
@@ -85,12 +102,22 @@ export class SchemaQueryColumnEditorWindow extends React.Component<ISchemaQueryC
 
                                     />
                                     <CodeEditor title="inline SQL" bindProp="inlineSql" height={150}
-                                                options={{mode: "text/x-mssql", theme:"sql-template"}}
+                                                options={{mode: "text/x-mssql", theme: "sql-template"}}
                                                 resizable storageKey="input:SchemaQuery.inlineSql"
                                                 hidden={!this.inlineSqlMode}
 
 
                                     />
+                                    <ComboBox
+                                        title="сортировка"
+                                        bindProp="orderBy"
+                                        valueMember="id"
+                                        displayMember="name"
+                                        width={100}
+                                        placeHolder="<нет>"
+                                        source={this.getSortComboBoxlist()}
+                                    />
+
                                     <CheckBox title="скрытая" bindProp="isHidden" width={300}/>
                                     <CheckBox title="отключена" bindProp="isDisabled" width={300}/>
                                 </FormPanel>

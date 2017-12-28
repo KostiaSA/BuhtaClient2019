@@ -36,7 +36,8 @@
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-20 23:08:32.534",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-27 16:30:35.989",
+    "changedDate": "<DateTime>2017-12-27 23:07:18.371",
     "dbName": "mag3666",
-    "note": "933"
+    "note": "933",
+    "primaryKey": true
 }

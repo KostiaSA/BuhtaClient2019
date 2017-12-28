@@ -334,6 +334,19 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
     };
 
+    getColumnSortText = (row: ISchemaQueryColumnProps): React.ReactNode => {
+        let style: CSSProperties = {};
+
+        if (!row.orderBy)
+            return null;
+        else
+        if (row.orderBy.startsWith("asc"))
+            return <span style={{color: "seagreen"}}>{row.orderBy}</span>;
+        else
+            return <span style={{color: "tomato"}}>{row.orderBy}</span>;
+
+    };
+
     render() {
 
         if (this.error) {
@@ -413,6 +426,8 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                                 getText={this.getRootColumnText}/>
                                                 <TreeGridColumn headerText="Заголовок"
                                                                 getText={this.getColumnCaptionText}/>
+                                                <TreeGridColumn headerText="Сортировка" width={100}
+                                                                getText={this.getColumnSortText}/>
 
                                             </TreeGrid>
                                         </FlexItem>
@@ -496,6 +511,15 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 />
                             </TabsPanelItem>
 
+                            <TabsPanelItem title={(this.query.sqlOrderBy ? "+" : "") + "SQL-order by"}>
+                                <CodeEditor
+                                    title="" options={{mode: "text/x-mssql", theme: "sql-template"}}
+                                    bindObj={this.query}
+                                    bindProp="sqlOrderBy"
+                                    onChange={async () => this.forceUpdate()}
+                                />
+                            </TabsPanelItem>
+
                             <TabsPanelItem title={(this.query.sqlAfter ? "+" : "") + "SQL-after"}>
                                 <CodeEditor
                                     title="" options={{mode: "text/x-mssql", theme: "sql-template"}}
@@ -543,7 +567,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                 />
                             </FlexItem>
                             <FlexItem dock="fill" style={{justifyContent: "flex-end"}}>
-                                <Button imgSrc={config.button.applIcon}
+                                <Button imgSrc={config.button.applyIcon}
                                         tooltip="сохранить без закрытия формы"
                                         style={{marginRight: 5, opacity: 0.7}}
                                         ref={(e) => this.applyButton = e!}
