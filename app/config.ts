@@ -184,7 +184,6 @@ export let config: any = {
                 "darkorange",
                 "orange",
             ]
-
         },
         {
             groupName: "YELLOW HTML COLORS",
@@ -201,7 +200,6 @@ export let config: any = {
                 "khaki",
                 "darkkhaki",
             ]
-
         },
         {
             groupName: "PURPLE HTML COLORS",
@@ -226,7 +224,6 @@ export let config: any = {
                 "darkslateblue",
                 "mediumslateblue",
             ]
-
         },
         {
             groupName: "GREEN HTML COLORS",
@@ -284,6 +281,64 @@ export let config: any = {
                 "darkblue",
                 "navy",
                 "midnightblue",
+            ]
+        },
+        {
+            groupName: "BROWN HTML COLORS",
+            colors: [
+                "cornsilk",
+                "blanchedalmond",
+                "bisque",
+                "navajowhite",
+                "wheat",
+                "burlywood",
+                "tan",
+                "rosybrown",
+                "sandybrown",
+                "goldenrod",
+                "darkgoldenrod",
+                "peru",
+                "chocolate",
+                "saddlebrown",
+                "sienna",
+                "brown",
+                "maroon",
+            ]
+        },
+        {
+            groupName: "WHITE HTML COLORS",
+            colors: [
+                "white",
+                "snow",
+                "honeydew",
+                "mintcream",
+                "aliceblue",
+                "ghostwhite",
+                "whitesmoke",
+                "seashell",
+                "beige",
+                "oldlace",
+                "floralwhite",
+                "ivory",
+                "antiquewhite",
+                "linen",
+                "lavenderblush",
+                "mistyrose",
+            ]
+        },
+        {
+            groupName: "GRAY HTML COLORS",
+            colors: [
+                "gainsboro",
+                "lightgray",
+                "silver",
+                "darkgray",
+                "gray",
+                "dimgray",
+                "lightslategray",
+                "slategray",
+                "darkslategray",
+                "black",
             ]
         },
     ]
