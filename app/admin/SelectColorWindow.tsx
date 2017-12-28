@@ -23,13 +23,11 @@ export class SelectColorWindow extends SchemaObjectBaseDesignerWindow {
     errorTitle: string;
     window: Window;
 
-    colors: string[];
-
     async componentDidMount() {
 
         try {
-            this.colors = config.CSS_COLOR_NAMES.map((color: string) => ({name: color, value: color, group: "Web"}));
 
+            this.colorRadioElement.checked = true;
             this.forceUpdate();
 
         }
@@ -53,56 +51,122 @@ export class SelectColorWindow extends SchemaObjectBaseDesignerWindow {
         this.window.close();
     };
 
-    renderColors(group: string): React.ReactNode {
 
-
-        return this.colors
-            .filter((c: any) => c.group === group)
-            .map((c: any) => {
-                let onClick = () => {
-                    this.window.close(c.value);
-                };
-                return (
-                    <tr key={c.name}>
-                        <td style={{color: c.value, paddingBottom: 6, cursor: "pointer"}} onClick={onClick}>{c.name}</td>
-                        <td style={{color: c.value, paddingBottom: 6, fontWeight: "bold",cursor: "pointer"}}
-                            onClick={onClick}>{c.name}</td>
-                        <td style={{color: c.value, paddingBottom: 6, fontStyle: "italic",cursor: "pointer"}}
-                            onClick={onClick}>{c.name}</td>
-                        <td style={{
-                            color: c.value,
-                            paddingBottom: 6,
-                            fontStyle: "italic",
+    renderColorsOrBackground(color: string): React.ReactNode {
+        let onClick = () => {
+            this.window.close(color);
+        };
+        let cellStyle = {cursor: "pointer", height: 20, verticalAlign: "middle"};
+        if (this.isColorMode()) {
+            return (
+                <tr key={color}>
+                    <td
+                        style={{color: color, ...cellStyle}}
+                        onClick={onClick}
+                        className="select-color-td"
+                    >
+                        {color}
+                    </td>
+                    <td
+                        style={{color: color, fontWeight: "bold", ...cellStyle}}
+                        className="select-color-td"
+                        onClick={onClick}
+                    >
+                        {color}
+                    </td>
+                    <td
+                        style={{color: color, backgroundColor: "darkslategray", ...cellStyle}}
+                        className="select-color-td"
+                        onClick={onClick}
+                    >
+                        {color}
+                    </td>
+                    <td
+                        style={{color: color, backgroundColor: "darkslategray", fontWeight: "bold", ...cellStyle}}
+                        className="select-color-td"
+                        onClick={onClick}
+                    >
+                        {color}
+                    </td>
+                </tr>
+            )
+        }
+        else {
+            return (
+                <tr key={color}>
+                    <td
+                        style={{backgroundColor: color, color: "white", ...cellStyle}}
+                        className="select-color-td"
+                        onClick={onClick}
+                    >
+                        {color}
+                    </td>
+                    <td
+                        style={{
+                            color: "white",
+                            backgroundColor: color,
                             fontWeight: "bold",
-                            cursor: "pointer"
+                            ...cellStyle
                         }}
-                            onClick={onClick}
-                        >{c.name}</td>
-                        <td style={{color: "gray", cursor: "pointer", paddingBottom: 6}} onClick={onClick}>выбрать '{c.name}'</td>
-                    </tr>
-                )
+                        className="select-color-td"
+                        onClick={onClick}
+                    >
+                        {color}
+                    </td>
+                    <td
+                        style={{backgroundColor: color, color: "darkslategray", ...cellStyle}}
+                        className="select-color-td"
+                        onClick={onClick}
+                    >
+                        {color}
+                    </td>
+                    <td
+                        style={{
+                            color: "darkslategray",
+                            backgroundColor: color,
+                            fontWeight: "bold",
+                            ...cellStyle
+                        }}
+                        className="select-color-td"
+                        onClick={onClick}
+                    >
+                        {color}
+                    </td>
+                </tr>
+            )
+        }
+    }
+
+    renderColors(group: any): React.ReactNode {
+        return group.colors
+            .map((color: string) => {
+                return this.renderColorsOrBackground(color);
             });
     }
 
     renderGroups(): React.ReactNode {
-        if (!this.colors)
-            return null;
 
-        let groups = Array.from(new Set(this.colors.map((c: any) => c.group)));
-
-        return groups.map((group: string) => {
-            return (
-                <div key={group}
-                >
-                    <div style={{fontSize: 15, fontWeight: "bold"}}>{group}</div>
-                    <table>
-                        <tbody>
-                        {this.renderColors(group)}
-                        </tbody>
-                    </table>
-                </div>
-            )
+        return config.htmlColorGroups.map((group: any, index: number) => {
+            return ([
+                <tr key={group.groupName}>
+                    <td colSpan={4} style={{
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        color: "slategray",
+                        paddingTop: index === 0 ? 5 : 20,
+                        paddingBottom: 10
+                    }}>{group.groupName}</td>
+                </tr>,
+                this.renderColors(group)
+            ])
         });
+    }
+
+    colorRadioElement: HTMLInputElement;
+    backgroundRadioElement: HTMLInputElement;
+
+    isColorMode(): boolean {
+        return !!(!this.colorRadioElement || this.colorRadioElement.checked);
     }
 
 
@@ -116,6 +180,8 @@ export class SelectColorWindow extends SchemaObjectBaseDesignerWindow {
         //console.log("render SchemaTableDesignerWindow");
         return (
             <Window
+                width={590}
+                height={700}
                 {...omit(this.props.window, ["children"])}
                 storageKey="SelectColorWindow"
                 title="Выбор цвета"
@@ -125,11 +191,28 @@ export class SelectColorWindow extends SchemaObjectBaseDesignerWindow {
                 }}>
 
                 <FlexHPanel>
-                    <FlexItem dock="top">
-                        фильтр по названию
+                    <FlexItem dock="top" style={{padding: 15}}>
+                        <div>
+                            <input
+                                ref={(e) => this.colorRadioElement = e!}
+                                type="radio" name="type" id="radio1" value="color"
+                                onChange={() => this.forceUpdate()}
+                            />
+                            <label htmlFor="radio1">Color</label>
+                            <input
+                                ref={(e) => this.backgroundRadioElement = e!}
+                                type="radio" name="type" id="radio2" value="background"
+                                onChange={() => this.forceUpdate()}
+                            />
+                            <label htmlFor="radio2">Background</label>
+                        </div>
                     </FlexItem>
                     <FlexItem dock="fill" style={{padding: 15, overflow: "auto"}}>
-                        {this.renderGroups()}
+                        <table>
+                            <tbody>
+                            {this.renderGroups()}
+                            </tbody>
+                        </table>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
                         <Button imgSrc={config.button.cancelIcon}
