@@ -1,6 +1,6 @@
 ﻿{
-    "description": "Справочник организаций",
-    "name": "СписокОрганизаций",
+    "description": "Справочник организаций222",
+    "name": "СписокОрганизаций222",
     "objectType": "query",
     "root": {
         "tableId": "buhta/zzz-tests/Организация_MAG666.table",

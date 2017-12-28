@@ -420,6 +420,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                 popup={this.createPopupMenu}
                                                 enableHover={false}
                                                 expandAll
+                                                storageKey="SchemaQueryDesignerColumnsTree"
 
                                             >
                                                 <TreeGridColumn headerText="Таблица/Колонка"

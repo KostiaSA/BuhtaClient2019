@@ -18,4 +18,4 @@ SELECT
     [Организация_MAG666].[Ключ] AS [__recordId__]
 FROM
     [ТМЦ500] AS [Организация_MAG666]
-ORDER BY /* SQL-orderby: начало */ Ключ /* SQL-orderby: конец */, [Название] DESC, [Номер]
+ORDER BY [Название] DESC, [Номер]

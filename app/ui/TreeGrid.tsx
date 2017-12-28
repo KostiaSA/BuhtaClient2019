@@ -8,6 +8,8 @@ import {ITreeGridColumnProps, TreeGridColumn} from "./TreeGridColumn";
 import {isString} from "../utils/isString";
 import {isFunction} from "../utils/isFunction";
 import {getRandomString} from "../utils/getRandomString";
+import {storageGet} from "../storage/storageGet";
+import {storageSet} from "../storage/storageSet";
 
 // запрещенные имена в row: data,expanded,leaf,level,parent,records,uid,_visible
 
@@ -40,7 +42,7 @@ export interface ITreeGridProps extends IComponentProps {
     expandAll?: boolean;
     columnsResize?: boolean;
     columnsReorder?: boolean;
-
+    storageKey?: string;
 }
 
 export interface ITreeGridNode {
@@ -175,7 +177,7 @@ export class TreeGrid extends Component<ITreeGridProps> {
     updateProps(props: ITreeGridProps, create: boolean) {
         this.widget.css("position", "absolute");
 
-        let treeGridOptions: any = omit(props, ["children", "source", "onRowDoubleClick", "onRowKeyDown", "popup", "expandAll"]);
+        let treeGridOptions: any = omit(props, ["children", "source", "onRowDoubleClick", "onRowKeyDown", "popup", "expandAll","storageKey"]);
         treeGridOptions.height = "100%";
         treeGridOptions.width = "100%";
 
@@ -219,6 +221,14 @@ export class TreeGrid extends Component<ITreeGridProps> {
                 columnOptions.text = colProps.headerText;
                 if (!columnOptions.text)
                     columnOptions.text = columnOptions.datafield || "?datafield";
+
+                columnOptions.datafield = columnOptions.datafield || ("$" + colProps.headerText);
+                if (this.props.storageKey) {
+                    let storage = storageGet(this.props.storageKey, [columnOptions.datafield,]);
+                    if (storage && storage.width)
+                        columnOptions.width = storage.width;
+                }
+
 
                 columnOptions.cellClassName = (rowId: string, datafieldName: any, datafieldValue: any, row: string): string => {
 
@@ -433,6 +443,7 @@ export class TreeGrid extends Component<ITreeGridProps> {
             // };
         }
 
+
         try {
             this.widget.jqxTreeGrid(treeGridOptions);
         }
@@ -447,6 +458,12 @@ export class TreeGrid extends Component<ITreeGridProps> {
             });
         else
             this.widget.off("rowDoubleClick");
+
+        this.widget.on("columnResized", (event: any) => {
+            if (this.props.storageKey) {
+                storageSet(this.props.storageKey!, [event.args.dataField], {width: event.args.newWidth});
+            }
+        });
 
     }
 
