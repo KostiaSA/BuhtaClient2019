@@ -32,7 +32,8 @@
                 "id": "String",
                 "maxLen": 0
             },
-            "fieldCaption": "Строка3255"
+            "fieldCaption": "Строка3255",
+            "color": "lightseagreen"
         }, {
             "inlineSql": "{{_ServerCurrentTime_}}",
             "inlineDataType": {
@@ -49,11 +50,11 @@
             "fieldCaption": "Строка1988"
         }]
     },
-    "note": "12260789990022",
+    "note": "1226078999002225",
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-20 23:13:31.551",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-29 15:37:47.595",
+    "changedDate": "<DateTime>2017-12-29 16:30:41.862",
     "sqlBefore": "-- ================",
     "sqlOrderBy": ""
 }

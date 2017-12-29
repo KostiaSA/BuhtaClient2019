@@ -138,7 +138,6 @@ export class DbGrid extends Component<IDbGridProps> {
             // this.widget.jqxGrid('applyfilters');
 
 
-
             let lastParentW = 0;
             let resizeIntervalId = setInterval(() => {
                 let newW = this.widget.parent().width();
@@ -158,7 +157,7 @@ export class DbGrid extends Component<IDbGridProps> {
                 //console.log("cellselect----------->", this.focusedCellDataField, this.focusedCellRow);
                 this.focusedCellRow = this.getRowByIndex(event.args.rowindex);
                 this.focusedCellDataField = event.args.datafield;
-                setTimeout(this.resetToolbar.bind(this),1);
+                setTimeout(this.resetToolbar.bind(this), 1);
                 //this.resetToolbar();
                 // // event arguments.
                 // var args = event.args;
@@ -188,163 +187,163 @@ export class DbGrid extends Component<IDbGridProps> {
     resetToolbar() {
 
         //if (appState.desktop.toolbar.activeElement !== this) {
-            appState.desktop.clearToolbarFocusedGroups();
-          //  appState.desktop.toolbar.activeElement = this;
+        appState.desktop.clearToolbarFocusedGroups();
+        //  appState.desktop.toolbar.activeElement = this;
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid",
-                type: "icon",
-                tooltip: "обновить список (F5)",
-                id: "refresh",
-                icon: config.dbGrid.toolbar.reloadIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid",
+            type: "icon",
+            tooltip: "обновить список (F5)",
+            id: "refresh",
+            icon: config.dbGrid.toolbar.reloadIcon
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-find",
-                type: "icon",
-                tooltip: "поиск по колонке с начала списка (F2)",
-                id: "find",
-                icon: config.dbGrid.toolbar.findIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-find",
+            type: "icon",
+            tooltip: "поиск по колонке с начала списка (F2)",
+            id: "find",
+            icon: config.dbGrid.toolbar.findIcon
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-find",
-                type: "icon",
-                tooltip: "поиск по колонке вперед (F3)",
-                id: "find-next",
-                icon: config.dbGrid.toolbar.findNextIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-find",
+            type: "icon",
+            tooltip: "поиск по колонке вперед (F3)",
+            id: "find-next",
+            icon: config.dbGrid.toolbar.findNextIcon
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-find",
-                type: "icon",
-                tooltip: "поиск по колонке назад (Shift-F3)",
-                id: "find-prev",
-                icon: config.dbGrid.toolbar.findPrevIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-find",
+            type: "icon",
+            tooltip: "поиск по колонке назад (Shift-F3)",
+            id: "find-prev",
+            icon: config.dbGrid.toolbar.findPrevIcon
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-filter",
-                type: "icon",
-                tooltip: "включить фильтр",
-                id: "filter",
-                icon: config.dbGrid.toolbar.filterIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-filter",
+            type: "icon",
+            tooltip: "включить фильтр",
+            id: "filter",
+            icon: config.dbGrid.toolbar.filterIcon
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-filter",
-                type: "icon",
-                tooltip: "фильтр по строке/подстроке",
-                id: "filter-input",
-                icon: config.dbGrid.toolbar.filterInputIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-filter",
+            type: "icon",
+            tooltip: "фильтр по строке/подстроке",
+            id: "filter-input",
+            icon: config.dbGrid.toolbar.filterInputIcon
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-filter",
-                type: "icon",
-                tooltip: "фильтр по выделенному значению",
-                id: "filter-plus",
-                icon: config.dbGrid.toolbar.filterPlusIcon,
-                onClick: async () => {
-                    let queryColumn = this.query.getColumnByCaption(this.focusedCellDataField);
-                    let cellValue = this.focusedCellRow[this.focusedCellDataField];
-                    let dataType = queryColumn.getDataType();
-                    let filter = new DbGridEqualFilter(dataType, cellValue, this.focusedCellDataField);
-                    this.activeFilters.push(filter);
-                    this.setFilteredDataSource();
-                }
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-filter",
+            type: "icon",
+            tooltip: "фильтр по выделенному значению",
+            id: "filter-plus",
+            icon: config.dbGrid.toolbar.filterPlusIcon,
+            onClick: async () => {
+                let queryColumn = this.query.getColumnByCaption(this.focusedCellDataField);
+                let cellValue = this.focusedCellRow[this.focusedCellDataField];
+                let dataType = queryColumn.getDataType();
+                let filter = new DbGridEqualFilter(dataType, cellValue, this.focusedCellDataField);
+                this.activeFilters.push(filter);
+                this.setFilteredDataSource();
+            }
 
-            });
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-filter",
-                type: "icon",
-                tooltip: "фильтр - все кроме выделенного значения",
-                id: "filter-minus",
-                icon: config.dbGrid.toolbar.filterMinusIcon,
-                onClick: async () => {
-                    let queryColumn = this.query.getColumnByCaption(this.focusedCellDataField);
-                    let cellValue = this.focusedCellRow[this.focusedCellDataField];
-                    let dataType = queryColumn.getDataType();
-                    let filter = new DbGridNotEqualFilter(dataType, cellValue, this.focusedCellDataField);
-                    this.activeFilters.push(filter);
-                    this.setFilteredDataSource();
-                }
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-filter",
+            type: "icon",
+            tooltip: "фильтр - все кроме выделенного значения",
+            id: "filter-minus",
+            icon: config.dbGrid.toolbar.filterMinusIcon,
+            onClick: async () => {
+                let queryColumn = this.query.getColumnByCaption(this.focusedCellDataField);
+                let cellValue = this.focusedCellRow[this.focusedCellDataField];
+                let dataType = queryColumn.getDataType();
+                let filter = new DbGridNotEqualFilter(dataType, cellValue, this.focusedCellDataField);
+                this.activeFilters.push(filter);
+                this.setFilteredDataSource();
+            }
 
-            });
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-filter",
-                type: "icon",
-                tooltip: "сброс всех фильтров",
-                id: "filter-reset",
-                icon: config.dbGrid.toolbar.filterResetIcon,
-                onClick: async () => {
-                    this.activeFilters.length = 0;
-                    this.setFilteredDataSource();
-                }
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-filter",
+            type: "icon",
+            tooltip: "сброс всех фильтров",
+            id: "filter-reset",
+            icon: config.dbGrid.toolbar.filterResetIcon,
+            onClick: async () => {
+                this.activeFilters.length = 0;
+                this.setFilteredDataSource();
+            }
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-selection",
-                type: "icon",
-                tooltip: "показать колонку для выбора записей",
-                id: "checkboxes",
-                icon: config.dbGrid.toolbar.checkboxesIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-selection",
+            type: "icon",
+            tooltip: "показать колонку для выбора записей",
+            id: "checkboxes",
+            icon: config.dbGrid.toolbar.checkboxesIcon
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-selection",
-                type: "icon",
-                tooltip: "выбрать все записи",
-                id: "checkboxes-all",
-                icon: config.dbGrid.toolbar.checkboxesAllIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-selection",
+            type: "icon",
+            tooltip: "выбрать все записи",
+            id: "checkboxes-all",
+            icon: config.dbGrid.toolbar.checkboxesAllIcon
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-selection",
-                type: "icon",
-                tooltip: "снять выбор",
-                id: "checkboxes-none",
-                icon: config.dbGrid.toolbar.checkboxesNoneIcon
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-selection",
+            type: "icon",
+            tooltip: "снять выбор",
+            id: "checkboxes-none",
+            icon: config.dbGrid.toolbar.checkboxesNoneIcon
+        });
 
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-sort",
-                type: "icon",
-                tooltip: "сортировка по возрастанию",
-                id: "sort-asc",
-                icon: config.dbGrid.toolbar.sortAscIcon,
-                onClick: async () => {
-                    this.sortByColumn(this.focusedCellDataField, "asc");
-                }
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-sort",
+            type: "icon",
+            tooltip: "сортировка по возрастанию",
+            id: "sort-asc",
+            icon: config.dbGrid.toolbar.sortAscIcon,
+            onClick: async () => {
+                this.sortByColumn(this.focusedCellDataField, "asc");
+            }
 
-            });
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-sort",
-                type: "icon",
-                tooltip: "сортировка по убыванию",
-                id: "sort-desc",
-                icon: config.dbGrid.toolbar.sortDescIcon,
-                onClick: async () => {
-                    this.sortByColumn(this.focusedCellDataField, "desc");
-                }
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-sort",
+            type: "icon",
+            tooltip: "сортировка по убыванию",
+            id: "sort-desc",
+            icon: config.dbGrid.toolbar.sortDescIcon,
+            onClick: async () => {
+                this.sortByColumn(this.focusedCellDataField, "desc");
+            }
+        });
 
-            addToolbarIconItem(appState.desktop.toolbar, {
-                group: "focused-grid-sort",
-                type: "icon",
-                tooltip: "отмена сортировки",
-                id: "sort-reset",
-                icon: config.dbGrid.toolbar.sortResetIcon,
-                onClick: async () => {
-                    this.removeSort();
-                }
-            });
+        addToolbarIconItem(appState.desktop.toolbar, {
+            group: "focused-grid-sort",
+            type: "icon",
+            tooltip: "отмена сортировки",
+            id: "sort-reset",
+            icon: config.dbGrid.toolbar.sortResetIcon,
+            onClick: async () => {
+                this.removeSort();
+            }
+        });
 
-            appState.desktop.forceUpdate();
+        appState.desktop.forceUpdate();
         //}
 
     }
@@ -359,6 +358,153 @@ export class DbGrid extends Component<IDbGridProps> {
             columnOptions.filtertype = "input";
             columnOptions.text = col.props.fieldCaption || col.props.fieldSource;
             columnOptions.datafield = col.props.fieldCaption || col.props.fieldSource;
+
+
+            columnOptions.cellsrenderer = (rowIndex: number, columnfield: any, value: any, defaulthtml: string): string => {
+
+                // if (!colProps.getText &&
+                //     !colProps.color && !colProps.getColor &&
+                //     !colProps.background && !colProps.getBackground &&
+                //     !colProps.fontStyle && !colProps.getFontStyle &&
+                //     !colProps.fontWeight && !colProps.getFontWeight &&
+                //     !colProps.fontFamily && !colProps.getFontFamily &&
+                //     !colProps.fontSize && !colProps.getFontSize
+                // )
+                //     return defaulthtml;
+
+
+
+                let el = document.createElement("div");
+                el.innerHTML = defaulthtml;
+                let defaultSpan = el.childNodes[0] as HTMLElement;
+
+                let createError = (message: string) => {
+                    defaultSpan.innerText = "ошибка: " + message;
+                    defaultSpan.title = "ошибка: " + message;
+                    defaultSpan.style.color = "red";
+                    console.error(defaultSpan.innerText);
+                    return defaultSpan.outerHTML;
+                };
+
+                let row = this.rows[rowIndex];
+
+                // --------------------------- color --------------------------
+                if (col.calcColorForDbGrid()) {
+                    defaultSpan.style.color = col.calcColorForDbGrid();
+                }
+                // if (colProps.getColor) {
+                //     if (!isFunction(colProps.getColor!))
+                //         return createError("'getColor' должен быть функцией");
+                //
+                //     try {
+                //         let value = colProps.getColor(row);
+                //         if (!isString(value))
+                //             return createError("'getColor' должен возвращать строку");
+                //         defaultSpan.style.color = value;
+                //     }
+                //     catch (e) {
+                //         return createError(" в 'getColor': " + e.toString());
+                //     }
+                // }
+
+                // // --------------------------- fontStyle --------------------------
+                // if (colProps.fontStyle) {
+                //     if (!isString(colProps.fontStyle))
+                //         return createError("'fontStyle' должен быть строкой");
+                //     defaultSpan.style.fontStyle = colProps.fontStyle;
+                // }
+                // if (colProps.getFontStyle) {
+                //     if (!isFunction(colProps.getFontStyle!))
+                //         return createError("'getFontStyle' должен быть функцией");
+                //
+                //     try {
+                //         let value = colProps.getFontStyle(row);
+                //         if (!isString(value))
+                //             return createError("'getFontStyle' должен возвращать строку");
+                //         defaultSpan.style.fontStyle = value;
+                //     }
+                //     catch (e) {
+                //         return createError(" в 'getFontStyle': " + e.toString());
+                //     }
+                // }
+                //
+                // // --------------------------- fontWeight --------------------------
+                // if (colProps.fontWeight) {
+                //     if (!isString(colProps.fontWeight))
+                //         return createError("'fontWeight' должен быть строкой");
+                //     defaultSpan.style.fontWeight = colProps.fontWeight;
+                // }
+                // if (colProps.getFontWeight) {
+                //     if (!isFunction(colProps.getFontWeight!))
+                //         return createError("'getFontWeight' должен быть функцией");
+                //
+                //     try {
+                //         let value = colProps.getFontWeight(row);
+                //         if (!isString(value))
+                //             return createError("'getFontWeight' должен возвращать строку");
+                //         defaultSpan.style.fontWeight = value;
+                //     }
+                //     catch (e) {
+                //         return createError(" в 'getFontWeight': " + e.toString());
+                //     }
+                // }
+                //
+                // // --------------------------- fontFamily --------------------------
+                // if (colProps.fontFamily) {
+                //     if (!isString(colProps.fontFamily))
+                //         return createError("'fontFamily' должен быть строкой");
+                //     defaultSpan.style.fontFamily = colProps.fontFamily;
+                // }
+                // if (colProps.getFontFamily) {
+                //     if (!isFunction(colProps.getFontFamily!))
+                //         return createError("'getFontFamily' должен быть функцией");
+                //
+                //     try {
+                //         let value = colProps.getFontFamily(row);
+                //         if (!isString(value))
+                //             return createError("'getFontFamily' должен возвращать строку");
+                //         defaultSpan.style.fontFamily = value;
+                //     }
+                //     catch (e) {
+                //         return createError(" в 'getFontFamily': " + e.toString());
+                //     }
+                // }
+                //
+                // // --------------------------- fontSize --------------------------
+                // if (colProps.fontSize) {
+                //     if (!isString(colProps.fontSize))
+                //         return createError("'fontSize' должен быть строкой");
+                //     defaultSpan.style.fontSize = colProps.fontSize;
+                // }
+                // if (colProps.getFontSize) {
+                //     if (!isFunction(colProps.getFontSize!))
+                //         return createError("'getFontSize' должен быть функцией");
+                //
+                //     try {
+                //         let value = colProps.getFontSize(row);
+                //         if (!isString(value))
+                //             return createError("'getFontSize' должен возвращать строку");
+                //         defaultSpan.style.fontSize = value;
+                //     }
+                //     catch (e) {
+                //         return createError(" в 'getFontSize': " + e.toString());
+                //     }
+                // }
+                //
+                //
+                // if (colProps.getText) {
+                //     try {
+                //         defaultSpan.innerHTML = ReactDOMServer.renderToStaticMarkup(
+                //             <span>{colProps.getText(row)}</span>);
+                //     }
+                //     catch (e) {
+                //         return createError(" в 'getText': " + e.toString());
+                //     }
+                // }
+
+                return defaultSpan.outerHTML;
+            };
+
             columns.push(columnOptions);
         }
         this.widget.jqxGrid({columns: columns});
@@ -400,7 +546,6 @@ export class DbGrid extends Component<IDbGridProps> {
             await this.createColumns();
 
             this.setFilteredDataSource();
-            this.autoResizeColumns();
 
             this.forceUpdate();
         }

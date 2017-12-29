@@ -38,8 +38,8 @@ export interface ISchemaQueryColumnProps {
     inlineDataType?: IBaseSqlDataTypeProps;
     orderBy?: string;
     children?: ISchemaQueryColumnProps[];
-    color?:string;
-    background?:string;
+    color?: string;
+    background?: string;
 }
 
 
@@ -336,6 +336,10 @@ export class SchemaQueryColumn {
             return this.parent.joinTableAlias + "." + (this.props.tableAlias || this.joinTable.getShortSqlName());
         else
             return this.props.tableAlias || this.joinTable.getShortSqlName();
+    }
+
+    calcColorForDbGrid(): string {
+        return this.props.color!;
     }
 
     getDataType(): BaseSqlDataType {
