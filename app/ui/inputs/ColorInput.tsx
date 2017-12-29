@@ -10,6 +10,7 @@ import {storageGet} from "../../storage/storageGet";
 import {storageSet} from "../../storage/storageSet";
 import {appState} from "../../AppState";
 import {addToolbarIconItem} from "../Toolbar";
+import {getColorValue} from "../../utils/getColorValue";
 
 export interface IColorInputProps extends IBaseInputProps {
     height?: string | number;
@@ -124,8 +125,14 @@ export class ColorInput extends BaseInput<IColorInputProps> {
         let renderedValidationResult = this.renderValidationResult();
 
         let style: CSSProperties = {};
-        if (this.isChanged)
-            style.color = config.formPanel.inputChangedColor;
+
+        let color = objectPathGet(this.bindObj, this.props.bindProp);
+        if (color)
+            style.color = getColorValue(color);
+        else
+            style.color = "black";
+
+
         if (renderedValidationResult)
             style.background = config.formPanel.errorInputBackground;
 
@@ -145,7 +152,7 @@ export class ColorInput extends BaseInput<IColorInputProps> {
                                 background: "url(vendor/fugue/color-swatch.png) no-repeat center center",
                                 backgroundColor: "rgb(183, 183, 183)",
                                 borderRight: this.props.resizable ? "2px solid silver" : "none",
-                                opacity:0.6
+                                opacity: 0.6
                             }}
                             onClick={async () => {
                                 console.log("click8888888888")
