@@ -169,3 +169,8 @@ input[type=text].jqx-input {
 .select-color-td:hover{
     text-decoration: underline;
 }
+
+.input-right-button:hover{
+    background-color: silver !important;
+    opacity: 1 !important;
+}

@@ -138,32 +138,22 @@ export class ColorInput extends BaseInput<IColorInputProps> {
                             <input id={this.$id} style={style} type="text" onFocus={this.resetToolbarOnGotFocus}/>
                         </td>
                         <td
+                            className="input-right-button"
                             key={2}
                             style={{
-                                padding: 0,
-                                backgroundColor: "#c0c0c04d",
+                                width: 22,
+                                background: "url(vendor/fugue/color-swatch.png) no-repeat center center",
+                                backgroundColor: "rgb(183, 183, 183)",
+                                borderRight: this.props.resizable ? "2px solid silver" : "none",
+                                opacity:0.6
+                            }}
+                            onClick={async () => {
+                                console.log("click8888888888")
+                                // this.form!.cancelChanges();
+                                // if (!this.form!.needSaveChanges || await getConfirmation("Выйти без сохранения?"))
+                                //     this.window.close(false);
                             }}
                         >
-                            <div style={{
-                                borderTop: "1px solid silver",
-                                borderBottom: "1px solid silver",
-                                borderRight: "1px solid silver",
-                                width: 24,
-                                height: 22,
-                                verticalAlign: "middle",
-                                textAlign: "center"
-                            }}>
-                                <img
-                                    style={{height: 16, width: 16}}
-                                    src="vendor/fugue/color-swatch.png"
-                                    onClick={async () => {
-                                        // this.form!.cancelChanges();
-                                        // if (!this.form!.needSaveChanges || await getConfirmation("Выйти без сохранения?"))
-                                        //     this.window.close(false);
-                                    }}
-                                />
-
-                            </div>
                         </td>
                         {this.renderRightResizerTd()}
                     </tr>

@@ -5,6 +5,7 @@ export let config: any = {
     adminMode: true,
     theme: "buhta",
     border: "1px solid #d4d4d4",
+    borderColor: "#d4d4d4",
     mainDatabaseName: "main",
     font: {
         family: "Ubuntu",
