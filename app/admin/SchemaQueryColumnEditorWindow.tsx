@@ -16,6 +16,7 @@ import {getConfirmation} from "../ui/modals/getConfirmation";
 import {CheckBox} from "../ui/inputs/CheckBox";
 import {CodeEditor} from "../ui/inputs/CodeEditor";
 import {ComboBox} from "../ui/inputs/ComboBox";
+import {ColorInput} from "../ui/inputs/ColorInput";
 
 
 export interface ISchemaQueryColumnEditorProps {
@@ -117,6 +118,12 @@ export class SchemaQueryColumnEditorWindow extends React.Component<ISchemaQueryC
                                         placeHolder="<нет>"
                                         source={this.getSortComboBoxlist()}
                                     />
+                                    <ColorInput title="цвет" bindProp="color" placeHolder="цвет текста"
+                                           width={300}
+                                           resizable storageKey="input:SchemaQuery.color"
+
+                                    />
+
 
                                     <CheckBox title="скрытая" bindProp="isHidden" width={300}/>
                                     <CheckBox title="отключена" bindProp="isDisabled" width={300}/>

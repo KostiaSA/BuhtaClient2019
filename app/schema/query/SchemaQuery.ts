@@ -38,6 +38,8 @@ export interface ISchemaQueryColumnProps {
     inlineDataType?: IBaseSqlDataTypeProps;
     orderBy?: string;
     children?: ISchemaQueryColumnProps[];
+    color?:string;
+    background?:string;
 }
 
 

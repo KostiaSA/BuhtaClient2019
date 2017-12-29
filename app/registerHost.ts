@@ -40,6 +40,8 @@ import {getDatabaseDialect} from "./sql/getDatabaseDialect";
 import {executeSql} from "./sql/executeSql";
 import {throwError} from "./utils/throwError";
 import {assert} from "./test/assert";
+import {registerUserColor, userColors} from "./utils/registerUserColor";
+import {getColorValue} from "./utils/getColorValue";
 
 declare const chai: any;
 declare const window: any;
@@ -130,6 +132,9 @@ export function registerHost() {
 
             notifySuccess: notifySuccess,
 
+            registerUserColor: registerUserColor,
+            getColorValue: getColorValue,
+            userColors: userColors,
 
         }
     };
