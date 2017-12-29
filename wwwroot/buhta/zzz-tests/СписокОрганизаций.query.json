@@ -9,7 +9,8 @@
             "orderBy": "asc2"
         }, {
             "fieldSource": "Название",
-            "orderBy": "desc1"
+            "orderBy": "desc1",
+            "color": "orangered"
         }, {
             "inlineSql": "Номер+'--'",
             "inlineDataType": {
@@ -50,7 +51,7 @@
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-20 23:13:31.551",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-28 14:09:39.734",
+    "changedDate": "<DateTime>2017-12-29 15:14:31.557",
     "sqlBefore": "-- ================",
     "sqlOrderBy": ""
 }

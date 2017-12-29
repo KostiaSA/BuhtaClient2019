@@ -245,10 +245,10 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                                     style={{
                                         cursor: "default",
                                         textOverflow: "ellipsis",
-                                        overflow:"hidden",
+                                        overflow: "hidden",
                                         maxWidth: 200,
                                         minWidth: 50,
-                                        paddingRight:3
+                                        paddingRight: 3
                                     }}
                                 >
                                     {winTitle}
@@ -352,8 +352,6 @@ export class Desktop extends React.Component<IDesktopProps, any> {
     async openWindow(win: React.ReactElement<any>): Promise<any> {
 
         return new Promise<boolean>((resolve: (result: any) => void, reject: (error: string) => void) => {
-
-
             if (win.props.window) {
                 if (!win.props.window.id)
                     win.props.window.id = "rand_" + getRandomString();
@@ -369,7 +367,13 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                 this.windows.push(React.cloneElement(win, {key: getRandomString()}));
             }
             else {
-                this.windows.push(React.cloneElement(win, {onClose: resolve, key: getRandomString()}))
+                this.windows.push(React.cloneElement(win, {
+                    window: {
+                        onClose: resolve,
+                        key: getRandomString(),
+                        id: "rand_" + getRandomString()
+                    }
+                }))
             }
             this.forceUpdate();
         });

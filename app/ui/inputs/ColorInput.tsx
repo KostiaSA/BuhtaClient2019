@@ -11,6 +11,7 @@ import {storageSet} from "../../storage/storageSet";
 import {appState} from "../../AppState";
 import {addToolbarIconItem} from "../Toolbar";
 import {getColorValue} from "../../utils/getColorValue";
+import {SelectColorWindow} from "../../admin/SelectColorWindow";
 
 export interface IColorInputProps extends IBaseInputProps {
     height?: string | number;
@@ -155,10 +156,16 @@ export class ColorInput extends BaseInput<IColorInputProps> {
                                 opacity: 0.6
                             }}
                             onClick={async () => {
-                                console.log("click8888888888")
-                                // this.form!.cancelChanges();
-                                // if (!this.form!.needSaveChanges || await getConfirmation("Выйти без сохранения?"))
-                                //     this.window.close(false);
+                                if (!this.props.disabled) {
+                                    let win = this.getWindow();
+                                    if (win) {
+                                        let selectedColor = await win.openParentWindow(<SelectColorWindow/>);
+                                        if (selectedColor)
+                                            this.widget.jqxInput("val", selectedColor);
+                                        this.widget.jqxInput("focus");
+
+                                    }
+                                }
                             }}
                         >
                         </td>

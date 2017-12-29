@@ -23,6 +23,7 @@ export interface IBaseInputProps extends IComponentProps {
     storageKey?: string;
     resizable?: boolean;
     readOnly?: boolean;
+    disabled?:boolean;
 }
 
 export class BaseInput<P extends IBaseInputProps=IBaseInputProps> extends Component<P> {
