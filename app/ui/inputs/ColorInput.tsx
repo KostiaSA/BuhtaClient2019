@@ -12,6 +12,7 @@ import {appState} from "../../AppState";
 import {addToolbarIconItem} from "../Toolbar";
 import {getColorValue} from "../../utils/getColorValue";
 import {SelectColorWindow} from "../../admin/SelectColorWindow";
+import {emptyStringToUndefined} from "../../utils/emptyStringToUndefined";
 
 export interface IColorInputProps extends IBaseInputProps {
     height?: string | number;
@@ -26,6 +27,9 @@ export class ColorInput extends BaseInput<IColorInputProps> {
         this.context = context;
     }
 
+
+
+
     componentDidMount() {
         this.formPanel.renderedInputs.push(this);
 
@@ -39,7 +43,7 @@ export class ColorInput extends BaseInput<IColorInputProps> {
 
         this.widget.on("change",
             async (event: any) => {
-                objectPathSet(this.bindObj, this.props.bindProp, this.widget.val());
+                objectPathSet(this.bindObj, this.props.bindProp, emptyStringToUndefined(this.widget.val()));
                 if (this.props.onChange) {
                     await this.props.onChange();
                 }
@@ -49,7 +53,7 @@ export class ColorInput extends BaseInput<IColorInputProps> {
 
         this.widget.on("keyup",
             async (event: any) => {
-                objectPathSet(this.bindObj, this.props.bindProp, this.widget.val());
+                objectPathSet(this.bindObj, this.props.bindProp, emptyStringToUndefined(this.widget.val()));
                 this.validate();
                 this.forceUpdate();
             });

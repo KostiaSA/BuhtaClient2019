@@ -42,6 +42,7 @@ import {throwError} from "./utils/throwError";
 import {assert} from "./test/assert";
 import {registerUserColor, userColors} from "./utils/registerUserColor";
 import {getColorValue} from "./utils/getColorValue";
+import {emptyStringToUndefined} from "./utils/emptyStringToUndefined";
 
 declare const chai: any;
 declare const window: any;
@@ -135,6 +136,8 @@ export function registerHost() {
             registerUserColor: registerUserColor,
             getColorValue: getColorValue,
             userColors: userColors,
+
+            emptyStringToUndefined:emptyStringToUndefined,
 
         }
     };
