@@ -359,19 +359,19 @@ export class DbGrid extends Component<IDbGridProps> {
             columnOptions.text = col.props.fieldCaption || col.props.fieldSource;
             columnOptions.datafield = col.props.fieldCaption || col.props.fieldSource;
 
+            let colorForDbGrid = col.calcColorForDbGrid();
 
             columnOptions.cellsrenderer = (rowIndex: number, columnfield: any, value: any, defaulthtml: string): string => {
 
-                // if (!colProps.getText &&
+                if (!colorForDbGrid
                 //     !colProps.color && !colProps.getColor &&
                 //     !colProps.background && !colProps.getBackground &&
                 //     !colProps.fontStyle && !colProps.getFontStyle &&
                 //     !colProps.fontWeight && !colProps.getFontWeight &&
                 //     !colProps.fontFamily && !colProps.getFontFamily &&
                 //     !colProps.fontSize && !colProps.getFontSize
-                // )
-                //     return defaulthtml;
-
+                )
+                    return defaulthtml;
 
 
                 let el = document.createElement("div");
@@ -389,8 +389,8 @@ export class DbGrid extends Component<IDbGridProps> {
                 let row = this.rows[rowIndex];
 
                 // --------------------------- color --------------------------
-                if (col.calcColorForDbGrid()) {
-                    defaultSpan.style.color = col.calcColorForDbGrid();
+                if (colorForDbGrid) {
+                    defaultSpan.style.color = colorForDbGrid;
                 }
                 // if (colProps.getColor) {
                 //     if (!isFunction(colProps.getColor!))

@@ -25,7 +25,7 @@
                 "id": "Money"
             },
             "fieldCaption": "Деньги5525",
-            "color": "deeppink"
+            "color": ""
         }, {
             "inlineSql": "CASE \n  WHEN Ключ%2=0 THEN Номер+' '+ Название + STR(Ключ) \n  ELSE '' \nEND",
             "inlineDataType": {
@@ -33,7 +33,7 @@
                 "maxLen": 0
             },
             "fieldCaption": "Строка3255",
-            "color": "lightseagreen"
+            "color": ""
         }, {
             "inlineSql": "{{_ServerCurrentTime_}}",
             "inlineDataType": {
@@ -54,7 +54,7 @@
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-20 23:13:31.551",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-29 16:30:41.862",
+    "changedDate": "<DateTime>2017-12-29 16:36:46.454",
     "sqlBefore": "-- ================",
     "sqlOrderBy": ""
 }
