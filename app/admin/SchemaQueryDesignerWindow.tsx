@@ -37,6 +37,7 @@ import {SchemaQueryTestRunWindow} from "./SchemaQueryTestRunWindow";
 import {notifySuccess} from "../utils/notifySuccess";
 import {throwError} from "../utils/throwError";
 import {schemaObjectJsonCache} from "../schema/getSchemaObjectProps";
+import {getColorValue} from "../utils/getColorValue";
 
 
 export interface ISchemaQueryDesignerProps extends ISchemaObjectDesignerProps {
@@ -339,8 +340,7 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
         if (!row.orderBy)
             return null;
-        else
-        if (row.orderBy.startsWith("asc"))
+        else if (row.orderBy.startsWith("asc"))
             return <span style={{color: "seagreen"}}>{row.orderBy}</span>;
         else
             return <span style={{color: "#ca1f00"}}>{row.orderBy}</span>;
@@ -429,6 +429,10 @@ export class SchemaQueryDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                                 getText={this.getColumnCaptionText} width={120}/>
                                                 <TreeGridColumn headerText="Сортировка" width={56}
                                                                 getText={this.getColumnSortText}/>
+                                                <TreeGridColumn headerText="Цвет" width={100}
+                                                                getText={(row) => getColorValue(row.color) || ""}
+                                                                getColor={(row) => getColorValue(row.color) || "inherit"}
+                                                />
 
                                             </TreeGrid>
                                         </FlexItem>

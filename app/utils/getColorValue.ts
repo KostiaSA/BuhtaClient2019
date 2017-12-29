@@ -3,6 +3,9 @@ import {throwError} from "./throwError";
 import {isString} from "./isString";
 
 export function getColorValue(color: string): string {
+    if (!color)
+        return undefined as any;
+
     if (!isString(color)) {
         throwError("getColorValue(): 'color' должен быть строкой");
         throw "fake";

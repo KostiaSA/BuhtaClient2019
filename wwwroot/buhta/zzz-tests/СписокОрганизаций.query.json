@@ -6,7 +6,8 @@
         "tableId": "buhta/zzz-tests/Организация_MAG666.table",
         "children": [{
             "fieldSource": "Номер",
-            "orderBy": "asc2"
+            "orderBy": "asc2",
+            "color": "mediumblue"
         }, {
             "fieldSource": "Название",
             "orderBy": "desc1",
@@ -23,7 +24,8 @@
             "inlineDataType": {
                 "id": "Money"
             },
-            "fieldCaption": "Деньги5525"
+            "fieldCaption": "Деньги5525",
+            "color": "deeppink"
         }, {
             "inlineSql": "CASE \n  WHEN Ключ%2=0 THEN Номер+' '+ Название + STR(Ключ) \n  ELSE '' \nEND",
             "inlineDataType": {
@@ -51,7 +53,7 @@
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-20 23:13:31.551",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2017-12-29 15:14:31.557",
+    "changedDate": "<DateTime>2017-12-29 15:37:47.595",
     "sqlBefore": "-- ================",
     "sqlOrderBy": ""
 }
