@@ -367,13 +367,21 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                 this.windows.push(React.cloneElement(win, {key: getRandomString()}));
             }
             else {
-                this.windows.push(React.cloneElement(win, {
-                    window: {
+                if (win.type === Window) {
+                    this.windows.push(React.cloneElement(win, {
                         onClose: resolve,
                         key: getRandomString(),
-                        id: "rand_" + getRandomString()
-                    }
-                }))
+                    }))
+                }
+                else {
+                    this.windows.push(React.cloneElement(win, {
+                        window: {
+                            onClose: resolve,
+                            key: getRandomString(),
+                            id: "rand_" + getRandomString()
+                        }
+                    }))
+                }
             }
             this.forceUpdate();
         });
