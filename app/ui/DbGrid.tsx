@@ -920,7 +920,7 @@ export class DbGrid extends Component<IDbGridProps> {
                         backgroundColor: this.error ? "#ffe6e1a6" : "initial",
                         textAlign: "center",
                         verticalAlign: "middle",
-                        lineHeight: 5
+                        padding: 15
                     }}>
                     ошибка загрузки: {this.error}
                 </div>
