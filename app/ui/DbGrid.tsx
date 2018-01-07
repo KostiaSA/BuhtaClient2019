@@ -553,7 +553,7 @@ export class DbGrid extends Component<IDbGridProps> {
     }
 
     async componentDidUpdate() {
-        console.log("componentDidUpdate", this.rows)
+        //console.log("componentDidUpdate", this.rows)
         if (this.isDataLoaded) {
             this.isDataLoaded = true;
             await this.initializeJqxGrid();

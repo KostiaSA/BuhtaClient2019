@@ -3,6 +3,7 @@ import * as moment from "moment";
 export let config: any = {
     productionMode: false,
     adminMode: true,
+    adminIcon: "buhta/assets/icons/admin.png",
     theme: "buhta",
     border: "1px solid #d4d4d4",
     borderColor: "#d4d4d4",

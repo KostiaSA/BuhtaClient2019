@@ -278,23 +278,14 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                                 alert("fuf")
                             }}></MenuItem>
                             <MenuSeparator/>
-                            <MenuItem title="Старый 33333" onClick={async () => {
-                                alert("fuf")
-                            }}></MenuItem>
-                            <MenuItem title="Старый +++" onClick={async () => {
-                                alert("fuf")
-                            }}></MenuItem>
-                            <MenuItem title="Старый 33333" onClick={async () => {
-                                alert("fuf")
-                            }}></MenuItem>
-                            <MenuItem title="Старый +++" onClick={async () => {
+                            <MenuItem title="Режим администратора"
+                                      icon={config.adminIcon}
+                                      onClick={async () => {
                                 alert("fuf")
                             }}></MenuItem>
 
-                            <MenuItem title="Старый 33333" startGroup onClick={async () => {
-                                alert("fuf")
-                            }}></MenuItem>
-                            <MenuItem title="Старый +++" onClick={async () => {
+                            <MenuSeparator/>
+                            <MenuItem title="Закрыть программу" onClick={async () => {
                                 alert("fuf")
                             }}></MenuItem>
                         </MenuItem>
