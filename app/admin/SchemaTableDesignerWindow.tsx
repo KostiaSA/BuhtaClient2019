@@ -27,8 +27,6 @@ import {XJSON_clone, XJSON_equals, XJSON_parse, XJSON_stringify} from "../utils/
 import {SchemaObject} from "../schema/SchemaObject";
 import {ComboBox} from "../ui/inputs/ComboBox";
 import {getDatabasesList} from "../sql/getDatabasesList";
-import {FormPanelHGroup} from "../ui/FormPanelHGroup";
-import {CheckBox} from "../ui/inputs/CheckBox";
 import {throwError} from "../utils/throwError";
 import {schemaObjectJsonCache} from "../schema/getSchemaObjectProps";
 
@@ -135,7 +133,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                 let result = new SchemaTable(this.table).validate();
                 if (result) {
                     this.errorTitle = "Ошибка загрузки файла";
-                    throwError( result);
+                    throwError(result);
                 }
 
                 this.forceUpdate();
@@ -227,6 +225,10 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
             return null;
     };
 
+    getFullSqlName = (): string => {
+        let table = new SchemaTable(this.table);
+        return table.getFullSqlName();
+    };
 
     render() {
 
@@ -239,7 +241,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
         let validator = new SchemaTable(this.table).getValidator();
 
-        //console.log("render SchemaTableDesignerWindow");
+        console.log("render SchemaTableDesignerWindow");
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
@@ -269,6 +271,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                 bindObj={this.table}
                                                 bindProp="name"
                                                 placeHolder="имя таблицы"
+                                                readOnly
                                             />
 
                                             <Input title="описание" bindProp="description"
@@ -277,7 +280,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                             />
 
                                             <Input title="sql имя" bindProp="sqlName"
-                                                   placeHolder="введите sql имя таблицы"
+                                                   placeHolder={this.getFullSqlName()}
                                                    resizable storageKey="input:sqlName"
                                             />
 
@@ -295,19 +298,19 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                                 resizable storageKey="input:dbName"
                                             />
 
-                                            <FormPanelHGroup>
-                                                <CheckBox title="первичный ключ" bindProp="primaryKey" width={150}/>
-                                                <Input width={200} bindProp="note"
-                                                       resizable storageKey="input:dbName2222222"
-                                                       placeHolder="note" title="примечание2"
-                                                />
-                                                <CheckBox title="NOT NULL" bindProp="notNull" width={100}/>
+                                            {/*<FormPanelHGroup>*/}
+                                            {/*<CheckBox title="первичный ключ" bindProp="primaryKey" width={150}/>*/}
+                                            {/*<Input width={200} bindProp="note"*/}
+                                            {/*resizable storageKey="input:dbName2222222"*/}
+                                            {/*placeHolder="note" title="примечание2"*/}
+                                            {/*/>*/}
+                                            {/*<CheckBox title="NOT NULL" bindProp="notNull" width={100}/>*/}
 
-                                                <Input width={200} bindProp="note"
-                                                       placeHolder="note" title="примечание3"
-                                                />
+                                            {/*<Input width={200} bindProp="note"*/}
+                                            {/*placeHolder="note" title="примечание3"*/}
+                                            {/*/>*/}
 
-                                            </FormPanelHGroup>
+                                            {/*</FormPanelHGroup>*/}
 
                                         </FormPanel>
                                     </FlexItem>

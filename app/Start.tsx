@@ -4,6 +4,7 @@ import {Desktop} from "./ui/Desktop";
 import {appState} from "./AppState";
 import {config} from "./config";
 import {registerHost} from "./registerHost";
+import {webSocketInit} from "./utils/webSocket";
 
 async function start() {
 
@@ -18,6 +19,8 @@ async function start() {
     $(document).on('contextmenu', (e) => {
         return false;
     });
+
+    webSocketInit();
 
     // window.addEventListener('unhandledrejection', (event: any) => {
     //     console.error(event.reason.statusText || event.reason);

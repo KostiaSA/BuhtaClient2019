@@ -159,7 +159,6 @@ export class SchemaTableColumnEditorWindow extends React.Component<ISchemaTableC
                             imgSrc={config.button.cancelIcon}
                             text="Отмена"
                             onClick={async () => {
-                                //this.form1!.cancelChanges();
                                 if (!this.form!.needSaveChanges || await getConfirmation("Выйти без сохранения?"))
                                     this.window.close(false);
                             }}

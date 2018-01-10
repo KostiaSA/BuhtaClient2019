@@ -84,10 +84,11 @@ export class ColorInput extends BaseInput<IColorInputProps> {
     }
 
     updateProps(props: IColorInputProps, create: boolean) {
-        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator", "storageKey", "resizable"]);
+        let opt: any = omit(props, ["bindObj", "bindProp", "title", "children", "onChange", "hidden", "validator", "storageKey", "resizable","readOnly"]);
 
         opt.height = opt.height || config.baseInput.height;
         opt.width = opt.width || config.baseInput.width;
+        opt.disabled = this.props.readOnly;
 
         if (this.props.storageKey) {
             let storage = storageGet(this.props.storageKey, ["size", this.getWindow().props.storageKey!]);

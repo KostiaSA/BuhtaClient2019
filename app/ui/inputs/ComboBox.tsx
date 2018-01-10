@@ -113,11 +113,12 @@ export class ComboBox extends BaseInput<IComboBoxProps> {
         let opt: any = omit(props, [
             "bindObj", "bindProp", "title", "children",
             "onChange", "hidden", "validator", "source",
-            "storageKey", "resizable"
+            "storageKey", "resizable","readOnly"
         ]);
 
         opt.animationType = "none";
         opt.autoDropDownHeight = true;
+        opt.disabled = this.props.readOnly;
 
 
         opt.height = opt.height || config.baseInput.height;
