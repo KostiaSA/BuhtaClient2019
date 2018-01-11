@@ -15,7 +15,7 @@ export async function getDatabaseSqlName(dbName: string = config.mainDatabaseNam
 
     let db = databasesCache.find((db) => db.name === dbName);
     if (db)
-        return db.dialect;
+        return db.sqlName;
     else {
         throwError("getDatabaseSqlName(dbName): не найдена база данных с именем '" + dbName + "'");
         throw "fake";

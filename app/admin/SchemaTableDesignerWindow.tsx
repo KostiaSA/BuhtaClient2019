@@ -29,10 +29,10 @@ import {ComboBox} from "../ui/inputs/ComboBox";
 import {getDatabasesList} from "../sql/getDatabasesList";
 import {throwError} from "../utils/throwError";
 import {schemaObjectJsonCache} from "../schema/getSchemaObjectProps";
-import {TreeGrid} from "../ui/TreeGrid";
-import {SchemaQuery} from "../schema/query/SchemaQuery";
 import {notifySuccess} from "../utils/notifySuccess";
 import {FlexVPanel} from "../ui/FlexVPanel";
+import {adminExecuteSql} from "./api/adminExecuteSql";
+import {getDatabaseSqlName} from "../sql/getDatabaseSqlName";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
@@ -171,6 +171,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
         }
 
     }
+
     handleClickApplyButton = async () => {
         this.table.columns = this.tableColumnsArray.toArray();
 
@@ -195,8 +196,9 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
         try {
             await saveSchemaObjectFiles(req);
             delete schemaObjectJsonCache[this.props.objectId!];
-
+            this.table.objectId = this.props.objectId;
             this.form!.resetNeedSaveChanges();
+
             notifySuccess("Таблица сохранена");
         }
         catch (err) {
@@ -442,8 +444,11 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                                         if (this.form!.needSaveChanges) {
                                             await this.handleClickApplyButton();
                                         }
-                                        let sql=await (new SchemaTable(this.table).emitSynchronizeTableSql(this.table.dbName || config.mainDatabaseName));
-                                        console.log(sql);
+                                        let dbName = this.table.dbName || config.mainDatabaseName;
+                                        let sql = await (new SchemaTable(this.table).emitSynchronizeTableSql(dbName));
+                                        await adminExecuteSql(dbName, sql);
+                                        notifySuccess("Таблица синхронизирована в базе '" + dbName + " ("+(await getDatabaseSqlName(dbName))+")'");
+                                        //console.log(sql);
                                         // appState.d;esktop.openWindow(
                                         //     <SchemaQueryTestRunWindow
                                         //         queryId={this.query.objectId}

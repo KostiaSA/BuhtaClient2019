@@ -5,6 +5,7 @@ import {Component, IComponentProps} from "./Component";
 import {omit} from "../utils/omit";
 import {isStringOrNullOrEmpty} from "../utils/isStringOrNullOrEmpty";
 import {throwWarning} from "../utils/throwWarning";
+import {showError} from "./modals/showError";
 
 
 export interface IButtonProps extends IComponentProps {
@@ -66,8 +67,15 @@ export class Button extends Component<IButtonProps> {
                     let win = this.getWindow();
                     if (win) {
                         win.disable({cursor: "wait"});
-                        await this.props.onClick!();
-                        win.enable();
+                        try {
+                            await this.props.onClick!();
+                        }
+                        catch (e) {
+                            showError(e);
+                        }
+                        finally {
+                            win.enable();
+                        }
                     }
                     else
                         this.props.onClick!();

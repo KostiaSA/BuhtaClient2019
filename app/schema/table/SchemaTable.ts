@@ -423,6 +423,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
             return this.emitCreateTableSql(dialect);
         }
         else { // таблица уже есть, проверям структуру
+            // todo emitSynchronizeTableSql -> ALTER TABLE
             return "?alter table";
         }
 
