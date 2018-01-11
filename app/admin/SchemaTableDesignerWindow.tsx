@@ -29,12 +29,17 @@ import {ComboBox} from "../ui/inputs/ComboBox";
 import {getDatabasesList} from "../sql/getDatabasesList";
 import {throwError} from "../utils/throwError";
 import {schemaObjectJsonCache} from "../schema/getSchemaObjectProps";
+import {TreeGrid} from "../ui/TreeGrid";
+import {SchemaQuery} from "../schema/query/SchemaQuery";
+import {notifySuccess} from "../utils/notifySuccess";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
     //tableId?: string;
     //window?: IWindowProps;
 }
+
+// todo сделать копирование колонки
 
 export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
@@ -165,6 +170,39 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
         }
 
     }
+    handleClickApplyButton = async () => {
+        this.table.columns = this.tableColumnsArray.toArray();
+
+        let validator = new SchemaTable(this.table).getValidator();
+
+        let validationError = joiValidate(this.table, validator);
+
+        if (validationError) {
+            await showError(validationError);
+            return;
+        }
+
+        new SchemaObject(this.table).setChangedUserAndDate();
+        let filePath = this.props.objectId || this.props.newObjectPath + "/" + this.table.name + "." + SchemaTable.objectType;
+        delete this.table.objectId;
+
+        let req: ISavedSchemaObjectFiles = {
+            filePath: filePath,
+            json: XJSON_stringify(this.table)
+        };
+
+        try {
+            await saveSchemaObjectFiles(req);
+            delete schemaObjectJsonCache[this.props.objectId!];
+
+            this.form!.resetNeedSaveChanges();
+            notifySuccess("Таблица сохранена");
+        }
+        catch (err) {
+            showError(err.toString());
+        }
+
+    };
 
     handleClickSaveButton = async () => {
 
@@ -180,11 +218,11 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
         }
 
         new SchemaObject(this.table).setChangedUserAndDate();
-        let fielPath = this.props.objectId || this.props.newObjectPath + "/" + this.table.name + "." + SchemaTable.objectType;
+        let filePath = this.props.objectId || this.props.newObjectPath + "/" + this.table.name + "." + SchemaTable.objectType;
         delete this.table.objectId;
 
         let req: ISavedSchemaObjectFiles = {
-            filePath: fielPath,
+            filePath: filePath,
             json: XJSON_stringify(this.table)
         };
 
@@ -241,7 +279,7 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
 
         let validator = new SchemaTable(this.table).getValidator();
 
-        console.log("render SchemaTableDesignerWindow");
+        //console.log("render SchemaTableDesignerWindow");
         return (
             <Window
                 {...omit(this.props.window, ["children"])}
@@ -392,6 +430,10 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                         </TabsPanel>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
+                        <Button imgSrc={config.button.applyIcon}
+                                tooltip="сохранить без закрытия формы"
+                                style={{marginRight: 5, opacity: 0.7}}
+                                onClick={this.handleClickApplyButton}/>
                         <Button imgSrc={config.button.saveIcon}
                                 text="Сохранить"
                                 style={{marginRight: 5}}

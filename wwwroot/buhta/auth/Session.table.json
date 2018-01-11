@@ -3,7 +3,7 @@
     "name": "Session",
     "objectType": "table",
     "columns": [{
-        "name": "id",
+        "name": "sessionId",
         "primaryKey": true,
         "dataType": {
             "id": "Guid"
@@ -11,24 +11,43 @@
         "description": "",
         "notNull": true
     }, {
-        "name": "ip",
+        "name": "clientIp",
         "dataType": {
             "id": "String",
             "maxLen": 50
         },
         "description": "ip-адрес клиента"
     }, {
-        "name": "buhtaServer",
+        "name": "buhtaServerName",
         "dataType": {
             "id": "String",
             "maxLen": 50
         },
         "description": "уникальное имя buhtaServer"
+    }, {
+        "name": "createTime",
+        "dataType": {
+            "id": "DateTime"
+        },
+        "description": "время создания сессии"
+    }, {
+        "name": "lastTime",
+        "dataType": {
+            "id": "DateTime"
+        },
+        "description": "время последней активности"
+    }, {
+        "name": "userId",
+        "dataType": {
+            "id": "ForeignKey",
+            "fkTableId": "buhta/auth/User.table"
+        },
+        "description": "id пользователя"
     }],
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-13 18:56:48.794",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2018-01-10 13:12:41.881",
-    "note": "",
+    "changedDate": "<DateTime>2018-01-10 14:23:12.195",
+    "note": "-",
     "dbName": "auth"
 }

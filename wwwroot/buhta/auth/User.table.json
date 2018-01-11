@@ -1,0 +1,40 @@
+﻿{
+    "description": "Список пользователей",
+    "name": "User",
+    "objectType": "table",
+    "columns": [{
+        "name": "userId",
+        "primaryKey": true,
+        "dataType": {
+            "id": "Guid"
+        },
+        "description": "",
+        "notNull": true
+    }, {
+        "name": "login",
+        "dataType": {
+            "id": "String",
+            "maxLen": 50
+        },
+        "description": "логин клиента"
+    }, {
+        "name": "password",
+        "dataType": {
+            "id": "String",
+            "maxLen": 50
+        },
+        "description": "пароль клиента"
+    }, {
+        "name": "isAdmin",
+        "dataType": {
+            "id": "Boolean"
+        },
+        "description": "доступ администратора"
+    }],
+    "createdBy": "Иванов17-20",
+    "createdDate": "<DateTime>2017-12-13 18:56:48.794",
+    "changedBy": "Иванов17-20",
+    "changedDate": "<DateTime>2018-01-10 14:21:12.175",
+    "note": "-",
+    "dbName": "auth"
+}
