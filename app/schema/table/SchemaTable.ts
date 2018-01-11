@@ -417,7 +417,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         let dialect = await getDatabaseDialect(dbName);
         let dbSqlName = await getDatabaseSqlName(dbName);
         let e = new SqlEmitter(dialect);
-        let sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_CATALOG=" + e.emit_STRING(dbName) + " AND TABLE_NAME=" + e.emit_STRING(this.getFullSqlName());
+        let sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_CATALOG=" + e.emit_STRING(dbSqlName) + " AND TABLE_NAME=" + e.emit_STRING(this.getFullSqlName());
         let count = await adminGetValueFromSql(dbName, sql);
         if (count === 0) {  // таблицы не существует, создаем
             return this.emitCreateTableSql(dialect);
