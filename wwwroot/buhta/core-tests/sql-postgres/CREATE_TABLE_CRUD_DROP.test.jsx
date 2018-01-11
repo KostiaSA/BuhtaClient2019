@@ -10,6 +10,7 @@ class Test extends buhta.test.BaseTest {
 
     _getSchemaTable() {
         let props = {
+            objectId: "__testtable__",
             name: "__testtable__",
             objectType: "table",
             columns: [

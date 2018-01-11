@@ -82,7 +82,7 @@ export class SchemaQuery extends SchemaObject<ISchemaQueryProps> { //implements 
 
     async execute(paramsObj: any = {}, dbName?: string): Promise<ISqlDataset[]> {
         if (!dbName)
-            dbName = (await this.getRootColumn()).joinTable.props.dbName;
+            dbName = (await this.getRootColumn()).joinTable.props.dbName || config.mainDatabaseName;
         return executeSql(this.props.objectId!, paramsObj, dbName);
     }
 

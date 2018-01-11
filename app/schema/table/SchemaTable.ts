@@ -229,7 +229,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         else
             sql.push("CREATE TABLE ");
 
-        sql.push(e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
+        sql.push(e.emit_TABLE_NAME(this.getFullSqlName()));
 
         sql.push("(\n");
 
@@ -258,7 +258,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
         sql.push("DROP TABLE ");
 
-        sql.push(e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
+        sql.push(e.emit_TABLE_NAME(this.getFullSqlName()));
 
         sql.push("\n");
 
@@ -274,7 +274,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
         sql.push("INSERT INTO ");
 
-        sql.push(e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
+        sql.push(e.emit_TABLE_NAME(this.getFullSqlName()));
 
         let colNames: string[] = [];
         let colValues: string[] = [];
@@ -342,7 +342,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
         sql.push(colNames.join(","));
 
-        sql.push(" FROM " + e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
+        sql.push(" FROM " + e.emit_TABLE_NAME(this.getFullSqlName()));
 
         let dataType = appState.sqlDataTypes[primaryKeyColumn.dataType.id];
         sql.push(" WHERE " + e.emit_NAME(primaryKeyColumn.name) + "=" + await dataType.emitValue(dialect, primaryKeyColumn.dataType, rowId));// this.valueToSql(primaryKeyColumn, this.rowId));
@@ -358,7 +358,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         let sql: string[] = [];
         let colSets: string[] = [];
 
-        sql.push("UPDATE " + e.emit_TABLE_NAME(this.props.sqlName || this.props.name) + " SET");
+        sql.push("UPDATE " + e.emit_TABLE_NAME(this.getFullSqlName()) + " SET");
 
         let primaryKeyColumn = this.getPrimaryKeyColumn();
         if (!primaryKeyColumn) {
@@ -398,7 +398,7 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         let sql: string[] = [];
         let colSets: string[] = [];
 
-        sql.push("DELETE FROM " + e.emit_TABLE_NAME(this.props.sqlName || this.props.name));
+        sql.push("DELETE FROM " + e.emit_TABLE_NAME(this.getFullSqlName()));
 
         let primaryKeyColumn = this.getPrimaryKeyColumn();
         if (!primaryKeyColumn) {
@@ -413,14 +413,20 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
 
     }
 
-    // async emitSynchronizeTableSql(dbName: string = config.mainDatabaseName): Promise<SqlBatch> {
-    //     let dialect = await getDatabaseDialect(dbName);
-    //     let dbSqlName = await getDatabaseSqlName(dbName);
-    //     let e = new SqlEmitter(dialect);
-    //     let sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_CATALOG=" + e.emit_STRING(dbName) + " AND TABLE_NAME=" + e.emit_STRING(this.getFullSqlName());
-    //     let count= await adminGetValueFromSql(dbName, sql);
-    //
-    // }
+    async emitSynchronizeTableSql(dbName: string = config.mainDatabaseName): Promise<SqlBatch> {
+        let dialect = await getDatabaseDialect(dbName);
+        let dbSqlName = await getDatabaseSqlName(dbName);
+        let e = new SqlEmitter(dialect);
+        let sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_CATALOG=" + e.emit_STRING(dbName) + " AND TABLE_NAME=" + e.emit_STRING(this.getFullSqlName());
+        let count = await adminGetValueFromSql(dbName, sql);
+        if (count === 0) {  // таблицы не существует, создаем
+            return this.emitCreateTableSql(dialect);
+        }
+        else { // таблица уже есть, проверям структуру
+            return "?alter table";
+        }
+
+    }
 
 
 }

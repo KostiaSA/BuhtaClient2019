@@ -32,6 +32,7 @@ import {schemaObjectJsonCache} from "../schema/getSchemaObjectProps";
 import {TreeGrid} from "../ui/TreeGrid";
 import {SchemaQuery} from "../schema/query/SchemaQuery";
 import {notifySuccess} from "../utils/notifySuccess";
+import {FlexVPanel} from "../ui/FlexVPanel";
 
 
 export interface ISchemaTableDesignerProps extends ISchemaObjectDesignerProps {
@@ -430,19 +431,44 @@ export class SchemaTableDesignerWindow extends SchemaObjectBaseDesignerWindow {
                         </TabsPanel>
                     </FlexItem>
                     <FlexItem dock="bottom" style={{padding: 5, justifyContent: "flex-end"}}>
-                        <Button imgSrc={config.button.applyIcon}
-                                tooltip="сохранить без закрытия формы"
-                                style={{marginRight: 5, opacity: 0.7}}
-                                onClick={this.handleClickApplyButton}/>
-                        <Button imgSrc={config.button.saveIcon}
-                                text="Сохранить"
-                                style={{marginRight: 5}}
-                                ref={(e) => this.saveButton = e!}
-                                onClick={this.handleClickSaveButton}/>
-                        <Button imgSrc={config.button.cancelIcon}
-                                text="Отмена"
-                                ref={(e) => this.closeButton = e!}
-                                onClick={this.handleClickCloseButton}/>
+                        <FlexVPanel>
+                            <FlexItem dock="left">
+                                {/******************** Button "Синхронизировать с БД" *************/}
+                                <Button
+                                    text="Синхронизировать с БД"
+                                    imgSrc="vendor/fugue/database-sql.png"
+                                    style={{marginRight: 5}}
+                                    onClick={async () => {
+                                        if (this.form!.needSaveChanges) {
+                                            await this.handleClickApplyButton();
+                                        }
+                                        let sql=await (new SchemaTable(this.table).emitSynchronizeTableSql(this.table.dbName || config.mainDatabaseName));
+                                        console.log(sql);
+                                        // appState.d;esktop.openWindow(
+                                        //     <SchemaQueryTestRunWindow
+                                        //         queryId={this.query.objectId}
+                                        //         window={{height: 500, width: 700}}
+                                        //     />
+                                        // );
+                                    }}
+                                />
+                            </FlexItem>
+                            <FlexItem dock="fill" style={{justifyContent: "flex-end"}}>
+                                <Button imgSrc={config.button.applyIcon}
+                                        tooltip="сохранить без закрытия формы"
+                                        style={{marginRight: 5, opacity: 0.7}}
+                                        onClick={this.handleClickApplyButton}/>
+                                <Button imgSrc={config.button.saveIcon}
+                                        text="Сохранить"
+                                        style={{marginRight: 5}}
+                                        ref={(e) => this.saveButton = e!}
+                                        onClick={this.handleClickSaveButton}/>
+                                <Button imgSrc={config.button.cancelIcon}
+                                        text="Отмена"
+                                        ref={(e) => this.closeButton = e!}
+                                        onClick={this.handleClickCloseButton}/>
+                            </FlexItem>
+                        </FlexVPanel>
                     </FlexItem>
                 </FlexHPanel>
 
