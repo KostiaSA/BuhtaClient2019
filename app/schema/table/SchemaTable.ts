@@ -10,6 +10,9 @@ import {SqlBatch, SqlDialect, SqlEmitter} from "../../sql/SqlEmitter";
 import {isArray} from "../../utils/isArray";
 import {replaceAll} from "../../utils/replaceAll";
 import {throwError} from "../../utils/throwError";
+import {getDatabaseSqlName} from "../../sql/getDatabaseSqlName";
+import {getDatabaseDialect} from "../../sql/getDatabaseDialect";
+import {adminGetValueFromSql} from "../../admin/utils/adminGetValueFromSql";
 
 
 export interface ISchemaTableProps extends ISchemaObjectProps {
@@ -409,5 +412,15 @@ export class SchemaTable extends SchemaObject<ISchemaTableProps> { //implements 
         return sql.join("");
 
     }
+
+    // async emitSynchronizeTableSql(dbName: string = config.mainDatabaseName): Promise<SqlBatch> {
+    //     let dialect = await getDatabaseDialect(dbName);
+    //     let dbSqlName = await getDatabaseSqlName(dbName);
+    //     let e = new SqlEmitter(dialect);
+    //     let sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_CATALOG=" + e.emit_STRING(dbName) + " AND TABLE_NAME=" + e.emit_STRING(this.getFullSqlName());
+    //     let count= await adminGetValueFromSql(dbName, sql);
+    //
+    // }
+
 
 }

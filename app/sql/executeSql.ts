@@ -8,7 +8,8 @@ import {throwError} from "../utils/throwError";
 
 export interface ISqlDataset {
     columns: { name: string, type: string }[];
-    rows: any[];
+    rows: any[];    // к полям обращаемся по имени
+    _rows_: any[];  // к полям обращаемся по индексу
 }
 
 export async function executeSql(sqlTemplatePath: string, paramsObj: any = {}, dbName: string = config.mainDatabaseName): Promise<ISqlDataset[]> {
