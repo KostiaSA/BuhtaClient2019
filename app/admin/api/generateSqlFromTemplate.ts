@@ -3,6 +3,7 @@ import {SqlDialect} from "../../sql/SqlEmitter";
 import {isString} from "util";
 import {XJSON_stringify} from "../../utils/xjson";
 import {throwError} from "../../utils/throwError";
+import {appState} from "../../AppState";
 
 export interface ISchemaObjectFiles {
     sqlTemplate: string;
@@ -18,12 +19,16 @@ export async function generateSqlFromTemplate(dialect: SqlDialect, sqlTemplate: 
         throwError( "adminExecuteSql(): параметр 'dialect' должен быть строкой");
 
     let req = {
+        sessionId:appState.sessionId,
+        windowId:appState.windowId,
+        authToken:appState.authToken,
         dialect: dialect,
         sqlTemplate: sqlTemplate,
-        paramsObj: XJSON_stringify(paramsObj),
+//        paramsObj: XJSON_stringify(paramsObj),
+        paramsObj: paramsObj,
     };
 
-    let response: any = await axios.post("api/admin/generateSqlFromTemplate", req);
+    let response: any = await axios.post("api/admin/generateSqlFromTemplate", {xjson:XJSON_stringify(req)});
 
     if (response.data.error)
         throwError( response.data.error);

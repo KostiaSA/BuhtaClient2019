@@ -13,7 +13,7 @@ export async function loadSchemaTree(path: string = "", objectTypes: string[] = 
     let req = {
         sessionId:appState.sessionId,
         windowId:appState.windowId,
-        authTooken:appState.authToken,
+        authToken:appState.authToken,
         path: path,
         objectTypes: objectTypes
     };

@@ -4,6 +4,7 @@ import {config} from "../config";
 import {XJSON_stringify} from "../utils/xjson";
 import {postProcessSqlResult} from "./postProcessSqlResult";
 import {throwError} from "../utils/throwError";
+import {appState} from "../AppState";
 
 
 export interface ISqlDataset {
@@ -33,12 +34,16 @@ export async function executeSql(sqlTemplatePath: string, paramsObj: any = {}, d
     }
 
     let req = {
+        sessionId:appState.sessionId,
+        windowId:appState.windowId,
+        authToken:appState.authToken,
         sqlTemplatePath: sqlTemplatePath,
-        paramsObj: XJSON_stringify(paramsObj),
+//        paramsObj: XJSON_stringify(paramsObj),
+        paramsObj: paramsObj,
         dbName: dbName
     };
 
-    let response: any = await axios.post("api/executeSql", req);
+    let response: any = await axios.post("api/executeSql", {xjson:XJSON_stringify(req)});
 
     if (response.data.error)
         throwError( response.data.error);

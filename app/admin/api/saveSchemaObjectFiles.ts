@@ -1,6 +1,7 @@
 import axios from "axios";
 import {throwError} from "../../utils/throwError";
-import {schemaObjectJsonCache} from "../../schema/getSchemaObjectProps";
+import {appState} from "../../AppState";
+import {XJSON_stringify} from "../../utils/xjson";
 
 
 export interface ISavedSchemaObjectFiles {
@@ -22,7 +23,12 @@ export async function saveSchemaObjectFiles(req: ISavedSchemaObjectFiles): Promi
     if (req.jsx)
         req.jsx = js_beautify(req.jsx);
 
-    let response: any = await axios.post("api/admin/saveSchemaObjectFiles", req);
+    (req as any).sessionId = appState.sessionId;
+    (req as any).windowId = appState.windowId;
+    (req as any).authToken = appState.authToken;
+
+
+    let response: any = await axios.post("api/admin/saveSchemaObjectFiles", {xjson:XJSON_stringify(req)});
 
     if (response.data.error)
         throwError(response.data.error);
