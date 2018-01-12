@@ -37,7 +37,7 @@ import {isString} from "./utils/isString";
 import {isStringOrNull} from "./utils/isStringOrNull";
 import {notifySuccess} from "./utils/notifySuccess";
 import {getDatabaseDialect} from "./sql/getDatabaseDialect";
-import {executeSql} from "./sql/executeSql";
+import {executeSql} from "./api/executeSql";
 import {throwError} from "./utils/throwError";
 import {assert} from "./test/assert";
 import {registerUserColor, userColors} from "./utils/registerUserColor";

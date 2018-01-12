@@ -7,7 +7,7 @@ import {getErrorWindow} from "../ui/modals/showError";
 import {config} from "../config";
 import {Button} from "../ui/Button";
 import {ComboBox} from "../ui/inputs/ComboBox";
-import {getDatabasesList, IDatabase} from "../sql/getDatabasesList";
+import {getDatabasesList, IDatabase} from "../api/getDatabasesList";
 import {DbGrid} from "../ui/DbGrid";
 import {FormPanel} from "../ui/FormPanel";
 import {FormPanelHGroup} from "../ui/FormPanelHGroup";

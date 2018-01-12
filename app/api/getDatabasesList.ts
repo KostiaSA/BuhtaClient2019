@@ -1,5 +1,5 @@
 import axios from "axios";
-import {SqlDialect} from "./SqlEmitter";
+import {SqlDialect} from "../sql/SqlEmitter";
 import {throwError} from "../utils/throwError";
 import {appState} from "../AppState";
 import {XJSON_stringify} from "../utils/xjson";

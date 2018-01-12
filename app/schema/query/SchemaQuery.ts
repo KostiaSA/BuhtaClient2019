@@ -8,7 +8,7 @@ import {getRandomString} from "../../utils/getRandomString";
 import {getSchemaObjectProps} from "../getSchemaObjectProps";
 import {SqlSelectEmitter} from "../../sql/SqlSelectEmitter";
 import {addNewLineSymbol} from "../../utils/addNewLineSymbol";
-import {executeSql, ISqlDataset} from "../../sql/executeSql";
+import {executeSql, ISqlDataset} from "../../api/executeSql";
 import {throwError} from "../../utils/throwError";
 import {BaseSqlDataType, IBaseSqlDataTypeProps} from "../table/datatypes/BaseSqlDataType";
 import {appState} from "../../AppState";

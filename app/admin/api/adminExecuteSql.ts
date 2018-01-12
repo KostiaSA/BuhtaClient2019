@@ -2,7 +2,7 @@ import axios from "axios";
 import {SqlBatch} from "../../sql/SqlEmitter";
 import {isArray, isString} from "util";
 import {postProcessSqlResult} from "../../sql/postProcessSqlResult";
-import {ISqlDataset} from "../../sql/executeSql";
+import {ISqlDataset} from "../../api/executeSql";
 import {throwError} from "../../utils/throwError";
 import {appState} from "../../AppState";
 import {XJSON_stringify} from "../../utils/xjson";

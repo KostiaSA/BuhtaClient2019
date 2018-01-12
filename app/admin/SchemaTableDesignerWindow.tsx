@@ -26,7 +26,7 @@ import {ISchemaObjectDesignerProps, SchemaObjectBaseDesignerWindow} from "./Sche
 import {XJSON_clone, XJSON_equals, XJSON_parse, XJSON_stringify} from "../utils/xjson";
 import {SchemaObject} from "../schema/SchemaObject";
 import {ComboBox} from "../ui/inputs/ComboBox";
-import {getDatabasesList} from "../sql/getDatabasesList";
+import {getDatabasesList} from "../api/getDatabasesList";
 import {throwError} from "../utils/throwError";
 import {schemaObjectJsonCache} from "../schema/getSchemaObjectProps";
 import {notifySuccess} from "../utils/notifySuccess";

@@ -2,7 +2,7 @@ import axios from "axios";
 import {isString} from "util";
 import {config} from "../config";
 import {XJSON_stringify} from "../utils/xjson";
-import {postProcessSqlResult} from "./postProcessSqlResult";
+import {postProcessSqlResult} from "../sql/postProcessSqlResult";
 import {throwError} from "../utils/throwError";
 import {appState} from "../AppState";
 
