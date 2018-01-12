@@ -50,13 +50,17 @@ export class AppState {
         return this.cachedSessionId;
     }
 
-    private cachedAuthToken: string | null;
-
     get authToken(): string {
-        if (!this.cachedAuthToken) {
-            this.cachedAuthToken = localStorage.getItem("buhta-authToken");
-        }
-        return this.cachedAuthToken || "none";
+        return localStorage.getItem("buhta-authToken") || "none";
+    }
+
+    get login(): string {
+        return localStorage.getItem("buhta-login") || "";
+    }
+
+    setAuthToken(token: string, login: string) {
+        localStorage.setItem("buhta-authToken", token);
+        localStorage.setItem("buhta-login", login);
     }
 
     async start() {

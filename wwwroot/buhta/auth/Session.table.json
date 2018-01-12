@@ -43,11 +43,25 @@
             "fkTableId": "buhta/auth/User.table"
         },
         "description": "id пользователя"
+    }, {
+        "name": "authToken",
+        "dataType": {
+            "id": "String",
+            "maxLen": 32
+        },
+        "description": "токен авторизации"
+    }, {
+        "name": "login",
+        "dataType": {
+            "id": "String",
+            "maxLen": 50
+        },
+        "description": "логин пользователя"
     }],
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-13 18:56:48.794",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2018-01-11 17:04:55.307",
+    "changedDate": "<DateTime>2018-01-12 17:57:28.636",
     "note": "-2",
     "dbName": "auth"
 }

@@ -14,6 +14,7 @@ import {TestsExplorerWindow} from "../admin/TestsExplorerWindow";
 import {throwError} from "../utils/throwError";
 import {clearToolbarFocusedGroups, IToolbarProps, Toolbar} from "./Toolbar";
 import {SelectColorWindow} from "../admin/SelectColorWindow";
+import {doLogin} from "../api/doLogin";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -313,13 +314,14 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                                 }}></MenuItem>
                         </MenuItem>
                         <MenuItem
-                            title="Цвета"
+                            title="Login"
                             onClick={async () => {
-                                this.openWindow(
-                                    <SelectColorWindow
-                                        window={{height: 600, width: 800}}>
-                                    </SelectColorWindow>
-                                );
+                                doLogin("admin","admin");
+                                // this.openWindow(
+                                //     <SelectColorWindow
+                                //         window={{height: 600, width: 800}}>
+                                //     </SelectColorWindow>
+                                // );
                             }}></MenuItem>
                     </Menu>
                     <Toolbar groups={this.toolbar.groups} items={this.toolbar.items}></Toolbar>
