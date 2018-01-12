@@ -1,7 +1,7 @@
 import {arrayBufferToBase64} from "./arrayBufferToBase64";
 import {base64ToArrayBuffer} from "./base64ToArrayBuffer";
 import * as moment from "moment";
-import {guidFromBase64, guidToBase64} from "./guid";
+import {guidFromBase64, guidFromHex, guidToBase64, guidToHex} from "./guid";
 import {throwError} from "./throwError";
 
 export function XJSON_stringify(obj: any): string {
@@ -54,7 +54,8 @@ function stringify_prepare(obj: any): any {
                 return "<Uint8Array>" + arrayBufferToBase64(obj.buffer);
             }
             else if (obj instanceof Uint32Array && obj.length===4) {
-                return "<Guid>" + guidToBase64(obj);
+                //return "<Guid>" + guidToBase64(obj);
+                return "<Guid>" + guidToHex(obj);
             }
             else {
                 let cloned: any = {};
@@ -85,7 +86,7 @@ export function XJSON_parse_postprocess(obj: any): any {
                     return new Uint8Array(base64ToArrayBuffer(obj.substr("<Uint8Array>".length)))
                 }
                 else if (obj.startsWith("<Guid>")) {
-                    return guidFromBase64(obj.substr("<Guid>".length))
+                    return guidFromHex(obj.substr("<Guid>".length))
                 }
                 else if (obj.startsWith("<Date>")) {
                     return moment(obj.substr("<Date>".length))
