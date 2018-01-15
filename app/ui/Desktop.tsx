@@ -275,7 +275,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                             <MenuItem title="Старый 2" onClick={async () => {
                                 alert("fuf")
                             }}></MenuItem>
-                            <MenuItem title="Старый 333" onClick={async () => {
+                            <MenuItem title="Старый 3323" onClick={async () => {
                                 alert("fuf")
                             }}></MenuItem>
                             <MenuSeparator/>
