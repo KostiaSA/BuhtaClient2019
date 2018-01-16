@@ -43,6 +43,8 @@ import {assert} from "./test/assert";
 import {registerUserColor, userColors} from "./utils/registerUserColor";
 import {getColorValue} from "./utils/getColorValue";
 import {emptyStringToUndefined} from "./utils/emptyStringToUndefined";
+import {getSchemaObjectProps} from "./schema/getSchemaObjectProps";
+import {getRandomString} from "./utils/getRandomString";
 
 declare const chai: any;
 declare const window: any;
@@ -86,6 +88,7 @@ export function registerHost() {
         schema: {
             SchemaObject: SchemaObject,
             SchemaTable: SchemaTable,
+            getSchemaObjectProps:getSchemaObjectProps
         },
         ui: {
             Input: Input,
@@ -110,6 +113,8 @@ export function registerHost() {
             XJSON_stringify: XJSON_stringify,
             XJSON_parse: XJSON_parse,
             XJSON_parse_postprocess: XJSON_parse_postprocess,
+
+            getRandomString:getRandomString,
 
             newGuid: newGuid,
             emptyGuid: emptyGuid,

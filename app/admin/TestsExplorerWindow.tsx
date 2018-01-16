@@ -171,7 +171,31 @@ export class TestsExplorerWindow extends React.Component<any> {
 
                 //console.log(className, compiledScript);
                 code = "window.$$BuhtaTestClassForRun=" + code;
-                loadScript(code);
+
+                try {
+                    eval(code);
+                }
+                catch (e) {
+
+                    //  этот набор операторов вместо "console.error(e);" позволяет видеть в Хроме исходник и место ошибки
+                    let script = document.createElement("script");
+                    script.type = "text/javascript";
+                    script.text = code;
+                    document.head.appendChild(script);  // не вызывет почему-то exception при синтактических ошибках
+                    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                    if (this.totalErrorCount === null)
+                        this.totalErrorCount = 0;
+                    this.totalErrorCount++;
+                    let subItem = {
+                        result: "error",
+                        message: "ошибка компиляции: "+ (e.message || e.toString())
+                    };
+                    testedItem.result = "error";
+                    testedItem.items.push(subItem);
+                    this.forceUpdate();
+                    continue;
+                }
                 //eval(code);
                 //console.log("$$BuhtaTestClassForRun-------------->", $$BuhtaTestClassForRun);
 
