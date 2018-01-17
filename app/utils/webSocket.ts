@@ -1,5 +1,7 @@
 import {appState} from "../AppState";
 import {guidToHex} from "./guid";
+import {doStart} from "../api/doStart";
+import {sleep} from "./sleep";
 
 let socket: WebSocket;
 let socketAuthToken: string;
@@ -32,29 +34,56 @@ function updateState() {
 }
 
 
-export function webSocketInit() {
-    if (appState.authToken === "none" || (socketAuthToken === appState.authToken && socket.readyState === WebSocket.OPEN))
+let insideWebSocketInit = false;
+
+export async function webSocketInit() {
+    if (insideWebSocketInit || appState.authToken === "none" || (socketAuthToken === appState.authToken && socket.readyState === WebSocket.OPEN))
         return;
 
-    let scheme = document.location.protocol == "https:" ? "wss" : "ws";
-    let port = document.location.port ? (":" + document.location.port) : "";
-    let url = scheme + "://" + document.location.hostname + port + "/ws/" + guidToHex(appState.sessionId)+"/"+appState.windowId;
 
-    socketAuthToken = appState.authToken;
-    socket = new WebSocket(url);
-    socket.onopen = function (event) {
-        console.log("socket onopen -------------->", event);
-        updateState();
-    };
-    socket.onclose = function (event) {
-        console.log("socket onclose -------------->", event);
-        updateState();
-    };
-    socket.onerror = function (event) {
-        console.log("socket onerror -------------->", event);
-        updateState();
-    };
-    socket.onmessage = function (event) {
-        console.log("socket message==============>", event.data);
-    };
+    try {
+        insideWebSocketInit = true;
+        console.log("попытка установки соединения webSocket...");
+        let startOk = await doStart();
+        if (startOk) {
+            let scheme = document.location.protocol == "https:" ? "wss" : "ws";
+            let port = document.location.port ? (":" + document.location.port) : "";
+            let url = scheme + "://" + document.location.hostname + port + "/ws/" + guidToHex(appState.sessionId) + "/" + appState.windowId;
+
+            socketAuthToken = appState.authToken;
+            socket = new WebSocket(url);
+            socket.onopen = function (event) {
+                console.log("socket onopen -------------->", event);
+                updateState();
+            };
+            socket.onclose = function (event) {
+                console.log("socket onclose -------------->", event);
+                updateState();
+            };
+            socket.onerror = function (event) {
+                console.log("socket onerror -------------->", event);
+                updateState();
+            };
+            socket.onmessage = function (event) {
+                console.log("socket message==============>", event.data);
+            };
+        }
+        else {
+            console.log("нет авторизации...");
+        }
+        await sleep(5000);
+        insideWebSocketInit = false;
+    }
+    catch {
+        await sleep(5000);
+        insideWebSocketInit = false;
+    }
+
+
 }
+
+export async function startWebSocketLife() {
+    setInterval(webSocketInit, 2000);
+
+}
+

@@ -15,7 +15,7 @@ import {throwError} from "../utils/throwError";
 import {clearToolbarFocusedGroups, IToolbarProps, Toolbar} from "./Toolbar";
 import {SelectColorWindow} from "../admin/SelectColorWindow";
 import {doLogin} from "../api/doLogin";
-import {webSocketInit} from "../utils/webSocket";
+import {startWebSocketLife, webSocketInit} from "../utils/webSocket";
 import {doStart} from "../api/doStart";
 
 
@@ -33,14 +33,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
         //this.__createT();
         this.forceUpdate();
 
-        try {
-            let startOk = await doStart();
-            if (startOk)
-                webSocketInit();
-        }
-        catch {
-
-        }
+        startWebSocketLife();
     }
 
     w: Window;
