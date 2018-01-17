@@ -1,6 +1,6 @@
 import {appState} from "../AppState";
 import {guidToHex} from "./guid";
-import {doStart} from "../api/doStart";
+import {doStart} from "../api/checkAuth";
 import {sleep} from "./sleep";
 
 let socket: WebSocket;

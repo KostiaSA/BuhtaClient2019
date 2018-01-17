@@ -16,7 +16,7 @@ import {clearToolbarFocusedGroups, IToolbarProps, Toolbar} from "./Toolbar";
 import {SelectColorWindow} from "../admin/SelectColorWindow";
 import {doLogin} from "../api/doLogin";
 import {startWebSocketLife, webSocketInit} from "../utils/webSocket";
-import {doStart} from "../api/doStart";
+import {doStart} from "../api/checkAuth";
 
 
 export interface IDesktopProps extends IComponentProps {
