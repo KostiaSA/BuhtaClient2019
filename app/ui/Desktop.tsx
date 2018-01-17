@@ -15,6 +15,8 @@ import {throwError} from "../utils/throwError";
 import {clearToolbarFocusedGroups, IToolbarProps, Toolbar} from "./Toolbar";
 import {SelectColorWindow} from "../admin/SelectColorWindow";
 import {doLogin} from "../api/doLogin";
+import {webSocketInit} from "../utils/webSocket";
+import {doStart} from "../api/doStart";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -26,10 +28,19 @@ declare var Babel: any;
 
 export class Desktop extends React.Component<IDesktopProps, any> {
 
-    componentDidMount() {
+    async componentDidMount() {
         appState.desktop = this;
         //this.__createT();
         this.forceUpdate();
+
+        try {
+            let startOk = await doStart();
+            if (startOk)
+                webSocketInit();
+        }
+        catch {
+
+        }
     }
 
     w: Window;
@@ -282,8 +293,8 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                             <MenuItem title="Режим администратора"
                                       icon={config.adminIcon}
                                       onClick={async () => {
-                                alert("fuf")
-                            }}></MenuItem>
+                                          alert("fuf")
+                                      }}></MenuItem>
 
                             <MenuSeparator/>
                             <MenuItem title="Закрыть программу" onClick={async () => {
@@ -316,7 +327,7 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                         <MenuItem
                             title="Login"
                             onClick={async () => {
-                                doLogin("admin","admin");
+                                doLogin("admin", "admin");
                                 // this.openWindow(
                                 //     <SelectColorWindow
                                 //         window={{height: 600, width: 800}}>

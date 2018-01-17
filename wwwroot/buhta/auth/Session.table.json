@@ -57,11 +57,17 @@
             "maxLen": 50
         },
         "description": "логин пользователя"
+    }, {
+        "name": "isAdmin",
+        "dataType": {
+            "id": "Boolean"
+        },
+        "description": "админский доступ"
     }],
     "createdBy": "Иванов17-20",
     "createdDate": "<DateTime>2017-12-13 18:56:48.794",
     "changedBy": "Иванов17-20",
-    "changedDate": "<DateTime>2018-01-12 17:57:28.636",
+    "changedDate": "<DateTime>2018-01-16 16:38:35.199",
     "note": "-2",
     "dbName": "auth"
 }

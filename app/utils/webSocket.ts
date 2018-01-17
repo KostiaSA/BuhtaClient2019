@@ -1,4 +1,8 @@
+import {appState} from "../AppState";
+import {guidToHex} from "./guid";
+
 let socket: WebSocket;
+let socketAuthToken: string;
 
 let socketState: string;
 
@@ -29,10 +33,14 @@ function updateState() {
 
 
 export function webSocketInit() {
+    if (appState.authToken === "none" || (socketAuthToken === appState.authToken && socket.readyState === WebSocket.OPEN))
+        return;
+
     let scheme = document.location.protocol == "https:" ? "wss" : "ws";
     let port = document.location.port ? (":" + document.location.port) : "";
-    let url = scheme + "://" + document.location.hostname + port + "/ws";
+    let url = scheme + "://" + document.location.hostname + port + "/ws/" + guidToHex(appState.sessionId)+"/"+appState.windowId;
 
+    socketAuthToken = appState.authToken;
     socket = new WebSocket(url);
     socket.onopen = function (event) {
         console.log("socket onopen -------------->", event);

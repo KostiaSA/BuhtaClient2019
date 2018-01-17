@@ -16,10 +16,7 @@ export function getRandomString(length: number = 20): string {
     crypto.getRandomValues(bytes);
     let len = bytes.byteLength;
     for (let i = 0; i < len; i++) {
-        let c = String.fromCharCode(bytes[i]);
-        if (c === "/" || c === "+")
-            c = "q";
-        binary += c;
+        binary += String.fromCharCode(bytes[i]);
     }
     let ret = window.btoa(binary).substr(0, length);
     ret = replaceAll(ret, "+", "Q");

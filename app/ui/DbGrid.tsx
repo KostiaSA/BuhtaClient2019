@@ -538,7 +538,7 @@ export class DbGrid extends Component<IDbGridProps> {
 
     async setDataSource() {
         //this.updateProps(this.props, true);
-        console.log("setDataSource");
+        //console.log("setDataSource");
         //debugger
         if (!this.isDataSourceAssigned) {
             this.isDataSourceAssigned = true;

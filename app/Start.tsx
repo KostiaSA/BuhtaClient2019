@@ -20,7 +20,8 @@ async function start() {
         return false;
     });
 
-    webSocketInit();
+
+    //webSocketInit();
 
     // window.addEventListener('unhandledrejection', (event: any) => {
     //     console.error(event.reason.statusText || event.reason);
