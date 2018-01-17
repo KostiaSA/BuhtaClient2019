@@ -1,6 +1,6 @@
 import {appState} from "../AppState";
 import {guidToHex} from "./guid";
-import {doStart} from "../api/checkAuth";
+import {checkAuth} from "../api/checkAuth";
 import {sleep} from "./sleep";
 
 let socket: WebSocket;
@@ -44,8 +44,8 @@ export async function webSocketInit() {
     try {
         insideWebSocketInit = true;
         console.log("попытка установки соединения webSocket...");
-        let startOk = await doStart();
-        if (startOk) {
+        let authOk = await checkAuth();
+        if (authOk) {
             let scheme = document.location.protocol == "https:" ? "wss" : "ws";
             let port = document.location.port ? (":" + document.location.port) : "";
             let url = scheme + "://" + document.location.hostname + port + "/ws/" + guidToHex(appState.sessionId) + "/" + appState.windowId;
