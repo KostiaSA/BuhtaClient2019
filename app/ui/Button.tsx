@@ -39,7 +39,11 @@ export class Button extends Component<IButtonProps> {
         this.updateProps(this.props);
     }
 
-    updateProps(props: IButtonProps) {
+    componentDidUpdate() {
+        this.updateProps(this.props,false);
+    }
+
+    updateProps(props: IButtonProps, onMount: boolean = true) {
         let opt: any = omit(this.props, ["children", "text", "style", "onClick", "tabIndex", "autoFocus", "tooltip"]);
 
         opt.imgPosition = opt.imgPosition || "left";
@@ -61,28 +65,30 @@ export class Button extends Component<IButtonProps> {
         this.widget.jqxButton(opt);
         this.widget = $("#" + this.$id);
 
-        if (this.props.onClick)
-            this.widget.on("click", async () => {
-                if (!this.disabled()) {
-                    let win = this.getWindow();
-                    if (win) {
-                        win.disable({cursor: "wait"});
-                        try {
-                            await this.props.onClick!();
+        if (onMount) {
+            if (this.props.onClick)
+                this.widget.on("click", async () => {
+                    if (!this.disabled()) {
+                        let win = this.getWindow();
+                        if (win) {
+                            win.disable({cursor: "wait"});
+                            try {
+                                await this.props.onClick!();
+                            }
+                            catch (e) {
+                                showError(e);
+                            }
+                            finally {
+                                win.enable();
+                            }
                         }
-                        catch (e) {
-                            showError(e);
-                        }
-                        finally {
-                            win.enable();
-                        }
+                        else
+                            this.props.onClick!();
                     }
-                    else
-                        this.props.onClick!();
-                }
-            });
-        else
-            this.widget.off("click");
+                });
+            else
+                this.widget.off("click");
+        }
     }
 
     disabled(): boolean {

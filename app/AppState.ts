@@ -6,6 +6,7 @@ import {registerSchemaObjectTypes} from "./schema/registerSchemaObjectTypes";
 import {Guid, guidToHex, newGuid} from "./utils/guid";
 import {XJSON_parse, XJSON_stringify} from "./utils/xjson";
 import {getRandomString} from "./utils/getRandomString";
+import {throwError} from "./utils/throwError";
 
 
 export class AppState {
@@ -25,7 +26,13 @@ export class AppState {
     }
 
     get userId(): string {
-        return "Иванов17-20";
+
+        let userIdStr= localStorage.getItem("buhta-userId");
+        if (userIdStr)
+            return XJSON_parse(userIdStr);
+        else
+            throwError("нет userId");
+        throw "fake";
     }
 
     get sessionIdAsStr(): string {
@@ -50,6 +57,10 @@ export class AppState {
         return this.cachedSessionId;
     }
 
+    isLoggedIn(): boolean {
+        return this.authToken !== "none";
+    }
+
     get authToken(): string {
         return localStorage.getItem("buhta-authToken") || "none";
     }
@@ -58,9 +69,14 @@ export class AppState {
         return localStorage.getItem("buhta-login") || "";
     }
 
-    setAuthToken(token: string, login: string) {
+    setAuthToken(token: string, login: string, userId: Guid) {
         localStorage.setItem("buhta-authToken", token);
         localStorage.setItem("buhta-login", login);
+        localStorage.setItem("buhta-userId", XJSON_stringify(userId));
+    }
+
+    clearAuthToken() {
+        localStorage.setItem("buhta-authToken", "none");
     }
 
     async start() {

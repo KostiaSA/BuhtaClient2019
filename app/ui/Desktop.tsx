@@ -1,5 +1,5 @@
 import * as  React from "react";
-import {appState} from "../AppState";
+import {AppState, appState} from "../AppState";
 import {Window} from "./Window";
 import {getRandomString} from "../utils/getRandomString";
 import {replaceAll} from "../utils/replaceAll";
@@ -17,6 +17,8 @@ import {SelectColorWindow} from "../admin/SelectColorWindow";
 import {doLogin} from "../api/doLogin";
 import {startWebSocketLife, webSocketInit} from "../utils/webSocket";
 import {checkAuth} from "../api/checkAuth";
+import {Button} from "./Button";
+import {doLogout} from "../api/doLogout";
 
 
 export interface IDesktopProps extends IComponentProps {
@@ -341,6 +343,73 @@ export class Desktop extends React.Component<IDesktopProps, any> {
                     fontFamily: config.font.family
                 }}>
                     {this.renderTaskBarItems()}
+                </div>,
+                <div style={{
+                    position: "absolute",
+                    top: 2,
+                    right: 0,
+                    paddingLeft: 3,
+                    paddingRight: 3,
+                    fontSize: 10,
+                    fontFamily: config.font.family
+                }}>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td style={{verticalAlign: "middle",}}>
+                                    <span
+                                        style={{
+                                            fontSize: 13,
+                                            color: "chocolate",
+                                            paddingRight: 5,
+                                            display: appState.isLoggedIn() ? "inline" : "none"
+                                        }}
+                                    >
+                                        ООО БУХта, {appState.login}
+                                    </span>
+                            </td>
+                            <td style={{verticalAlign: "middle"}}>
+                                <Button
+                                    width={63}
+                                    text={!appState.isLoggedIn() ? "Вход" : "Выход"}
+                                    onClick={async () => {
+                                        console.log("login===========ckicl");
+                                        if (!appState.isLoggedIn()) {
+                                            await doLogin("admin", "admin");
+                                            console.log("login++++++++++++++");
+                                        }
+                                        else {
+                                            await doLogout();
+                                            console.log("loguot-------------");
+                                        }
+                                        // this.openWindow(
+                                        //     <SelectColorWindow
+                                        //         window={{height: 600, width: 800}}>
+                                        //     </SelectColorWindow>
+                                        // );
+                                        this.forceUpdate();
+                                    }}>
+
+                                </Button>
+                            </td>
+                            {/*<td style={{verticalAlign: "middle", display: appState.isLoggedIn() ? "initial" : "none"}}>*/}
+                            {/*<Button*/}
+                            {/*text="Выход"*/}
+                            {/*onClick={async () => {*/}
+                            {/*await doLogout();*/}
+                            {/*this.forceUpdate();*/}
+                            {/*// this.openWindow(*/}
+                            {/*//     <SelectColorWindow*/}
+                            {/*//         window={{height: 600, width: 800}}>*/}
+                            {/*//     </SelectColorWindow>*/}
+                            {/*// );*/}
+                            {/*}}>*/}
+
+                            {/*</Button>*/}
+                            {/*</td>*/}
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             ]
         )
